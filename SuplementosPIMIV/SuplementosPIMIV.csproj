@@ -67,10 +67,40 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="View\FrmMenuPrincipal.aspx" />
+    <Content Include="View\FrmProduto.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\ControlCategoria.cs" />
+    <Compile Include="Controller\ControlProduto.cs" />
+    <Compile Include="Controller\ControlSabor.cs" />
+    <Compile Include="Controller\ControlSubcategoria.cs" />
+    <Compile Include="Database\AcessConnector.cs" />
+    <Compile Include="Database\BaseConnector.cs" />
+    <Compile Include="Database\DAO.cs" />
+    <Compile Include="Database\MySQLConnector.cs" />
+    <Compile Include="Database\SqlServerConnector.cs" />
+    <Compile Include="Model\ModelCategoria.cs" />
+    <Compile Include="Model\ModelProduto.cs" />
+    <Compile Include="Model\ModelSabor.cs" />
+    <Compile Include="Model\ModelSubcategoria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validacao.cs" />
+    <Compile Include="View\FrmMenuPrincipal.aspx.cs">
+      <DependentUpon>FrmMenuPrincipal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\FrmMenuPrincipal.aspx.designer.cs">
+      <DependentUpon>FrmMenuPrincipal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\FrmProduto.aspx.cs">
+      <DependentUpon>FrmProduto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\FrmProduto.aspx.designer.cs">
+      <DependentUpon>FrmProduto.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -81,6 +111,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

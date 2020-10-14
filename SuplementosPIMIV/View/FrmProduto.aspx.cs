@@ -130,6 +130,80 @@ namespace PontoDeVenda
                 ddlID_Subcategoria.SelectedIndex != 0;
         }
 
+        private string ValidateFields()
+        {
+            // validar a entrada de dados para incluir
+            myValidar = new Validar();
+            string mDs_Msg = "";
+
+            if (myValidar.CampoPreenchido(txbNM_Produto.Text))
+            {
+                if (!myValidar.TamanhoCampo(txbNM_Produto.Text, 50))
+                {
+                    mDs_Msg = " Limite de caracteres para o nome excedido, " +
+                                  "o limite para este campo é: 50 caracteres, " +
+                                  "quantidade utilizada: " + txbNM_Produto.Text.Length + ".";
+                }
+            }
+            else
+            {
+                mDs_Msg = " O nome deve estar preenchido.";
+            }
+
+            if (myValidar.CampoPreenchido(txbDS_Produto.Text))
+            {
+                if (!myValidar.TamanhoCampo(txbDS_Produto.Text, 3000))
+                {
+                    mDs_Msg += " Limite de caracteres para descrição excedido, " +
+                                  "o limite para este campo é: 3000 caracteres, " +
+                                  "quantidade utilizada: " + txbDS_Produto.Text.Length + ".";
+                }
+            }
+            else
+            {
+                mDs_Msg += " A descrição deve estar preenchida.";
+            }
+
+
+            if (myValidar.CampoPreenchido(txbQTD_Estoque.Text))
+            {
+                if (!myValidar.Valor(txbQTD_Estoque.Text))
+                {
+                    mDs_Msg += " A quantidade em estoque deve ser um valor numérico, no formato: 9.999.999,99.";
+                }
+            }
+            else
+            {
+                mDs_Msg += " A quantidade em estoque deve estar preenchida.";
+            }
+
+            if (myValidar.CampoPreenchido(txbPR_Custo.Text))
+            {
+                if (!myValidar.Valor(txbPR_Custo.Text))
+                {
+                    mDs_Msg += " O preço de custo deve ser um valor numérico, no formato: 9.999.999,99.";
+                }
+            }
+            else
+            {
+                mDs_Msg += " O preço de custo deve estar preenchido.";
+            }
+
+            if (myValidar.CampoPreenchido(txbPR_Venda.Text))
+            {
+                if (!myValidar.Valor(txbPR_Venda.Text))
+                {
+                    mDs_Msg += " O preço de venda deve ser um valor numérico, no formato: 9.999.999,99.";
+                }
+            }
+            else
+            {
+                mDs_Msg += " O preço de venda deve estar preenchido.";
+            }
+
+            return mDs_Msg;
+        }
+
         private void Incluir()
         {
             // validar a entrada de dados para incluir

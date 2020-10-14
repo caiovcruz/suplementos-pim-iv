@@ -8,7 +8,7 @@
 
     <title>Menu Principal</title>
 
-    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link href="~/Assets/css/styles.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>

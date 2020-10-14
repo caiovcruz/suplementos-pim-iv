@@ -165,7 +165,8 @@ li {
 
 #formLogin {
     height: 100%;
-    background-color: #000000;
+    background-image: url(../img/bLogin.jpg);
+    background-size: cover;
     background-repeat: no-repeat;
     background-attachment: scroll;
 }
@@ -177,6 +178,8 @@ li {
 
 #logInterno {
     background-color: #ffffff;
+    margin: 0px 42% 0px 42%;
+    border-radius: 10px;
 }
 
 #txbDS_Usuario {

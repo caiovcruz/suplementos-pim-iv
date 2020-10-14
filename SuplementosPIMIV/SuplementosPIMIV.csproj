@@ -112,6 +112,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\img\bLogin.jpg" />
     <Content Include="View\FrmLogin.aspx" />
     <Content Include="View\FrmMenuPrincipal.aspx" />
     <Content Include="View\FrmProduto.aspx" />
@@ -168,7 +169,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\img\" />
     <Folder Include="Assets\js\" />
   </ItemGroup>
   <PropertyGroup>

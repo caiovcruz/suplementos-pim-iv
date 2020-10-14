@@ -220,8 +220,8 @@ namespace PontoDeVenda
                     txbNM_Produto.Text,
                     txbDS_Produto.Text,
                     Convert.ToDouble(txbQTD_Estoque.Text),
-                    Convert.ToDouble(txbPR_Venda.Text),
-                    Convert.ToDouble(txbPR_Custo.Text));
+                    Convert.ToDouble(txbPR_Custo.Text),
+                    Convert.ToDouble(txbPR_Venda.Text));
 
                 // o que ocorreu?
                 if (myControlProduto.DS_Mensagem == "OK")
@@ -262,8 +262,8 @@ namespace PontoDeVenda
                     txbNM_Produto.Text,
                     txbDS_Produto.Text,
                     Convert.ToDouble(txbQTD_Estoque.Text),
-                    Convert.ToDouble(txbPR_Venda.Text),
-                    Convert.ToDouble(txbPR_Custo.Text));
+                    Convert.ToDouble(txbPR_Custo.Text),
+                    Convert.ToDouble(txbPR_Venda.Text));
 
                 // o que ocorreu?
                 if (myControlProduto.DS_Mensagem == "OK")

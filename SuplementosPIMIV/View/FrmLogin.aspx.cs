@@ -12,7 +12,7 @@ namespace PontoDeVenda
 {
     public partial class FrmLogin : System.Web.UI.Page
     {
-        private ControlLogin myControlLogin;
+        private ControllerLogin myControllerLogin;
         private Validar myValidar;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -55,8 +55,8 @@ namespace PontoDeVenda
 
             if (mDs_Msg == "")
             {
-                myControlLogin = new ControlLogin(mDs_Usuario, mDs_Senha);
-                mDs_Msg = myControlLogin.Acessar();
+                myControllerLogin = new ControllerLogin(mDs_Usuario, mDs_Senha);
+                mDs_Msg = myControllerLogin.Acessar();
 
                 if (mDs_Msg == "Ok")
                 {

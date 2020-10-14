@@ -13,10 +13,10 @@ namespace PontoDeVenda
     public partial class FrmProduto : System.Web.UI.Page
     {
         private Validar myValidar;
-        private ControlProduto myControlProduto;
-        private ControlCategoria myControlCategoria;
-        private ControlSubcategoria myControlSubcategoria;
-        private ControlSabor myControlSabor;
+        private ControllerProduto myControllerProduto;
+        private ControllerCategoria myControllerCategoria;
+        private ControllerSubcategoria myControllerSubcategoria;
+        private ControllerSabor myControllerSabor;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -57,11 +57,11 @@ namespace PontoDeVenda
 
         private void CarregarProdutos()
         {
-            // instanciando um objeto da classe ControlProduto
-            myControlProduto = new ControlProduto();
+            // instanciando um objeto da classe ControllerProduto
+            myControllerProduto = new ControllerProduto();
 
             // passando a fonte de dados para o GridView
-            gvwProduto.DataSource = myControlProduto.Exibir();
+            gvwProduto.DataSource = myControllerProduto.Exibir();
 
             // associando os dados para carregar e exibir
             gvwProduto.DataBind();
@@ -69,9 +69,9 @@ namespace PontoDeVenda
 
         private void CarregarCategorias()
         {
-            myControlCategoria = new ControlCategoria();
+            myControllerCategoria = new ControllerCategoria();
 
-            ddlID_Categoria.DataSource = myControlCategoria.Exibir();
+            ddlID_Categoria.DataSource = myControllerCategoria.Exibir();
             ddlID_Categoria.DataTextField = "NM_Categoria";
             ddlID_Categoria.DataValueField = "ID_Categoria";
             ddlID_Categoria.DataBind();
@@ -82,9 +82,9 @@ namespace PontoDeVenda
 
         private void CarregarSubcategorias()
         {
-            myControlSubcategoria = new ControlSubcategoria();
+            myControllerSubcategoria = new ControllerSubcategoria();
 
-            ddlID_Subcategoria.DataSource = myControlSubcategoria.Exibir();
+            ddlID_Subcategoria.DataSource = myControllerSubcategoria.Exibir();
             ddlID_Subcategoria.DataTextField = "NM_Subcategoria";
             ddlID_Subcategoria.DataValueField = "ID_Subcategoria";
             ddlID_Subcategoria.DataBind();
@@ -95,9 +95,9 @@ namespace PontoDeVenda
 
         private void CarregarSabores()
         {
-            myControlSabor = new ControlSabor();
+            myControllerSabor = new ControllerSabor();
 
-            ddlID_Sabor.DataSource = myControlSabor.Exibir();
+            ddlID_Sabor.DataSource = myControllerSabor.Exibir();
             ddlID_Sabor.DataTextField = "DS_Sabor";
             ddlID_Sabor.DataValueField = "ID_Sabor";
             ddlID_Sabor.DataBind();
@@ -213,7 +213,7 @@ namespace PontoDeVenda
             {
                 // tudo certinho
                 // instanciar um objeto da classe produto, carregar tela e incluir
-                myControlProduto = new ControlProduto(
+                myControllerProduto = new ControllerProduto(
                     Convert.ToInt32(ddlID_Categoria.SelectedValue),
                     Convert.ToInt32(ddlID_Subcategoria.SelectedValue),
                     Convert.ToInt32(ddlID_Sabor.SelectedValue),
@@ -224,7 +224,7 @@ namespace PontoDeVenda
                     Convert.ToDouble(txbPR_Venda.Text));
 
                 // o que ocorreu?
-                if (myControlProduto.DS_Mensagem == "OK")
+                if (myControllerProduto.DS_Mensagem == "OK")
                 {
                     // tudo certinho!
                     LimparCampos();
@@ -235,7 +235,7 @@ namespace PontoDeVenda
                 else
                 {
                     // exibir erro!
-                    lblDS_Mensagem.Text = myControlProduto.DS_Mensagem;
+                    lblDS_Mensagem.Text = myControllerProduto.DS_Mensagem;
                 }
             }
             else
@@ -254,7 +254,7 @@ namespace PontoDeVenda
             {
                 // tudo certinho
                 // instanciar um objeto da classe produto, carregar tela e alterar
-                myControlProduto = new ControlProduto(
+                myControllerProduto = new ControllerProduto(
                     Convert.ToInt32(txbID_Produto.Text),
                     Convert.ToInt32(ddlID_Categoria.SelectedValue),
                     Convert.ToInt32(ddlID_Subcategoria.SelectedValue),
@@ -266,7 +266,7 @@ namespace PontoDeVenda
                     Convert.ToDouble(txbPR_Venda.Text));
 
                 // o que ocorreu?
-                if (myControlProduto.DS_Mensagem == "OK")
+                if (myControllerProduto.DS_Mensagem == "OK")
                 {
                     // tudo certinho!
                     LimparCampos();
@@ -277,7 +277,7 @@ namespace PontoDeVenda
                 else
                 {
                     // exibir erro!
-                    lblDS_Mensagem.Text = myControlProduto.DS_Mensagem;
+                    lblDS_Mensagem.Text = myControllerProduto.DS_Mensagem;
                 }
             }
             else
@@ -299,8 +299,8 @@ namespace PontoDeVenda
             {
                 // tudo certinho
                 // instanciar um objeto da classe produto, carregar tela e consultar
-                myControlProduto = new ControlProduto(txbNM_ProdutoConsultar.Text);
-                gvwProduto.DataSource = myControlProduto.Consultar();
+                myControllerProduto = new ControllerProduto(txbNM_ProdutoConsultar.Text);
+                gvwProduto.DataSource = myControllerProduto.Consultar();
                 gvwProduto.DataBind();
             }
             else
@@ -313,10 +313,10 @@ namespace PontoDeVenda
         private void Excluir()
         {
             // instanciar um objeto da classe produto e carregar tela e consultar
-            myControlProduto = new ControlProduto(Convert.ToInt32(txbID_Produto.Text));
+            myControllerProduto = new ControllerProduto(Convert.ToInt32(txbID_Produto.Text));
 
             // o que ocorreu?
-            if (myControlProduto.DS_Mensagem == "OK")
+            if (myControllerProduto.DS_Mensagem == "OK")
             {
                 // tudo certinho!
                 LimparCampos();
@@ -327,7 +327,7 @@ namespace PontoDeVenda
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = myControlProduto.DS_Mensagem;
+                lblDS_Mensagem.Text = myControllerProduto.DS_Mensagem;
             }
         }
 

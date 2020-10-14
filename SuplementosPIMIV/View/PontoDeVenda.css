@@ -1,0 +1,177 @@
+﻿* {
+    /*corrigindo comportamento padrão css*/
+    box-sizing: border-box;
+}
+
+html, body {
+    /*margin: 0; está zerando a margem de 8px que automaticamente o navegador coloca*/
+    margin: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #F9F9F9;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+
+li {
+    float: right;
+}
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+        li a:hover:not(.active) {
+            background-color: #111;
+        }
+
+.active {
+    background-color: #4CAF50;
+}
+
+.Titulo {
+    font-weight: bold;
+    font-size: large;
+    margin: 20px 0px 20px 0px;
+    color: #333;
+}
+
+.Msg {
+    color: #F00;
+}
+
+.conteudo {
+    background: silver;
+    margin-left: 23%;
+}
+
+#container {
+    display: grid;
+}
+
+#cadastro, #produto {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border-color: gainsboro;
+}
+
+#cadastro {
+    margin: 0px 10% 0px 10%;
+}
+
+#cadInterno, #prodInterno {
+    margin: 0px 5% 0px 10%;
+}
+
+#interno {
+    width: 100%;
+    position: inherit;
+    display: grid;
+    grid-template-columns: 60% 20% 20%;
+}
+
+#coluna1, #coluna2, #coluna3 {
+    float: left;
+}
+
+#gvwProdutos {
+    width: 100%;
+}
+
+.Label {
+    margin-top: 5px;
+}
+
+.TextBox {
+    border-radius: 5px;
+    border: 2px solid #DCDCDC;
+    font-size: 15px;
+    padding: 10px 7px;
+    margin-bottom: 10px;
+}
+
+#txbNM_ProdutoConsultar {
+    width: 48.5%;
+    margin: 0px 15px 0px 240px;
+}
+
+#gvwProduto {
+    width: 95%;
+    text-align: center;
+}
+
+#txbNM_Produto {
+    width: 95%;
+}
+
+#txbDS_Produto {
+    width: 95%;
+    height: 120px;
+}
+
+#ddlID_Categoria, #ddlID_Subcategoria, #ddlID_Sabor {
+    width: 194px;
+}
+
+.Button {
+    height: 50px;
+    width: 100px;
+    border-radius: 5px;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0px 10px 15px 0px;
+}
+
+#btnIncluir {
+    color: #FFFFFF;
+    background-color: #00a4ff;
+}
+
+    #btnIncluir:not([disabled]):hover {
+        background-color: #4ec0ff;
+    }
+
+#btnExcluir {
+    color: #FFFFFF;
+    background-color: #ff2626;
+}
+
+    #btnExcluir:not([disabled]):hover {
+        background-color: #ff4343;
+    }
+
+#btnLimpar {
+    margin-right: 57%;
+}
+
+#Login {
+    margin: 12% 0 12% 0;
+    text-align: center;
+}
+
+#logInterno {
+    background-color: #ffffff;
+}
+
+#txbDS_Usuario {
+    margin-bottom: 5px;
+}

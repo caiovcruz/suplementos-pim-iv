@@ -115,7 +115,7 @@
     <Content Include="View\FrmLogin.aspx" />
     <Content Include="View\FrmMenuPrincipal.aspx" />
     <Content Include="View\FrmProduto.aspx" />
-    <Content Include="View\styles.css" />
+    <Content Include="Assets\CSS\styles.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

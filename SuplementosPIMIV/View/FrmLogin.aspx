@@ -15,11 +15,12 @@
     <form id="formLogin" runat="server">
         <div id="Login">
 
-            <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Iniciar Sessão"></asp:Label>
-
             <div id="logInterno">
 
-                <br /><br />
+                <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Iniciar Sessão"></asp:Label>
+
+                <br />
+                <br />
 
                 <asp:TextBox CssClass="TextBox" ID="txbDS_Usuario" MaxLength="20" placeholder="Usuário" runat="server"></asp:TextBox>
 
@@ -28,11 +29,13 @@
                 <asp:TextBox CssClass="TextBox" ID="txbDS_Senha" TextMode="Password" MaxLength="20"
                     placeholder="Senha" runat="server"></asp:TextBox>
 
-                <br /><br />
+                <br />
+                <br />
 
                 <asp:Button CssClass="Button" ID="btnAcessar" runat="server" Text="Login" OnClick="btnAcessar_Click" />
 
-                <br /><br />
+                <br />
+                <br />
 
                 <div>
                     <asp:Label CssClass="Msg" ID="lblDS_Msg" runat="server" Text=""></asp:Label>

@@ -8,7 +8,7 @@
 
     <title>Menu Principal</title>
 
-    <link href="PontoDeVenda.css" rel="stylesheet" type="text/css" />
+    <link href="styles.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>

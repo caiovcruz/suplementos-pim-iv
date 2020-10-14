@@ -115,7 +115,7 @@
     <Content Include="View\FrmLogin.aspx" />
     <Content Include="View\FrmMenuPrincipal.aspx" />
     <Content Include="View\FrmProduto.aspx" />
-    <Content Include="Assets\CSS\styles.css" />
+    <Content Include="Assets\css\styles.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -167,7 +167,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Assets\img\" />
+    <Folder Include="Assets\js\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

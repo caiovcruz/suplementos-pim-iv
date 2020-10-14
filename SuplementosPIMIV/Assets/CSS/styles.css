@@ -163,6 +163,12 @@ li {
     margin-right: 57%;
 }
 
+#formLogin {
+    background-color: #000000;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+}
+
 #Login {
     margin: 12% 0 12% 0;
     text-align: center;

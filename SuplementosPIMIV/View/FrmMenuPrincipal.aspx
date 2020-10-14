@@ -12,7 +12,7 @@
 
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="formMenuPrincipal" runat="server">
 
         <!-- Menu -------------------------------------- -->
         <ul class="menu">

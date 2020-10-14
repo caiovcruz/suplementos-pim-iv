@@ -13,7 +13,7 @@
 
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="formProduto" runat="server">
         <asp:ScriptManager ID="scpManager" runat="server"></asp:ScriptManager>
 
         <!-- Menu -------------------------------------- -->

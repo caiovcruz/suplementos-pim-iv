@@ -12,7 +12,7 @@
 
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="formLogin" runat="server">
         <div id="Login">
 
             <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Iniciar Sessão"></asp:Label>

@@ -206,16 +206,10 @@ namespace PontoDeVenda
 
         private void Incluir()
         {
-            // validar a entrada de dados para incluir
-            myValidar = new Validar(
-                txbNM_Produto.Text,
-                txbDS_Produto.Text,
-                txbQTD_Estoque.Text,
-                txbPR_Venda.Text,
-                txbPR_Custo.Text);
+            // validar a entrada de dados para inclusão
+            string mDs_Msg = ValidateFields();
 
-            // o que ocorreu?
-            if (myValidar.DS_Mensagem == "")
+            if (mDs_Msg == "")
             {
                 // tudo certinho
                 // instanciar um objeto da classe produto, carregar tela e incluir
@@ -247,22 +241,16 @@ namespace PontoDeVenda
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = myValidar.DS_Mensagem;
+                lblDS_Mensagem.Text = mDs_Msg;
             }
         }
 
         private void Alterar()
         {
-            // validar a entrada de dados para alterar
-            myValidar = new Validar(
-                txbNM_Produto.Text,
-                txbDS_Produto.Text,
-                txbQTD_Estoque.Text,
-                txbPR_Venda.Text,
-                txbPR_Custo.Text);
+            // validar a entrada de dados para inclusão
+            string mDs_Msg = ValidateFields();
 
-            // o que ocorreu?
-            if (myValidar.DS_Mensagem == "")
+            if (mDs_Msg == "")
             {
                 // tudo certinho
                 // instanciar um objeto da classe produto, carregar tela e alterar
@@ -295,17 +283,19 @@ namespace PontoDeVenda
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = myValidar.DS_Mensagem;
+                lblDS_Mensagem.Text = mDs_Msg;
             }
         }
 
         private void CarregarProdutosConsultar()
         {
             // validar a entrada de dados para consulta
-            myValidar = new Validar(txbNM_ProdutoConsultar.Text);
+            myValidar = new Validar();
+            string mDs_Msg = (myValidar.TamanhoCampo(txbNM_ProdutoConsultar.Text, 50)) ? "" : " Limite de caracteres para o nome excedido, " +
+                                                                                              "o limite para este campo é: 50 caracteres, " +
+                                                                                              "quantidade utilizada: " + txbNM_ProdutoConsultar.Text.Length + "."; ;
 
-            // o que ocorreu?
-            if (myValidar.DS_Mensagem == "")
+            if (mDs_Msg == "")
             {
                 // tudo certinho
                 // instanciar um objeto da classe produto, carregar tela e consultar
@@ -316,7 +306,7 @@ namespace PontoDeVenda
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = myValidar.DS_Mensagem;
+                lblDS_Mensagem.Text = mDs_Msg;
             }
         }
 
@@ -423,6 +413,7 @@ namespace PontoDeVenda
             if (!string.IsNullOrWhiteSpace(txbNM_ProdutoConsultar.Text))
             {
                 btnConsultar.Enabled = true;
+                btnConsultar.Focus();
             }
             else
             {
@@ -434,26 +425,13 @@ namespace PontoDeVenda
         protected void txbNM_Produto_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            txbDS_Produto.Focus();
         }
 
         protected void txbDS_Produto_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
-        }
-
-        protected void txbQTD_Estoque_TextChanged(object sender, EventArgs e)
-        {
-            IncludeFields();
-        }
-
-        protected void txbPR_Venda_TextChanged(object sender, EventArgs e)
-        {
-            IncludeFields();
-        }
-
-        protected void txbPR_Custo_TextChanged(object sender, EventArgs e)
-        {
-            IncludeFields();
+            ddlID_Categoria.Focus();
         }
 
         protected void ddlID_Categoria_SelectedIndexChanged(object sender, EventArgs e)
@@ -461,14 +439,34 @@ namespace PontoDeVenda
             IncludeFields();
 
             ddlID_Subcategoria.Enabled = ddlID_Categoria.SelectedIndex != 0;
+            ddlID_Subcategoria.Focus();
         }
 
         protected void ddlID_Subcategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            ddlID_Sabor.Focus();
         }
 
         protected void ddlID_Sabor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            IncludeFields();
+            txbQTD_Estoque.Focus();
+        }
+
+        protected void txbQTD_Estoque_TextChanged(object sender, EventArgs e)
+        {
+            IncludeFields();
+            txbPR_Custo.Focus();
+        }
+
+        protected void txbPR_Custo_TextChanged(object sender, EventArgs e)
+        {
+            IncludeFields();
+            txbPR_Venda.Focus();
+        }
+
+        protected void txbPR_Venda_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
         }

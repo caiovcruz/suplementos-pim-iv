@@ -201,11 +201,11 @@ li {
 }
 
 #txbNM_Categoria {
-    width: 98.5%;
+    width: 95%;
 }
 
 #txbDS_Categoria {
-    width: 98.5%;
+    width: 95%;
     height: 120px;
 }
 
@@ -215,7 +215,7 @@ li {
 }
 
 #btnLimparCategoria {
-    margin-right: 32%;
+    margin-right: 29%;
 }
 
 #gvwCategoria {

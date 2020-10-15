@@ -7,7 +7,7 @@
 // </gerado automaticamente>
 //------------------------------------------------------------------------------
 
-namespace PontoDeVenda
+namespace SuplementosPIMIV.View
 {
 
 

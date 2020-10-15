@@ -1,7 +1,7 @@
 ﻿using DataBase;
 using System.Data;
 
-namespace PontoDeVenda
+namespace SuplementosPIMIV.Model
 {
     public class ModelProduto
     {

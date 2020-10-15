@@ -1,12 +1,7 @@
 ﻿using DataBase;
-using Org.BouncyCastle.Crypto;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 
-namespace PontoDeVenda.Model
+namespace SuplementosPIMIV.Model
 {
     public class ModelSabor
     {

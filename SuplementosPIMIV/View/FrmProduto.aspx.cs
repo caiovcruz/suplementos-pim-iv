@@ -1,14 +1,10 @@
-﻿using PontoDeVenda.Control;
+﻿using SuplementosPIMIV.Controller;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Validacao;
 
-namespace PontoDeVenda
+namespace SuplementosPIMIV.View
 {
     public partial class FrmProduto : System.Web.UI.Page
     {

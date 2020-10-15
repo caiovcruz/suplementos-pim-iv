@@ -1,8 +1,7 @@
 ﻿using DataBase;
-using System;
 using System.Data;
 
-namespace PontoDeVenda
+namespace SuplementosPIMIV.Model
 {
     public class ModelLogin
     {

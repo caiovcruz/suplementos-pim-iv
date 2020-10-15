@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FrmProduto.aspx.cs" Inherits="PontoDeVenda.FrmProduto" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FrmProduto.aspx.cs" Inherits="SuplementosPIMIV.View.FrmProduto" %>
 
 <!DOCTYPE html>
 

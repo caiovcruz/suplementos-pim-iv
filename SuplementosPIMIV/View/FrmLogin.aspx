@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FrmLogin.aspx.cs" Inherits="PontoDeVenda.FrmLogin" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FrmLogin.aspx.cs" Inherits="SuplementosPIMIV.View.FrmLogin" %>
 
 <!DOCTYPE html>
 

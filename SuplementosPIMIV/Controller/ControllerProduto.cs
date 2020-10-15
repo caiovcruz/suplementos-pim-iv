@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Validacao;
+﻿using SuplementosPIMIV.Model;
 
-namespace PontoDeVenda
+namespace SuplementosPIMIV.Controller
 {
     public class ControllerProduto : ModelProduto
     {

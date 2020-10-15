@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FrmMenuPrincipal.aspx.cs" Inherits="PontoDeVenda.FrmMenuPrincipal" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FrmMenuPrincipal.aspx.cs" Inherits="SuplementosPIMIV.View.FrmMenuPrincipal" %>
 
 <!DOCTYPE html>
 

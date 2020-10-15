@@ -166,9 +166,9 @@ namespace SuplementosPIMIV.View
 
                         if (myValidar.CampoPreenchido(txbQTD_Estoque.Text))
                         {
-                            if (!myValidar.Valor(txbQTD_Estoque.Text))
+                            if (!myValidar.Numero(txbQTD_Estoque.Text))
                             {
-                                mDs_Msg += " A quantidade em estoque deve ser um valor numérico, no formato: 9.999.999,99.";
+                                mDs_Msg += " A quantidade em estoque deve ser um valor numérico.";
                             }
                         }
                         else

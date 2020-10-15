@@ -41,5 +41,18 @@ namespace Validacao
                 return true;
             }
         }
+
+        public bool Numero(string campo)
+        {
+            if (!Regex.IsMatch(campo, @"^[\d]+$"))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
     }
 }

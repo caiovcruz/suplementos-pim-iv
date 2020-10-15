@@ -130,7 +130,7 @@ namespace SuplementosPIMIV.Model
             {
                 string SQLSelect = "SELECT PROD.ID_Produto, PROD.NM_Produto, PROD.ID_Categoria, CAT.NM_Categoria, " +
                     "PROD.ID_Subcategoria, SUB.NM_Subcategoria, PROD.ID_Sabor, SAB.DS_Sabor, PROD.DS_Produto, " +
-                    "FORMAT(PROD.QTD_Estoque, 2, 'de_DE') AS QTD_Estoque, FORMAT(PROD.PR_Custo, 2, 'de_DE') AS PR_Custo, " +
+                    "PROD.QTD_Estoque, FORMAT(PROD.PR_Custo, 2, 'de_DE') AS PR_Custo, " +
                     "FORMAT(PROD.PR_Venda, 2, 'de_DE') AS PR_Venda FROM tb_produto AS PROD INNER JOIN tb_categoria AS CAT " +
                     "ON PROD.ID_Categoria = CAT.ID_Categoria INNER JOIN tb_subcategoria AS SUB ON PROD.ID_Subcategoria = SUB.ID_Subcategoria " +
                     "INNER JOIN tb_sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor WHERE PROD.Ativo = 1 " +
@@ -174,7 +174,7 @@ namespace SuplementosPIMIV.Model
             {
                 string SQLSelect = "SELECT PROD.ID_Produto, PROD.NM_Produto, PROD.ID_Categoria, CAT.NM_Categoria, " +
                     "PROD.ID_Subcategoria, SUB.NM_Subcategoria, PROD.ID_Sabor, SAB.DS_Sabor, PROD.DS_Produto, " +
-                    "FORMAT(PROD.QTD_Estoque, 2, 'de_DE') AS QTD_Estoque, FORMAT(PROD.PR_Custo, 2, 'de_DE') AS PR_Custo, " +
+                    "PROD.QTD_Estoque, FORMAT(PROD.PR_Custo, 2, 'de_DE') AS PR_Custo, " +
                     "FORMAT(PROD.PR_Venda, 2, 'de_DE') AS PR_Venda FROM tb_produto AS PROD INNER JOIN tb_categoria AS CAT " +
                     "ON PROD.ID_Categoria = CAT.ID_Categoria INNER JOIN tb_subcategoria AS SUB ON PROD.ID_Subcategoria = SUB.ID_Subcategoria " +
                     "INNER JOIN tb_sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor WHERE PROD.Ativo = 1 ORDER BY PROD.ID_Produto DESC";

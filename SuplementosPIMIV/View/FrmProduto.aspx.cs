@@ -106,24 +106,24 @@ namespace SuplementosPIMIV.View
         {
             btnIncluir.Enabled =
                 txbNM_Produto.Text.Length > 0 &&
-                ddlID_Sabor.SelectedIndex != 0 &&
                 txbDS_Produto.Text.Length > 0 &&
                 txbQTD_Estoque.Text.Length > 0 &&
                 txbPR_Venda.Text.Length > 0 &&
                 txbPR_Custo.Text.Length > 0 &&
                 ddlID_Categoria.SelectedIndex != 0 &&
                 ddlID_Subcategoria.SelectedIndex != 0 &&
+                ddlID_Sabor.SelectedIndex != 0 &&
                 txbID_Produto.Text.Length == 0;
 
             btnLimparProduto.Enabled =
                 txbNM_Produto.Text.Length > 0 ||
-                ddlID_Sabor.SelectedIndex != 0 ||
                 txbDS_Produto.Text.Length > 0 ||
                 txbQTD_Estoque.Text.Length > 0 ||
                 txbPR_Venda.Text.Length > 0 ||
                 txbPR_Custo.Text.Length > 0 ||
                 ddlID_Categoria.SelectedIndex != 0 ||
-                ddlID_Subcategoria.SelectedIndex != 0;
+                ddlID_Subcategoria.SelectedIndex != 0 ||
+                ddlID_Sabor.SelectedIndex != 0;
         }
 
         private string ValidateFields()
@@ -371,19 +371,19 @@ namespace SuplementosPIMIV.View
                 e.Row.Attributes.Add("onClick", Page.ClientScript.GetPostBackEventReference(lb, ""));
 
                 e.Row.Cells[9].Attributes.Add("style", "word-break:break-all;word-wrap:break-word; width: 200px");
-                e.Row.Cells[2].Visible = false;
-                e.Row.Cells[4].Visible = false;
+                e.Row.Cells[3].Visible = false;
+                e.Row.Cells[5].Visible = false;
                 e.Row.Cells[7].Visible = false;
             }
 
             if (e.Row.RowType == DataControlRowType.Header)
             {
                 e.Row.Cells[1].Text = "#";
-                e.Row.Cells[2].Visible = false;
-                e.Row.Cells[3].Text = "Categoria";
-                e.Row.Cells[4].Visible = false;
-                e.Row.Cells[5].Text = "Subcategoria";
-                e.Row.Cells[6].Text = "Nome";
+                e.Row.Cells[2].Text = "Nome";
+                e.Row.Cells[3].Visible = false;
+                e.Row.Cells[4].Text = "Categoria";
+                e.Row.Cells[5].Visible = false;
+                e.Row.Cells[6].Text = "Subcategoria";
                 e.Row.Cells[7].Visible = false;
                 e.Row.Cells[8].Text = "Sabor";
                 e.Row.Cells[9].Text = "Descrição";
@@ -396,10 +396,10 @@ namespace SuplementosPIMIV.View
         protected void gvwProduto_SelectedIndexChanged(object sender, EventArgs e)
         {
             txbID_Produto.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[1].Text);
-            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[2].Text);
-            ddlID_Subcategoria.SelectedValue = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[4].Text);
+            txbNM_Produto.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[2].Text);
+            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[3].Text);
+            ddlID_Subcategoria.SelectedValue = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[5].Text);
             ddlID_Subcategoria.Enabled = true;
-            txbNM_Produto.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[6].Text);
             ddlID_Sabor.SelectedValue = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[7].Text);
             txbDS_Produto.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[9].Text);
             txbQTD_Estoque.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[10].Text);

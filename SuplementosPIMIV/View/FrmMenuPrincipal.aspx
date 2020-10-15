@@ -17,8 +17,9 @@
         <!-- Menu -------------------------------------- -->
         <ul class="menu">
             <li><a href="FrmMenuPrincipal.aspx">Menu</a></li>
-            <li><a href="FrmProduto.aspx">Produto</a></li>
             <li><a href="">PDV</a></li>
+            <li><a href="FrmProduto.aspx">Produto</a></li>
+            <li><a href="FrmCategoria.aspx">Categoria</a></li>
         </ul>
 
         <br />

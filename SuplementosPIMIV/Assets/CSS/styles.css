@@ -63,36 +63,36 @@ li {
     margin-left: 23%;
 }
 
-#container {
+.conteiner {
     display: grid;
 }
 
-#cadastro, #produto {
+#cadastroProduto, #exibeProduto {
     background-color: #FFFFFF;
     border-radius: 10px;
     border-color: gainsboro;
 }
 
-#cadastro {
+#cadastroProduto {
     margin: 0px 10% 0px 10%;
 }
 
-#cadInterno, #prodInterno {
+#cadInternoProduto, #exibeInternoProduto {
     margin: 0px 5% 0px 10%;
 }
 
-#interno {
+#internoColunasProduto {
     width: 100%;
     position: inherit;
     display: grid;
     grid-template-columns: 60% 20% 20%;
 }
 
-#coluna1, #coluna2, #coluna3 {
+.colunasProduto {
     float: left;
 }
 
-#gvwProdutos {
+#gvwProduto {
     width: 100%;
 }
 
@@ -159,7 +159,7 @@ li {
         background-color: #ff4343;
     }
 
-#btnLimpar {
+#btnLimparProduto {
     margin-right: 57%;
 }
 
@@ -184,4 +184,41 @@ li {
 
 #txbDS_Usuario {
     margin-bottom: 5px;
+}
+
+#cadastroCategoria, #exibeCategoria {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border-color: gainsboro;
+}
+
+#cadastroCategoria {
+    margin: 0px 25% 0px 25%;
+}
+
+#cadInternoCategoria, #exibeInternoCategoria {
+    margin: 0px 5% 0px 10%;
+}
+
+#txbNM_Categoria {
+    width: 98.5%;
+}
+
+#txbDS_Categoria {
+    width: 98.5%;
+    height: 120px;
+}
+
+#txbNM_CategoriaConsultar {
+    width: 48.5%;
+    margin: 0px 15px 0px 240px;
+}
+
+#btnLimparCategoria {
+    margin-right: 32%;
+}
+
+#gvwCategoria {
+    width: 95%;
+    text-align: center;
 }

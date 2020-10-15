@@ -51,7 +51,7 @@ namespace PontoDeVenda
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = false;
             btnExcluir.Enabled = false;
-            btnLimpar.Enabled = false;
+            btnLimparProduto.Enabled = false;
             btnConsultar.Enabled = false;
         }
 
@@ -119,7 +119,7 @@ namespace PontoDeVenda
                 ddlID_Subcategoria.SelectedIndex != 0 &&
                 txbID_Produto.Text.Length == 0;
 
-            btnLimpar.Enabled =
+            btnLimparProduto.Enabled =
                 txbNM_Produto.Text.Length > 0 ||
                 ddlID_Sabor.SelectedIndex != 0 ||
                 txbDS_Produto.Text.Length > 0 ||
@@ -351,7 +351,7 @@ namespace PontoDeVenda
             Excluir();
         }
 
-        protected void btnLimpar_Click(object sender, EventArgs e)
+        protected void btnLimparProduto_Click(object sender, EventArgs e)
         {
             LimparCampos();
             BloquearBotoes();
@@ -405,7 +405,7 @@ namespace PontoDeVenda
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = true;
             btnExcluir.Enabled = true;
-            btnLimpar.Enabled = true;
+            btnLimparProduto.Enabled = true;
         }
 
         protected void txbNM_ProdutoConsultar_TextChanged(object sender, EventArgs e)

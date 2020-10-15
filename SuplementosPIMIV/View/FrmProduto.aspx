@@ -19,15 +19,16 @@
         <!-- Menu -------------------------------------- -->
         <ul class="menu">
             <li><a href="FrmMenuPrincipal.aspx">Menu</a></li>
-            <li><a href="FrmProduto.aspx">Produto</a></li>
             <li><a href="">PDV</a></li>
+            <li><a href="FrmProduto.aspx">Produto</a></li>
+            <li><a href="FrmCategoria.aspx">Categoria</a></li>
         </ul>
 
-        <div id="container">
+        <div class="conteiner">
 
-            <div id="cadastro">
+            <div id="cadastroProduto">
 
-                <div id="cadInterno">
+                <div id="cadInternoProduto">
 
                     <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Cadastro de Produtos"></asp:Label>
 
@@ -36,9 +37,9 @@
                     <asp:UpdatePanel ID="updCadastro" runat="server">
                         <ContentTemplate>
 
-                            <div id="interno">
+                            <div id="internoColunasProduto">
 
-                                <div id="coluna1">
+                                <div class="colunasProduto">
 
                                     <asp:TextBox CssClass="TextBox" ID="txbID_Produto" Visible="false" runat="server"></asp:TextBox>
 
@@ -55,7 +56,7 @@
 
                                 </div>
 
-                                <div id="coluna2">
+                                <div class="colunasProduto">
 
                                     <asp:Label CssClass="Label" runat="server" Width="100%" Text="Categoria"></asp:Label>
                                     <asp:DropDownList CssClass="TextBox" ID="ddlID_Categoria" runat="server"
@@ -77,7 +78,7 @@
 
                                 </div>
 
-                                <div id="coluna3">
+                                <div class="colunasProduto">
                                     <asp:Label CssClass="Label" runat="server" Width="100%" Text="Subcategoria"></asp:Label>
                                     <asp:DropDownList CssClass="TextBox" ID="ddlID_Subcategoria" runat="server"
                                         OnSelectedIndexChanged="ddlID_Subcategoria_SelectedIndexChanged" AutoPostBack="true">
@@ -106,7 +107,7 @@
                             <br />
                             <br />
 
-                            <asp:Button CssClass="Button" ID="btnLimpar" runat="server" Text="Limpar" OnClick="btnLimpar_Click" />
+                            <asp:Button CssClass="Button" ID="btnLimparProduto" runat="server" Text="Limpar" OnClick="btnLimparProduto_Click" />
                             <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
                             <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
                             <asp:Button CssClass="Button" ID="btnIncluir" runat="server" Text="Incluir" OnClick="btnIncluir_Click" />
@@ -120,8 +121,8 @@
 
             <br />
 
-            <div id="produto">
-                <div id="prodInterno">
+            <div id="exibeProduto">
+                <div id="exibeInternoProduto">
 
                     <br />
 

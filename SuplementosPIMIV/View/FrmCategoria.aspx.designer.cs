@@ -7,21 +7,21 @@
 // </gerado automaticamente>
 //------------------------------------------------------------------------------
 
-namespace PontoDeVenda
+namespace SuplementosPIMIV.View
 {
 
 
-    public partial class FrmProduto
+    public partial class FrmCategoria
     {
 
         /// <summary>
-        /// Controle formProduto.
+        /// Controle formCategoria.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm formProduto;
+        protected global::System.Web.UI.HtmlControls.HtmlForm formCategoria;
 
         /// <summary>
         /// Controle scpManager.
@@ -42,85 +42,31 @@ namespace PontoDeVenda
         protected global::System.Web.UI.UpdatePanel updCadastro;
 
         /// <summary>
-        /// Controle txbID_Produto.
+        /// Controle txbID_Categoria.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbID_Produto;
+        protected global::System.Web.UI.WebControls.TextBox txbID_Categoria;
 
         /// <summary>
-        /// Controle txbNM_Produto.
+        /// Controle txbNM_Categoria.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbNM_Produto;
+        protected global::System.Web.UI.WebControls.TextBox txbNM_Categoria;
 
         /// <summary>
-        /// Controle txbDS_Produto.
+        /// Controle txbDS_Categoria.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbDS_Produto;
-
-        /// <summary>
-        /// Controle ddlID_Categoria.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlID_Categoria;
-
-        /// <summary>
-        /// Controle ddlID_Sabor.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlID_Sabor;
-
-        /// <summary>
-        /// Controle txbPR_Custo.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbPR_Custo;
-
-        /// <summary>
-        /// Controle ddlID_Subcategoria.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlID_Subcategoria;
-
-        /// <summary>
-        /// Controle txbQTD_Estoque.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbQTD_Estoque;
-
-        /// <summary>
-        /// Controle txbPR_Venda.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbPR_Venda;
+        protected global::System.Web.UI.WebControls.TextBox txbDS_Categoria;
 
         /// <summary>
         /// Controle lblDS_Mensagem.
@@ -132,13 +78,13 @@ namespace PontoDeVenda
         protected global::System.Web.UI.WebControls.Label lblDS_Mensagem;
 
         /// <summary>
-        /// Controle btnLimparProduto.
+        /// Controle btnLimparCategoria.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLimparProduto;
+        protected global::System.Web.UI.WebControls.Button btnLimparCategoria;
 
         /// <summary>
         /// Controle btnExcluir.
@@ -177,13 +123,13 @@ namespace PontoDeVenda
         protected global::System.Web.UI.UpdatePanel updConsulta;
 
         /// <summary>
-        /// Controle txbNM_ProdutoConsultar.
+        /// Controle txbNM_CategoriaConsultar.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbNM_ProdutoConsultar;
+        protected global::System.Web.UI.WebControls.TextBox txbNM_CategoriaConsultar;
 
         /// <summary>
         /// Controle btnConsultar.
@@ -195,12 +141,12 @@ namespace PontoDeVenda
         protected global::System.Web.UI.WebControls.Button btnConsultar;
 
         /// <summary>
-        /// Controle gvwProduto.
+        /// Controle gvwCategoria.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvwProduto;
+        protected global::System.Web.UI.WebControls.GridView gvwCategoria;
     }
 }

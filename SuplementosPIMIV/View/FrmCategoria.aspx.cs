@@ -75,25 +75,35 @@ namespace SuplementosPIMIV.View
                                   "o limite para este campo é: 50 caracteres, " +
                                   "quantidade utilizada: " + txbNM_Categoria.Text.Length + ".";
                 }
-            }
-            else
-            {
-                mDs_Msg = " O nome deve estar preenchido.";
-            }
-
-            if (myValidar.CampoPreenchido(txbDS_Categoria.Text))
-            {
-                if (!myValidar.TamanhoCampo(txbDS_Categoria.Text, 1500))
+                else
                 {
-                    mDs_Msg += " Limite de caracteres para descrição excedido, " +
-                                  "o limite para este campo é: 3000 caracteres, " +
-                                  "quantidade utilizada: " + txbDS_Categoria.Text.Length + ".";
+                    myControllerCategoria = new ControllerCategoria(txbNM_Categoria.Text);
+                    if (myControllerCategoria.Consultar().Rows.Count > 0)
+                    {
+                        mDs_Msg = " Categoria já cadastrada.";
+                    }
+                    else
+                    {
+                        if (myValidar.CampoPreenchido(txbDS_Categoria.Text))
+                        {
+                            if (!myValidar.TamanhoCampo(txbDS_Categoria.Text, 1500))
+                            {
+                                mDs_Msg += " Limite de caracteres para descrição excedido, " +
+                                              "o limite para este campo é: 3000 caracteres, " +
+                                              "quantidade utilizada: " + txbDS_Categoria.Text.Length + ".";
+                            }
+                        }
+                        else
+                        {
+                            mDs_Msg += " A descrição deve estar preenchida.";
+                        }
+                    }
                 }
             }
             else
             {
-                mDs_Msg += " A descrição deve estar preenchida.";
-            }
+                mDs_Msg = " O nome deve estar preenchido.";
+            }           
 
             return mDs_Msg;
         }

@@ -77,8 +77,21 @@ namespace SuplementosPIMIV.View
                 }
                 else
                 {
-                    myControllerCategoria = new ControllerCategoria(txbNM_Categoria.Text);
-                    if (myControllerCategoria.Consultar().Rows.Count > 0)
+                    bool categoriaCadastrada = false;
+
+                    foreach (GridViewRow row in gvwCategoria.Rows)
+                    {
+                        if (txbID_Categoria.Text != row.Cells[1].Text)
+                        {
+                            if (row.Cells[2].Text.Equals(txbNM_Categoria.Text))
+                            {
+                                categoriaCadastrada = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (categoriaCadastrada.Equals(true))
                     {
                         mDs_Msg = " Categoria já cadastrada.";
                     }

@@ -23,7 +23,7 @@ namespace SuplementosPIMIV.Model
             dataAcessObject.Setup(DataBase.DatabaseTypes.MySql,
                 "Persist Security Info=False; " +
                 "Server=localhost; " +
-                "Database=ponto_de_venda; " +
+                "Database=pdv_suplementos; " +
                 "Uid=root; " +
                 "Pwd=011118");
         }

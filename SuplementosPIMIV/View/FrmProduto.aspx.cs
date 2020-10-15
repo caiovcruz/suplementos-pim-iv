@@ -1,4 +1,5 @@
-﻿using SuplementosPIMIV.Controller;
+﻿using MySqlX.XDevAPI.Relational;
+using SuplementosPIMIV.Controller;
 using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -142,8 +143,21 @@ namespace SuplementosPIMIV.View
                 }
                 else
                 {
-                    myControllerProduto = new ControllerProduto(txbNM_Produto.Text);
-                    if (myControllerProduto.Consultar().Rows.Count > 0)
+                    bool produtoCadastrado = false;
+
+                    foreach (GridViewRow row in gvwProduto.Rows)
+                    {
+                        if (txbID_Produto.Text != row.Cells[1].Text)
+                        {
+                            if (row.Cells[2].Text.Equals(txbNM_Produto.Text))
+                            {
+                                produtoCadastrado = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (produtoCadastrado.Equals(true))
                     {
                         mDs_Msg = " Produto já cadastrado.";
                     }

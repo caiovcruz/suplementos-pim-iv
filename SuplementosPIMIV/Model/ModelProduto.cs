@@ -13,14 +13,14 @@ namespace SuplementosPIMIV.Model
         public int ID_Sabor { get; set; }
         public string NM_Produto { get; set; }
         public string DS_Produto { get; set; }
-        public double QTD_Estoque { get; set; }
+        public int QTD_Estoque { get; set; }
         public double PR_Custo { get; set; }
         public double PR_Venda { get; set; }  
         public string DS_Mensagem { get; set; }
 
         public ModelProduto() { }
 
-        public ModelProduto(int id_categoria, int id_subcategoria, int id_sabor, string nm_produto,  string ds_produto, double qtd_estoque, double pr_custo, double pr_venda)
+        public ModelProduto(int id_categoria, int id_subcategoria, int id_sabor, string nm_produto,  string ds_produto, int qtd_estoque, double pr_custo, double pr_venda)
         {
             ID_Categoria = id_categoria;
             ID_Subcategoria = id_subcategoria;
@@ -34,7 +34,7 @@ namespace SuplementosPIMIV.Model
             Incluir();
         }
 
-        public ModelProduto(int id_produto, int id_categoria, int id_subcategoria, int id_sabor, string nm_produto, string ds_produto, double qtd_estoque, double pr_custo, double pr_venda)
+        public ModelProduto(int id_produto, int id_categoria, int id_subcategoria, int id_sabor, string nm_produto, string ds_produto, int qtd_estoque, double pr_custo, double pr_venda)
         {
             ID_Produto = id_produto;
             ID_Categoria = id_categoria;
@@ -81,7 +81,7 @@ namespace SuplementosPIMIV.Model
             {
                 string SQLInsert = "INSERT INTO tb_produto (ID_Categoria, ID_Subcategoria, ID_Sabor, NM_Produto, DS_Produto, QTD_Estoque, PR_Custo, PR_Venda, Ativo)" +
                     "VALUES ('"+ ID_Categoria + "', '" + ID_Subcategoria + "', '" + ID_Sabor + "', '" + NM_Produto + "','" + DS_Produto + "', " +
-                    "REPLACE( REPLACE('" + QTD_Estoque + "', '.' ,'' ), ',', '.' ), " +
+                    "'" + QTD_Estoque + "', " +
                     "REPLACE( REPLACE('" + PR_Custo + "', '.' ,'' ), ',', '.' ), " +
                     "REPLACE( REPLACE('" + PR_Venda + "', '.' ,'' ), ',', '.' ), " +
                     "1)";
@@ -107,7 +107,7 @@ namespace SuplementosPIMIV.Model
                     "ID_Sabor = '"+ ID_Sabor +"', " +
                     "NM_Produto = '"+ NM_Produto +"', " +
                     "DS_Produto = '"+ DS_Produto +"', " +
-                    "QTD_Estoque = REPLACE( REPLACE('" + QTD_Estoque + "', '.' ,'' ), ',', '.' ), " +
+                    "QTD_Estoque = '" + QTD_Estoque + "', " +
                     "PR_Venda = REPLACE( REPLACE('" + PR_Venda + "', '.' ,'' ), ',', '.' ), " +
                     "PR_Custo = REPLACE( REPLACE('" + PR_Custo + "', '.' ,'' ), ',', '.' )" +
                     "WHERE ID_Produto = '"+ ID_Produto +"'";

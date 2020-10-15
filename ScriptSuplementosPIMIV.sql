@@ -48,7 +48,7 @@ CREATE TABLE tb_produto
 	ID_Sabor INT NOT NULL,
     NM_Produto VARCHAR(50) NOT NULL,
     DS_Produto VARCHAR(3000),
-    QTD_Estoque DECIMAL(10,2) NOT NULL,
+    QTD_Estoque INT NOT NULL,
 	PR_Custo DECIMAL(10,2) NOT NULL,
     PR_Venda DECIMAL(10,2) NOT NULL,
     Ativo BIT NOT NULL,
@@ -128,7 +128,7 @@ VALUES
     1,
 	'WHEY 100% 900g',
     'Tabela Nutricional: 32g (dose) = 5,8g carboidrato, 20g proteína, 8g glutamina, 4,5 BCAA',
-    10.00,
+    10,
     50.00,
     70.00,
     1
@@ -144,7 +144,7 @@ PROD.NM_Produto,
 PROD.ID_Sabor, 
 SAB.DS_Sabor, 
 PROD.DS_Produto, 
-FORMAT(PROD.QTD_Estoque, 2, 'de_DE') AS QTD_Estoque,
+PROD.QTD_Estoque,
 FORMAT(PROD.PR_Custo, 2, 'de_DE') AS PR_Custo,
 FORMAT(PROD.PR_Venda, 2, 'de_DE') AS PR_Venda
 FROM tb_produto AS PROD

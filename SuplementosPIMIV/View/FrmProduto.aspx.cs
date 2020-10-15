@@ -239,7 +239,7 @@ namespace SuplementosPIMIV.View
                     Convert.ToInt32(ddlID_Sabor.SelectedValue),
                     txbNM_Produto.Text,
                     txbDS_Produto.Text,
-                    Convert.ToDouble(txbQTD_Estoque.Text),
+                    Convert.ToInt32(txbQTD_Estoque.Text),
                     Convert.ToDouble(txbPR_Custo.Text),
                     Convert.ToDouble(txbPR_Venda.Text));
 
@@ -281,7 +281,7 @@ namespace SuplementosPIMIV.View
                     Convert.ToInt32(ddlID_Sabor.SelectedValue),
                     txbNM_Produto.Text,
                     txbDS_Produto.Text,
-                    Convert.ToDouble(txbQTD_Estoque.Text),
+                    Convert.ToInt32(txbQTD_Estoque.Text),
                     Convert.ToDouble(txbPR_Custo.Text),
                     Convert.ToDouble(txbPR_Venda.Text));
 

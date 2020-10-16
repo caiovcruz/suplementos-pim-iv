@@ -129,7 +129,7 @@ namespace SuplementosPIMIV.Model
             if (dataAcessObject.Connector.Open())
             {
                 string SQLSelect = "SELECT PROD.ID_Produto, PROD.NM_Produto, PROD.ID_Categoria, CAT.NM_Categoria, " +
-                    "PROD.ID_Subcategoria, SUB.NM_Subcategoria, PROD.ID_Sabor, SAB.DS_Sabor, PROD.DS_Produto, " +
+                    "PROD.ID_Subcategoria, SUB.NM_Subcategoria, PROD.ID_Sabor, SAB.NM_Sabor, PROD.DS_Produto, " +
                     "PROD.QTD_Estoque, FORMAT(PROD.PR_Custo, 2, 'de_DE') AS PR_Custo, " +
                     "FORMAT(PROD.PR_Venda, 2, 'de_DE') AS PR_Venda FROM tb_produto AS PROD INNER JOIN tb_categoria AS CAT " +
                     "ON PROD.ID_Categoria = CAT.ID_Categoria INNER JOIN tb_subcategoria AS SUB ON PROD.ID_Subcategoria = SUB.ID_Subcategoria " +
@@ -173,7 +173,7 @@ namespace SuplementosPIMIV.Model
             if (dataAcessObject.Connector.Open())
             {
                 string SQLSelect = "SELECT PROD.ID_Produto, PROD.NM_Produto, PROD.ID_Categoria, CAT.NM_Categoria, " +
-                    "PROD.ID_Subcategoria, SUB.NM_Subcategoria, PROD.ID_Sabor, SAB.DS_Sabor, PROD.DS_Produto, " +
+                    "PROD.ID_Subcategoria, SUB.NM_Subcategoria, PROD.ID_Sabor, SAB.NM_Sabor, PROD.DS_Produto, " +
                     "PROD.QTD_Estoque, FORMAT(PROD.PR_Custo, 2, 'de_DE') AS PR_Custo, " +
                     "FORMAT(PROD.PR_Venda, 2, 'de_DE') AS PR_Venda FROM tb_produto AS PROD INNER JOIN tb_categoria AS CAT " +
                     "ON PROD.ID_Categoria = CAT.ID_Categoria INNER JOIN tb_subcategoria AS SUB ON PROD.ID_Subcategoria = SUB.ID_Subcategoria " +

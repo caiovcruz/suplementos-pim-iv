@@ -215,7 +215,7 @@ li {
 }
 
 #btnLimparCategoria {
-    margin-right: 29%;
+    margin-right: 28%;
 }
 
 #gvwCategoria {
@@ -256,6 +256,38 @@ li {
 }
 
 #gvwSubcategoria {
+    width: 95%;
+    text-align: center;
+}
+
+#cadastroSabor, #exibeSabor {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border-color: gainsboro;
+}
+
+#cadastroSabor {
+    margin: 0px 25% 0px 25%;
+}
+
+#cadInternoSabor, #exibeInternoSabor {
+    margin: 0px 5% 0px 10%;
+}
+
+#txbNM_Sabor {
+    width: 95%;
+}
+
+#txbNM_SaborConsultar {
+    width: 48.5%;
+    margin: 0px 15px 0px 240px;
+}
+
+#btnLimparSabor {
+    margin-right: 28%;
+}
+
+#gvwSabor {
     width: 95%;
     text-align: center;
 }

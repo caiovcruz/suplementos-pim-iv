@@ -118,6 +118,7 @@
     <Content Include="View\FrmMenuPrincipal.aspx" />
     <Content Include="View\FrmProduto.aspx" />
     <Content Include="Assets\css\styles.css" />
+    <Content Include="View\FrmSabor.aspx" />
     <Content Include="View\FrmSubcategoria.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -166,6 +167,13 @@
     </Compile>
     <Compile Include="View\FrmProduto.aspx.designer.cs">
       <DependentUpon>FrmProduto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\FrmSabor.aspx.cs">
+      <DependentUpon>FrmSabor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\FrmSabor.aspx.designer.cs">
+      <DependentUpon>FrmSabor.aspx</DependentUpon>
     </Compile>
     <Compile Include="View\FrmSubcategoria.aspx.cs">
       <DependentUpon>FrmSubcategoria.aspx</DependentUpon>

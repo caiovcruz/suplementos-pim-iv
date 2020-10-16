@@ -35,7 +35,7 @@ CREATE TABLE tb_subcategoria
 CREATE TABLE tb_sabor
 (
 	ID_Sabor INT NOT NULL AUTO_INCREMENT,
-    DS_Sabor VARCHAR(50),
+    NM_Sabor VARCHAR(50),
     Ativo BIT NOT NULL,
     PRIMARY KEY (ID_Sabor)
 );
@@ -100,7 +100,7 @@ VALUES
   
 INSERT INTO tb_sabor
 (
-    DS_Sabor,
+    NM_Sabor,
     Ativo
 )
 VALUES
@@ -142,7 +142,7 @@ PROD.ID_Subcategoria,
 SUB.NM_Subcategoria, 
 PROD.NM_Produto, 
 PROD.ID_Sabor, 
-SAB.DS_Sabor, 
+SAB.NM_Sabor, 
 PROD.DS_Produto, 
 PROD.QTD_Estoque,
 FORMAT(PROD.PR_Custo, 2, 'de_DE') AS PR_Custo,

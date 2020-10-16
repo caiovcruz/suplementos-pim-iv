@@ -18,9 +18,10 @@
         <ul class="menu">
             <li><a href="FrmMenuPrincipal.aspx">Menu</a></li>
             <li><a href="">PDV</a></li>
-            <li><a href="FrmProduto.aspx">Produto</a></li>
-            <li><a href="FrmSubcategoria.aspx">Subcategoria</a></li>
-            <li><a href="FrmCategoria.aspx">Categoria</a></li>
+            <li><a href="FrmProduto.aspx">Produtos</a></li>
+            <li><a href="FrmSabor.aspx">Sabores</a></li>
+            <li><a href="FrmSubcategorias.aspx">Subcategorias</a></li>
+            <li><a href="FrmCategorias.aspx">Categorias</a></li>
         </ul>
 
         <br />

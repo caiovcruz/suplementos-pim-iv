@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FrmSubcategoria.aspx.cs" Inherits="SuplementosPIMIV.View.FrmSubcategoria" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FrmSabor.aspx.cs" Inherits="SuplementosPIMIV.View.FrmSabor" %>
 
 <!DOCTYPE html>
 
@@ -7,13 +7,13 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <title>Cadastro de Subcategorias</title>
+    <title>Cadastro de Sabores</title>
 
     <link href="~/Assets/css/styles.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
-    <form id="formSubcategoria" runat="server">
+    <form id="formSabor" runat="server">
         <asp:ScriptManager ID="scpManager" runat="server"></asp:ScriptManager>
 
         <!-- Menu -------------------------------------- -->
@@ -28,34 +28,22 @@
 
         <div class="conteiner">
 
-            <div id="cadastroSubcategoria">
+            <div id="cadastroSabor">
 
-                <div id="cadInternoSubcategoria">
+                <div id="cadInternoSabor">
 
-                    <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Cadastro de Subcategorias"></asp:Label>
+                    <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Cadastro de Sabores"></asp:Label>
 
                     <br />
 
                     <asp:UpdatePanel ID="updCadastro" runat="server">
                         <ContentTemplate>
 
-                            <asp:TextBox CssClass="TextBox" ID="txbID_Subcategoria" Visible="false" runat="server"></asp:TextBox>
-
-                            <asp:Label CssClass="Label" runat="server" Width="100%" Text="Categoria base"></asp:Label>
-                            <asp:DropDownList CssClass="TextBox" ID="ddlID_Categoria" runat="server"
-                                OnSelectedIndexChanged="ddlID_Categoria_SelectedIndexChanged" AutoPostBack="true">
-                            </asp:DropDownList>
+                            <asp:TextBox CssClass="TextBox" ID="txbID_Sabor" Visible="false" runat="server"></asp:TextBox>
 
                             <asp:Label CssClass="Label" runat="server" Width="100%" Text="Nome"></asp:Label>
-                            <asp:TextBox CssClass="TextBox" ID="txbNM_Subcategoria" runat="server" MaxLengh="50"
-                                placeholder="Nome da subcategoria" OnTextChanged="txbNM_Subcategoria_TextChanged" AutoPostBack="true"></asp:TextBox>
-
-                            <br />
-
-                            <asp:Label CssClass="Label" runat="server" Width="100%" Text="Descrição"></asp:Label>
-                            <asp:TextBox CssClass="TextBox" ID="txbDS_Subcategoria" runat="server" MaxLengh="1500"
-                                TextMode="MultiLine" Wrap="true" placeholder="Descrição da subcategoria"
-                                OnTextChanged="txbDS_Subcategoria_TextChanged" AutoPostBack="true"></asp:TextBox>
+                            <asp:TextBox CssClass="TextBox" ID="txbNM_Sabor" runat="server" MaxLengh="50"
+                                placeholder="Nome do Sabor" OnTextChanged="txbNM_Sabor_TextChanged" AutoPostBack="true"></asp:TextBox>
 
                             <br />
 
@@ -64,7 +52,7 @@
                             <br />
                             <br />
 
-                            <asp:Button CssClass="Button" ID="btnLimparSubcategoria" runat="server" Text="Limpar" OnClick="btnLimparSubcategoria_Click" />
+                            <asp:Button CssClass="Button" ID="btnLimparSabor" runat="server" Text="Limpar" OnClick="btnLimparSabor_Click" />
                             <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
                             <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
                             <asp:Button CssClass="Button" ID="btnIncluir" runat="server" Text="Incluir" OnClick="btnIncluir_Click" />
@@ -78,16 +66,16 @@
 
             <br />
 
-            <div id="exibeSubcategoria">
-                <div id="exibeInternoSubcategoria">
+            <div id="exibeSabor">
+                <div id="exibeInternoSabor">
 
                     <br />
 
                     <asp:UpdatePanel ID="updConsulta" runat="server">
                         <ContentTemplate>
 
-                            <asp:TextBox CssClass="TextBox" ID="txbNM_SubcategoriaConsultar" MaxLengh="50"
-                                placeholder="Buscar subcategoria" runat="server" OnTextChanged="txbNM_SubcategoriaConsultar_TextChanged"
+                            <asp:TextBox CssClass="TextBox" ID="txbNM_SaborConsultar" MaxLengh="50"
+                                placeholder="Buscar Sabor" runat="server" OnTextChanged="txbNM_SaborConsultar_TextChanged"
                                 AutoPostBack="true"></asp:TextBox>
 
                             <asp:Button CssClass="Button" ID="btnConsultar" runat="server" Text="Consultar"
@@ -95,9 +83,9 @@
 
                             <br />
 
-                            <asp:GridView ID="gvwSubcategoria" runat="server" CellPadding="5" GridLines="Horizontal"
-                                AlternatingRowStyle-BackColor="WhiteSmoke" OnRowDataBound="gvwSubcategoria_RowDataBound"
-                                OnSelectedIndexChanged="gvwSubcategoria_SelectedIndexChanged">
+                            <asp:GridView ID="gvwSabor" runat="server" CellPadding="5" GridLines="Horizontal"
+                                AlternatingRowStyle-BackColor="WhiteSmoke" OnRowDataBound="gvwSabor_RowDataBound"
+                                OnSelectedIndexChanged="gvwSabor_SelectedIndexChanged">
                                 <Columns>
                                     <asp:TemplateField>
                                         <ItemTemplate>

@@ -8,14 +8,14 @@ namespace SuplementosPIMIV.Model
         private DAO dataAcessObject;
 
         public int ID_Sabor { get; set; }
-        public string DS_Sabor { get; set; }
+        public string NM_Sabor { get; set; }
         public string DS_Mensagem { get; set; }
 
         public ModelSabor() { }
 
-        public ModelSabor(string ds_sabor, bool incluir)
+        public ModelSabor(string nm_sabor, bool incluir)
         {
-            DS_Sabor = ds_sabor;
+            NM_Sabor = nm_sabor;
 
             if (incluir)
             {
@@ -23,10 +23,10 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public ModelSabor(int id_sabor, string ds_sabor)
+        public ModelSabor(int id_sabor, string nm_sabor)
         {
             ID_Sabor = id_sabor;
-            DS_Sabor = ds_sabor;
+            NM_Sabor = nm_sabor;
 
             Alterar();
         }
@@ -56,8 +56,8 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLInsert = "INSERT INTO tb_sabor (DS_Sabor, Ativo)" +
-                    "VALUES ('" + DS_Sabor + "', 1)";
+                string SQLInsert = "INSERT INTO tb_sabor (NM_Sabor, Ativo)" +
+                    "VALUES ('" + NM_Sabor + "', 1)";
                 var result = dataAcessObject.Connector.Execute(SQLInsert);
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao cadastrar";
@@ -75,7 +75,7 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLUpdate = "UPDATE tb_sabor SET DS_Sabor = '" + DS_Sabor + "', WHERE ID_Sabor = '" + ID_Sabor + "'";
+                string SQLUpdate = "UPDATE tb_sabor SET NM_Sabor = '" + NM_Sabor + "' WHERE ID_Sabor = '" + ID_Sabor + "'";
                 var result = dataAcessObject.Connector.Execute(SQLUpdate);
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao alterar";
@@ -93,8 +93,8 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLSelect = "SELECT ID_Sabor, DS_Sabor " +
-                    "FROM tb_sabor WHERE Ativo = 1 AND DS_Sabor LIKE CONCAT('" + DS_Sabor + "', '%') ORDER BY ID_Sabor DESC";
+                string SQLSelect = "SELECT ID_Sabor, NM_Sabor " +
+                    "FROM tb_sabor WHERE Ativo = 1 AND NM_Sabor LIKE CONCAT('" + NM_Sabor + "', '%') ORDER BY ID_Sabor DESC";
                 IDataReader dataReader = dataAcessObject.Connector.QueryWithReader(SQLSelect);
                 dataTable.TableName = "tb_sabor";
                 dataTable.Load(dataReader);
@@ -132,7 +132,7 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLSelect = "SELECT ID_Sabor, DS_Sabor FROM tb_sabor WHERE Ativo = 1 ORDER BY ID_Sabor DESC";
+                string SQLSelect = "SELECT ID_Sabor, NM_Sabor FROM tb_sabor WHERE Ativo = 1 ORDER BY ID_Sabor DESC";
                 IDataReader dataReader = dataAcessObject.Connector.QueryWithReader(SQLSelect);
                 dataTable.TableName = "tb_sabor";
                 dataTable.Load(dataReader);

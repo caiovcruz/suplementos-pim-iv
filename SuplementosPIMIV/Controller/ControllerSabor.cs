@@ -6,9 +6,9 @@ namespace SuplementosPIMIV.Controller
     {
         public ControllerSabor() : base() { }
 
-        public ControllerSabor(string ds_sabor, bool incluir) : base(ds_sabor, incluir) { }
+        public ControllerSabor(string nm_sabor, bool incluir) : base(nm_sabor, incluir) { }
 
-        public ControllerSabor(int id_sabor, string ds_sabor) : base(id_sabor, ds_sabor) { }
+        public ControllerSabor(int id_sabor, string nm_sabor) : base(id_sabor, nm_sabor) { }
 
         public ControllerSabor(int id_sabor) : base(id_sabor) { }
     }

@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS tb_login;
 DROP TABLE IF EXISTS tb_produto;
+DROP TABLE IF EXISTS tb_marca;
 DROP TABLE IF EXISTS tb_categoria;
 DROP TABLE IF EXISTS tb_subcategoria;
 DROP TABLE IF EXISTS tb_sabor;
@@ -40,9 +41,18 @@ CREATE TABLE tb_sabor
     PRIMARY KEY (ID_Sabor)
 );
 
+CREATE TABLE tb_marca
+(
+	ID_Marca INT NOT NULL AUTO_INCREMENT,
+    NM_Marca VARCHAR(50),
+    Ativo BIT NOT NULL,
+    PRIMARY KEY (ID_Marca)
+);
+
 CREATE TABLE tb_produto 
 (
 	ID_Produto INT NOT NULL AUTO_INCREMENT,
+    ID_Marca INT NOT NULL,
     ID_Categoria INT NOT NULL,
     ID_Subcategoria INT NOT NULL,
 	ID_Sabor INT NOT NULL,
@@ -78,7 +88,7 @@ INSERT INTO tb_categoria
 )
 VALUES
 (
-	'Whey',
+	'Proteina',
     'Categoria utilizada para wheys em geral',
     1
 );
@@ -93,7 +103,7 @@ INSERT INTO tb_subcategoria
 VALUES
 (
 	1,
-	'Concentrado',
+	'Concentrada',
     'Categoria utilizada para wheys concentrados',
     1
 ); 
@@ -109,8 +119,20 @@ VALUES
     1
 ); 
   
+INSERT INTO tb_marca
+(
+	NM_Marca,
+    Ativo
+)
+VALUES
+(
+	'Muscle Definition',
+    1
+);
+  
 INSERT INTO tb_produto
 (
+    ID_Marca,
 	ID_Categoria,
     ID_Subcategoria,
 	ID_Sabor,
@@ -124,6 +146,7 @@ INSERT INTO tb_produto
 VALUES
 (
 	1,
+	1,
     1,
     1,
 	'WHEY 100% 900g',
@@ -135,19 +158,18 @@ VALUES
 );
 
 SELECT 
-PROD.ID_Produto, 
-PROD.ID_Categoria, 
-CAT.NM_Categoria, 
-PROD.ID_Subcategoria, 
-SUB.NM_Subcategoria, 
+MAR.NM_Marca,
 PROD.NM_Produto, 
-PROD.ID_Sabor, 
+CAT.NM_Categoria, 
+SUB.NM_Subcategoria, 
 SAB.NM_Sabor, 
 PROD.DS_Produto, 
 PROD.QTD_Estoque,
 FORMAT(PROD.PR_Custo, 2, 'de_DE') AS PR_Custo,
 FORMAT(PROD.PR_Venda, 2, 'de_DE') AS PR_Venda
 FROM tb_produto AS PROD
+INNER JOIN tb_marca AS MAR
+ON PROD.ID_Marca = MAR.ID_Marca
 INNER JOIN tb_categoria AS CAT
 ON PROD.ID_Categoria = CAT.ID_Categoria
 INNER JOIN tb_subcategoria AS SUB

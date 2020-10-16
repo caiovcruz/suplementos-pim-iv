@@ -45,10 +45,10 @@ namespace SuplementosPIMIV.View
             myControllerMarca = new ControllerMarca();
 
             // passando a fonte de dados para o GridView
-            gvwMarca.DataSource = myControllerMarca.Exibir();
+            gvwExibe.DataSource = myControllerMarca.Exibir();
 
             // associando os dados para carregar e exibir
-            gvwMarca.DataBind();
+            gvwExibe.DataBind();
         }
 
         private void CarregarMarcasConsultar()
@@ -64,8 +64,8 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe marca, carregar tela e consultar
                 myControllerMarca = new ControllerMarca(txbNM_MarcaConsultar.Text, false);
-                gvwMarca.DataSource = myControllerMarca.Consultar();
-                gvwMarca.DataBind();
+                gvwExibe.DataSource = myControllerMarca.Consultar();
+                gvwExibe.DataBind();
             }
             else
             {
@@ -102,7 +102,7 @@ namespace SuplementosPIMIV.View
                 {
                     bool MarcaCadastrada = false;
 
-                    foreach (GridViewRow row in gvwMarca.Rows)
+                    foreach (GridViewRow row in gvwExibe.Rows)
                     {
                         if (txbID_Marca.Text != row.Cells[1].Text)
                         {
@@ -264,7 +264,7 @@ namespace SuplementosPIMIV.View
             }
         }
 
-        protected void gvwMarca_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void gvwExibe_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
@@ -279,10 +279,10 @@ namespace SuplementosPIMIV.View
             }
         }
 
-        protected void gvwMarca_SelectedIndexChanged(object sender, EventArgs e)
+        protected void gvwExibe_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txbID_Marca.Text = Server.HtmlDecode(gvwMarca.SelectedRow.Cells[1].Text);
-            txbNM_Marca.Text = Server.HtmlDecode(gvwMarca.SelectedRow.Cells[2].Text);
+            txbID_Marca.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text);
+            txbNM_Marca.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text);
 
             lblDS_Mensagem.Text = "";
 

@@ -45,10 +45,10 @@ namespace SuplementosPIMIV.View
             myControllerSabor = new ControllerSabor();
 
             // passando a fonte de dados para o GridView
-            gvwSabor.DataSource = myControllerSabor.Exibir();
+            gvwExibe.DataSource = myControllerSabor.Exibir();
 
             // associando os dados para carregar e exibir
-            gvwSabor.DataBind();
+            gvwExibe.DataBind();
         }
 
         private void CarregarSaboresConsultar()
@@ -64,8 +64,8 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe sabor, carregar tela e consultar
                 myControllerSabor = new ControllerSabor(txbNM_SaborConsultar.Text, false);
-                gvwSabor.DataSource = myControllerSabor.Consultar();
-                gvwSabor.DataBind();
+                gvwExibe.DataSource = myControllerSabor.Consultar();
+                gvwExibe.DataBind();
             }
             else
             {
@@ -102,7 +102,7 @@ namespace SuplementosPIMIV.View
                 {
                     bool SaborCadastrado = false;
 
-                    foreach (GridViewRow row in gvwSabor.Rows)
+                    foreach (GridViewRow row in gvwExibe.Rows)
                     {
                         if (txbID_Sabor.Text != row.Cells[1].Text)
                         {
@@ -264,7 +264,7 @@ namespace SuplementosPIMIV.View
             }
         }
 
-        protected void gvwSabor_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void gvwExibe_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
@@ -279,10 +279,10 @@ namespace SuplementosPIMIV.View
             }
         }
 
-        protected void gvwSabor_SelectedIndexChanged(object sender, EventArgs e)
+        protected void gvwExibe_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txbID_Sabor.Text = Server.HtmlDecode(gvwSabor.SelectedRow.Cells[1].Text);
-            txbNM_Sabor.Text = Server.HtmlDecode(gvwSabor.SelectedRow.Cells[2].Text);
+            txbID_Sabor.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text);
+            txbNM_Sabor.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text);
 
             lblDS_Mensagem.Text = "";
 

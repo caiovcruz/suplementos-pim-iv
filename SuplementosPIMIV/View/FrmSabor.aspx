@@ -93,9 +93,9 @@
 
                             <br />
 
-                            <asp:GridView ID="gvwSabor" runat="server" CellPadding="5" GridLines="Horizontal"
-                                AlternatingRowStyle-BackColor="WhiteSmoke" OnRowDataBound="gvwSabor_RowDataBound"
-                                OnSelectedIndexChanged="gvwSabor_SelectedIndexChanged">
+                            <asp:GridView CssClass="gvwExibe" ID="gvwExibe" runat="server" CellPadding="5" GridLines="Horizontal"
+                                AlternatingRowStyle-BackColor="WhiteSmoke" OnRowDataBound="gvwExibe_RowDataBound"
+                                OnSelectedIndexChanged="gvwExibe_SelectedIndexChanged">
                                 <Columns>
                                     <asp:TemplateField>
                                         <ItemTemplate>

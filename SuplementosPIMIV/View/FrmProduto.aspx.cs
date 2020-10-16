@@ -60,10 +60,10 @@ namespace SuplementosPIMIV.View
             myControllerProduto = new ControllerProduto();
 
             // passando a fonte de dados para o GridView
-            gvwProduto.DataSource = myControllerProduto.Exibir();
+            gvwExibe.DataSource = myControllerProduto.Exibir();
 
             // associando os dados para carregar e exibir
-            gvwProduto.DataBind();
+            gvwExibe.DataBind();
         }
 
         private void CarregarMarcas()
@@ -162,7 +162,7 @@ namespace SuplementosPIMIV.View
                 {
                     bool produtoCadastrado = false;
 
-                    foreach (GridViewRow row in gvwProduto.Rows)
+                    foreach (GridViewRow row in gvwExibe.Rows)
                     {
                         if (txbID_Produto.Text != row.Cells[1].Text)
                         {
@@ -339,8 +339,8 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe produto, carregar tela e consultar
                 myControllerProduto = new ControllerProduto(txbNM_ProdutoConsultar.Text);
-                gvwProduto.DataSource = myControllerProduto.Consultar();
-                gvwProduto.DataBind();
+                gvwExibe.DataSource = myControllerProduto.Consultar();
+                gvwExibe.DataBind();
             }
             else
             {
@@ -396,7 +396,7 @@ namespace SuplementosPIMIV.View
             BloquearBotoes();
         }
 
-        protected void gvwProduto_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void gvwExibe_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
@@ -429,19 +429,19 @@ namespace SuplementosPIMIV.View
             }
         }
 
-        protected void gvwProduto_SelectedIndexChanged(object sender, EventArgs e)
+        protected void gvwExibe_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txbID_Produto.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[1].Text);
-            txbNM_Produto.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[4].Text);
-            ddlID_Marca.SelectedValue = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[2].Text);
-            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[5].Text);
-            ddlID_Subcategoria.SelectedValue = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[7].Text);
+            txbID_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text);
+            txbNM_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[4].Text);
+            ddlID_Marca.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text);
+            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[5].Text);
+            ddlID_Subcategoria.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[7].Text);
             ddlID_Subcategoria.Enabled = true;
-            ddlID_Sabor.SelectedValue = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[9].Text);
-            txbDS_Produto.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[11].Text);
-            txbQTD_Estoque.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[12].Text);
-            txbPR_Custo.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[13].Text);
-            txbPR_Venda.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[14].Text);
+            ddlID_Sabor.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[9].Text);
+            txbDS_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[11].Text);
+            txbQTD_Estoque.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[12].Text);
+            txbPR_Custo.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[13].Text);
+            txbPR_Venda.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[14].Text);
 
             lblDS_Mensagem.Text = "";
 

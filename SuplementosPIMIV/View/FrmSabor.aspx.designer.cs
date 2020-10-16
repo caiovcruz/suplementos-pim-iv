@@ -132,12 +132,12 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.Button btnConsultar;
 
         /// <summary>
-        /// Controle gvwSabor.
+        /// Controle gvwExibe.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvwSabor;
+        protected global::System.Web.UI.WebControls.GridView gvwExibe;
     }
 }

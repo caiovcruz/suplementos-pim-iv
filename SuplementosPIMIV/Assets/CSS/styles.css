@@ -22,14 +22,14 @@ body {
     background-color: #333;
 }
 
-/* Links inside the navbar */
-.navbar a {
-    float: right;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
+    /* Links inside the navbar */
+    .navbar a {
+        float: right;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
 
 /* The dropdown container */
 .dropdown {
@@ -37,22 +37,22 @@ body {
     overflow: hidden;
 }
 
-/* Dropdown button */
-.dropdown .dropbtn {
-    font-size: 16px;
-    border: none;
-    outline: none;
-    color: white;
-    padding: 14px 16px;
-    background-color: inherit;
-    font-family: inherit; /* Important for vertical align on mobile phones */
-    margin: 0; /* Important for vertical align on mobile phones */
-}
+    /* Dropdown button */
+    .dropdown .dropbtn {
+        font-size: 16px;
+        border: none;
+        outline: none;
+        color: white;
+        padding: 14px 16px;
+        background-color: inherit;
+        font-family: inherit; /* Important for vertical align on mobile phones */
+        margin: 0; /* Important for vertical align on mobile phones */
+    }
 
-/* Add a red background color to navbar links on hover */
-.navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: #111;
-}
+    /* Add a red background color to navbar links on hover */
+    .navbar a:hover, .dropdown:hover .dropbtn {
+        background-color: #111;
+    }
 
 /* Dropdown content (hidden by default) */
 .dropdown-content {
@@ -64,21 +64,21 @@ body {
     z-index: 1;
 }
 
-/* Links inside the dropdown */
-.dropdown-content a {
-    float: none;
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-}
+    /* Links inside the dropdown */
+    .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
 
-/* Add a grey background color to dropdown links on hover */
-.dropdown-content a:hover {
-    background-color: red;
-    color: white;
-}
+        /* Add a grey background color to dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: red;
+            color: white;
+        }
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
@@ -130,8 +130,9 @@ body {
     float: left;
 }
 
-#gvwProduto {
-    width: 100%;
+.gvwExibe {
+    width: 95%;
+    text-align: center;
 }
 
 .Label {
@@ -149,11 +150,6 @@ body {
 #txbNM_ProdutoConsultar {
     width: 48.5%;
     margin: 0px 15px 0px 240px;
-}
-
-#gvwProduto {
-    width: 95%;
-    text-align: center;
 }
 
 #txbNM_Produto {
@@ -256,11 +252,6 @@ body {
     margin-right: 28%;
 }
 
-#gvwCategoria {
-    width: 95%;
-    text-align: center;
-}
-
 #cadastroSubcategoria, #exibeSubcategoria {
     background-color: #FFFFFF;
     border-radius: 10px;
@@ -293,11 +284,6 @@ body {
     margin-right: 28%;
 }
 
-#gvwSubcategoria {
-    width: 95%;
-    text-align: center;
-}
-
 #cadastroSabor, #exibeSabor {
     background-color: #FFFFFF;
     border-radius: 10px;
@@ -325,11 +311,6 @@ body {
     margin-right: 28%;
 }
 
-#gvwSabor {
-    width: 95%;
-    text-align: center;
-}
-
 #cadastroMarca, #exibeMarca {
     background-color: #FFFFFF;
     border-radius: 10px;
@@ -355,9 +336,4 @@ body {
 
 #btnLimparMarca {
     margin-right: 28%;
-}
-
-#gvwMarca {
-    width: 95%;
-    text-align: center;
 }

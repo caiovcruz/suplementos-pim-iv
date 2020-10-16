@@ -43,10 +43,10 @@ namespace SuplementosPIMIV.View
             myControllerCategoria = new ControllerCategoria();
 
             // passando a fonte de dados para o GridView
-            gvwCategoria.DataSource = myControllerCategoria.Exibir();
+            gvwExibe.DataSource = myControllerCategoria.Exibir();
 
             // associando os dados para carregar e exibir
-            gvwCategoria.DataBind();
+            gvwExibe.DataBind();
         }
 
         private void CarregarCategoriasConsultar()
@@ -62,8 +62,8 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe categoria, carregar tela e consultar
                 myControllerCategoria = new ControllerCategoria(txbNM_CategoriaConsultar.Text);
-                gvwCategoria.DataSource = myControllerCategoria.Consultar();
-                gvwCategoria.DataBind();
+                gvwExibe.DataSource = myControllerCategoria.Consultar();
+                gvwExibe.DataBind();
             }
             else
             {
@@ -102,7 +102,7 @@ namespace SuplementosPIMIV.View
                 {
                     bool categoriaCadastrada = false;
 
-                    foreach (GridViewRow row in gvwCategoria.Rows)
+                    foreach (GridViewRow row in gvwExibe.Rows)
                     {
                         if (txbID_Categoria.Text != row.Cells[1].Text)
                         {
@@ -139,7 +139,7 @@ namespace SuplementosPIMIV.View
             else
             {
                 mDs_Msg = " O nome deve estar preenchido.";
-            }           
+            }
 
             return mDs_Msg;
         }
@@ -287,7 +287,7 @@ namespace SuplementosPIMIV.View
             }
         }
 
-        protected void gvwCategoria_RowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
+        protected void gvwExibe_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
@@ -301,15 +301,15 @@ namespace SuplementosPIMIV.View
             {
                 e.Row.Cells[1].Text = "#";
                 e.Row.Cells[2].Text = "Nome";
-                e.Row.Cells[3].Text = "Descrição";          
+                e.Row.Cells[3].Text = "Descrição";
             }
         }
 
-        protected void gvwCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        protected void gvwExibe_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txbID_Categoria.Text = Server.HtmlDecode(gvwCategoria.SelectedRow.Cells[1].Text);
-            txbNM_Categoria.Text = Server.HtmlDecode(gvwCategoria.SelectedRow.Cells[2].Text);
-            txbDS_Categoria.Text = Server.HtmlDecode(gvwCategoria.SelectedRow.Cells[3].Text);
+            txbID_Categoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text);
+            txbNM_Categoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text);
+            txbDS_Categoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text);
 
             lblDS_Mensagem.Text = "";
 

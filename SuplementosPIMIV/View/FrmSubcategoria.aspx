@@ -107,9 +107,9 @@
 
                             <br />
 
-                            <asp:GridView ID="gvwSubcategoria" runat="server" CellPadding="5" GridLines="Horizontal"
-                                AlternatingRowStyle-BackColor="WhiteSmoke" OnRowDataBound="gvwSubcategoria_RowDataBound"
-                                OnSelectedIndexChanged="gvwSubcategoria_SelectedIndexChanged">
+                            <asp:GridView CssClass="gvwExibe" ID="gvwExibe" runat="server" CellPadding="5" GridLines="Horizontal"
+                                AlternatingRowStyle-BackColor="WhiteSmoke" OnRowDataBound="gvwExibe_RowDataBound"
+                                OnSelectedIndexChanged="gvwExibe_SelectedIndexChanged">
                                 <Columns>
                                     <asp:TemplateField>
                                         <ItemTemplate>

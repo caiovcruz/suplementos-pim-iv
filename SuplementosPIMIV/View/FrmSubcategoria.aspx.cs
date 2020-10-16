@@ -50,10 +50,10 @@ namespace SuplementosPIMIV.View
             myControllerSubcategoria = new ControllerSubcategoria();
 
             // passando a fonte de dados para o GridView
-            gvwSubcategoria.DataSource = myControllerSubcategoria.Exibir();
+            gvwExibe.DataSource = myControllerSubcategoria.Exibir();
 
             // associando os dados para carregar e exibir
-            gvwSubcategoria.DataBind();
+            gvwExibe.DataBind();
         }
 
         private void CarregarCategorias()
@@ -82,8 +82,8 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe categoria, carregar tela e consultar
                 myControllerCategoria = new ControllerCategoria(txbNM_SubcategoriaConsultar.Text);
-                gvwSubcategoria.DataSource = myControllerCategoria.Consultar();
-                gvwSubcategoria.DataBind();
+                gvwExibe.DataSource = myControllerCategoria.Consultar();
+                gvwExibe.DataBind();
             }
             else
             {
@@ -124,7 +124,7 @@ namespace SuplementosPIMIV.View
                 {
                     bool categoriaCadastrada = false;
 
-                    foreach (GridViewRow row in gvwSubcategoria.Rows)
+                    foreach (GridViewRow row in gvwExibe.Rows)
                     {
                         if (txbID_Subcategoria.Text != row.Cells[1].Text)
                         {
@@ -317,7 +317,7 @@ namespace SuplementosPIMIV.View
             }
         }
 
-        protected void gvwSubcategoria_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void gvwExibe_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
@@ -338,12 +338,12 @@ namespace SuplementosPIMIV.View
             }
         }
 
-        protected void gvwSubcategoria_SelectedIndexChanged(object sender, EventArgs e)
+        protected void gvwExibe_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txbID_Subcategoria.Text = Server.HtmlDecode(gvwSubcategoria.SelectedRow.Cells[1].Text);
-            txbNM_Subcategoria.Text = Server.HtmlDecode(gvwSubcategoria.SelectedRow.Cells[2].Text);
-            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwSubcategoria.SelectedRow.Cells[3].Text);
-            txbDS_Subcategoria.Text = Server.HtmlDecode(gvwSubcategoria.SelectedRow.Cells[5].Text);
+            txbID_Subcategoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text);
+            txbNM_Subcategoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text);
+            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text);
+            txbDS_Subcategoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[5].Text);
 
             lblDS_Mensagem.Text = "";
 

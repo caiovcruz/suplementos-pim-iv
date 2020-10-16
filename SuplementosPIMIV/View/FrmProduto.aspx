@@ -45,11 +45,12 @@
 
                                     <asp:TextBox CssClass="TextBox" ID="txbID_Produto" Visible="false" runat="server"></asp:TextBox>
 
-                                    <asp:Label CssClass="Label" runat="server" Width="100%" Text="Nome"></asp:Label>
+                                    <asp:Label CssClass="Label" runat="server" Width="63%" Text="Nome"></asp:Label>
+                                    <asp:Label CssClass="Label" runat="server" Width="30%" Text="Marca"></asp:Label>
+
                                     <asp:TextBox CssClass="TextBox" ID="txbNM_Produto" runat="server" MaxLengh="50"
                                         placeholder="Nome do produto" OnTextChanged="txbNM_Produto_TextChanged" AutoPostBack="true"></asp:TextBox>
 
-                                    <asp:Label CssClass="Label" runat="server" Width="100%" Text="Marca"></asp:Label>
                                     <asp:DropDownList CssClass="TextBox" ID="ddlID_Marca" runat="server"
                                         OnSelectedIndexChanged="ddlID_Marca_SelectedIndexChanged" AutoPostBack="true">
                                     </asp:DropDownList>

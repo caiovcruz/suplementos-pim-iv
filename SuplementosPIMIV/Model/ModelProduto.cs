@@ -16,12 +16,12 @@ namespace SuplementosPIMIV.Model
         public string DS_Produto { get; set; }
         public int QTD_Estoque { get; set; }
         public double PR_Custo { get; set; }
-        public double PR_Venda { get; set; }  
+        public double PR_Venda { get; set; }
         public string DS_Mensagem { get; set; }
 
         public ModelProduto() { }
 
-        public ModelProduto(int id_marca, int id_categoria, int id_subcategoria, int id_sabor, string nm_produto,  string ds_produto, int qtd_estoque, double pr_custo, double pr_venda)
+        public ModelProduto(int id_marca, int id_categoria, int id_subcategoria, int id_sabor, string nm_produto, string ds_produto, int qtd_estoque, double pr_custo, double pr_venda)
         {
             ID_Marca = id_marca;
             ID_Categoria = id_categoria;
@@ -53,7 +53,7 @@ namespace SuplementosPIMIV.Model
         }
 
         public ModelProduto(string nm_produto)
-        {     
+        {
             NM_Produto = nm_produto;
         }
 
@@ -97,7 +97,7 @@ namespace SuplementosPIMIV.Model
                     "VALUES " +
                     "(" +
                         "'" + ID_Marca + "', " +
-                        "'"+ ID_Categoria + "', " +
+                        "'" + ID_Categoria + "', " +
                         "'" + ID_Subcategoria + "', " +
                         "'" + ID_Sabor + "', " +
                         "'" + NM_Produto + "', " +
@@ -126,15 +126,15 @@ namespace SuplementosPIMIV.Model
             {
                 string SQLUpdate = "UPDATE tb_produto SET " +
                     "ID_Marca = '" + ID_Marca + "', " +
-                    "ID_Categoria = '"+ ID_Categoria +"', " +
-                    "ID_Subcategoria = '"+ ID_Subcategoria +"', " +
-                    "ID_Sabor = '"+ ID_Sabor +"', " +
-                    "NM_Produto = '"+ NM_Produto +"', " +
-                    "DS_Produto = '"+ DS_Produto +"', " +
+                    "ID_Categoria = '" + ID_Categoria + "', " +
+                    "ID_Subcategoria = '" + ID_Subcategoria + "', " +
+                    "ID_Sabor = '" + ID_Sabor + "', " +
+                    "NM_Produto = '" + NM_Produto + "', " +
+                    "DS_Produto = '" + DS_Produto + "', " +
                     "QTD_Estoque = '" + QTD_Estoque + "', " +
                     "PR_Venda = REPLACE( REPLACE('" + PR_Venda + "', '.' ,'' ), ',', '.' ), " +
                     "PR_Custo = REPLACE( REPLACE('" + PR_Custo + "', '.' ,'' ), ',', '.' )" +
-                    "WHERE ID_Produto = '"+ ID_Produto +"'";
+                    "WHERE ID_Produto = '" + ID_Produto + "'";
                 var result = dataAcessObject.Connector.Execute(SQLUpdate);
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao alterar";
@@ -154,9 +154,9 @@ namespace SuplementosPIMIV.Model
             {
                 string SQLSelect = "SELECT " +
                     "PROD.ID_Produto, " +
+                    "PROD.NM_Produto, " +
                     "PROD.ID_Marca, " +
                     "MAR.NM_Marca, " +
-                    "PROD.NM_Produto, " +
                     "PROD.ID_Categoria, " +
                     "CAT.NM_Categoria, " +
                     "PROD.ID_Subcategoria, " +
@@ -212,9 +212,9 @@ namespace SuplementosPIMIV.Model
             {
                 string SQLSelect = "SELECT " +
                     "PROD.ID_Produto, " +
+                    "PROD.NM_Produto, " +
                     "PROD.ID_Marca, " +
                     "MAR.NM_Marca, " +
-                    "PROD.NM_Produto, " +
                     "PROD.ID_Categoria, " +
                     "CAT.NM_Categoria, " +
                     "PROD.ID_Subcategoria, " +

@@ -389,7 +389,7 @@ namespace SuplementosPIMIV.View
                 e.Row.Attributes.Add("onClick", Page.ClientScript.GetPostBackEventReference(lb, ""));
 
                 e.Row.Cells[9].Attributes.Add("style", "word-break:break-all;word-wrap:break-word; width: 200px");
-                e.Row.Cells[2].Visible = false;
+                e.Row.Cells[3].Visible = false;
                 e.Row.Cells[5].Visible = false;
                 e.Row.Cells[7].Visible = false;
                 e.Row.Cells[9].Visible = false;
@@ -398,9 +398,9 @@ namespace SuplementosPIMIV.View
             if (e.Row.RowType == DataControlRowType.Header)
             {
                 e.Row.Cells[1].Text = "#";
-                e.Row.Cells[2].Visible = false;
-                e.Row.Cells[3].Text = "Marca";
-                e.Row.Cells[4].Text = "Nome";
+                e.Row.Cells[2].Text = "Nome";
+                e.Row.Cells[3].Visible = false;
+                e.Row.Cells[4].Text = "Marca";
                 e.Row.Cells[5].Visible = false;
                 e.Row.Cells[6].Text = "Categoria";
                 e.Row.Cells[7].Visible = false;
@@ -453,6 +453,12 @@ namespace SuplementosPIMIV.View
         protected void txbNM_Produto_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            ddlID_Marca.Focus();
+        }
+
+        protected void ddlID_Marca_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            IncludeFields();
             txbDS_Produto.Focus();
         }
 
@@ -495,11 +501,6 @@ namespace SuplementosPIMIV.View
         }
 
         protected void txbPR_Venda_TextChanged(object sender, EventArgs e)
-        {
-            IncludeFields();
-        }
-
-        protected void ddlID_Marca_SelectedIndexChanged(object sender, EventArgs e)
         {
             IncludeFields();
         }

@@ -41,14 +41,16 @@
 
                             <asp:TextBox CssClass="TextBox" ID="txbID_Subcategoria" Visible="false" runat="server"></asp:TextBox>
 
-                            <asp:Label CssClass="Label" runat="server" Width="100%" Text="Categoria base"></asp:Label>
+                            <asp:Label CssClass="Label" runat="server" Width="64.5%" Text="Nome"></asp:Label>
+                            <asp:Label CssClass="Label" runat="server" Width="30%" Text="Categoria base"></asp:Label>
+
+                            <asp:TextBox CssClass="TextBox" ID="txbNM_Subcategoria" runat="server" MaxLengh="50"
+                                placeholder="Nome da subcategoria" OnTextChanged="txbNM_Subcategoria_TextChanged"
+                                AutoPostBack="true"></asp:TextBox>
+
                             <asp:DropDownList CssClass="TextBox" ID="ddlID_Categoria" runat="server"
                                 OnSelectedIndexChanged="ddlID_Categoria_SelectedIndexChanged" AutoPostBack="true">
                             </asp:DropDownList>
-
-                            <asp:Label CssClass="Label" runat="server" Width="100%" Text="Nome"></asp:Label>
-                            <asp:TextBox CssClass="TextBox" ID="txbNM_Subcategoria" runat="server" MaxLengh="50"
-                                placeholder="Nome da subcategoria" OnTextChanged="txbNM_Subcategoria_TextChanged" AutoPostBack="true"></asp:TextBox>
 
                             <br />
 

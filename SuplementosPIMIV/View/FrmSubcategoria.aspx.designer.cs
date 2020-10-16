@@ -51,15 +51,6 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.TextBox txbID_Subcategoria;
 
         /// <summary>
-        /// Controle ddlID_Categoria.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlID_Categoria;
-
-        /// <summary>
         /// Controle txbNM_Subcategoria.
         /// </summary>
         /// <remarks>
@@ -67,6 +58,15 @@ namespace SuplementosPIMIV.View
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txbNM_Subcategoria;
+
+        /// <summary>
+        /// Controle ddlID_Categoria.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlID_Categoria;
 
         /// <summary>
         /// Controle txbDS_Subcategoria.

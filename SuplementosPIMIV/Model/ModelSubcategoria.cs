@@ -64,8 +64,20 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLInsert = "INSERT INTO tb_subcategoria (ID_Categoria, NM_Subcategoria, DS_Subcategoria, Ativo)" +
-                    "VALUES ('" + ID_Categoria + "', '" + NM_Subcategoria + "','" + DS_Subcategoria + "', 1)";
+                string SQLInsert = "INSERT INTO tb_subcategoria " +
+                    "(" +
+                        "ID_Categoria, " +
+                        "NM_Subcategoria, " +
+                        "DS_Subcategoria, " +
+                        "Ativo" +
+                    ")" +
+                    "VALUES " +
+                    "(" +
+                        "'" + ID_Categoria + "', " +
+                        "'" + NM_Subcategoria + "', " +
+                        "'" + DS_Subcategoria + "', " +
+                        "1" +
+                    ")";
                 var result = dataAcessObject.Connector.Execute(SQLInsert);
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao cadastrar";
@@ -83,9 +95,11 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLUpdate = "UPDATE tb_subcategoria SET ID_Categoria = '" + ID_Categoria + "', " +
+                string SQLUpdate = "UPDATE tb_subcategoria SET " +
+                    "ID_Categoria = '" + ID_Categoria + "', " +
                     "NM_Subcategoria = '" + NM_Subcategoria + "', " +
-                    "DS_Subcategoria = '" + DS_Subcategoria + "' WHERE ID_Subcategoria = '" + ID_Subcategoria + "'";
+                    "DS_Subcategoria = '" + DS_Subcategoria + "' " +
+                    "WHERE ID_Subcategoria = '" + ID_Subcategoria + "'";
                 var result = dataAcessObject.Connector.Execute(SQLUpdate);
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao alterar";
@@ -103,9 +117,16 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLSelect = "SELECT SUB.ID_Subcategoria, SUB.ID_Categoria, CAT.NM_Categoria, SUB.NM_Subcategoria, SUB.DS_Subcategoria " +
-                    "FROM tb_subcategoria AS SUB INNER JOIN tb_categoria AS CAT ON SUB.ID_Categoria = CAT.ID_Categoria " +
-                    "WHERE SUB.Ativo = 1 AND SUB.NM_Subcategoria LIKE CONCAT('" + NM_Subcategoria + "', '%') " +
+                string SQLSelect = "SELECT " +
+                    "SUB.ID_Subcategoria, " +
+                    "SUB.NM_Subcategoria, " +
+                    "SUB.ID_Categoria, " +
+                    "CAT.NM_Categoria, " +
+                    "SUB.DS_Subcategoria " +
+                    "FROM tb_subcategoria AS SUB " +
+                    "INNER JOIN tb_categoria AS CAT ON SUB.ID_Categoria = CAT.ID_Categoria " +
+                    "WHERE SUB.Ativo = 1 " +
+                    "AND SUB.NM_Subcategoria LIKE CONCAT('" + NM_Subcategoria + "', '%') " +
                     "ORDER BY SUB.ID_Subcategoria DESC";
                 IDataReader dataReader = dataAcessObject.Connector.QueryWithReader(SQLSelect);
                 dataTable.TableName = "tb_subcategoria";
@@ -144,9 +165,16 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLSelect = "SELECT SUB.ID_Subcategoria, SUB.ID_Categoria, CAT.NM_Categoria, SUB.NM_Subcategoria, SUB.DS_Subcategoria " +
-                    "FROM tb_subcategoria AS SUB INNER JOIN tb_categoria AS CAT ON SUB.ID_Categoria = CAT.ID_Categoria " +
-                    "WHERE SUB.Ativo = 1 ORDER BY SUB.ID_Subcategoria DESC";
+                string SQLSelect = "SELECT " +
+                    "SUB.ID_Subcategoria, " +
+                    "SUB.NM_Subcategoria, " +
+                    "SUB.ID_Categoria, " +
+                    "CAT.NM_Categoria, " +
+                    "SUB.DS_Subcategoria " +
+                    "FROM tb_subcategoria AS SUB " +
+                    "INNER JOIN tb_categoria AS CAT ON SUB.ID_Categoria = CAT.ID_Categoria " +
+                    "WHERE SUB.Ativo = 1 " +
+                    "ORDER BY SUB.ID_Subcategoria DESC";
                 IDataReader dataReader = dataAcessObject.Connector.QueryWithReader(SQLSelect);
                 dataTable.TableName = "tb_subcategoria";
                 dataTable.Load(dataReader);

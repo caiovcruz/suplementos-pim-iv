@@ -325,15 +325,15 @@ namespace SuplementosPIMIV.View
                 e.Row.Attributes.Add("onClick", Page.ClientScript.GetPostBackEventReference(lb, ""));
 
                 e.Row.Cells[5].Attributes.Add("style", "word-break:break-all;word-wrap:break-word");
-                e.Row.Cells[2].Visible = false;
+                e.Row.Cells[3].Visible = false;
             }
 
             if (e.Row.RowType == DataControlRowType.Header)
             {
                 e.Row.Cells[1].Text = "#";
-                e.Row.Cells[2].Visible = false;
-                e.Row.Cells[3].Text = "Categoria base";
-                e.Row.Cells[4].Text = "Nome";
+                e.Row.Cells[2].Text = "Nome";
+                e.Row.Cells[3].Visible = false;
+                e.Row.Cells[4].Text = "Categoria base";
                 e.Row.Cells[5].Text = "Descrição";
             }
         }
@@ -341,8 +341,8 @@ namespace SuplementosPIMIV.View
         protected void gvwSubcategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
             txbID_Subcategoria.Text = Server.HtmlDecode(gvwSubcategoria.SelectedRow.Cells[1].Text);
-            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwSubcategoria.SelectedRow.Cells[2].Text);
-            txbNM_Subcategoria.Text = Server.HtmlDecode(gvwSubcategoria.SelectedRow.Cells[4].Text);
+            txbNM_Subcategoria.Text = Server.HtmlDecode(gvwSubcategoria.SelectedRow.Cells[2].Text);
+            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwSubcategoria.SelectedRow.Cells[3].Text);
             txbDS_Subcategoria.Text = Server.HtmlDecode(gvwSubcategoria.SelectedRow.Cells[5].Text);
 
             lblDS_Mensagem.Text = "";

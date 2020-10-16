@@ -11,6 +11,7 @@ namespace SuplementosPIMIV.View
     {
         private Validar myValidar;
         private ControllerProduto myControllerProduto;
+        private ControllerMarca myControllerMarca;
         private ControllerCategoria myControllerCategoria;
         private ControllerSubcategoria myControllerSubcategoria;
         private ControllerSabor myControllerSabor;
@@ -21,6 +22,7 @@ namespace SuplementosPIMIV.View
             {
                 LimparCampos();
                 CarregarProdutos();
+                CarregarMarcas();
                 CarregarCategorias();
                 CarregarSubcategorias();
                 CarregarSabores();
@@ -62,6 +64,19 @@ namespace SuplementosPIMIV.View
 
             // associando os dados para carregar e exibir
             gvwProduto.DataBind();
+        }
+
+        private void CarregarMarcas()
+        {
+            myControllerMarca = new ControllerMarca();
+
+            ddlID_Marca.DataSource = myControllerMarca.Exibir();
+            ddlID_Marca.DataTextField = "NM_Marca";
+            ddlID_Marca.DataValueField = "ID_Marca";
+            ddlID_Marca.DataBind();
+
+            ddlID_Marca.Items.Insert(0, "Marca");
+            ddlID_Marca.SelectedIndex = 0;
         }
 
         private void CarregarCategorias()
@@ -388,7 +403,7 @@ namespace SuplementosPIMIV.View
                 LinkButton lb = (LinkButton)e.Row.FindControl("lbSelecionar");
                 e.Row.Attributes.Add("onClick", Page.ClientScript.GetPostBackEventReference(lb, ""));
 
-                e.Row.Cells[9].Attributes.Add("style", "word-break:break-all;word-wrap:break-word; width: 200px");
+                e.Row.Cells[11].Attributes.Add("style", "word-break:break-all;word-wrap:break-word; width: 400px");
                 e.Row.Cells[3].Visible = false;
                 e.Row.Cells[5].Visible = false;
                 e.Row.Cells[7].Visible = false;

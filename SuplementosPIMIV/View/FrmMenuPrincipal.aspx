@@ -20,8 +20,8 @@
             <li><a href="">PDV</a></li>
             <li><a href="FrmProduto.aspx">Produtos</a></li>
             <li><a href="FrmSabor.aspx">Sabores</a></li>
-            <li><a href="FrmSubcategorias.aspx">Subcategorias</a></li>
-            <li><a href="FrmCategorias.aspx">Categorias</a></li>
+            <li><a href="FrmSubcategoria.aspx">Subcategorias</a></li>
+            <li><a href="FrmCategoria.aspx">Categorias</a></li>
         </ul>
 
         <br />

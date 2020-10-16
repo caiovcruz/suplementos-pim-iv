@@ -222,3 +222,40 @@ li {
     width: 95%;
     text-align: center;
 }
+
+#cadastroSubcategoria, #exibeSubcategoria {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border-color: gainsboro;
+}
+
+#cadastroSubcategoria {
+    margin: 0px 25% 0px 25%;
+}
+
+#cadInternoSubcategoria, #exibeInternoSubcategoria {
+    margin: 0px 5% 0px 10%;
+}
+
+#txbNM_Subcategoria {
+    width: 95%;
+}
+
+#txbDS_Subcategoria {
+    width: 95%;
+    height: 120px;
+}
+
+#txbNM_SubcategoriaConsultar {
+    width: 48.5%;
+    margin: 0px 15px 0px 240px;
+}
+
+#btnLimparSubcategoria {
+    margin-right: 28%;
+}
+
+#gvwSubcategoria {
+    width: 95%;
+    text-align: center;
+}

@@ -6,10 +6,11 @@ namespace SuplementosPIMIV.Controller
     {
         public ControllerSubcategoria() { }
 
-        public ControllerSubcategoria(string nm_subcategoria, string ds_subcategoria) : base(nm_subcategoria, ds_subcategoria) { }
+        public ControllerSubcategoria(int id_categoria, string nm_subcategoria, string ds_subcategoria) : 
+            base(id_categoria, nm_subcategoria, ds_subcategoria) { }
 
-        public ControllerSubcategoria(int id_subcategoria, string nm_subcategoria, string ds_subcategoria) :
-            base(id_subcategoria, nm_subcategoria, ds_subcategoria) { }
+        public ControllerSubcategoria(int id_subcategoria, int id_categoria, string nm_subcategoria, string ds_subcategoria) :
+            base(id_subcategoria, id_categoria, nm_subcategoria, ds_subcategoria) { }
 
         public ControllerSubcategoria(string nm_subcategoria) : base(nm_subcategoria) { }
 

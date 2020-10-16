@@ -1,13 +1,18 @@
 ﻿using SuplementosPIMIV.Controller;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using Validacao;
 
 namespace SuplementosPIMIV.View
 {
-    public partial class FrmCategoria : System.Web.UI.Page
+    public partial class FrmSubcategoria : System.Web.UI.Page
     {
         private Validar myValidar;
+        private ControllerSubcategoria myControllerSubcategoria;
         private ControllerCategoria myControllerCategoria;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -15,6 +20,7 @@ namespace SuplementosPIMIV.View
             if (!IsPostBack)
             {
                 LimparCampos();
+                CarregarSubcategorias();
                 CarregarCategorias();
                 BloquearBotoes();
             }
@@ -22,9 +28,10 @@ namespace SuplementosPIMIV.View
 
         private void LimparCampos()
         {
-            txbID_Categoria.Text = "";
-            txbNM_Categoria.Text = "";
-            txbDS_Categoria.Text = "";
+            txbID_Subcategoria.Text = "";
+            ddlID_Categoria.SelectedIndex = 0;
+            txbNM_Subcategoria.Text = "";
+            txbDS_Subcategoria.Text = "";
             lblDS_Mensagem.Text = "";
         }
 
@@ -33,37 +40,50 @@ namespace SuplementosPIMIV.View
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = false;
             btnExcluir.Enabled = false;
-            btnLimparCategoria.Enabled = false;
+            btnLimparSubcategoria.Enabled = false;
             btnConsultar.Enabled = false;
+        }
+
+        private void CarregarSubcategorias()
+        {
+            // instanciando um objeto da classe ControllerSubcategoria
+            myControllerSubcategoria = new ControllerSubcategoria();
+
+            // passando a fonte de dados para o GridView
+            gvwSubcategoria.DataSource = myControllerSubcategoria.Exibir();
+
+            // associando os dados para carregar e exibir
+            gvwSubcategoria.DataBind();
         }
 
         private void CarregarCategorias()
         {
-            // instanciando um objeto da classe ControllerCategoria
             myControllerCategoria = new ControllerCategoria();
 
-            // passando a fonte de dados para o GridView
-            gvwCategoria.DataSource = myControllerCategoria.Exibir();
+            ddlID_Categoria.DataSource = myControllerCategoria.Exibir();
+            ddlID_Categoria.DataTextField = "NM_Categoria";
+            ddlID_Categoria.DataValueField = "ID_Categoria";
+            ddlID_Categoria.DataBind();
 
-            // associando os dados para carregar e exibir
-            gvwCategoria.DataBind();
+            ddlID_Categoria.Items.Insert(0, "Categoria base");
+            ddlID_Categoria.SelectedIndex = 0;
         }
 
-        private void CarregarCategoriasConsultar()
+        private void CarregarSubcategoriasConsultar()
         {
             // validar a entrada de dados para consulta
             myValidar = new Validar();
-            string mDs_Msg = (myValidar.TamanhoCampo(txbNM_CategoriaConsultar.Text, 50)) ? "" : " Limite de caracteres para o nome excedido, " +
+            string mDs_Msg = (myValidar.TamanhoCampo(txbNM_SubcategoriaConsultar.Text, 50)) ? "" : " Limite de caracteres para o nome excedido, " +
                                                                                               "o limite para este campo é: 50 caracteres, " +
-                                                                                              "quantidade utilizada: " + txbNM_CategoriaConsultar.Text.Length + "."; ;
+                                                                                              "quantidade utilizada: " + txbNM_SubcategoriaConsultar.Text.Length + "."; ;
 
             if (mDs_Msg == "")
             {
                 // tudo certinho
                 // instanciar um objeto da classe categoria, carregar tela e consultar
-                myControllerCategoria = new ControllerCategoria(txbNM_CategoriaConsultar.Text);
-                gvwCategoria.DataSource = myControllerCategoria.Consultar();
-                gvwCategoria.DataBind();
+                myControllerCategoria = new ControllerCategoria(txbNM_SubcategoriaConsultar.Text);
+                gvwSubcategoria.DataSource = myControllerCategoria.Consultar();
+                gvwSubcategoria.DataBind();
             }
             else
             {
@@ -75,13 +95,15 @@ namespace SuplementosPIMIV.View
         private void IncludeFields()
         {
             btnIncluir.Enabled =
-                txbNM_Categoria.Text.Length > 0 &&
-                txbDS_Categoria.Text.Length > 0 &&
-                txbID_Categoria.Text.Length == 0;
+                ddlID_Categoria.SelectedIndex != 0 &&
+                txbNM_Subcategoria.Text.Length > 0 &&
+                txbDS_Subcategoria.Text.Length > 0 &&
+                txbID_Subcategoria.Text.Length == 0;
 
-            btnLimparCategoria.Enabled =
-                txbNM_Categoria.Text.Length > 0 ||
-                txbDS_Categoria.Text.Length > 0;
+            btnLimparSubcategoria.Enabled =
+                ddlID_Categoria.SelectedIndex != 0 ||
+                txbNM_Subcategoria.Text.Length > 0 ||
+                txbDS_Subcategoria.Text.Length > 0;
         }
 
         private string ValidateFields()
@@ -90,23 +112,23 @@ namespace SuplementosPIMIV.View
             myValidar = new Validar();
             string mDs_Msg = "";
 
-            if (myValidar.CampoPreenchido(txbNM_Categoria.Text))
+            if (myValidar.CampoPreenchido(txbNM_Subcategoria.Text))
             {
-                if (!myValidar.TamanhoCampo(txbNM_Categoria.Text, 50))
+                if (!myValidar.TamanhoCampo(txbNM_Subcategoria.Text, 50))
                 {
                     mDs_Msg = " Limite de caracteres para o nome excedido, " +
                                   "o limite para este campo é: 50 caracteres, " +
-                                  "quantidade utilizada: " + txbNM_Categoria.Text.Length + ".";
+                                  "quantidade utilizada: " + txbNM_Subcategoria.Text.Length + ".";
                 }
                 else
                 {
                     bool categoriaCadastrada = false;
 
-                    foreach (GridViewRow row in gvwCategoria.Rows)
+                    foreach (GridViewRow row in gvwSubcategoria.Rows)
                     {
-                        if (txbID_Categoria.Text != row.Cells[1].Text)
+                        if (txbID_Subcategoria.Text != row.Cells[1].Text)
                         {
-                            if (row.Cells[2].Text.Equals(txbNM_Categoria.Text))
+                            if (row.Cells[2].Text.Equals(txbNM_Subcategoria.Text))
                             {
                                 categoriaCadastrada = true;
                                 break;
@@ -116,17 +138,17 @@ namespace SuplementosPIMIV.View
 
                     if (categoriaCadastrada.Equals(true))
                     {
-                        mDs_Msg = " Categoria já cadastrada.";
+                        mDs_Msg = " Subcategoria já cadastrada.";
                     }
                     else
                     {
-                        if (myValidar.CampoPreenchido(txbDS_Categoria.Text))
+                        if (myValidar.CampoPreenchido(txbDS_Subcategoria.Text))
                         {
-                            if (!myValidar.TamanhoCampo(txbDS_Categoria.Text, 1500))
+                            if (!myValidar.TamanhoCampo(txbDS_Subcategoria.Text, 1500))
                             {
                                 mDs_Msg += " Limite de caracteres para descrição excedido, " +
                                               "o limite para este campo é: 3000 caracteres, " +
-                                              "quantidade utilizada: " + txbDS_Categoria.Text.Length + ".";
+                                              "quantidade utilizada: " + txbDS_Subcategoria.Text.Length + ".";
                             }
                         }
                         else
@@ -139,7 +161,7 @@ namespace SuplementosPIMIV.View
             else
             {
                 mDs_Msg = " O nome deve estar preenchido.";
-            }           
+            }
 
             return mDs_Msg;
         }
@@ -152,24 +174,25 @@ namespace SuplementosPIMIV.View
             if (mDs_Msg == "")
             {
                 // tudo certinho
-                // instanciar um objeto da classe categoria, carregar tela e incluir
-                myControllerCategoria = new ControllerCategoria(
-                    txbNM_Categoria.Text,
-                    txbDS_Categoria.Text);
+                // instanciar um objeto da classe subcategoria, carregar tela e incluir
+                myControllerSubcategoria = new ControllerSubcategoria(
+                    Convert.ToInt32(ddlID_Categoria.SelectedValue),
+                    txbNM_Subcategoria.Text,
+                    txbDS_Subcategoria.Text);
 
                 // o que ocorreu?
-                if (myControllerCategoria.DS_Mensagem == "OK")
+                if (myControllerSubcategoria.DS_Mensagem == "OK")
                 {
                     // tudo certinho!
                     LimparCampos();
                     BloquearBotoes();
-                    CarregarCategorias();
+                    CarregarSubcategorias();
                     lblDS_Mensagem.Text = "Incluído com sucesso!";
                 }
                 else
                 {
                     // exibir erro!
-                    lblDS_Mensagem.Text = myControllerCategoria.DS_Mensagem;
+                    lblDS_Mensagem.Text = myControllerSubcategoria.DS_Mensagem;
                 }
             }
             else
@@ -187,25 +210,26 @@ namespace SuplementosPIMIV.View
             if (mDs_Msg == "")
             {
                 // tudo certinho
-                // instanciar um objeto da classe categoria, carregar tela e alterar
-                myControllerCategoria = new ControllerCategoria(
-                    Convert.ToInt32(txbID_Categoria.Text),
-                    txbNM_Categoria.Text,
-                    txbDS_Categoria.Text);
+                // instanciar um objeto da classe subcategoria, carregar tela e alterar
+                myControllerSubcategoria = new ControllerSubcategoria(
+                    Convert.ToInt32(txbID_Subcategoria.Text),
+                    Convert.ToInt32(ddlID_Categoria.SelectedValue),
+                    txbNM_Subcategoria.Text,
+                    txbDS_Subcategoria.Text);
 
                 // o que ocorreu?
-                if (myControllerCategoria.DS_Mensagem == "OK")
+                if (myControllerSubcategoria.DS_Mensagem == "OK")
                 {
                     // tudo certinho!
                     LimparCampos();
                     BloquearBotoes();
-                    CarregarCategorias();
+                    CarregarSubcategorias();
                     lblDS_Mensagem.Text = "Alterado com sucesso!";
                 }
                 else
                 {
                     // exibir erro!
-                    lblDS_Mensagem.Text = myControllerCategoria.DS_Mensagem;
+                    lblDS_Mensagem.Text = myControllerSubcategoria.DS_Mensagem;
                 }
             }
             else
@@ -217,22 +241,22 @@ namespace SuplementosPIMIV.View
 
         private void Excluir()
         {
-            // instanciar um objeto da classe categoria e carregar tela e consultar
-            myControllerCategoria = new ControllerCategoria(Convert.ToInt32(txbID_Categoria.Text));
+            // instanciar um objeto da classe subcategoria e carregar tela e consultar
+            myControllerCategoria = new ControllerCategoria(Convert.ToInt32(txbID_Subcategoria.Text));
 
             // o que ocorreu?
-            if (myControllerCategoria.DS_Mensagem == "OK")
+            if (myControllerSubcategoria.DS_Mensagem == "OK")
             {
                 // tudo certinho!
                 LimparCampos();
                 BloquearBotoes();
-                CarregarCategorias();
+                CarregarSubcategorias();
                 lblDS_Mensagem.Text = "Excluído com sucesso!";
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = myControllerCategoria.DS_Mensagem;
+                lblDS_Mensagem.Text = myControllerSubcategoria.DS_Mensagem;
             }
         }
 
@@ -251,7 +275,7 @@ namespace SuplementosPIMIV.View
             Excluir();
         }
 
-        protected void btnLimparCategoria_Click(object sender, EventArgs e)
+        protected void btnLimparSubcategoria_Click(object sender, EventArgs e)
         {
             LimparCampos();
             BloquearBotoes();
@@ -259,23 +283,29 @@ namespace SuplementosPIMIV.View
 
         protected void btnConsultar_Click(object sender, EventArgs e)
         {
-            CarregarCategoriasConsultar();
+            CarregarSubcategoriasConsultar();
         }
 
-        protected void txbNM_Categoria_TextChanged(object sender, EventArgs e)
+        protected void ddlID_Categoria_SelectedIndexChanged(object sender, EventArgs e)
         {
             IncludeFields();
-            txbDS_Categoria.Focus();
+            txbNM_Subcategoria.Focus();
         }
 
-        protected void txbDS_Categoria_TextChanged(object sender, EventArgs e)
+        protected void txbNM_Subcategoria_TextChanged(object sender, EventArgs e)
+        {
+            IncludeFields();
+            txbDS_Subcategoria.Focus();
+        }
+
+        protected void txbDS_Subcategoria_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
         }
 
-        protected void txbNM_CategoriaConsultar_TextChanged(object sender, EventArgs e)
+        protected void txbNM_SubcategoriaConsultar_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txbNM_CategoriaConsultar.Text))
+            if (!string.IsNullOrWhiteSpace(txbNM_SubcategoriaConsultar.Text))
             {
                 btnConsultar.Enabled = true;
                 btnConsultar.Focus();
@@ -283,40 +313,44 @@ namespace SuplementosPIMIV.View
             else
             {
                 btnConsultar.Enabled = false;
-                CarregarCategorias();
+                CarregarSubcategorias();
             }
         }
 
-        protected void gvwCategoria_RowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
+        protected void gvwSubcategoria_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 LinkButton lb = (LinkButton)e.Row.FindControl("lbSelecionar");
                 e.Row.Attributes.Add("onClick", Page.ClientScript.GetPostBackEventReference(lb, ""));
 
-                e.Row.Cells[3].Attributes.Add("style", "word-break:break-all;word-wrap:break-word");
+                e.Row.Cells[5].Attributes.Add("style", "word-break:break-all;word-wrap:break-word");
+                e.Row.Cells[2].Visible = false;
             }
 
             if (e.Row.RowType == DataControlRowType.Header)
             {
                 e.Row.Cells[1].Text = "#";
-                e.Row.Cells[2].Text = "Nome";
-                e.Row.Cells[3].Text = "Descrição";          
+                e.Row.Cells[2].Visible = false;
+                e.Row.Cells[3].Text = "Categoria base";
+                e.Row.Cells[4].Text = "Nome";
+                e.Row.Cells[5].Text = "Descrição";
             }
         }
 
-        protected void gvwCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        protected void gvwSubcategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txbID_Categoria.Text = Server.HtmlDecode(gvwCategoria.SelectedRow.Cells[1].Text);
-            txbNM_Categoria.Text = Server.HtmlDecode(gvwCategoria.SelectedRow.Cells[2].Text);
-            txbDS_Categoria.Text = Server.HtmlDecode(gvwCategoria.SelectedRow.Cells[3].Text);
+            txbID_Subcategoria.Text = Server.HtmlDecode(gvwSubcategoria.SelectedRow.Cells[1].Text);
+            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwSubcategoria.SelectedRow.Cells[2].Text);
+            txbNM_Subcategoria.Text = Server.HtmlDecode(gvwSubcategoria.SelectedRow.Cells[4].Text);
+            txbDS_Subcategoria.Text = Server.HtmlDecode(gvwSubcategoria.SelectedRow.Cells[5].Text);
 
             lblDS_Mensagem.Text = "";
 
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = true;
             btnExcluir.Enabled = true;
-            btnLimparCategoria.Enabled = true;
+            btnLimparSubcategoria.Enabled = true;
         }
     }
 }

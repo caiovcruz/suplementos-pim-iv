@@ -9,20 +9,30 @@
     <title>Menu Principal</title>
 
     <link href="~/Assets/css/styles.css" rel="stylesheet" type="text/css" />
+    <script src="https://kit.fontawesome.com/de6e3c9fed.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
     <form id="formMenuPrincipal" runat="server">
 
         <!-- Menu -------------------------------------- -->
-        <ul class="menu">
-            <li><a href="FrmMenuPrincipal.aspx">Menu</a></li>
-            <li><a href="">PDV</a></li>
-            <li><a href="FrmProduto.aspx">Produtos</a></li>
-            <li><a href="FrmSabor.aspx">Sabores</a></li>
-            <li><a href="FrmSubcategoria.aspx">Subcategorias</a></li>
-            <li><a href="FrmCategoria.aspx">Categorias</a></li>
-        </ul>
+        <div class="navbar">
+            <a href="FrmMenuPrincipal.aspx">Menu</a>
+            <a href="">PDV</a>
+            <div class="dropdown">
+                <button class="dropbtn">
+                    Produtos
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="FrmProduto.aspx">Produtos</a>
+                    <a href="FrmMarca.aspx">Marcas</a>
+                    <a href="FrmSabor.aspx">Sabores</a>
+                    <a href="FrmSubcategoria.aspx">Subcategorias</a>
+                    <a href="FrmCategoria.aspx">Categorias</a>
+                </div>
+            </div>
+        </div>
 
         <br />
 

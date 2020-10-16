@@ -16,6 +16,75 @@ body {
     flex-direction: column;
 }
 
+/* Navbar container */
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+}
+
+/* Links inside the navbar */
+.navbar a {
+    float: right;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* The dropdown container */
+.dropdown {
+    float: right;
+    overflow: hidden;
+}
+
+/* Dropdown button */
+.dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit; /* Important for vertical align on mobile phones */
+    margin: 0; /* Important for vertical align on mobile phones */
+}
+
+/* Add a red background color to navbar links on hover */
+.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: #111;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #F9F9F9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/*
 .menu {
     list-style-type: none;
     margin: 0;
@@ -46,7 +115,7 @@ li {
 .active {
     background-color: #4CAF50;
 }
-
+*/
 .Titulo {
     font-weight: bold;
     font-size: large;
@@ -288,6 +357,38 @@ li {
 }
 
 #gvwSabor {
+    width: 95%;
+    text-align: center;
+}
+
+#cadastroMarca, #exibeMarca {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border-color: gainsboro;
+}
+
+#cadastroMarca {
+    margin: 0px 25% 0px 25%;
+}
+
+#cadInternoMarca, #exibeInternoMarca {
+    margin: 0px 5% 0px 10%;
+}
+
+#txbNM_Marca {
+    width: 95%;
+}
+
+#txbNM_MarcaConsultar {
+    width: 48.5%;
+    margin: 0px 15px 0px 240px;
+}
+
+#btnLimparMarca {
+    margin-right: 28%;
+}
+
+#gvwMarca {
     width: 95%;
     text-align: center;
 }

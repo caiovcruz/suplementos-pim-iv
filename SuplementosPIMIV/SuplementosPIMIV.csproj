@@ -113,8 +113,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\img\bLogin.jpg" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="View\FrmCategoria.aspx" />
     <Content Include="View\FrmLogin.aspx" />
+    <Content Include="View\FrmMarca.aspx" />
     <Content Include="View\FrmMenuPrincipal.aspx" />
     <Content Include="View\FrmProduto.aspx" />
     <Content Include="Assets\css\styles.css" />
@@ -156,6 +160,13 @@
     <Compile Include="View\FrmLogin.aspx.designer.cs">
       <DependentUpon>FrmLogin.aspx</DependentUpon>
     </Compile>
+    <Compile Include="View\FrmMarca.aspx.cs">
+      <DependentUpon>FrmMarca.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\FrmMarca.aspx.designer.cs">
+      <DependentUpon>FrmMarca.aspx</DependentUpon>
+    </Compile>
     <Compile Include="View\FrmMenuPrincipal.aspx.cs">
       <DependentUpon>FrmMenuPrincipal.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -186,6 +197,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

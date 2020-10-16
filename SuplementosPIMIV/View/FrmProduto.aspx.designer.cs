@@ -60,6 +60,15 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.TextBox txbNM_Produto;
 
         /// <summary>
+        /// Controle ddlID_Marca.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlID_Marca;
+
+        /// <summary>
         /// Controle txbDS_Produto.
         /// </summary>
         /// <remarks>

@@ -95,7 +95,7 @@ namespace SuplementosPIMIV.View
             myControllerSabor = new ControllerSabor();
 
             ddlID_Sabor.DataSource = myControllerSabor.Exibir();
-            ddlID_Sabor.DataTextField = "DS_Sabor";
+            ddlID_Sabor.DataTextField = "NM_Sabor";
             ddlID_Sabor.DataValueField = "ID_Sabor";
             ddlID_Sabor.DataBind();
 
@@ -111,6 +111,7 @@ namespace SuplementosPIMIV.View
                 txbQTD_Estoque.Text.Length > 0 &&
                 txbPR_Venda.Text.Length > 0 &&
                 txbPR_Custo.Text.Length > 0 &&
+                ddlID_Marca.SelectedIndex != 0 &&
                 ddlID_Categoria.SelectedIndex != 0 &&
                 ddlID_Subcategoria.SelectedIndex != 0 &&
                 ddlID_Sabor.SelectedIndex != 0 &&
@@ -122,6 +123,7 @@ namespace SuplementosPIMIV.View
                 txbQTD_Estoque.Text.Length > 0 ||
                 txbPR_Venda.Text.Length > 0 ||
                 txbPR_Custo.Text.Length > 0 ||
+                ddlID_Marca.SelectedIndex != 0 ||
                 ddlID_Categoria.SelectedIndex != 0 ||
                 ddlID_Subcategoria.SelectedIndex != 0 ||
                 ddlID_Sabor.SelectedIndex != 0;
@@ -234,6 +236,7 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe produto, carregar tela e incluir
                 myControllerProduto = new ControllerProduto(
+                    Convert.ToInt32(ddlID_Marca.SelectedValue),
                     Convert.ToInt32(ddlID_Categoria.SelectedValue),
                     Convert.ToInt32(ddlID_Subcategoria.SelectedValue),
                     Convert.ToInt32(ddlID_Sabor.SelectedValue),
@@ -276,6 +279,7 @@ namespace SuplementosPIMIV.View
                 // instanciar um objeto da classe produto, carregar tela e alterar
                 myControllerProduto = new ControllerProduto(
                     Convert.ToInt32(txbID_Produto.Text),
+                    Convert.ToInt32(ddlID_Marca.SelectedValue),
                     Convert.ToInt32(ddlID_Categoria.SelectedValue),
                     Convert.ToInt32(ddlID_Subcategoria.SelectedValue),
                     Convert.ToInt32(ddlID_Sabor.SelectedValue),
@@ -385,40 +389,44 @@ namespace SuplementosPIMIV.View
                 e.Row.Attributes.Add("onClick", Page.ClientScript.GetPostBackEventReference(lb, ""));
 
                 e.Row.Cells[9].Attributes.Add("style", "word-break:break-all;word-wrap:break-word; width: 200px");
-                e.Row.Cells[3].Visible = false;
+                e.Row.Cells[2].Visible = false;
                 e.Row.Cells[5].Visible = false;
                 e.Row.Cells[7].Visible = false;
+                e.Row.Cells[9].Visible = false;
             }
 
             if (e.Row.RowType == DataControlRowType.Header)
             {
                 e.Row.Cells[1].Text = "#";
-                e.Row.Cells[2].Text = "Nome";
-                e.Row.Cells[3].Visible = false;
-                e.Row.Cells[4].Text = "Categoria";
+                e.Row.Cells[2].Visible = false;
+                e.Row.Cells[3].Text = "Marca";
+                e.Row.Cells[4].Text = "Nome";
                 e.Row.Cells[5].Visible = false;
-                e.Row.Cells[6].Text = "Subcategoria";
+                e.Row.Cells[6].Text = "Categoria";
                 e.Row.Cells[7].Visible = false;
-                e.Row.Cells[8].Text = "Sabor";
-                e.Row.Cells[9].Text = "Descrição";
-                e.Row.Cells[10].Text = "Estoque";
-                e.Row.Cells[11].Text = "Preço\nCusto";
-                e.Row.Cells[12].Text = "Preço\nVenda";
+                e.Row.Cells[8].Text = "Subcategoria";
+                e.Row.Cells[9].Visible = false;
+                e.Row.Cells[10].Text = "Sabor";
+                e.Row.Cells[11].Text = "Descrição";
+                e.Row.Cells[12].Text = "Estoque";
+                e.Row.Cells[13].Text = "Preço\nCusto";
+                e.Row.Cells[14].Text = "Preço\nVenda";
             }
         }
 
         protected void gvwProduto_SelectedIndexChanged(object sender, EventArgs e)
         {
             txbID_Produto.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[1].Text);
-            txbNM_Produto.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[2].Text);
-            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[3].Text);
-            ddlID_Subcategoria.SelectedValue = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[5].Text);
+            txbNM_Produto.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[4].Text);
+            ddlID_Marca.SelectedValue = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[2].Text);
+            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[5].Text);
+            ddlID_Subcategoria.SelectedValue = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[7].Text);
             ddlID_Subcategoria.Enabled = true;
-            ddlID_Sabor.SelectedValue = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[7].Text);
-            txbDS_Produto.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[9].Text);
-            txbQTD_Estoque.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[10].Text);
-            txbPR_Custo.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[11].Text);
-            txbPR_Venda.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[12].Text);
+            ddlID_Sabor.SelectedValue = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[9].Text);
+            txbDS_Produto.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[11].Text);
+            txbQTD_Estoque.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[12].Text);
+            txbPR_Custo.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[13].Text);
+            txbPR_Venda.Text = Server.HtmlDecode(gvwProduto.SelectedRow.Cells[14].Text);
 
             lblDS_Mensagem.Text = "";
 
@@ -487,6 +495,11 @@ namespace SuplementosPIMIV.View
         }
 
         protected void txbPR_Venda_TextChanged(object sender, EventArgs e)
+        {
+            IncludeFields();
+        }
+
+        protected void ddlID_Marca_SelectedIndexChanged(object sender, EventArgs e)
         {
             IncludeFields();
         }

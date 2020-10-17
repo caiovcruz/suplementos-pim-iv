@@ -105,6 +105,29 @@ body {
     display: grid;
 }
 
+#formLogin {
+    height: 100%;
+    background-image: url(../img/bLogin.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+}
+
+#Login {
+    margin: 12% 0 12% 0;
+    text-align: center;
+}
+
+#logInterno {
+    background-color: #ffffff;
+    margin: 0px 42% 0px 42%;
+    border-radius: 10px;
+}
+
+#txbDS_Usuario {
+    margin-bottom: 5px;
+}
+
 #cadastroProduto, #exibeProduto {
     background-color: #FFFFFF;
     border-radius: 10px;
@@ -130,6 +153,10 @@ body {
     float: left;
 }
 
+#colunaProduto2, #colunaProduto3 {
+    margin-left: 15px;
+}
+
 .gvwExibe {
     width: 95%;
     text-align: center;
@@ -153,16 +180,24 @@ body {
 }
 
 #txbNM_Produto {
-    width: 63%;
+    width: 67%;
 }
 
 #txbDS_Produto {
-    width: 95%;
+    width: 100%;
     height: 120px;
 }
 
-#ddlID_Marca, #ddlID_Categoria, #ddlID_Subcategoria, #ddlID_Sabor {
-    width: 194px;
+#ddlID_Marca {
+    width: 32%;
+}
+
+#ddlID_Categoria, #ddlID_Subcategoria, #ddlID_Sabor {
+    width: 100%;
+}
+
+#txbQTD_Estoque, #txbPR_Custo, #txbPR_Venda {
+    width: 100%;
 }
 
 .Button {
@@ -172,7 +207,7 @@ body {
     border: none;
     font-size: 18px;
     font-weight: bold;
-    margin: 0px 10px 15px 0px;
+    margin-bottom: 15px;
 }
 
 #btnIncluir {
@@ -193,31 +228,9 @@ body {
         background-color: #ff4343;
     }
 
-#btnLimparProduto {
-    margin-right: 57%;
-}
-
-#formLogin {
-    height: 100%;
-    background-image: url(../img/bLogin.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: scroll;
-}
-
-#Login {
-    margin: 12% 0 12% 0;
-    text-align: center;
-}
-
-#logInterno {
-    background-color: #ffffff;
-    margin: 0px 42% 0px 42%;
-    border-radius: 10px;
-}
-
-#txbDS_Usuario {
-    margin-bottom: 5px;
+#btnIncluir, #btnAlterar, #btnExcluir {
+    float: right;
+    margin-left: 15px;
 }
 
 #cadastroCategoria, #exibeCategoria {
@@ -235,21 +248,17 @@ body {
 }
 
 #txbNM_Categoria {
-    width: 95%;
+    width: 100%;
 }
 
 #txbDS_Categoria {
-    width: 95%;
+    width: 100%;
     height: 120px;
 }
 
 #txbNM_CategoriaConsultar {
     width: 48.5%;
     margin: 0px 15px 0px 240px;
-}
-
-#btnLimparCategoria {
-    margin-right: 28%;
 }
 
 #cadastroSubcategoria, #exibeSubcategoria {
@@ -267,21 +276,17 @@ body {
 }
 
 #txbNM_Subcategoria {
-    width: 64.5%;
+    width: 69.2%;
 }
 
 #txbDS_Subcategoria {
-    width: 95%;
+    width: 100%;
     height: 120px;
 }
 
 #txbNM_SubcategoriaConsultar {
     width: 48.5%;
     margin: 0px 15px 0px 240px;
-}
-
-#btnLimparSubcategoria {
-    margin-right: 28%;
 }
 
 #cadastroSabor, #exibeSabor {
@@ -299,16 +304,12 @@ body {
 }
 
 #txbNM_Sabor {
-    width: 95%;
+    width: 100%;
 }
 
 #txbNM_SaborConsultar {
     width: 48.5%;
     margin: 0px 15px 0px 240px;
-}
-
-#btnLimparSabor {
-    margin-right: 28%;
 }
 
 #cadastroMarca, #exibeMarca {
@@ -326,14 +327,10 @@ body {
 }
 
 #txbNM_Marca {
-    width: 95%;
+    width: 100%;
 }
 
 #txbNM_MarcaConsultar {
     width: 48.5%;
     margin: 0px 15px 0px 240px;
-}
-
-#btnLimparMarca {
-    margin-right: 28%;
 }

@@ -51,7 +51,7 @@
 
                             <asp:TextBox CssClass="TextBox" ID="txbID_Subcategoria" Visible="false" runat="server"></asp:TextBox>
 
-                            <asp:Label CssClass="Label" runat="server" Width="64.5%" Text="Nome"></asp:Label>
+                            <asp:Label CssClass="Label" runat="server" Width="69.2%" Text="Nome"></asp:Label>
                             <asp:Label CssClass="Label" runat="server" Width="30%" Text="Categoria base"></asp:Label>
 
                             <asp:TextBox CssClass="TextBox" ID="txbNM_Subcategoria" runat="server" MaxLengh="50"

@@ -74,7 +74,7 @@
 
                                 </div>
 
-                                <div class="colunasProduto">
+                                <div class="colunasProduto" id="colunaProduto2">
 
                                     <asp:Label CssClass="Label" runat="server" Width="100%" Text="Categoria"></asp:Label>
                                     <asp:DropDownList CssClass="TextBox" ID="ddlID_Categoria" runat="server"
@@ -96,7 +96,7 @@
 
                                 </div>
 
-                                <div class="colunasProduto">
+                                <div class="colunasProduto" id="colunaProduto3">
                                     <asp:Label CssClass="Label" runat="server" Width="100%" Text="Subcategoria"></asp:Label>
                                     <asp:DropDownList CssClass="TextBox" ID="ddlID_Subcategoria" runat="server"
                                         OnSelectedIndexChanged="ddlID_Subcategoria_SelectedIndexChanged" AutoPostBack="true">
@@ -126,9 +126,9 @@
                             <br />
 
                             <asp:Button CssClass="Button" ID="btnLimparProduto" runat="server" Text="Limpar" OnClick="btnLimparProduto_Click" />
-                            <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
-                            <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
                             <asp:Button CssClass="Button" ID="btnIncluir" runat="server" Text="Incluir" OnClick="btnIncluir_Click" />
+                            <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
+                            <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
 
                         </ContentTemplate>
                     </asp:UpdatePanel>

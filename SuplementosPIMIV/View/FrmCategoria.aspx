@@ -70,9 +70,9 @@
                             <br />
 
                             <asp:Button CssClass="Button" ID="btnLimparCategoria" runat="server" Text="Limpar" OnClick="btnLimparCategoria_Click" />
-                            <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
-                            <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
                             <asp:Button CssClass="Button" ID="btnIncluir" runat="server" Text="Incluir" OnClick="btnIncluir_Click" />
+                            <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
+                            <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
 
                         </ContentTemplate>
                     </asp:UpdatePanel>

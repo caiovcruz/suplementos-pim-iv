@@ -87,13 +87,13 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.Button btnLimparCategoria;
 
         /// <summary>
-        /// Controle btnExcluir.
+        /// Controle btnIncluir.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnExcluir;
+        protected global::System.Web.UI.WebControls.Button btnIncluir;
 
         /// <summary>
         /// Controle btnAlterar.
@@ -105,13 +105,13 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.Button btnAlterar;
 
         /// <summary>
-        /// Controle btnIncluir.
+        /// Controle btnExcluir.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnIncluir;
+        protected global::System.Web.UI.WebControls.Button btnExcluir;
 
         /// <summary>
         /// Controle updConsulta.

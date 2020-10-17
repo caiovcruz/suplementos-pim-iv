@@ -35,7 +35,7 @@ namespace SuplementosPIMIV.View
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = false;
             btnExcluir.Enabled = false;
-            btnLimparSabor.Enabled = false;
+            btnLimpar.Enabled = false;
             btnConsultar.Enabled = false;
         }
 
@@ -80,7 +80,7 @@ namespace SuplementosPIMIV.View
                 txbNM_Sabor.Text.Length > 0 &&
                 txbID_Sabor.Text.Length == 0;
 
-            btnLimparSabor.Enabled =
+            btnLimpar.Enabled =
                 txbNM_Sabor.Text.Length > 0;
         }
 
@@ -234,7 +234,7 @@ namespace SuplementosPIMIV.View
             Excluir();
         }
 
-        protected void btnLimparSabor_Click(object sender, EventArgs e)
+        protected void btnLimpar_Click(object sender, EventArgs e)
         {
             LimparCampos();
             BloquearBotoes();
@@ -289,7 +289,7 @@ namespace SuplementosPIMIV.View
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = true;
             btnExcluir.Enabled = true;
-            btnLimparSabor.Enabled = true;
+            btnLimpar.Enabled = true;
         }
     }
 }

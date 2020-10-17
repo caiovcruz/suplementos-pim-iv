@@ -141,13 +141,13 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.Label lblDS_Mensagem;
 
         /// <summary>
-        /// Controle btnLimparProduto.
+        /// Controle btnLimpar.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLimparProduto;
+        protected global::System.Web.UI.WebControls.Button btnLimpar;
 
         /// <summary>
         /// Controle btnIncluir.

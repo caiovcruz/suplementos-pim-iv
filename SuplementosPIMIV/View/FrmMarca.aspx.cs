@@ -35,7 +35,7 @@ namespace SuplementosPIMIV.View
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = false;
             btnExcluir.Enabled = false;
-            btnLimparMarca.Enabled = false;
+            btnLimpar.Enabled = false;
             btnConsultar.Enabled = false;
         }
 
@@ -80,7 +80,7 @@ namespace SuplementosPIMIV.View
                 txbNM_Marca.Text.Length > 0 &&
                 txbID_Marca.Text.Length == 0;
 
-            btnLimparMarca.Enabled =
+            btnLimpar.Enabled =
                 txbNM_Marca.Text.Length > 0;
         }
 
@@ -234,7 +234,7 @@ namespace SuplementosPIMIV.View
             Excluir();
         }
 
-        protected void btnLimparMarca_Click(object sender, EventArgs e)
+        protected void btnLimpar_Click(object sender, EventArgs e)
         {
             LimparCampos();
             BloquearBotoes();
@@ -289,7 +289,7 @@ namespace SuplementosPIMIV.View
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = true;
             btnExcluir.Enabled = true;
-            btnLimparMarca.Enabled = true;
+            btnLimpar.Enabled = true;
         }
     }
 }

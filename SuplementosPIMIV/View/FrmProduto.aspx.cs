@@ -50,7 +50,7 @@ namespace SuplementosPIMIV.View
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = false;
             btnExcluir.Enabled = false;
-            btnLimparProduto.Enabled = false;
+            btnLimpar.Enabled = false;
             btnConsultar.Enabled = false;
         }
 
@@ -132,7 +132,7 @@ namespace SuplementosPIMIV.View
                 ddlID_Sabor.SelectedIndex != 0 &&
                 txbID_Produto.Text.Length == 0;
 
-            btnLimparProduto.Enabled =
+            btnLimpar.Enabled =
                 txbNM_Produto.Text.Length > 0 ||
                 txbDS_Produto.Text.Length > 0 ||
                 txbQTD_Estoque.Text.Length > 0 ||
@@ -390,7 +390,7 @@ namespace SuplementosPIMIV.View
             Excluir();
         }
 
-        protected void btnLimparProduto_Click(object sender, EventArgs e)
+        protected void btnLimpar_Click(object sender, EventArgs e)
         {
             LimparCampos();
             BloquearBotoes();
@@ -448,7 +448,7 @@ namespace SuplementosPIMIV.View
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = true;
             btnExcluir.Enabled = true;
-            btnLimparProduto.Enabled = true;
+            btnLimpar.Enabled = true;
         }
 
         protected void txbNM_ProdutoConsultar_TextChanged(object sender, EventArgs e)

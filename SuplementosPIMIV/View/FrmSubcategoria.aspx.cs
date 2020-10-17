@@ -40,7 +40,7 @@ namespace SuplementosPIMIV.View
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = false;
             btnExcluir.Enabled = false;
-            btnLimparSubcategoria.Enabled = false;
+            btnLimpar.Enabled = false;
             btnConsultar.Enabled = false;
         }
 
@@ -100,7 +100,7 @@ namespace SuplementosPIMIV.View
                 txbDS_Subcategoria.Text.Length > 0 &&
                 txbID_Subcategoria.Text.Length == 0;
 
-            btnLimparSubcategoria.Enabled =
+            btnLimpar.Enabled =
                 ddlID_Categoria.SelectedIndex != 0 ||
                 txbNM_Subcategoria.Text.Length > 0 ||
                 txbDS_Subcategoria.Text.Length > 0;
@@ -275,7 +275,7 @@ namespace SuplementosPIMIV.View
             Excluir();
         }
 
-        protected void btnLimparSubcategoria_Click(object sender, EventArgs e)
+        protected void btnLimpar_Click(object sender, EventArgs e)
         {
             LimparCampos();
             BloquearBotoes();
@@ -350,7 +350,7 @@ namespace SuplementosPIMIV.View
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = true;
             btnExcluir.Enabled = true;
-            btnLimparSubcategoria.Enabled = true;
+            btnLimpar.Enabled = true;
         }
     }
 }

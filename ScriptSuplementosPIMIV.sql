@@ -1,73 +1,76 @@
-DROP TABLE IF EXISTS tb_login;
-DROP TABLE IF EXISTS tb_produto;
-DROP TABLE IF EXISTS tb_marca;
-DROP TABLE IF EXISTS tb_categoria;
-DROP TABLE IF EXISTS tb_subcategoria;
-DROP TABLE IF EXISTS tb_sabor;
+DROP TABLE IF EXISTS TB_Login;
+DROP TABLE IF EXISTS TB_Produto;
+DROP TABLE IF EXISTS TB_Marca;
+DROP TABLE IF EXISTS TB_Categoria;
+DROP TABLE IF EXISTS TB_Subcategoria;
+DROP TABLE IF EXISTS TB_Sabor;
+GO
 
-CREATE TABLE tb_login 
+CREATE TABLE TB_Login 
 (
-	ID_Login INT NOT NULL AUTO_INCREMENT,
+	ID_Login INT IDENTITY(1,1),
 	DS_Usuario VARCHAR(20) NOT NULL,
 	DS_Senha VARCHAR(20) NOT NULL,
 	Ativo BIT NOT NULL,
     PRIMARY KEY (ID_Login)
 );
 
-CREATE TABLE tb_categoria
+CREATE TABLE TB_Categoria
 (
-	ID_Categoria INT NOT NULL AUTO_INCREMENT,
+	ID_Categoria INT IDENTITY(1,1),
 	NM_Categoria VARCHAR(50) NOT NULL,
-	DS_Categoria VARCHAR(1500),
+	DS_Categoria VARCHAR(1500) NOT NULL,
     Ativo BIT NOT NULL,
     PRIMARY KEY (ID_Categoria)
 );
 
-CREATE TABLE tb_subcategoria
+CREATE TABLE TB_Subcategoria
 (
-	ID_Subcategoria INT NOT NULL AUTO_INCREMENT,
+	ID_Subcategoria INT IDENTITY(1,1),
     ID_Categoria INT NOT NULL,
     NM_Subcategoria VARCHAR(50) NOT NULL,
-    DS_Subcategoria VARCHAR(1500),
+    DS_Subcategoria VARCHAR(1500) NOT NULL,
     Ativo BIT NOT NULL,
     PRIMARY KEY (ID_Subcategoria)
 );
 
-CREATE TABLE tb_sabor
+CREATE TABLE TB_Sabor
 (
-	ID_Sabor INT NOT NULL AUTO_INCREMENT,
-    NM_Sabor VARCHAR(50),
+	ID_Sabor INT IDENTITY(1,1),
+    NM_Sabor VARCHAR(50) NOT NULL,
     Ativo BIT NOT NULL,
     PRIMARY KEY (ID_Sabor)
 );
 
-CREATE TABLE tb_marca
+CREATE TABLE TB_Marca
 (
-	ID_Marca INT NOT NULL AUTO_INCREMENT,
-    NM_Marca VARCHAR(50),
+	ID_Marca INT IDENTITY(1,1),
+    NM_Marca VARCHAR(50) NOT NULL,
     Ativo BIT NOT NULL,
     PRIMARY KEY (ID_Marca)
 );
 
-CREATE TABLE tb_produto 
+CREATE TABLE TB_Produto 
 (
-	ID_Produto INT NOT NULL AUTO_INCREMENT,
+	ID_Produto INT IDENTITY(1,1),
     ID_Marca INT NOT NULL,
     ID_Categoria INT NOT NULL,
     ID_Subcategoria INT NOT NULL,
 	ID_Sabor INT NOT NULL,
     NM_Produto VARCHAR(50) NOT NULL,
-    DS_Produto VARCHAR(3000),
+    DS_Produto VARCHAR(3000) NOT NULL,
     QTD_Estoque INT NOT NULL,
 	PR_Custo DECIMAL(10,2) NOT NULL,
     PR_Venda DECIMAL(10,2) NOT NULL,
     Ativo BIT NOT NULL,
     PRIMARY KEY (ID_Produto),
-    FOREIGN KEY (ID_Categoria) REFERENCES tb_categoria(ID_Categoria),
-    FOREIGN KEY (ID_Subcategoria) REFERENCES tb_subcategoria(ID_Subcategoria)
-  );
+    FOREIGN KEY (ID_Categoria) REFERENCES TB_Categoria(ID_Categoria),
+    FOREIGN KEY (ID_Subcategoria) REFERENCES TB_Subcategoria(ID_Subcategoria)
+);
+
+GO
   
-  INSERT INTO tb_login
+  INSERT INTO TB_Login
 (
 	DS_Usuario,
     DS_Senha,
@@ -80,7 +83,7 @@ VALUES
     1
 );
 
-INSERT INTO tb_categoria
+INSERT INTO TB_Categoria
 (
 	NM_Categoria,
     DS_Categoria,
@@ -93,7 +96,7 @@ VALUES
     1
 );
   
-INSERT INTO tb_subcategoria
+INSERT INTO TB_Subcategoria
 (
 	ID_Categoria,
 	NM_Subcategoria,
@@ -108,7 +111,7 @@ VALUES
     1
 ); 
   
-INSERT INTO tb_sabor
+INSERT INTO TB_Sabor
 (
     NM_Sabor,
     Ativo
@@ -119,7 +122,7 @@ VALUES
     1
 ); 
   
-INSERT INTO tb_marca
+INSERT INTO TB_Marca
 (
 	NM_Marca,
     Ativo
@@ -130,7 +133,7 @@ VALUES
     1
 );
   
-INSERT INTO tb_produto
+INSERT INTO TB_Produto
 (
     ID_Marca,
 	ID_Categoria,
@@ -165,16 +168,16 @@ SUB.NM_Subcategoria,
 SAB.NM_Sabor, 
 PROD.DS_Produto, 
 PROD.QTD_Estoque,
-FORMAT(PROD.PR_Custo, 2, 'de_DE') AS PR_Custo,
-FORMAT(PROD.PR_Venda, 2, 'de_DE') AS PR_Venda
-FROM tb_produto AS PROD
-INNER JOIN tb_marca AS MAR
+FORMAT(PROD.PR_Custo, 'N2') AS PR_Custo,
+FORMAT(PROD.PR_Venda, 'N2') AS PR_Venda
+FROM TB_Produto AS PROD
+INNER JOIN TB_Marca AS MAR
 ON PROD.ID_Marca = MAR.ID_Marca
-INNER JOIN tb_categoria AS CAT
+INNER JOIN TB_Categoria AS CAT
 ON PROD.ID_Categoria = CAT.ID_Categoria
-INNER JOIN tb_subcategoria AS SUB
+INNER JOIN TB_Subcategoria AS SUB
 ON PROD.ID_Subcategoria = SUB.ID_Subcategoria
-INNER JOIN tb_sabor AS SAB
+INNER JOIN TB_Sabor AS SAB
 ON PROD.ID_Sabor = SAB.ID_Sabor
 WHERE PROD.Ativo = 1 
 ORDER BY PROD.ID_Produto DESC;

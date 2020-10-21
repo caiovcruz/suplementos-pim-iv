@@ -46,12 +46,10 @@ namespace SuplementosPIMIV.Model
         private void SetConnection()
         {
             dataAcessObject = new DAO();
-            dataAcessObject.Setup(DataBase.DatabaseTypes.MySql,
-                "Persist Security Info=False; " +
-                "Server=localhost; " +
-                "Database=pdv_suplementos; " +
-                "Uid=root; " +
-                "Pwd=011118");
+            dataAcessObject.Setup(DataBase.DatabaseTypes.SqlServer,
+                "Data Source=DRACCON/SQLEXPRESS; " +
+                "Initial Catalog=DB_Suplementos_PDV; " +
+                "Integrated Security=SSPI");
         }
 
         public void Incluir()
@@ -61,8 +59,15 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLInsert = "INSERT INTO tb_categoria (NM_Categoria, DS_Categoria, Ativo)" +
-                    "VALUES ('" + NM_Categoria + "','" + DS_Categoria + "', 1)";
+                string SQLInsert = 
+                    "INSERT INTO TB_Categoria (" +
+                        "NM_Categoria, " +
+                        "DS_Categoria, " +
+                        "Ativo)" +
+                    "VALUES (" +
+                        "'" + NM_Categoria + "', " +
+                        "'" + DS_Categoria + "', " +
+                        "1)";
                 var result = dataAcessObject.Connector.Execute(SQLInsert);
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao cadastrar";
@@ -80,8 +85,11 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLUpdate = "UPDATE tb_categoria SET NM_Categoria = '" + NM_Categoria + "', " +
-                    "DS_Categoria = '" + DS_Categoria + "' WHERE ID_Categoria = '" + ID_Categoria + "'";
+                string SQLUpdate = 
+                    "UPDATE TB_Categoria SET " +
+                    "NM_Categoria = '" + NM_Categoria + "', " +
+                    "DS_Categoria = '" + DS_Categoria + "' " +
+                    "WHERE ID_Categoria = '" + ID_Categoria + "'";
                 var result = dataAcessObject.Connector.Execute(SQLUpdate);
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao alterar";
@@ -99,10 +107,17 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLSelect = "SELECT ID_Categoria, NM_Categoria, DS_Categoria " +
-                    "FROM tb_categoria WHERE Ativo = 1 AND NM_Categoria LIKE CONCAT('" + NM_Categoria + "', '%') ORDER BY ID_Categoria DESC";
+                string SQLSelect = 
+                    "SELECT " +
+                    "ID_Categoria, " +
+                    "NM_Categoria, " +
+                    "DS_Categoria " +
+                    "FROM TB_Categoria " +
+                    "WHERE Ativo = 1 " +
+                    "AND NM_Categoria LIKE '" + NM_Categoria + "' + '%' " +
+                    "ORDER BY ID_Categoria DESC";
                 IDataReader dataReader = dataAcessObject.Connector.QueryWithReader(SQLSelect);
-                dataTable.TableName = "tb_categoria";
+                dataTable.TableName = "TB_Categoria";
                 dataTable.Load(dataReader);
             }
             else
@@ -120,8 +135,11 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLDelete = "UPDATE tb_categoria SET Ativo = 0 WHERE ID_Categoria = '" + ID_Categoria + "'";
-                var result = dataAcessObject.Connector.Execute(SQLDelete);
+                string SQLUpdate = 
+                    "UPDATE TB_Categoria SET " +
+                    "Ativo = 0 " +
+                    "WHERE ID_Categoria = '" + ID_Categoria + "'";
+                var result = dataAcessObject.Connector.Execute(SQLUpdate);
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao excluir";
             }
@@ -138,10 +156,16 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLSelect = "SELECT ID_Categoria, NM_Categoria, DS_Categoria " +
-                    "FROM tb_categoria WHERE Ativo = 1 ORDER BY ID_Categoria DESC";
+                string SQLSelect = 
+                    "SELECT " +
+                    "ID_Categoria, " +
+                    "NM_Categoria, " +
+                    "DS_Categoria " +
+                    "FROM TB_Categoria " +
+                    "WHERE Ativo = 1 " +
+                    "ORDER BY ID_Categoria DESC";
                 IDataReader dataReader = dataAcessObject.Connector.QueryWithReader(SQLSelect);
-                dataTable.TableName = "tb_categoria";
+                dataTable.TableName = "TB_Categoria";
                 dataTable.Load(dataReader);
             }
             else

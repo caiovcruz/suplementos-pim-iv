@@ -41,12 +41,10 @@ namespace SuplementosPIMIV.Model
         private void SetConnection()
         {
             dataAcessObject = new DAO();
-            dataAcessObject.Setup(DataBase.DatabaseTypes.MySql,
-                "Persist Security Info=False; " +
-                "Server=localhost; " +
-                "Database=pdv_suplementos; " +
-                "Uid=root; " +
-                "Pwd=011118");
+            dataAcessObject.Setup(DataBase.DatabaseTypes.SqlServer,
+                "Data Source=DRACCON/SQLEXPRESS; " +
+                "Initial Catalog=DB_Suplementos_PDV; " +
+                "Integrated Security=SSPI");
         }
 
         public void Incluir()
@@ -56,8 +54,13 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLInsert = "INSERT INTO tb_sabor (NM_Sabor, Ativo)" +
-                    "VALUES ('" + NM_Sabor + "', 1)";
+                string SQLInsert = 
+                    "INSERT INTO TB_Sabor (" +
+                        "NM_Sabor, " +
+                        "Ativo)" +
+                    "VALUES (" +
+                        "'" + NM_Sabor + "', " +
+                        "1)";
                 var result = dataAcessObject.Connector.Execute(SQLInsert);
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao cadastrar";
@@ -75,7 +78,10 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLUpdate = "UPDATE tb_sabor SET NM_Sabor = '" + NM_Sabor + "' WHERE ID_Sabor = '" + ID_Sabor + "'";
+                string SQLUpdate = 
+                    "UPDATE TB_Sabor SET " +
+                    "NM_Sabor = '" + NM_Sabor + "' " +
+                    "WHERE ID_Sabor = '" + ID_Sabor + "'";
                 var result = dataAcessObject.Connector.Execute(SQLUpdate);
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao alterar";
@@ -93,10 +99,16 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLSelect = "SELECT ID_Sabor, NM_Sabor " +
-                    "FROM tb_sabor WHERE Ativo = 1 AND NM_Sabor LIKE CONCAT('" + NM_Sabor + "', '%') ORDER BY ID_Sabor DESC";
+                string SQLSelect = 
+                    "SELECT " +
+                    "ID_Sabor, " +
+                    "NM_Sabor " +
+                    "FROM TB_Sabor " +
+                    "WHERE Ativo = 1 " +
+                    "AND NM_Sabor LIKE '" + NM_Sabor + "' + '%' " +
+                    "ORDER BY ID_Sabor DESC";
                 IDataReader dataReader = dataAcessObject.Connector.QueryWithReader(SQLSelect);
-                dataTable.TableName = "tb_sabor";
+                dataTable.TableName = "TB_Sabor";
                 dataTable.Load(dataReader);
             }
             else
@@ -114,8 +126,11 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLDelete = "UPDATE tb_sabor SET Ativo = 0 WHERE ID_Sabor = '" + ID_Sabor + "'";
-                var result = dataAcessObject.Connector.Execute(SQLDelete);
+                string SQLUpdate = 
+                    "UPDATE TB_Sabor SET " +
+                    "Ativo = 0 " +
+                    "WHERE ID_Sabor = '" + ID_Sabor + "'";
+                var result = dataAcessObject.Connector.Execute(SQLUpdate);
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao excluir";
             }
@@ -132,9 +147,15 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLSelect = "SELECT ID_Sabor, NM_Sabor FROM tb_sabor WHERE Ativo = 1 ORDER BY ID_Sabor DESC";
+                string SQLSelect = 
+                    "SELECT " +
+                    "ID_Sabor, " +
+                    "NM_Sabor " +
+                    "FROM TB_Sabor " +
+                    "WHERE Ativo = 1 " +
+                    "ORDER BY ID_Sabor DESC";
                 IDataReader dataReader = dataAcessObject.Connector.QueryWithReader(SQLSelect);
-                dataTable.TableName = "tb_sabor";
+                dataTable.TableName = "TB_Sabor";
                 dataTable.Load(dataReader);
             }
             else

@@ -20,12 +20,10 @@ namespace SuplementosPIMIV.Model
         private void SetConnection()
         {
             dataAcessObject = new DAO();
-            dataAcessObject.Setup(DataBase.DatabaseTypes.MySql,
-                "Persist Security Info=False; " +
-                "Server=localhost; " +
-                "Database=pdv_suplementos; " +
-                "Uid=root; " +
-                "Pwd=011118");
+            dataAcessObject.Setup(DataBase.DatabaseTypes.SqlServer,
+                "Data Source=DRACCON/SQLEXPRESS; " +
+                "Initial Catalog=DB_Suplementos_PDV; " +
+                "Integrated Security=SSPI");
         }
 
         public string Acessar()
@@ -39,10 +37,15 @@ namespace SuplementosPIMIV.Model
                 SetConnection();
                 if (dataAcessObject.Connector.Open())
                 {
-                    string SQLSelect = "SELECT DS_Usuario, DS_Senha FROM tb_login " +
-                        "WHERE DS_Usuario = '" + DS_Usuario + "' AND DS_Senha = '" + DS_Senha + "'";
+                    string SQLSelect = 
+                        "SELECT " +
+                        "DS_Usuario, " +
+                        "DS_Senha " +
+                        "FROM TB_Login " +
+                        "WHERE DS_Usuario = '" + DS_Usuario + "' " +
+                        "AND DS_Senha = '" + DS_Senha + "'";
                     IDataReader dataReader = dataAcessObject.Connector.QueryWithReader(SQLSelect);
-                    dataTable.TableName = "tb_login";
+                    dataTable.TableName = "TB_Login";
                     dataTable.Load(dataReader);
 
                     if (dataTable.Rows.Count > 0)

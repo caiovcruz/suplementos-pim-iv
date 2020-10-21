@@ -67,12 +67,10 @@ namespace SuplementosPIMIV.Model
         private void SetConnection()
         {
             dataAcessObject = new DAO();
-            dataAcessObject.Setup(DataBase.DatabaseTypes.MySql,
-                "Persist Security Info=False; " +
-                "Server=localhost; " +
-                "Database=pdv_suplementos; " +
-                "Uid=root; " +
-                "Pwd=011118");
+            dataAcessObject.Setup(DataBase.DatabaseTypes.SqlServer,
+                "Data Source=DRACCON/SQLEXPRESS; " +
+                "Initial Catalog=DB_Suplementos_PDV; " +
+                "Integrated Security=SSPI");
         }
 
         public void Incluir()
@@ -82,8 +80,8 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLInsert = "INSERT INTO tb_produto " +
-                    "(" +
+                string SQLInsert = 
+                    "INSERT INTO TB_Produto (" +
                         "ID_Marca, " +
                         "ID_Categoria, " +
                         "ID_Subcategoria, " +
@@ -94,8 +92,7 @@ namespace SuplementosPIMIV.Model
                         "PR_Custo, " +
                         "PR_Venda, " +
                         "Ativo)" +
-                    "VALUES " +
-                    "(" +
+                    "VALUES (" +
                         "'" + ID_Marca + "', " +
                         "'" + ID_Categoria + "', " +
                         "'" + ID_Subcategoria + "', " +
@@ -105,8 +102,7 @@ namespace SuplementosPIMIV.Model
                         "'" + QTD_Estoque + "', " +
                         "REPLACE( REPLACE('" + PR_Custo + "', '.' ,'' ), ',', '.' ), " +
                         "REPLACE( REPLACE('" + PR_Venda + "', '.' ,'' ), ',', '.' ), " +
-                        "1" +
-                    ")";
+                        "1)";
                 var result = dataAcessObject.Connector.Execute(SQLInsert);
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao cadastrar";
@@ -124,7 +120,8 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLUpdate = "UPDATE tb_produto SET " +
+                string SQLUpdate = 
+                    "UPDATE TB_Produto SET " +
                     "ID_Marca = '" + ID_Marca + "', " +
                     "ID_Categoria = '" + ID_Categoria + "', " +
                     "ID_Subcategoria = '" + ID_Subcategoria + "', " +
@@ -152,7 +149,8 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLSelect = "SELECT " +
+                string SQLSelect = 
+                    "SELECT " +
                     "PROD.ID_Produto, " +
                     "PROD.NM_Produto, " +
                     "PROD.ID_Marca, " +
@@ -164,17 +162,19 @@ namespace SuplementosPIMIV.Model
                     "PROD.ID_Sabor, " +
                     "SAB.NM_Sabor, " +
                     "PROD.DS_Produto, " +
-                    "PROD.QTD_Estoque, FORMAT(PROD.PR_Custo, 2, 'de_DE') AS PR_Custo, " +
-                    "FORMAT(PROD.PR_Venda, 2, 'de_DE') AS PR_Venda " +
-                    "FROM tb_produto AS PROD " +
-                    "INNER JOIN tb_marca AS MAR ON PROD.ID_Marca = MAR.ID_Marca " +
-                    "INNER JOIN tb_categoria AS CAT ON PROD.ID_Categoria = CAT.ID_Categoria " +
-                    "INNER JOIN tb_subcategoria AS SUB ON PROD.ID_Subcategoria = SUB.ID_Subcategoria " +
-                    "INNER JOIN tb_sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor " +
-                    "WHERE PROD.Ativo = 1 AND PROD.NM_Produto LIKE CONCAT('" + NM_Produto + "', '%') " +
+                    "PROD.QTD_Estoque, " +
+                    "FORMAT(PROD.PR_Custo, 'N2') AS PR_Custo, " +
+                    "FORMAT(PROD.PR_Venda, 'N2') AS PR_Venda " +
+                    "FROM TB_Produto AS PROD " +
+                    "INNER JOIN TB_Marca AS MAR ON PROD.ID_Marca = MAR.ID_Marca " +
+                    "INNER JOIN TB_Categoria AS CAT ON PROD.ID_Categoria = CAT.ID_Categoria " +
+                    "INNER JOIN TB_Subcategoria AS SUB ON PROD.ID_Subcategoria = SUB.ID_Subcategoria " +
+                    "INNER JOIN TB_Sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor " +
+                    "WHERE PROD.Ativo = 1 " +
+                    "AND PROD.NM_Produto LIKE '" + NM_Produto + "' + '%' " +
                     "ORDER BY PROD.ID_Produto DESC";
                 IDataReader dataReader = dataAcessObject.Connector.QueryWithReader(SQLSelect);
-                dataTable.TableName = "tb_produto";
+                dataTable.TableName = "TB_Produto";
                 dataTable.Load(dataReader);
             }
             else
@@ -192,8 +192,11 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLDelete = "UPDATE tb_produto SET Ativo = 0 WHERE ID_Produto = '" + ID_Produto + "'";
-                var result = dataAcessObject.Connector.Execute(SQLDelete);
+                string SQLUpdate = 
+                    "UPDATE TB_Produto SET " +
+                    "Ativo = 0 " +
+                    "WHERE ID_Produto = '" + ID_Produto + "'";
+                var result = dataAcessObject.Connector.Execute(SQLUpdate);
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao excluir";
             }
@@ -210,7 +213,8 @@ namespace SuplementosPIMIV.Model
             SetConnection();
             if (dataAcessObject.Connector.Open())
             {
-                string SQLSelect = "SELECT " +
+                string SQLSelect = 
+                    "SELECT " +
                     "PROD.ID_Produto, " +
                     "PROD.NM_Produto, " +
                     "PROD.ID_Marca, " +
@@ -222,16 +226,18 @@ namespace SuplementosPIMIV.Model
                     "PROD.ID_Sabor, " +
                     "SAB.NM_Sabor, " +
                     "PROD.DS_Produto, " +
-                    "PROD.QTD_Estoque, FORMAT(PROD.PR_Custo, 2, 'de_DE') AS PR_Custo, " +
-                    "FORMAT(PROD.PR_Venda, 2, 'de_DE') AS PR_Venda " +
-                    "FROM tb_produto AS PROD " +
-                    "INNER JOIN tb_marca AS MAR ON PROD.ID_Marca = MAR.ID_Marca " +
-                    "INNER JOIN tb_categoria AS CAT ON PROD.ID_Categoria = CAT.ID_Categoria " +
-                    "INNER JOIN tb_subcategoria AS SUB ON PROD.ID_Subcategoria = SUB.ID_Subcategoria " +
-                    "INNER JOIN tb_sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor " +
-                    "WHERE PROD.Ativo = 1 ORDER BY PROD.ID_Produto DESC";
+                    "PROD.QTD_Estoque, " +
+                    "FORMAT(PROD.PR_Custo, 'N2') AS PR_Custo, " +
+                    "FORMAT(PROD.PR_Venda, 'N2') AS PR_Venda " +
+                    "FROM TB_Produto AS PROD " +
+                    "INNER JOIN TB_Marca AS MAR ON PROD.ID_Marca = MAR.ID_Marca " +
+                    "INNER JOIN TB_Categoria AS CAT ON PROD.ID_Categoria = CAT.ID_Categoria " +
+                    "INNER JOIN TB_Subcategoria AS SUB ON PROD.ID_Subcategoria = SUB.ID_Subcategoria " +
+                    "INNER JOIN TB_Sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor " +
+                    "WHERE PROD.Ativo = 1 " +
+                    "ORDER BY PROD.ID_Produto DESC";
                 IDataReader dataReader = dataAcessObject.Connector.QueryWithReader(SQLSelect);
-                dataTable.TableName = "tb_produto";
+                dataTable.TableName = "TB_Produto";
                 dataTable.Load(dataReader);
             }
             else

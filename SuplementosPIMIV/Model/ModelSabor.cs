@@ -1,21 +1,32 @@
-﻿using DataBase;
+﻿using System;
 using System.Data;
+using System.Data.SqlClient;
+using System.Text;
 
 namespace SuplementosPIMIV.Model
 {
     public class ModelSabor
     {
-        private DAO dataAcessObject;
-
         public int ID_Sabor { get; set; }
         public string NM_Sabor { get; set; }
         public string DS_Mensagem { get; set; }
 
-        public ModelSabor() { }
+        private string ConnectionString = "";
 
-        public ModelSabor(string nm_sabor, bool incluir)
+        // Variaveis de Conexão
+        SqlConnection sqlConnection;                            // Conexão do SGBD
+        SqlCommand sqlCommand;                                  // Command que envia um 'comando' para o SGBD
+        SqlDataReader sqlDataReader;                            // Retorno do Command (DataReader) espécie de tabela/leitura 'apenas pra frente'
+
+        public ModelSabor(string connectionString)
+        {
+            ConnectionString = connectionString;
+        }
+
+        public ModelSabor(string nm_sabor, bool incluir, string connectionString)
         {
             NM_Sabor = nm_sabor;
+            ConnectionString = connectionString;
 
             if (incluir)
             {
@@ -23,51 +34,53 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public ModelSabor(int id_sabor, string nm_sabor)
+        public ModelSabor(int id_sabor, string nm_sabor, string connectionString)
         {
             ID_Sabor = id_sabor;
             NM_Sabor = nm_sabor;
+            ConnectionString = connectionString;
 
             Alterar();
         }
 
-        public ModelSabor(int id_sabor)
+        public ModelSabor(int id_sabor, string connectionString)
         {
             ID_Sabor = id_sabor;
+            ConnectionString = connectionString;
 
             Excluir();
-        }
-
-        private void SetConnection()
-        {
-            dataAcessObject = new DAO();
-            dataAcessObject.Setup(DataBase.DatabaseTypes.SqlServer,
-                "Data Source=DRACCON/SQLEXPRESS; " +
-                "Initial Catalog=DB_Suplementos_PDV; " +
-                "Integrated Security=SSPI");
         }
 
         public void Incluir()
         {
             DS_Mensagem = "";
 
-            SetConnection();
-            if (dataAcessObject.Connector.Open())
+            try
             {
-                string SQLInsert = 
-                    "INSERT INTO TB_Sabor (" +
-                        "NM_Sabor, " +
-                        "Ativo)" +
-                    "VALUES (" +
-                        "'" + NM_Sabor + "', " +
-                        "1)";
-                var result = dataAcessObject.Connector.Execute(SQLInsert);
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("INSERT INTO TB_Sabor (");
+                stringSQL.Append("NM_Sabor, ");
+                stringSQL.Append("Ativo)");
+                stringSQL.Append("VALUES (");
+                stringSQL.Append("'" + NM_Sabor + "', ");
+                stringSQL.Append("1)");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                int result = sqlCommand.ExecuteNonQuery();
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao cadastrar";
             }
-            else
+            catch (Exception e)
             {
-                DS_Mensagem = "Erro de conexão";
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
             }
         }
 
@@ -75,20 +88,29 @@ namespace SuplementosPIMIV.Model
         {
             DS_Mensagem = "";
 
-            SetConnection();
-            if (dataAcessObject.Connector.Open())
+            try
             {
-                string SQLUpdate = 
-                    "UPDATE TB_Sabor SET " +
-                    "NM_Sabor = '" + NM_Sabor + "' " +
-                    "WHERE ID_Sabor = '" + ID_Sabor + "'";
-                var result = dataAcessObject.Connector.Execute(SQLUpdate);
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("UPDATE TB_Sabor SET ");
+                stringSQL.Append("NM_Sabor = '" + NM_Sabor + "' ");
+                stringSQL.Append("WHERE ID_Sabor = '" + ID_Sabor + "'");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                int result = sqlCommand.ExecuteNonQuery();
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao alterar";
             }
-            else
+            catch (Exception e)
             {
-                DS_Mensagem = "Erro de conexão";
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
             }
         }
 
@@ -96,24 +118,32 @@ namespace SuplementosPIMIV.Model
         {
             DataTable dataTable = new DataTable();
 
-            SetConnection();
-            if (dataAcessObject.Connector.Open())
+            try
             {
-                string SQLSelect = 
-                    "SELECT " +
-                    "ID_Sabor, " +
-                    "NM_Sabor " +
-                    "FROM TB_Sabor " +
-                    "WHERE Ativo = 1 " +
-                    "AND NM_Sabor LIKE '" + NM_Sabor + "' + '%' " +
-                    "ORDER BY ID_Sabor DESC";
-                IDataReader dataReader = dataAcessObject.Connector.QueryWithReader(SQLSelect);
-                dataTable.TableName = "TB_Sabor";
-                dataTable.Load(dataReader);
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("ID_Sabor, ");
+                stringSQL.Append("NM_Sabor ");
+                stringSQL.Append("FROM TB_Sabor ");
+                stringSQL.Append("WHERE Ativo = 1 ");
+                stringSQL.Append("AND NM_Sabor LIKE '" + NM_Sabor + "' + '%' ");
+                stringSQL.Append("ORDER BY ID_Sabor DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                sqlDataReader = sqlCommand.ExecuteReader();
+                dataTable.Load(sqlDataReader);
             }
-            else
+            catch (Exception e)
             {
-                dataTable = null;
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
             }
 
             return dataTable;
@@ -123,20 +153,29 @@ namespace SuplementosPIMIV.Model
         {
             DS_Mensagem = "";
 
-            SetConnection();
-            if (dataAcessObject.Connector.Open())
+            try
             {
-                string SQLUpdate = 
-                    "UPDATE TB_Sabor SET " +
-                    "Ativo = 0 " +
-                    "WHERE ID_Sabor = '" + ID_Sabor + "'";
-                var result = dataAcessObject.Connector.Execute(SQLUpdate);
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("UPDATE TB_Sabor SET ");
+                stringSQL.Append("Ativo = 0 ");
+                stringSQL.Append("WHERE ID_Sabor = '" + ID_Sabor + "'");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                int result = sqlCommand.ExecuteNonQuery();
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao excluir";
             }
-            else
+            catch (Exception e)
             {
-                DS_Mensagem = "Erro de conexão";
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
             }
         }
 
@@ -144,24 +183,31 @@ namespace SuplementosPIMIV.Model
         {
             DataTable dataTable = new DataTable();
 
-            SetConnection();
-            if (dataAcessObject.Connector.Open())
+            try
             {
-                string SQLSelect = 
-                    "SELECT " +
-                    "ID_Sabor, " +
-                    "NM_Sabor " +
-                    "FROM TB_Sabor " +
-                    "WHERE Ativo = 1 " +
-                    "ORDER BY ID_Sabor DESC";
-                IDataReader dataReader = dataAcessObject.Connector.QueryWithReader(SQLSelect);
-                dataTable.TableName = "TB_Sabor";
-                dataTable.Load(dataReader);
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("ID_Sabor, ");
+                stringSQL.Append("NM_Sabor ");
+                stringSQL.Append("FROM TB_Sabor ");
+                stringSQL.Append("WHERE Ativo = 1 ");
+                stringSQL.Append("ORDER BY ID_Sabor DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                sqlDataReader = sqlCommand.ExecuteReader();
+                dataTable.Load(sqlDataReader);
             }
-            else
+            catch (Exception e)
             {
-                dataTable = null;
-                DS_Mensagem = "Erro de conexão";
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
             }
 
             return dataTable;

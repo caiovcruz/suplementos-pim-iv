@@ -12,7 +12,13 @@ namespace SuplementosPIMIV.View
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                // ConnectionString
+                Session["ConnectionString"] = "Server=DRACCON\\SQLEXPRESS;Database=DB_Suplementos_PDV;Trusted_Connection=True;";
 
+                txbDS_Usuario.Focus();
+            }
         }
 
         private void LimparCampos()
@@ -50,7 +56,7 @@ namespace SuplementosPIMIV.View
 
             if (mDs_Msg == "")
             {
-                myControllerLogin = new ControllerLogin(mDs_Usuario, mDs_Senha);
+                myControllerLogin = new ControllerLogin(mDs_Usuario, mDs_Senha, Session["ConnectionString"].ToString());
                 mDs_Msg = myControllerLogin.Acessar();
 
                 if (mDs_Msg == "Ok")

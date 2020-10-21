@@ -40,7 +40,7 @@ namespace SuplementosPIMIV.View
         private void CarregarCategorias()
         {
             // instanciando um objeto da classe ControllerCategoria
-            myControllerCategoria = new ControllerCategoria();
+            myControllerCategoria = new ControllerCategoria(Session["ConnectionString"].ToString());
 
             // passando a fonte de dados para o GridView
             gvwExibe.DataSource = myControllerCategoria.Exibir();
@@ -61,7 +61,7 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho
                 // instanciar um objeto da classe categoria, carregar tela e consultar
-                myControllerCategoria = new ControllerCategoria(txbNM_CategoriaConsultar.Text);
+                myControllerCategoria = new ControllerCategoria(txbNM_CategoriaConsultar.Text, Session["ConnectionString"].ToString());
                 gvwExibe.DataSource = myControllerCategoria.Consultar();
                 gvwExibe.DataBind();
             }
@@ -155,7 +155,8 @@ namespace SuplementosPIMIV.View
                 // instanciar um objeto da classe categoria, carregar tela e incluir
                 myControllerCategoria = new ControllerCategoria(
                     txbNM_Categoria.Text,
-                    txbDS_Categoria.Text);
+                    txbDS_Categoria.Text,
+                    Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
                 if (myControllerCategoria.DS_Mensagem == "OK")
@@ -191,7 +192,8 @@ namespace SuplementosPIMIV.View
                 myControllerCategoria = new ControllerCategoria(
                     Convert.ToInt32(txbID_Categoria.Text),
                     txbNM_Categoria.Text,
-                    txbDS_Categoria.Text);
+                    txbDS_Categoria.Text,
+                    Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
                 if (myControllerCategoria.DS_Mensagem == "OK")
@@ -218,7 +220,7 @@ namespace SuplementosPIMIV.View
         private void Excluir()
         {
             // instanciar um objeto da classe categoria e carregar tela e consultar
-            myControllerCategoria = new ControllerCategoria(Convert.ToInt32(txbID_Categoria.Text));
+            myControllerCategoria = new ControllerCategoria(Convert.ToInt32(txbID_Categoria.Text), Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerCategoria.DS_Mensagem == "OK")

@@ -57,7 +57,7 @@ namespace SuplementosPIMIV.View
         private void CarregarProdutos()
         {
             // instanciando um objeto da classe ControllerProduto
-            myControllerProduto = new ControllerProduto();
+            myControllerProduto = new ControllerProduto(Session["ConnectionString"].ToString());
 
             // passando a fonte de dados para o GridView
             gvwExibe.DataSource = myControllerProduto.Exibir();
@@ -68,7 +68,7 @@ namespace SuplementosPIMIV.View
 
         private void CarregarMarcas()
         {
-            myControllerMarca = new ControllerMarca();
+            myControllerMarca = new ControllerMarca(Session["ConnectionString"].ToString());
 
             ddlID_Marca.DataSource = myControllerMarca.Exibir();
             ddlID_Marca.DataTextField = "NM_Marca";
@@ -81,7 +81,7 @@ namespace SuplementosPIMIV.View
 
         private void CarregarCategorias()
         {
-            myControllerCategoria = new ControllerCategoria();
+            myControllerCategoria = new ControllerCategoria(Session["ConnectionString"].ToString());
 
             ddlID_Categoria.DataSource = myControllerCategoria.Exibir();
             ddlID_Categoria.DataTextField = "NM_Categoria";
@@ -94,7 +94,7 @@ namespace SuplementosPIMIV.View
 
         private void CarregarSubcategorias()
         {
-            myControllerSubcategoria = new ControllerSubcategoria();
+            myControllerSubcategoria = new ControllerSubcategoria(Session["ConnectionString"].ToString());
 
             ddlID_Subcategoria.DataSource = myControllerSubcategoria.Exibir();
             ddlID_Subcategoria.DataTextField = "NM_Subcategoria";
@@ -107,7 +107,7 @@ namespace SuplementosPIMIV.View
 
         private void CarregarSabores()
         {
-            myControllerSabor = new ControllerSabor();
+            myControllerSabor = new ControllerSabor(Session["ConnectionString"].ToString());
 
             ddlID_Sabor.DataSource = myControllerSabor.Exibir();
             ddlID_Sabor.DataTextField = "NM_Sabor";
@@ -116,6 +116,29 @@ namespace SuplementosPIMIV.View
 
             ddlID_Sabor.Items.Insert(0, "Sabor");
             ddlID_Sabor.SelectedIndex = 0;
+        }
+
+        private void CarregarProdutosConsultar()
+        {
+            // validar a entrada de dados para consulta
+            myValidar = new Validar();
+            string mDs_Msg = (myValidar.TamanhoCampo(txbNM_ProdutoConsultar.Text, 50)) ? "" : " Limite de caracteres para o nome excedido, " +
+                                                                                              "o limite para este campo é: 50 caracteres, " +
+                                                                                              "quantidade utilizada: " + txbNM_ProdutoConsultar.Text.Length + "."; ;
+
+            if (mDs_Msg == "")
+            {
+                // tudo certinho
+                // instanciar um objeto da classe produto, carregar tela e consultar
+                myControllerProduto = new ControllerProduto(txbNM_ProdutoConsultar.Text, Session["ConnectionString"].ToString());
+                gvwExibe.DataSource = myControllerProduto.Consultar();
+                gvwExibe.DataBind();
+            }
+            else
+            {
+                // exibir erro!
+                lblDS_Mensagem.Text = mDs_Msg;
+            }
         }
 
         private void IncludeFields()
@@ -259,7 +282,8 @@ namespace SuplementosPIMIV.View
                     txbDS_Produto.Text,
                     Convert.ToInt32(txbQTD_Estoque.Text),
                     Convert.ToDouble(txbPR_Custo.Text),
-                    Convert.ToDouble(txbPR_Venda.Text));
+                    Convert.ToDouble(txbPR_Venda.Text),
+                    Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
                 if (myControllerProduto.DS_Mensagem == "OK")
@@ -302,7 +326,8 @@ namespace SuplementosPIMIV.View
                     txbDS_Produto.Text,
                     Convert.ToInt32(txbQTD_Estoque.Text),
                     Convert.ToDouble(txbPR_Custo.Text),
-                    Convert.ToDouble(txbPR_Venda.Text));
+                    Convert.ToDouble(txbPR_Venda.Text),
+                    Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
                 if (myControllerProduto.DS_Mensagem == "OK")
@@ -326,33 +351,10 @@ namespace SuplementosPIMIV.View
             }
         }
 
-        private void CarregarProdutosConsultar()
-        {
-            // validar a entrada de dados para consulta
-            myValidar = new Validar();
-            string mDs_Msg = (myValidar.TamanhoCampo(txbNM_ProdutoConsultar.Text, 50)) ? "" : " Limite de caracteres para o nome excedido, " +
-                                                                                              "o limite para este campo é: 50 caracteres, " +
-                                                                                              "quantidade utilizada: " + txbNM_ProdutoConsultar.Text.Length + "."; ;
-
-            if (mDs_Msg == "")
-            {
-                // tudo certinho
-                // instanciar um objeto da classe produto, carregar tela e consultar
-                myControllerProduto = new ControllerProduto(txbNM_ProdutoConsultar.Text);
-                gvwExibe.DataSource = myControllerProduto.Consultar();
-                gvwExibe.DataBind();
-            }
-            else
-            {
-                // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
-            }
-        }
-
         private void Excluir()
         {
             // instanciar um objeto da classe produto e carregar tela e consultar
-            myControllerProduto = new ControllerProduto(Convert.ToInt32(txbID_Produto.Text));
+            myControllerProduto = new ControllerProduto(Convert.ToInt32(txbID_Produto.Text), Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerProduto.DS_Mensagem == "OK")

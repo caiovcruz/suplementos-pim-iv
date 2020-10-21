@@ -47,7 +47,7 @@ namespace SuplementosPIMIV.View
         private void CarregarSubcategorias()
         {
             // instanciando um objeto da classe ControllerSubcategoria
-            myControllerSubcategoria = new ControllerSubcategoria();
+            myControllerSubcategoria = new ControllerSubcategoria(Session["ConnectionString"].ToString());
 
             // passando a fonte de dados para o GridView
             gvwExibe.DataSource = myControllerSubcategoria.Exibir();
@@ -58,7 +58,7 @@ namespace SuplementosPIMIV.View
 
         private void CarregarCategorias()
         {
-            myControllerCategoria = new ControllerCategoria();
+            myControllerCategoria = new ControllerCategoria(Session["ConnectionString"].ToString());
 
             ddlID_Categoria.DataSource = myControllerCategoria.Exibir();
             ddlID_Categoria.DataTextField = "NM_Categoria";
@@ -81,7 +81,7 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho
                 // instanciar um objeto da classe categoria, carregar tela e consultar
-                myControllerCategoria = new ControllerCategoria(txbNM_SubcategoriaConsultar.Text);
+                myControllerCategoria = new ControllerCategoria(txbNM_SubcategoriaConsultar.Text, Session["ConnectionString"].ToString());
                 gvwExibe.DataSource = myControllerCategoria.Consultar();
                 gvwExibe.DataBind();
             }
@@ -178,7 +178,8 @@ namespace SuplementosPIMIV.View
                 myControllerSubcategoria = new ControllerSubcategoria(
                     Convert.ToInt32(ddlID_Categoria.SelectedValue),
                     txbNM_Subcategoria.Text,
-                    txbDS_Subcategoria.Text);
+                    txbDS_Subcategoria.Text,
+                    Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
                 if (myControllerSubcategoria.DS_Mensagem == "OK")
@@ -215,7 +216,8 @@ namespace SuplementosPIMIV.View
                     Convert.ToInt32(txbID_Subcategoria.Text),
                     Convert.ToInt32(ddlID_Categoria.SelectedValue),
                     txbNM_Subcategoria.Text,
-                    txbDS_Subcategoria.Text);
+                    txbDS_Subcategoria.Text,
+                    Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
                 if (myControllerSubcategoria.DS_Mensagem == "OK")
@@ -242,7 +244,7 @@ namespace SuplementosPIMIV.View
         private void Excluir()
         {
             // instanciar um objeto da classe subcategoria e carregar tela e consultar
-            myControllerCategoria = new ControllerCategoria(Convert.ToInt32(txbID_Subcategoria.Text));
+            myControllerCategoria = new ControllerCategoria(Convert.ToInt32(txbID_Subcategoria.Text), Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerSubcategoria.DS_Mensagem == "OK")

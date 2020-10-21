@@ -1,85 +1,99 @@
-﻿using DataBase;
+﻿using System;
 using System.Data;
+using System.Data.SqlClient;
+using System.Text;
 
 namespace SuplementosPIMIV.Model
 {
     public class ModelSubcategoria
     {
-        private DAO dataAcessObject;
-
         public int ID_Subcategoria { get; set; }
         public int ID_Categoria { get; set; }
         public string NM_Subcategoria { get; set; }
         public string DS_Subcategoria { get; set; }
         public string DS_Mensagem { get; set; }
 
-        public ModelSubcategoria() { }
+        private string ConnectionString = "";
 
-        public ModelSubcategoria(int id_categoria, string nm_subcategoria, string ds_subcategoria)
+        // Variaveis de Conexão
+        SqlConnection sqlConnection;                            // Conexão do SGBD
+        SqlCommand sqlCommand;                                  // Command que envia um 'comando' para o SGBD
+        SqlDataReader sqlDataReader;                            // Retorno do Command (DataReader) espécie de tabela/leitura 'apenas pra frente'
+
+        public ModelSubcategoria(string connectionString)
+        {
+            ConnectionString = connectionString;
+        }
+
+        public ModelSubcategoria(int id_categoria, string nm_subcategoria, string ds_subcategoria, string connectionString)
         {
             ID_Categoria = id_categoria;
             NM_Subcategoria = nm_subcategoria;
             DS_Subcategoria = ds_subcategoria;
+            ConnectionString = connectionString;
 
             Incluir();
         }
 
-        public ModelSubcategoria(int id_subcategoria, int id_categoria, string nm_subcategoria, string ds_subcategoria)
+        public ModelSubcategoria(int id_subcategoria, int id_categoria, string nm_subcategoria, string ds_subcategoria, string connectionString)
         {
             ID_Subcategoria = id_subcategoria;
             ID_Categoria = id_categoria;
             NM_Subcategoria = nm_subcategoria;
             DS_Subcategoria = ds_subcategoria;
+            ConnectionString = connectionString;
 
             Alterar();
         }
 
-        public ModelSubcategoria(string nm_subcategoria)
+        public ModelSubcategoria(string nm_subcategoria, string connectionString)
         {
             NM_Subcategoria = nm_subcategoria;
+            ConnectionString = connectionString;
         }
 
-        public ModelSubcategoria(int id_subcategoria)
+        public ModelSubcategoria(int id_subcategoria, string connectionString)
         {
             ID_Subcategoria = id_subcategoria;
+            ConnectionString = connectionString;
 
             Excluir();
-        }
-
-        private void SetConnection()
-        {
-            dataAcessObject = new DAO();
-            dataAcessObject.Setup(DataBase.DatabaseTypes.SqlServer,
-                "Data Source=DRACCON/SQLEXPRESS; " +
-                "Initial Catalog=DB_Suplementos_PDV; " +
-                "Integrated Security=SSPI");
         }
 
         public void Incluir()
         {
             DS_Mensagem = "";
 
-            SetConnection();
-            if (dataAcessObject.Connector.Open())
+            try
             {
-                string SQLInsert = 
-                    "INSERT INTO TB_Subcategoria (" +
-                        "ID_Categoria, " +
-                        "NM_Subcategoria, " +
-                        "DS_Subcategoria, " +
-                        "Ativo)" +
-                    "VALUES (" +
-                        "'" + ID_Categoria + "', " +
-                        "'" + NM_Subcategoria + "', " +
-                        "'" + DS_Subcategoria + "', " +
-                        "1)";
-                var result = dataAcessObject.Connector.Execute(SQLInsert);
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("INSERT INTO TB_Subcategoria (");
+                stringSQL.Append("ID_Categoria, ");
+                stringSQL.Append("NM_Subcategoria, ");
+                stringSQL.Append("DS_Subcategoria, ");
+                stringSQL.Append("Ativo)");
+                stringSQL.Append("VALUES (");
+                stringSQL.Append("'" + ID_Categoria + "', ");
+                stringSQL.Append("'" + NM_Subcategoria + "', ");
+                stringSQL.Append("'" + DS_Subcategoria + "', ");
+                stringSQL.Append("1)");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                int result = sqlCommand.ExecuteNonQuery();
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao cadastrar";
             }
-            else
+            catch (Exception e)
             {
-                DS_Mensagem = "Erro de conexão";
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
             }
         }
 
@@ -87,22 +101,31 @@ namespace SuplementosPIMIV.Model
         {
             DS_Mensagem = "";
 
-            SetConnection();
-            if (dataAcessObject.Connector.Open())
+            try
             {
-                string SQLUpdate = 
-                    "UPDATE TB_Subcategoria SET " +
-                    "ID_Categoria = '" + ID_Categoria + "', " +
-                    "NM_Subcategoria = '" + NM_Subcategoria + "', " +
-                    "DS_Subcategoria = '" + DS_Subcategoria + "' " +
-                    "WHERE ID_Subcategoria = '" + ID_Subcategoria + "'";
-                var result = dataAcessObject.Connector.Execute(SQLUpdate);
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("UPDATE TB_Subcategoria SET ");
+                stringSQL.Append("ID_Categoria = '" + ID_Categoria + "', ");
+                stringSQL.Append("NM_Subcategoria = '" + NM_Subcategoria + "', ");
+                stringSQL.Append("DS_Subcategoria = '" + DS_Subcategoria + "' ");
+                stringSQL.Append("WHERE ID_Subcategoria = '" + ID_Subcategoria + "'");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                int result = sqlCommand.ExecuteNonQuery();
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao alterar";
             }
-            else
+            catch (Exception e)
             {
-                DS_Mensagem = "Erro de conexão";
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
             }
         }
 
@@ -110,28 +133,36 @@ namespace SuplementosPIMIV.Model
         {
             DataTable dataTable = new DataTable();
 
-            SetConnection();
-            if (dataAcessObject.Connector.Open())
+            try
             {
-                string SQLSelect = 
-                    "SELECT " +
-                    "SUB.ID_Subcategoria, " +
-                    "SUB.NM_Subcategoria, " +
-                    "SUB.ID_Categoria, " +
-                    "CAT.NM_Categoria, " +
-                    "SUB.DS_Subcategoria " +
-                    "FROM TB_Subcategoria AS SUB " +
-                    "INNER JOIN TB_Categoria AS CAT ON SUB.ID_Categoria = CAT.ID_Categoria " +
-                    "WHERE SUB.Ativo = 1 " +
-                    "AND SUB.NM_Subcategoria LIKE '" + NM_Subcategoria + "' + '%' " +
-                    "ORDER BY SUB.ID_Subcategoria DESC";
-                IDataReader dataReader = dataAcessObject.Connector.QueryWithReader(SQLSelect);
-                dataTable.TableName = "TB_Subcategoria";
-                dataTable.Load(dataReader);
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("SUB.ID_Subcategoria, ");
+                stringSQL.Append("SUB.NM_Subcategoria, ");
+                stringSQL.Append("SUB.ID_Categoria, ");
+                stringSQL.Append("CAT.NM_Categoria, ");
+                stringSQL.Append("SUB.DS_Subcategoria ");
+                stringSQL.Append("FROM TB_Subcategoria AS SUB ");
+                stringSQL.Append("INNER JOIN TB_Categoria AS CAT ON SUB.ID_Categoria = CAT.ID_Categoria ");
+                stringSQL.Append("WHERE SUB.Ativo = 1 ");
+                stringSQL.Append("AND SUB.NM_Subcategoria LIKE '" + NM_Subcategoria + "' + '%' ");
+                stringSQL.Append("ORDER BY SUB.ID_Subcategoria DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                sqlDataReader = sqlCommand.ExecuteReader();
+                dataTable.Load(sqlDataReader);
             }
-            else
+            catch (Exception e)
             {
-                dataTable = null;
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
             }
 
             return dataTable;
@@ -141,20 +172,29 @@ namespace SuplementosPIMIV.Model
         {
             DS_Mensagem = "";
 
-            SetConnection();
-            if (dataAcessObject.Connector.Open())
+            try
             {
-                string SQLUpdate = 
-                    "UPDATE TB_Subcategoria SET " +
-                    "Ativo = 0 " +
-                    "WHERE ID_Subcategoria = '" + ID_Subcategoria + "'";
-                var result = dataAcessObject.Connector.Execute(SQLUpdate);
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("UPDATE TB_Subcategoria SET ");
+                stringSQL.Append("Ativo = 0 ");
+                stringSQL.Append("WHERE ID_Subcategoria = '" + ID_Subcategoria + "'");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                int result = sqlCommand.ExecuteNonQuery();
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao excluir";
             }
-            else
+            catch (Exception e)
             {
-                DS_Mensagem = "Erro de conexão";
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
             }
         }
 
@@ -162,28 +202,35 @@ namespace SuplementosPIMIV.Model
         {
             DataTable dataTable = new DataTable();
 
-            SetConnection();
-            if (dataAcessObject.Connector.Open())
+            try
             {
-                string SQLSelect = 
-                    "SELECT " +
-                    "SUB.ID_Subcategoria, " +
-                    "SUB.NM_Subcategoria, " +
-                    "SUB.ID_Categoria, " +
-                    "CAT.NM_Categoria, " +
-                    "SUB.DS_Subcategoria " +
-                    "FROM TB_Subcategoria AS SUB " +
-                    "INNER JOIN TB_Categoria AS CAT ON SUB.ID_Categoria = CAT.ID_Categoria " +
-                    "WHERE SUB.Ativo = 1 " +
-                    "ORDER BY SUB.ID_Subcategoria DESC";
-                IDataReader dataReader = dataAcessObject.Connector.QueryWithReader(SQLSelect);
-                dataTable.TableName = "TB_Subcategoria";
-                dataTable.Load(dataReader);
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("SUB.ID_Subcategoria, ");
+                stringSQL.Append("SUB.NM_Subcategoria, ");
+                stringSQL.Append("SUB.ID_Categoria, ");
+                stringSQL.Append("CAT.NM_Categoria, ");
+                stringSQL.Append("SUB.DS_Subcategoria ");
+                stringSQL.Append("FROM TB_Subcategoria AS SUB ");
+                stringSQL.Append("INNER JOIN TB_Categoria AS CAT ON SUB.ID_Categoria = CAT.ID_Categoria ");
+                stringSQL.Append("WHERE SUB.Ativo = 1 ");
+                stringSQL.Append("ORDER BY SUB.ID_Subcategoria DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                sqlDataReader = sqlCommand.ExecuteReader();
+                dataTable.Load(sqlDataReader);
             }
-            else
+            catch (Exception e)
             {
-                dataTable = null;
-                DS_Mensagem = "Erro de conexão";
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
             }
 
             return dataTable;

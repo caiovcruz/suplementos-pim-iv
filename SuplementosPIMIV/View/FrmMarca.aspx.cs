@@ -42,7 +42,7 @@ namespace SuplementosPIMIV.View
         private void CarregarMarcas()
         {
             // instanciando um objeto da classe ControllerMarca
-            myControllerMarca = new ControllerMarca();
+            myControllerMarca = new ControllerMarca(Session["ConnectionString"].ToString());
 
             // passando a fonte de dados para o GridView
             gvwExibe.DataSource = myControllerMarca.Exibir();
@@ -63,7 +63,7 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho
                 // instanciar um objeto da classe marca, carregar tela e consultar
-                myControllerMarca = new ControllerMarca(txbNM_MarcaConsultar.Text, false);
+                myControllerMarca = new ControllerMarca(txbNM_MarcaConsultar.Text, false, Session["ConnectionString"].ToString());
                 gvwExibe.DataSource = myControllerMarca.Consultar();
                 gvwExibe.DataBind();
             }
@@ -139,7 +139,8 @@ namespace SuplementosPIMIV.View
                 // instanciar um objeto da classe marca, carregar tela e incluir
                 myControllerMarca = new ControllerMarca(
                     txbNM_Marca.Text,
-                    true);
+                    true,
+                    Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
                 if (myControllerMarca.DS_Mensagem == "OK")
@@ -174,7 +175,8 @@ namespace SuplementosPIMIV.View
                 // instanciar um objeto da classe sabor, carregar tela e alterar
                 myControllerMarca = new ControllerMarca(
                     Convert.ToInt32(txbID_Marca.Text),
-                    txbNM_Marca.Text);
+                    txbNM_Marca.Text,
+                    Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
                 if (myControllerMarca.DS_Mensagem == "OK")
@@ -201,7 +203,7 @@ namespace SuplementosPIMIV.View
         private void Excluir()
         {
             // instanciar um objeto da classe sabor e carregar tela e consultar
-            myControllerMarca = new ControllerMarca(Convert.ToInt32(txbID_Marca.Text));
+            myControllerMarca = new ControllerMarca(Convert.ToInt32(txbID_Marca.Text), Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerMarca.DS_Mensagem == "OK")

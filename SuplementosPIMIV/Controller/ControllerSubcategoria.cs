@@ -4,16 +4,16 @@ namespace SuplementosPIMIV.Controller
 {
     public class ControllerSubcategoria : ModelSubcategoria
     {
-        public ControllerSubcategoria() { }
+        public ControllerSubcategoria(string connectionString) : base(connectionString) { }
 
-        public ControllerSubcategoria(int id_categoria, string nm_subcategoria, string ds_subcategoria) : 
-            base(id_categoria, nm_subcategoria, ds_subcategoria) { }
+        public ControllerSubcategoria(int id_categoria, string nm_subcategoria, string ds_subcategoria, string connectionString) : 
+            base(id_categoria, nm_subcategoria, ds_subcategoria, connectionString) { }
 
-        public ControllerSubcategoria(int id_subcategoria, int id_categoria, string nm_subcategoria, string ds_subcategoria) :
-            base(id_subcategoria, id_categoria, nm_subcategoria, ds_subcategoria) { }
+        public ControllerSubcategoria(int id_subcategoria, int id_categoria, string nm_subcategoria, string ds_subcategoria, string connectionString) :
+            base(id_subcategoria, id_categoria, nm_subcategoria, ds_subcategoria, connectionString) { }
 
-        public ControllerSubcategoria(string nm_subcategoria) : base(nm_subcategoria) { }
+        public ControllerSubcategoria(string nm_subcategoria, string connectionString) : base(nm_subcategoria, connectionString) { }
 
-        public ControllerSubcategoria(int id_subcategoria) : base(id_subcategoria) { }
+        public ControllerSubcategoria(int id_subcategoria, string connectionString) : base(id_subcategoria, connectionString) { }
     }
 }

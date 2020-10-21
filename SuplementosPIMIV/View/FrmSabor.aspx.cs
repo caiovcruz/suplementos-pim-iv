@@ -42,7 +42,7 @@ namespace SuplementosPIMIV.View
         private void CarregarSabores()
         {
             // instanciando um objeto da classe ControllerSabor
-            myControllerSabor = new ControllerSabor();
+            myControllerSabor = new ControllerSabor(Session["ConnectionString"].ToString());
 
             // passando a fonte de dados para o GridView
             gvwExibe.DataSource = myControllerSabor.Exibir();
@@ -63,7 +63,7 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho
                 // instanciar um objeto da classe sabor, carregar tela e consultar
-                myControllerSabor = new ControllerSabor(txbNM_SaborConsultar.Text, false);
+                myControllerSabor = new ControllerSabor(txbNM_SaborConsultar.Text, false, Session["ConnectionString"].ToString());
                 gvwExibe.DataSource = myControllerSabor.Consultar();
                 gvwExibe.DataBind();
             }
@@ -139,7 +139,8 @@ namespace SuplementosPIMIV.View
                 // instanciar um objeto da classe sabor, carregar tela e incluir
                 myControllerSabor = new ControllerSabor(
                     txbNM_Sabor.Text,
-                    true);
+                    true,
+                    Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
                 if (myControllerSabor.DS_Mensagem == "OK")
@@ -174,7 +175,8 @@ namespace SuplementosPIMIV.View
                 // instanciar um objeto da classe sabor, carregar tela e alterar
                 myControllerSabor = new ControllerSabor(
                     Convert.ToInt32(txbID_Sabor.Text),
-                    txbNM_Sabor.Text);
+                    txbNM_Sabor.Text,
+                    Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
                 if (myControllerSabor.DS_Mensagem == "OK")
@@ -201,7 +203,7 @@ namespace SuplementosPIMIV.View
         private void Excluir()
         {
             // instanciar um objeto da classe sabor e carregar tela e consultar
-            myControllerSabor = new ControllerSabor(Convert.ToInt32(txbID_Sabor.Text));
+            myControllerSabor = new ControllerSabor(Convert.ToInt32(txbID_Sabor.Text), Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerSabor.DS_Mensagem == "OK")

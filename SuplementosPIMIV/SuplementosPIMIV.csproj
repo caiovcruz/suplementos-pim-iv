@@ -133,11 +133,6 @@
     <Compile Include="Controller\ControllerProduto.cs" />
     <Compile Include="Controller\ControllerSabor.cs" />
     <Compile Include="Controller\ControllerSubcategoria.cs" />
-    <Compile Include="Database\AcessConnector.cs" />
-    <Compile Include="Database\BaseConnector.cs" />
-    <Compile Include="Database\DAO.cs" />
-    <Compile Include="Database\MySQLConnector.cs" />
-    <Compile Include="Database\SqlServerConnector.cs" />
     <Compile Include="Model\ModelCategoria.cs" />
     <Compile Include="Model\ModelLogin.cs" />
     <Compile Include="Model\ModelMarca.cs" />

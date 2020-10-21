@@ -4,12 +4,12 @@ namespace SuplementosPIMIV.Controller
 {
     public class ControllerSabor : ModelSabor
     {
-        public ControllerSabor() : base() { }
+        public ControllerSabor(string connectionString) : base(connectionString) { }
 
-        public ControllerSabor(string nm_sabor, bool incluir) : base(nm_sabor, incluir) { }
+        public ControllerSabor(string nm_sabor, bool incluir, string connectionString) : base(nm_sabor, incluir, connectionString) { }
 
-        public ControllerSabor(int id_sabor, string nm_sabor) : base(id_sabor, nm_sabor) { }
+        public ControllerSabor(int id_sabor, string nm_sabor, string connectionString) : base(id_sabor, nm_sabor, connectionString) { }
 
-        public ControllerSabor(int id_sabor) : base(id_sabor) { }
+        public ControllerSabor(int id_sabor, string connectionString) : base(id_sabor, connectionString) { }
     }
 }

@@ -186,13 +186,22 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.UpdatePanel updConsulta;
 
         /// <summary>
-        /// Controle txbNM_ProdutoConsultar.
+        /// Controle ddlFiltro.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbNM_ProdutoConsultar;
+        protected global::System.Web.UI.WebControls.DropDownList ddlFiltro;
+
+        /// <summary>
+        /// Controle txbConsultar.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txbConsultar;
 
         /// <summary>
         /// Controle btnConsultar.

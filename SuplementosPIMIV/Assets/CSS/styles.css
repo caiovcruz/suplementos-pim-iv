@@ -174,9 +174,13 @@ body {
     margin-bottom: 10px;
 }
 
-#txbNM_ProdutoConsultar {
+#ddlFiltro {
+    margin-left: 13.5%;
+}
+
+#txbConsultar {
     width: 48.5%;
-    margin: 0px 15px 0px 240px;
+    margin: 0px 15px 0px 15px;
 }
 
 #txbNM_Produto {

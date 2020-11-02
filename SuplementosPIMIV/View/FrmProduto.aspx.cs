@@ -1,6 +1,8 @@
 ﻿using MySqlX.XDevAPI.Relational;
 using SuplementosPIMIV.Controller;
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Validacao;
@@ -26,7 +28,8 @@ namespace SuplementosPIMIV.View
                 CarregarCategorias();
                 CarregarSubcategorias();
                 CarregarSabores();
-                BloquearBotoes();
+                CarregarFiltrosDeBusca();
+                BloquearComponentes();
             }
         }
 
@@ -45,13 +48,14 @@ namespace SuplementosPIMIV.View
             lblDS_Mensagem.Text = "";
         }
 
-        private void BloquearBotoes()
+        private void BloquearComponentes()
         {
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = false;
             btnExcluir.Enabled = false;
             btnLimpar.Enabled = false;
             btnConsultar.Enabled = false;
+            txbConsultar.Enabled = false;
         }
 
         private void CarregarProdutos()
@@ -122,16 +126,32 @@ namespace SuplementosPIMIV.View
         {
             // validar a entrada de dados para consulta
             myValidar = new Validar();
-            string mDs_Msg = (myValidar.TamanhoCampo(txbNM_ProdutoConsultar.Text, 50)) ? "" : " Limite de caracteres para o nome excedido, " +
+            string mDs_Msg = (myValidar.TamanhoCampo(txbConsultar.Text, 50)) ? "" : " Limite de caracteres para o nome excedido, " +
                                                                                               "o limite para este campo é: 50 caracteres, " +
-                                                                                              "quantidade utilizada: " + txbNM_ProdutoConsultar.Text.Length + "."; ;
+                                                                                              "quantidade utilizada: " + txbConsultar.Text.Length + "."; ;
 
             if (mDs_Msg == "")
             {
                 // tudo certinho
                 // instanciar um objeto da classe produto, carregar tela e consultar
-                myControllerProduto = new ControllerProduto(txbNM_ProdutoConsultar.Text, Session["ConnectionString"].ToString());
-                gvwExibe.DataSource = myControllerProduto.Consultar();
+                myControllerProduto = new ControllerProduto(Session["ConnectionString"].ToString());
+
+                string filtro = "";
+
+                if (ddlFiltro.SelectedValue.Equals("ID")) filtro = "PROD.ID_Produto";
+                if (ddlFiltro.SelectedValue.Equals("EAN")) filtro = "PROD.NR_EAN";
+                if (ddlFiltro.SelectedValue.Equals("Nome")) filtro = "PROD.NM_Produto";
+                if (ddlFiltro.SelectedValue.Equals("Marca")) filtro = "MAR.NM_Marca";
+                if (ddlFiltro.SelectedValue.Equals("Categoria")) filtro = "CAT.NM_Categoria";
+                if (ddlFiltro.SelectedValue.Equals("Subcategoria")) filtro = "SUB.NM_Subcategoria";
+
+                if (ddlFiltro.SelectedValue.Equals("Preço Venda"))
+                {
+                    filtro = "PROD.PR_Venda"; 
+                    txbConsultar.Text = txbConsultar.Text.Replace(",", ".");
+                }
+
+                gvwExibe.DataSource = myControllerProduto.Consultar(filtro, txbConsultar.Text);
                 gvwExibe.DataBind();
             }
             else
@@ -139,6 +159,20 @@ namespace SuplementosPIMIV.View
                 // exibir erro!
                 lblDS_Mensagem.Text = mDs_Msg;
             }
+        }
+
+        private void CarregarFiltrosDeBusca()
+        {
+            ddlFiltro.Items.Insert(0, "Filtro");
+            ddlFiltro.Items.Insert(1, "ID");
+            ddlFiltro.Items.Insert(2, "EAN");
+            ddlFiltro.Items.Insert(3, "Nome");
+            ddlFiltro.Items.Insert(4, "Marca");
+            ddlFiltro.Items.Insert(5, "Categoria");
+            ddlFiltro.Items.Insert(6, "Subcategoria");
+            ddlFiltro.Items.Insert(7, "Preço Venda");
+
+            ddlFiltro.SelectedIndex = 0;
         }
 
         private void IncludeFields()
@@ -290,7 +324,7 @@ namespace SuplementosPIMIV.View
                 {
                     // tudo certinho!
                     LimparCampos();
-                    BloquearBotoes();
+                    BloquearComponentes();
                     CarregarProdutos();
                     lblDS_Mensagem.Text = "Incluído com sucesso!";
                 }
@@ -334,7 +368,7 @@ namespace SuplementosPIMIV.View
                 {
                     // tudo certinho!
                     LimparCampos();
-                    BloquearBotoes();
+                    BloquearComponentes();
                     CarregarProdutos();
                     lblDS_Mensagem.Text = "Alterado com sucesso!";
                 }
@@ -361,7 +395,7 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho!
                 LimparCampos();
-                BloquearBotoes();
+                BloquearComponentes();
                 CarregarProdutos();
                 lblDS_Mensagem.Text = "Excluído com sucesso!";
             }
@@ -395,7 +429,7 @@ namespace SuplementosPIMIV.View
         protected void btnLimpar_Click(object sender, EventArgs e)
         {
             LimparCampos();
-            BloquearBotoes();
+            BloquearComponentes();
         }
 
         protected void gvwExibe_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -453,9 +487,23 @@ namespace SuplementosPIMIV.View
             btnLimpar.Enabled = true;
         }
 
-        protected void txbNM_ProdutoConsultar_TextChanged(object sender, EventArgs e)
+        protected void ddlFiltro_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txbNM_ProdutoConsultar.Text))
+            if (!ddlFiltro.SelectedIndex.Equals(0))
+            {
+                txbConsultar.Enabled = true;
+                txbConsultar.Focus();
+            }
+            else
+            {
+                txbConsultar.Text = "";
+                txbConsultar.Enabled = false;
+            }
+        }
+
+        protected void txbConsultar_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txbConsultar.Text))
             {
                 btnConsultar.Enabled = true;
                 btnConsultar.Focus();

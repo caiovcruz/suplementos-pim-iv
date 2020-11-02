@@ -55,7 +55,7 @@
 
                                     <asp:TextBox CssClass="TextBox" ID="txbID_Produto" Visible="false" runat="server"></asp:TextBox>
 
-                                    <asp:Label CssClass="Label" runat="server" Width="63%" Text="Nome"></asp:Label>
+                                    <asp:Label CssClass="Label" runat="server" Width="67%" Text="Nome"></asp:Label>
                                     <asp:Label CssClass="Label" runat="server" Width="30%" Text="Marca"></asp:Label>
 
                                     <asp:TextBox CssClass="TextBox" ID="txbNM_Produto" runat="server" MaxLengh="50"
@@ -147,8 +147,11 @@
                     <asp:UpdatePanel ID="updConsulta" runat="server">
                         <ContentTemplate>
 
-                            <asp:TextBox CssClass="TextBox" ID="txbNM_ProdutoConsultar" MaxLengh="50"
-                                placeholder="Buscar produto" runat="server" OnTextChanged="txbNM_ProdutoConsultar_TextChanged"
+                            <asp:DropDownList CssClass="TextBox" ID="ddlFiltro" runat="server" AutoPostBack="true"
+                                OnSelectedIndexChanged="ddlFiltro_SelectedIndexChanged"></asp:DropDownList>
+
+                            <asp:TextBox CssClass="TextBox" ID="txbConsultar" MaxLengh="50"
+                                placeholder="Buscar produto" runat="server" OnTextChanged="txbConsultar_TextChanged"
                                 AutoPostBack="true"></asp:TextBox>
 
                             <asp:Button CssClass="Button" ID="btnConsultar" runat="server" Text="Consultar"

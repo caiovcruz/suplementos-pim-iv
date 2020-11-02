@@ -66,12 +66,6 @@ namespace SuplementosPIMIV.Model
             Alterar();
         }
 
-        public ModelProduto(string nm_produto, string connectionString)
-        {
-            NM_Produto = nm_produto;
-            ConnectionString = connectionString;
-        }
-
         public ModelProduto(int id_produto, string connectionString)
         {
             ID_Produto = id_produto;
@@ -167,7 +161,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public DataTable Consultar()
+        public DataTable Consultar(string filtro, string texto)
         {
             DataTable dataTable = new DataTable();
 
@@ -198,7 +192,7 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("INNER JOIN TB_Subcategoria AS SUB ON PROD.ID_Subcategoria = SUB.ID_Subcategoria ");
                 stringSQL.Append("INNER JOIN TB_Sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor ");
                 stringSQL.Append("WHERE PROD.Ativo = 1 ");
-                stringSQL.Append("AND PROD.NM_Produto LIKE '" + NM_Produto + "' + '%' ");
+                stringSQL.Append("AND " + filtro + " LIKE '" + texto + "' + '%' ");
                 stringSQL.Append("ORDER BY PROD.ID_Produto DESC");
 
                 sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);

@@ -12,6 +12,7 @@ namespace SuplementosPIMIV.Model
         public int ID_Categoria { get; set; }
         public int ID_Subcategoria { get; set; }
         public int ID_Sabor { get; set; }
+        public string NR_EAN { get; set; }
         public string NM_Produto { get; set; }
         public string DS_Produto { get; set; }
         public int QTD_Estoque { get; set; }
@@ -31,13 +32,14 @@ namespace SuplementosPIMIV.Model
             ConnectionString = connectionString;
         }
 
-        public ModelProduto(int id_marca, int id_categoria, int id_subcategoria, int id_sabor, string nm_produto, string ds_produto,
+        public ModelProduto(int id_marca, int id_categoria, int id_subcategoria, int id_sabor, string nr_ean, string nm_produto, string ds_produto,
             int qtd_estoque, double pr_custo, double pr_venda, string connectionString)
         {
             ID_Marca = id_marca;
             ID_Categoria = id_categoria;
             ID_Subcategoria = id_subcategoria;
             ID_Sabor = id_sabor;
+            NR_EAN = nr_ean;
             NM_Produto = nm_produto;
             DS_Produto = ds_produto;
             QTD_Estoque = qtd_estoque;
@@ -48,7 +50,7 @@ namespace SuplementosPIMIV.Model
             Incluir();
         }
 
-        public ModelProduto(int id_produto, int id_marca, int id_categoria, int id_subcategoria, int id_sabor, string nm_produto,
+        public ModelProduto(int id_produto, int id_marca, int id_categoria, int id_subcategoria, int id_sabor, string nr_ean, string nm_produto,
             string ds_produto, int qtd_estoque, double pr_custo, double pr_venda, string connectionString)
         {
             ID_Produto = id_produto;
@@ -56,6 +58,7 @@ namespace SuplementosPIMIV.Model
             ID_Categoria = id_categoria;
             ID_Subcategoria = id_subcategoria;
             ID_Sabor = id_sabor;
+            NR_EAN = nr_ean;
             NM_Produto = nm_produto;
             DS_Produto = ds_produto;
             QTD_Estoque = qtd_estoque;
@@ -89,6 +92,7 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("ID_Categoria, ");
                 stringSQL.Append("ID_Subcategoria, ");
                 stringSQL.Append("ID_Sabor, ");
+                stringSQL.Append("NR_EAN, ");
                 stringSQL.Append("NM_Produto, ");
                 stringSQL.Append("DS_Produto, ");
                 stringSQL.Append("QTD_Estoque, ");
@@ -100,6 +104,7 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("'" + ID_Categoria + "', ");
                 stringSQL.Append("'" + ID_Subcategoria + "', ");
                 stringSQL.Append("'" + ID_Sabor + "', ");
+                stringSQL.Append("'" + NR_EAN + "', ");
                 stringSQL.Append("'" + NM_Produto + "', ");
                 stringSQL.Append("'" + DS_Produto + "', ");
                 stringSQL.Append("'" + QTD_Estoque + "', ");
@@ -138,6 +143,7 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("ID_Categoria = '" + ID_Categoria + "', ");
                 stringSQL.Append("ID_Subcategoria = '" + ID_Subcategoria + "', ");
                 stringSQL.Append("ID_Sabor = '" + ID_Sabor + "', ");
+                stringSQL.Append("NR_EAN = '" + NR_EAN + "', ");
                 stringSQL.Append("NM_Produto = '" + NM_Produto + "', ");
                 stringSQL.Append("DS_Produto = '" + DS_Produto + "', ");
                 stringSQL.Append("QTD_Estoque = '" + QTD_Estoque + "', ");
@@ -173,6 +179,7 @@ namespace SuplementosPIMIV.Model
                 StringBuilder stringSQL = new StringBuilder();
                 stringSQL.Append("SELECT ");
                 stringSQL.Append("PROD.ID_Produto, ");
+                stringSQL.Append("PROD.NR_EAN, ");
                 stringSQL.Append("PROD.NM_Produto, ");
                 stringSQL.Append("PROD.ID_Marca, ");
                 stringSQL.Append("MAR.NM_Marca, ");
@@ -254,6 +261,7 @@ namespace SuplementosPIMIV.Model
                 StringBuilder stringSQL = new StringBuilder();
                 stringSQL.Append("SELECT ");
                 stringSQL.Append("PROD.ID_Produto, ");
+                stringSQL.Append("PROD.NR_EAN, ");
                 stringSQL.Append("PROD.NM_Produto, ");
                 stringSQL.Append("PROD.ID_Marca, ");
                 stringSQL.Append("MAR.NM_Marca, ");

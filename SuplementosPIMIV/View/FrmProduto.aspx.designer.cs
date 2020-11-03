@@ -51,6 +51,15 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.TextBox txbID_Produto;
 
         /// <summary>
+        /// Controle txbNR_EAN.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txbNR_EAN;
+
+        /// <summary>
         /// Controle txbNM_Produto.
         /// </summary>
         /// <remarks>

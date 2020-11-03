@@ -49,11 +49,18 @@
                     <asp:UpdatePanel ID="updCadastro" runat="server">
                         <ContentTemplate>
 
+                            <asp:TextBox CssClass="TextBox" ID="txbID_Produto" Visible="false" runat="server"></asp:TextBox>
+
+                            <asp:Label CssClass="Label" runat="server" Width="19%" Text="EAN"></asp:Label>
+
+                            <br />
+
+                            <asp:TextBox CssClass="TextBox" ID="txbNR_EAN" runat="server" MaxLengh="13"
+                                placeholder="Escaneie o cód. barras" OnTextChanged="txbNR_EAN_TextChanged" AutoPostBack="true"></asp:TextBox>
+
                             <div id="internoColunasProduto">
 
                                 <div class="colunasProduto">
-
-                                    <asp:TextBox CssClass="TextBox" ID="txbID_Produto" Visible="false" runat="server"></asp:TextBox>
 
                                     <asp:Label CssClass="Label" runat="server" Width="67%" Text="Nome"></asp:Label>
                                     <asp:Label CssClass="Label" runat="server" Width="30%" Text="Marca"></asp:Label>
@@ -148,7 +155,8 @@
                         <ContentTemplate>
 
                             <asp:DropDownList CssClass="TextBox" ID="ddlFiltro" runat="server" AutoPostBack="true"
-                                OnSelectedIndexChanged="ddlFiltro_SelectedIndexChanged"></asp:DropDownList>
+                                OnSelectedIndexChanged="ddlFiltro_SelectedIndexChanged">
+                            </asp:DropDownList>
 
                             <asp:TextBox CssClass="TextBox" ID="txbConsultar" MaxLengh="50"
                                 placeholder="Buscar produto" runat="server" OnTextChanged="txbConsultar_TextChanged"

@@ -57,6 +57,7 @@ CREATE TABLE TB_Produto
     ID_Categoria INT NOT NULL,
     ID_Subcategoria INT NOT NULL,
 	ID_Sabor INT NOT NULL,
+	NR_EAN VARCHAR(18) NOT NULL,
     NM_Produto VARCHAR(50) NOT NULL,
     DS_Produto VARCHAR(3000) NOT NULL,
     QTD_Estoque INT NOT NULL,
@@ -139,6 +140,7 @@ INSERT INTO TB_Produto
 	ID_Categoria,
     ID_Subcategoria,
 	ID_Sabor,
+	NR_EAN,
 	NM_Produto,
     DS_Produto,
     QTD_Estoque,
@@ -152,6 +154,7 @@ VALUES
 	1,
     1,
     1,
+	'7895461257854',
 	'WHEY 100% 900g',
     'Tabela Nutricional: 32g (dose) = 5,8g carboidrato, 20g proteína, 8g glutamina, 4,5 BCAA',
     10,
@@ -161,8 +164,10 @@ VALUES
 );
 
 SELECT 
-MAR.NM_Marca,
+PROD.ID_Produto,
+PROD.NR_EAN,
 PROD.NM_Produto, 
+MAR.NM_Marca,
 CAT.NM_Categoria, 
 SUB.NM_Subcategoria, 
 SAB.NM_Sabor, 

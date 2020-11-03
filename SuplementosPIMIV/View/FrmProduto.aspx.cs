@@ -36,6 +36,7 @@ namespace SuplementosPIMIV.View
         private void LimparCampos()
         {
             txbID_Produto.Text = "";
+            txbNR_EAN.Text = "";
             txbNM_Produto.Text = "";
             txbDS_Produto.Text = "";
             ddlID_Categoria.SelectedIndex = 0;
@@ -147,7 +148,7 @@ namespace SuplementosPIMIV.View
 
                 if (ddlFiltro.SelectedValue.Equals("Preço Venda"))
                 {
-                    filtro = "PROD.PR_Venda"; 
+                    filtro = "PROD.PR_Venda";
                     txbConsultar.Text = txbConsultar.Text.Replace(",", ".");
                 }
 
@@ -178,6 +179,7 @@ namespace SuplementosPIMIV.View
         private void IncludeFields()
         {
             btnIncluir.Enabled =
+                txbNR_EAN.Text.Length > 0 &&
                 txbNM_Produto.Text.Length > 0 &&
                 txbDS_Produto.Text.Length > 0 &&
                 txbQTD_Estoque.Text.Length > 0 &&
@@ -190,6 +192,7 @@ namespace SuplementosPIMIV.View
                 txbID_Produto.Text.Length == 0;
 
             btnLimpar.Enabled =
+                txbNR_EAN.Text.Length > 0 ||
                 txbNM_Produto.Text.Length > 0 ||
                 txbDS_Produto.Text.Length > 0 ||
                 txbQTD_Estoque.Text.Length > 0 ||
@@ -207,92 +210,143 @@ namespace SuplementosPIMIV.View
             myValidar = new Validar();
             string mDs_Msg = "";
 
-            if (myValidar.CampoPreenchido(txbNM_Produto.Text))
+            if (myValidar.CampoPreenchido(txbNR_EAN.Text))
             {
-                if (!myValidar.TamanhoCampo(txbNM_Produto.Text, 50))
+                if (!myValidar.TamanhoCampo(txbNR_EAN.Text, 13))
                 {
-                    mDs_Msg = " Limite de caracteres para o nome excedido, " +
-                                  "o limite para este campo é: 50 caracteres, " +
-                                  "quantidade utilizada: " + txbNM_Produto.Text.Length + ".";
+                    mDs_Msg = " Limite de caracteres para o código de barras excedido, " +
+                                  "o limite para este campo é: 13 caracteres, " +
+                                  "quantidade utilizada: " + txbNR_EAN.Text.Length + ".";
                 }
                 else
                 {
-                    bool produtoCadastrado = false;
-
-                    foreach (GridViewRow row in gvwExibe.Rows)
+                    if (!myValidar.Numero(txbNR_EAN.Text))
                     {
-                        if (txbID_Produto.Text != row.Cells[1].Text)
-                        {
-                            if (row.Cells[2].Text.Equals(txbNM_Produto.Text))
-                            {
-                                produtoCadastrado = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (produtoCadastrado.Equals(true))
-                    {
-                        mDs_Msg = " Produto já cadastrado.";
+                        mDs_Msg = " O código de barras deve ser numérico.";
                     }
                     else
                     {
-                        if (myValidar.CampoPreenchido(txbDS_Produto.Text))
+                        if (!myValidar.EAN(txbNR_EAN.Text))
                         {
-                            if (!myValidar.TamanhoCampo(txbDS_Produto.Text, 3000))
-                            {
-                                mDs_Msg += " Limite de caracteres para descrição excedido, " +
-                                              "o limite para este campo é: 3000 caracteres, " +
-                                              "quantidade utilizada: " + txbDS_Produto.Text.Length + ".";
-                            }
+                            mDs_Msg = " Código de barras inválido.";
                         }
                         else
                         {
-                            mDs_Msg += " A descrição deve estar preenchida.";
-                        }
+                            bool EANCadastrado = false;
 
-
-                        if (myValidar.CampoPreenchido(txbQTD_Estoque.Text))
-                        {
-                            if (!myValidar.Numero(txbQTD_Estoque.Text))
+                            foreach (GridViewRow row in gvwExibe.Rows)
                             {
-                                mDs_Msg += " A quantidade em estoque deve ser um valor numérico.";
+                                if (txbID_Produto.Text != row.Cells[1].Text)
+                                {
+                                    if (row.Cells[2].Text.Equals(txbNR_EAN.Text))
+                                    {
+                                        EANCadastrado = true;
+                                        break;
+                                    }
+                                }
                             }
-                        }
-                        else
-                        {
-                            mDs_Msg += " A quantidade em estoque deve estar preenchida.";
-                        }
 
-                        if (myValidar.CampoPreenchido(txbPR_Custo.Text))
-                        {
-                            if (!myValidar.Valor(txbPR_Custo.Text))
+                            if (EANCadastrado.Equals(true))
                             {
-                                mDs_Msg += " O preço de custo deve ser um valor numérico, no formato: 9.999.999,99.";
+                                mDs_Msg = " Código de barras já cadastrado.";
                             }
-                        }
-                        else
-                        {
-                            mDs_Msg += " O preço de custo deve estar preenchido.";
-                        }
+                            else
+                            {
+                                if (myValidar.CampoPreenchido(txbNM_Produto.Text))
+                                {
+                                    if (!myValidar.TamanhoCampo(txbNM_Produto.Text, 50))
+                                    {
+                                        mDs_Msg = " Limite de caracteres para o nome excedido, " +
+                                                      "o limite para este campo é: 50 caracteres, " +
+                                                      "quantidade utilizada: " + txbNM_Produto.Text.Length + ".";
+                                    }
+                                    else
+                                    {
+                                        bool produtoCadastrado = false;
 
-                        if (myValidar.CampoPreenchido(txbPR_Venda.Text))
-                        {
-                            if (!myValidar.Valor(txbPR_Venda.Text))
-                            {
-                                mDs_Msg += " O preço de venda deve ser um valor numérico, no formato: 9.999.999,99.";
+                                        foreach (GridViewRow row in gvwExibe.Rows)
+                                        {
+                                            if (txbID_Produto.Text != row.Cells[1].Text)
+                                            {
+                                                if (row.Cells[2].Text.Equals(txbNM_Produto.Text))
+                                                {
+                                                    produtoCadastrado = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        if (produtoCadastrado.Equals(true))
+                                        {
+                                            mDs_Msg = " Produto já cadastrado.";
+                                        }
+                                        else
+                                        {
+                                            if (myValidar.CampoPreenchido(txbDS_Produto.Text))
+                                            {
+                                                if (!myValidar.TamanhoCampo(txbDS_Produto.Text, 3000))
+                                                {
+                                                    mDs_Msg += " Limite de caracteres para descrição excedido, " +
+                                                                  "o limite para este campo é: 3000 caracteres, " +
+                                                                  "quantidade utilizada: " + txbDS_Produto.Text.Length + ".";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                mDs_Msg += " A descrição deve estar preenchida.";
+                                            }
+
+
+                                            if (myValidar.CampoPreenchido(txbQTD_Estoque.Text))
+                                            {
+                                                if (!myValidar.Numero(txbQTD_Estoque.Text))
+                                                {
+                                                    mDs_Msg += " A quantidade em estoque deve ser um valor numérico.";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                mDs_Msg += " A quantidade em estoque deve estar preenchida.";
+                                            }
+
+                                            if (myValidar.CampoPreenchido(txbPR_Custo.Text))
+                                            {
+                                                if (!myValidar.Valor(txbPR_Custo.Text))
+                                                {
+                                                    mDs_Msg += " O preço de custo deve ser um valor numérico, no formato: 9.999.999,99.";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                mDs_Msg += " O preço de custo deve estar preenchido.";
+                                            }
+
+                                            if (myValidar.CampoPreenchido(txbPR_Venda.Text))
+                                            {
+                                                if (!myValidar.Valor(txbPR_Venda.Text))
+                                                {
+                                                    mDs_Msg += " O preço de venda deve ser um valor numérico, no formato: 9.999.999,99.";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                mDs_Msg += " O preço de venda deve estar preenchido.";
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    mDs_Msg = " O nome deve estar preenchido.";
+                                }
                             }
-                        }
-                        else
-                        {
-                            mDs_Msg += " O preço de venda deve estar preenchido.";
                         }
                     }
                 }
             }
             else
             {
-                mDs_Msg = " O nome deve estar preenchido.";
+                mDs_Msg = " O código de barras deve estar preenchido.";
             }
 
             return mDs_Msg;
@@ -312,6 +366,7 @@ namespace SuplementosPIMIV.View
                     Convert.ToInt32(ddlID_Categoria.SelectedValue),
                     Convert.ToInt32(ddlID_Subcategoria.SelectedValue),
                     Convert.ToInt32(ddlID_Sabor.SelectedValue),
+                    txbNR_EAN.Text,
                     txbNM_Produto.Text,
                     txbDS_Produto.Text,
                     Convert.ToInt32(txbQTD_Estoque.Text),
@@ -356,6 +411,7 @@ namespace SuplementosPIMIV.View
                     Convert.ToInt32(ddlID_Categoria.SelectedValue),
                     Convert.ToInt32(ddlID_Subcategoria.SelectedValue),
                     Convert.ToInt32(ddlID_Sabor.SelectedValue),
+                    txbNR_EAN.Text,
                     txbNM_Produto.Text,
                     txbDS_Produto.Text,
                     Convert.ToInt32(txbQTD_Estoque.Text),
@@ -439,45 +495,47 @@ namespace SuplementosPIMIV.View
                 LinkButton lb = (LinkButton)e.Row.FindControl("lbSelecionar");
                 e.Row.Attributes.Add("onClick", Page.ClientScript.GetPostBackEventReference(lb, ""));
 
-                e.Row.Cells[11].Attributes.Add("style", "word-break:break-all;word-wrap:break-word; width: 400px");
-                e.Row.Cells[3].Visible = false;
-                e.Row.Cells[5].Visible = false;
-                e.Row.Cells[7].Visible = false;
-                e.Row.Cells[9].Visible = false;
+                e.Row.Cells[12].Attributes.Add("style", "word-break:break-all;word-wrap:break-word; width: 400px");
+                e.Row.Cells[4].Visible = false;
+                e.Row.Cells[6].Visible = false;
+                e.Row.Cells[8].Visible = false;
+                e.Row.Cells[10].Visible = false;
             }
 
             if (e.Row.RowType == DataControlRowType.Header)
             {
                 e.Row.Cells[1].Text = "#";
-                e.Row.Cells[2].Text = "Nome";
-                e.Row.Cells[3].Visible = false;
-                e.Row.Cells[4].Text = "Marca";
-                e.Row.Cells[5].Visible = false;
-                e.Row.Cells[6].Text = "Categoria";
-                e.Row.Cells[7].Visible = false;
-                e.Row.Cells[8].Text = "Subcategoria";
-                e.Row.Cells[9].Visible = false;
-                e.Row.Cells[10].Text = "Sabor";
-                e.Row.Cells[11].Text = "Descrição";
-                e.Row.Cells[12].Text = "Estoque";
-                e.Row.Cells[13].Text = "Preço\nCusto";
-                e.Row.Cells[14].Text = "Preço\nVenda";
+                e.Row.Cells[2].Text = "EAN";
+                e.Row.Cells[3].Text = "Nome";
+                e.Row.Cells[4].Visible = false;
+                e.Row.Cells[5].Text = "Marca";
+                e.Row.Cells[6].Visible = false;
+                e.Row.Cells[7].Text = "Categoria";
+                e.Row.Cells[8].Visible = false;
+                e.Row.Cells[9].Text = "Subcategoria";
+                e.Row.Cells[10].Visible = false;
+                e.Row.Cells[11].Text = "Sabor";
+                e.Row.Cells[12].Text = "Descrição";
+                e.Row.Cells[13].Text = "Estoque";
+                e.Row.Cells[14].Text = "Preço\nCusto";
+                e.Row.Cells[15].Text = "Preço\nVenda";
             }
         }
 
         protected void gvwExibe_SelectedIndexChanged(object sender, EventArgs e)
         {
             txbID_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text);
-            txbNM_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[4].Text);
-            ddlID_Marca.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text);
-            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[5].Text);
-            ddlID_Subcategoria.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[7].Text);
+            txbNR_EAN.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text);
+            txbNM_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text);
+            ddlID_Marca.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[4].Text);
+            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[6].Text);
+            ddlID_Subcategoria.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[8].Text);
             ddlID_Subcategoria.Enabled = true;
-            ddlID_Sabor.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[9].Text);
-            txbDS_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[11].Text);
-            txbQTD_Estoque.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[12].Text);
-            txbPR_Custo.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[13].Text);
-            txbPR_Venda.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[14].Text);
+            ddlID_Sabor.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[10].Text);
+            txbDS_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[12].Text);
+            txbQTD_Estoque.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[13].Text);
+            txbPR_Custo.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[14].Text);
+            txbPR_Venda.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[15].Text);
 
             lblDS_Mensagem.Text = "";
 
@@ -568,6 +626,11 @@ namespace SuplementosPIMIV.View
         protected void txbPR_Venda_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
+        }
+
+        protected void txbNR_EAN_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

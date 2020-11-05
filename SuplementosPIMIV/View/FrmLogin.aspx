@@ -9,6 +9,7 @@
     <title>Iniciar Sessão</title>
 
     <link href="~/Assets/css/styles.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
 
 </head>
 <body>

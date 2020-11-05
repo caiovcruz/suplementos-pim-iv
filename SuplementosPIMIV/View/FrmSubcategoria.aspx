@@ -10,6 +10,7 @@
     <title>Cadastro de Subcategorias</title>
 
     <link href="~/Assets/css/styles.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/de6e3c9fed.js" crossorigin="anonymous"></script>
 
 </head>

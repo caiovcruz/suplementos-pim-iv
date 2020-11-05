@@ -167,7 +167,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public DataTable Consultar(string filtro, string texto)
+        public DataTable Consultar(int status, string filtro, string texto)
         {
             DataTable dataTable = new DataTable();
 
@@ -198,7 +198,7 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("INNER JOIN TB_Categoria AS CAT ON PROD.ID_Categoria = CAT.ID_Categoria ");
                 stringSQL.Append("INNER JOIN TB_Subcategoria AS SUB ON PROD.ID_Subcategoria = SUB.ID_Subcategoria ");
                 stringSQL.Append("INNER JOIN TB_Sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor ");
-                stringSQL.Append("WHERE PROD.Ativo = 1 ");
+                stringSQL.Append("WHERE PROD.Ativo = " + status + " ");
                 stringSQL.Append("AND " + filtro + " LIKE '" + texto + "' + '%' ");
                 stringSQL.Append("ORDER BY PROD.ID_Produto DESC");
 
@@ -249,7 +249,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public DataTable Exibir()
+        public DataTable Exibir(int status)
         {
             DataTable dataTable = new DataTable();
 
@@ -280,7 +280,7 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("INNER JOIN TB_Categoria AS CAT ON PROD.ID_Categoria = CAT.ID_Categoria ");
                 stringSQL.Append("INNER JOIN TB_Subcategoria AS SUB ON PROD.ID_Subcategoria = SUB.ID_Subcategoria ");
                 stringSQL.Append("INNER JOIN TB_Sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor ");
-                stringSQL.Append("WHERE PROD.Ativo = 1 ");
+                stringSQL.Append("WHERE PROD.Ativo = " + status + " ");
                 stringSQL.Append("ORDER BY PROD.ID_Produto DESC");
 
                 sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);

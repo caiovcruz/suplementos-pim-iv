@@ -154,6 +154,8 @@
                     <asp:UpdatePanel ID="updConsulta" runat="server">
                         <ContentTemplate>
 
+                            <asp:CheckBox ID="chkStatusInativo" runat="server" Text="Inativos" AutoPostBack="true" OnCheckedChanged="chkStatusInativo_CheckedChanged" />
+
                             <asp:DropDownList CssClass="TextBox" ID="ddlFiltro" runat="server" AutoPostBack="true"
                                 OnSelectedIndexChanged="ddlFiltro_SelectedIndexChanged">
                             </asp:DropDownList>

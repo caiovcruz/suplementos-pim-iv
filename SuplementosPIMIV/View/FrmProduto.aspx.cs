@@ -65,7 +65,7 @@ namespace SuplementosPIMIV.View
             myControllerProduto = new ControllerProduto(Session["ConnectionString"].ToString());
 
             // passando a fonte de dados para o GridView
-            gvwExibe.DataSource = myControllerProduto.Exibir();
+            gvwExibe.DataSource = myControllerProduto.Exibir(chkStatusInativo.Checked ? 0 : 1);
 
             // associando os dados para carregar e exibir
             gvwExibe.DataBind();
@@ -152,7 +152,7 @@ namespace SuplementosPIMIV.View
                     txbConsultar.Text = txbConsultar.Text.Replace(",", ".");
                 }
 
-                gvwExibe.DataSource = myControllerProduto.Consultar(filtro, txbConsultar.Text);
+                gvwExibe.DataSource = myControllerProduto.Consultar(chkStatusInativo.Checked ? 0 : 1, filtro, txbConsultar.Text);
                 gvwExibe.DataBind();
             }
             else
@@ -631,6 +631,11 @@ namespace SuplementosPIMIV.View
         protected void txbNR_EAN_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        protected void chkStatusInativo_CheckedChanged(object sender, EventArgs e)
+        {
+            CarregarProdutos();
         }
     }
 }

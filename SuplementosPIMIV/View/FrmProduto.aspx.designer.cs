@@ -195,6 +195,15 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.UpdatePanel updConsulta;
 
         /// <summary>
+        /// Controle chkStatusInativo.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkStatusInativo;
+
+        /// <summary>
         /// Controle ddlFiltro.
         /// </summary>
         /// <remarks>

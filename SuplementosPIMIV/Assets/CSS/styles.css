@@ -174,8 +174,12 @@ body {
     margin-bottom: 10px;
 }
 
+#chkStatusInativo {
+    
+}
+
 #ddlFiltro {
-    margin-left: 13.5%;
+    margin-left: 10%;
 }
 
 #txbConsultar {

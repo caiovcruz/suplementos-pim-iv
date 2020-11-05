@@ -14,6 +14,6 @@ namespace SuplementosPIMIV.Controller
             string ds_produto, double pr_custo, double pr_venda, string connectionString) :
             base(id_produto, id_marca, id_categoria, id_subcategoria, id_sabor, nr_ean, nm_produto, ds_produto, pr_custo, pr_venda, connectionString) { }
 
-        public ControllerProduto(int id_produto, string connectionString) : base(id_produto, connectionString) { }
+        public ControllerProduto(int id_produto, string acao, string connectionString) : base(id_produto, acao, connectionString) { }
     }
 }

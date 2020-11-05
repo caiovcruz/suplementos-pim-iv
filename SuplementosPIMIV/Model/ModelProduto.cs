@@ -66,12 +66,19 @@ namespace SuplementosPIMIV.Model
             Alterar();
         }
 
-        public ModelProduto(int id_produto, string connectionString)
+        public ModelProduto(int id_produto, string acao, string connectionString)
         {
             ID_Produto = id_produto;
             ConnectionString = connectionString;
 
-            Excluir();
+            if (acao.Equals("Excluir"))
+            {
+                Excluir();
+            }
+            else if (acao.Equals("Ativar"))
+            {
+                Ativar();
+            }
         }
 
         public void Incluir()
@@ -187,7 +194,8 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("PROD.DS_Produto, ");
                 stringSQL.Append("EST.QTD_Estoque, ");
                 stringSQL.Append("FORMAT(PROD.PR_Custo, 'N2') AS PR_Custo, ");
-                stringSQL.Append("FORMAT(PROD.PR_Venda, 'N2') AS PR_Venda ");
+                stringSQL.Append("FORMAT(PROD.PR_Venda, 'N2') AS PR_Venda, ");
+                stringSQL.Append("PROD.Ativo ");
                 stringSQL.Append("FROM TB_Produto AS PROD ");
                 stringSQL.Append("INNER JOIN TB_Marca AS MAR ON PROD.ID_Marca = MAR.ID_Marca ");
                 stringSQL.Append("INNER JOIN TB_Categoria AS CAT ON PROD.ID_Categoria = CAT.ID_Categoria ");
@@ -245,6 +253,36 @@ namespace SuplementosPIMIV.Model
             }
         }
 
+        public void Ativar()
+        {
+            DS_Mensagem = "";
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("UPDATE TB_Produto SET ");
+                stringSQL.Append("Ativo = 1 ");
+                stringSQL.Append("WHERE ID_Produto = '" + ID_Produto + "'");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                int result = sqlCommand.ExecuteNonQuery();
+
+                DS_Mensagem = result > 0 ? "OK" : "Erro ao ativar";
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+        }
+
         public DataTable Exibir(int status)
         {
             DataTable dataTable = new DataTable();
@@ -270,7 +308,8 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("PROD.DS_Produto, ");
                 stringSQL.Append("EST.QTD_Estoque, ");
                 stringSQL.Append("FORMAT(PROD.PR_Custo, 'N2') AS PR_Custo, ");
-                stringSQL.Append("FORMAT(PROD.PR_Venda, 'N2') AS PR_Venda ");
+                stringSQL.Append("FORMAT(PROD.PR_Venda, 'N2') AS PR_Venda, ");
+                stringSQL.Append("PROD.Ativo ");
                 stringSQL.Append("FROM TB_Produto AS PROD ");
                 stringSQL.Append("INNER JOIN TB_Marca AS MAR ON PROD.ID_Marca = MAR.ID_Marca ");
                 stringSQL.Append("INNER JOIN TB_Categoria AS CAT ON PROD.ID_Categoria = CAT.ID_Categoria ");

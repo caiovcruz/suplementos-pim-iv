@@ -59,6 +59,8 @@
                             <asp:TextBox CssClass="TextBox" ID="txbNR_EAN" runat="server" MaxLengh="13"
                                 placeholder="Escaneie o cód. barras" OnTextChanged="txbNR_EAN_TextChanged" AutoPostBack="true"></asp:TextBox>
 
+                            <asp:Button CssClass="Button" ID="btnAtivarStatus" runat="server" Text="Ativar" OnClick="btnAtivarStatus_Click" />
+
                             <div id="internoColunasProduto">
 
                                 <div class="colunasProduto">

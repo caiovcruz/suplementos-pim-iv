@@ -53,6 +53,7 @@ namespace SuplementosPIMIV.View
 
         private void BloquearComponentes()
         {
+            btnAtivarStatus.Enabled = false;
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = false;
             btnExcluir.Enabled = false;
@@ -445,7 +446,7 @@ namespace SuplementosPIMIV.View
         private void Excluir()
         {
             // instanciar um objeto da classe produto e carregar tela e consultar
-            myControllerProduto = new ControllerProduto(Convert.ToInt32(txbID_Produto.Text), Session["ConnectionString"].ToString());
+            myControllerProduto = new ControllerProduto(Convert.ToInt32(txbID_Produto.Text), "Excluir", Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerProduto.DS_Mensagem == "OK")
@@ -455,6 +456,25 @@ namespace SuplementosPIMIV.View
                 BloquearComponentes();
                 CarregarProdutos();
                 lblDS_Mensagem.Text = "Excluído com sucesso!";
+            }
+            else
+            {
+                // exibir erro!
+                lblDS_Mensagem.Text = myControllerProduto.DS_Mensagem;
+            }
+        }
+
+        private void Ativar()
+        {
+            // instanciar um objeto da classe produto e carregar tela e consultar
+            myControllerProduto = new ControllerProduto(Convert.ToInt32(txbID_Produto.Text), "Ativar", Session["ConnectionString"].ToString());
+
+            // o que ocorreu?
+            if (myControllerProduto.DS_Mensagem == "OK")
+            {
+                // tudo certinho!
+                CarregarProdutos();
+                lblDS_Mensagem.Text = "Ativado com sucesso!";
             }
             else
             {
@@ -501,6 +521,7 @@ namespace SuplementosPIMIV.View
                 e.Row.Cells[6].Visible = false;
                 e.Row.Cells[8].Visible = false;
                 e.Row.Cells[10].Visible = false;
+                //e.Row.Cells[16].Visible = false;
             }
 
             if (e.Row.RowType == DataControlRowType.Header)
@@ -520,6 +541,7 @@ namespace SuplementosPIMIV.View
                 e.Row.Cells[13].Text = "Estoque";
                 e.Row.Cells[14].Text = "Preço\nCusto";
                 e.Row.Cells[15].Text = "Preço\nVenda";
+                //e.Row.Cells[16].Visible = false;
             }
         }
 
@@ -540,6 +562,7 @@ namespace SuplementosPIMIV.View
 
             lblDS_Mensagem.Text = "";
 
+            btnAtivarStatus.Enabled = true;
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = true;
             btnExcluir.Enabled = true;
@@ -572,6 +595,13 @@ namespace SuplementosPIMIV.View
                 btnConsultar.Enabled = false;
                 CarregarProdutos();
             }
+        }
+
+        protected void txbNR_EAN_TextChanged(object sender, EventArgs e)
+        {
+            IncludeFields();
+            btnAtivarStatus.Visible = true;
+            txbNM_Produto.Focus();
         }
 
         protected void txbNM_Produto_TextChanged(object sender, EventArgs e)
@@ -623,14 +653,15 @@ namespace SuplementosPIMIV.View
             IncludeFields();
         }
 
-        protected void txbNR_EAN_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         protected void chkStatusInativo_CheckedChanged(object sender, EventArgs e)
         {
             CarregarProdutos();
+        }
+
+        protected void btnAtivarStatus_Click(object sender, EventArgs e)
+        {
+            Ativar();
+            btnAtivarStatus.Enabled = false;
         }
     }
 }

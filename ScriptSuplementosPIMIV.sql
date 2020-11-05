@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS TB_Login;
+DROP TABLE IF EXISTS TB_Estoque;
 DROP TABLE IF EXISTS TB_Produto;
 DROP TABLE IF EXISTS TB_Marca;
 DROP TABLE IF EXISTS TB_Categoria;
@@ -60,13 +61,21 @@ CREATE TABLE TB_Produto
 	NR_EAN VARCHAR(18) NOT NULL,
     NM_Produto VARCHAR(50) NOT NULL,
     DS_Produto VARCHAR(3000) NOT NULL,
-    QTD_Estoque INT NOT NULL,
 	PR_Custo DECIMAL(10,2) NOT NULL,
     PR_Venda DECIMAL(10,2) NOT NULL,
     Ativo BIT NOT NULL,
     PRIMARY KEY (ID_Produto),
     FOREIGN KEY (ID_Categoria) REFERENCES TB_Categoria(ID_Categoria),
     FOREIGN KEY (ID_Subcategoria) REFERENCES TB_Subcategoria(ID_Subcategoria)
+);
+
+CREATE TABLE TB_Estoque
+(
+	ID_Produto INT NOT NULL,
+    QTD_Estoque INT NOT NULL,
+    Ativo BIT NOT NULL,
+    PRIMARY KEY (ID_Produto),
+	FOREIGN KEY (ID_Produto) REFERENCES TB_Produto(ID_Produto)
 );
 
 GO
@@ -143,7 +152,6 @@ INSERT INTO TB_Produto
 	NR_EAN,
 	NM_Produto,
     DS_Produto,
-    QTD_Estoque,
 	PR_Custo,
     PR_Venda,
     Ativo
@@ -157,9 +165,21 @@ VALUES
 	'7895461257854',
 	'WHEY 100% 900g',
     'Tabela Nutricional: 32g (dose) = 5,8g carboidrato, 20g proteína, 8g glutamina, 4,5 BCAA',
-    10,
     50.00,
     70.00,
+    1
+);
+
+INSERT INTO TB_Estoque
+(
+	ID_Produto,
+	QTD_Estoque,
+    Ativo
+)
+VALUES
+(
+	1,
+	10,
     1
 );
 
@@ -172,7 +192,7 @@ CAT.NM_Categoria,
 SUB.NM_Subcategoria, 
 SAB.NM_Sabor, 
 PROD.DS_Produto, 
-PROD.QTD_Estoque,
+EST.QTD_Estoque,
 FORMAT(PROD.PR_Custo, 'N2') AS PR_Custo,
 FORMAT(PROD.PR_Venda, 'N2') AS PR_Venda
 FROM TB_Produto AS PROD
@@ -184,5 +204,7 @@ INNER JOIN TB_Subcategoria AS SUB
 ON PROD.ID_Subcategoria = SUB.ID_Subcategoria
 INNER JOIN TB_Sabor AS SAB
 ON PROD.ID_Sabor = SAB.ID_Sabor
+INNER JOIN TB_Estoque AS EST
+ON PROD.ID_Produto = EST.ID_Produto
 WHERE PROD.Ativo = 1 
 ORDER BY PROD.ID_Produto DESC;

@@ -164,6 +164,8 @@ body {
 
 .Label {
     margin-top: 5px;
+    margin-bottom: 2px;
+    font-weight: bold;
 }
 
 .TextBox {

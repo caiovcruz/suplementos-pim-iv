@@ -113,7 +113,7 @@
 
                                     <asp:Label CssClass="Label" runat="server" Width="100%" Text="Estoque"></asp:Label>
                                     <asp:TextBox CssClass="TextBox" ID="txbQTD_Estoque" runat="server" MaxLengh="10"
-                                        placeholder="Estoque" OnTextChanged="txbQTD_Estoque_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                        placeholder="Estoque" AutoPostBack="true"></asp:TextBox>
 
                                     <br />
 

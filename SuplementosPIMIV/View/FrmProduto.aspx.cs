@@ -38,6 +38,7 @@ namespace SuplementosPIMIV.View
             txbID_Produto.Text = "";
             txbNR_EAN.Text = "";
             txbNM_Produto.Text = "";
+            ddlID_Marca.SelectedIndex = 0;
             txbDS_Produto.Text = "";
             ddlID_Categoria.SelectedIndex = 0;
             ddlID_Subcategoria.SelectedIndex = 0;
@@ -57,6 +58,7 @@ namespace SuplementosPIMIV.View
             btnLimpar.Enabled = false;
             btnConsultar.Enabled = false;
             txbConsultar.Enabled = false;
+            txbQTD_Estoque.Enabled = false;
         }
 
         private void CarregarProdutos()
@@ -182,7 +184,6 @@ namespace SuplementosPIMIV.View
                 txbNR_EAN.Text.Length > 0 &&
                 txbNM_Produto.Text.Length > 0 &&
                 txbDS_Produto.Text.Length > 0 &&
-                txbQTD_Estoque.Text.Length > 0 &&
                 txbPR_Venda.Text.Length > 0 &&
                 txbPR_Custo.Text.Length > 0 &&
                 ddlID_Marca.SelectedIndex != 0 &&
@@ -296,19 +297,6 @@ namespace SuplementosPIMIV.View
                                                 mDs_Msg += " A descrição deve estar preenchida.";
                                             }
 
-
-                                            if (myValidar.CampoPreenchido(txbQTD_Estoque.Text))
-                                            {
-                                                if (!myValidar.Numero(txbQTD_Estoque.Text))
-                                                {
-                                                    mDs_Msg += " A quantidade em estoque deve ser um valor numérico.";
-                                                }
-                                            }
-                                            else
-                                            {
-                                                mDs_Msg += " A quantidade em estoque deve estar preenchida.";
-                                            }
-
                                             if (myValidar.CampoPreenchido(txbPR_Custo.Text))
                                             {
                                                 if (!myValidar.Valor(txbPR_Custo.Text))
@@ -369,7 +357,6 @@ namespace SuplementosPIMIV.View
                     txbNR_EAN.Text,
                     txbNM_Produto.Text,
                     txbDS_Produto.Text,
-                    Convert.ToInt32(txbQTD_Estoque.Text),
                     Convert.ToDouble(txbPR_Custo.Text),
                     Convert.ToDouble(txbPR_Venda.Text),
                     Session["ConnectionString"].ToString());
@@ -414,7 +401,6 @@ namespace SuplementosPIMIV.View
                     txbNR_EAN.Text,
                     txbNM_Produto.Text,
                     txbDS_Produto.Text,
-                    Convert.ToInt32(txbQTD_Estoque.Text),
                     Convert.ToDouble(txbPR_Custo.Text),
                     Convert.ToDouble(txbPR_Venda.Text),
                     Session["ConnectionString"].ToString());
@@ -606,12 +592,6 @@ namespace SuplementosPIMIV.View
         }
 
         protected void ddlID_Sabor_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            IncludeFields();
-            txbQTD_Estoque.Focus();
-        }
-
-        protected void txbQTD_Estoque_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
             txbPR_Custo.Focus();

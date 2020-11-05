@@ -105,12 +105,13 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("'" + DS_Produto + "', ");
                 stringSQL.Append("REPLACE( REPLACE('" + PR_Custo + "', '.' ,'' ), ',', '.' ), ");
                 stringSQL.Append("REPLACE( REPLACE('" + PR_Venda + "', '.' ,'' ), ',', '.' ), ");
-                stringSQL.Append("1)");
+                stringSQL.Append("1);");
+                stringSQL.Append("SELECT SCOPE_IDENTITY();");
 
                 sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
-                int result = sqlCommand.ExecuteNonQuery();
+                ID_Produto = Convert.ToInt32(sqlCommand.ExecuteScalar());
 
-                DS_Mensagem = result > 0 ? "OK" : "Erro ao cadastrar";
+                DS_Mensagem = ID_Produto > 0 ? "OK" : "Erro ao cadastrar";
             }
             catch (Exception e)
             {
@@ -294,6 +295,6 @@ namespace SuplementosPIMIV.Model
             }
 
             return dataTable;
-        }
+        }       
     }
 }

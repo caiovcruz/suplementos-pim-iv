@@ -17,6 +17,7 @@ namespace SuplementosPIMIV.View
         private ControllerCategoria myControllerCategoria;
         private ControllerSubcategoria myControllerSubcategoria;
         private ControllerSabor myControllerSabor;
+        private ControllerEstoque myControllerEstoque;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -364,11 +365,25 @@ namespace SuplementosPIMIV.View
                 // o que ocorreu?
                 if (myControllerProduto.DS_Mensagem == "OK")
                 {
-                    // tudo certinho!
-                    LimparCampos();
-                    BloquearComponentes();
-                    CarregarProdutos();
-                    lblDS_Mensagem.Text = "Incluído com sucesso!";
+                    myControllerEstoque = new ControllerEstoque(
+                        myControllerProduto.ID_Produto,
+                        0,
+                        Session["ConnectionString"].ToString());
+
+                    if (myControllerEstoque.DS_Mensagem == "OK")
+                    {
+                        // tudo certinho!
+                        LimparCampos();
+                        BloquearComponentes();
+                        CarregarProdutos();
+                        lblDS_Mensagem.Text = "Incluído com sucesso!";
+                    }
+                    else
+                    {// exibir erro!
+                        lblDS_Mensagem.Text = "Incluído com sucesso! #Erro ao cadastrar estoque, " +
+                            "favor cadastrar manualmente para conseguir visualizar o produto.";
+
+                    }
                 }
                 else
                 {

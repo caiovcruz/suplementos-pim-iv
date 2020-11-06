@@ -334,6 +334,64 @@ namespace SuplementosPIMIV.Model
             }
 
             return dataTable;
-        }       
+        } 
+        
+        public string VerificarProdutoCadastrado(string id_produto, string nr_ean, string nm_produto, string id_marca)
+        {
+            DS_Mensagem = "";
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("1 ");
+                stringSQL.Append("FROM TB_Produto ");
+                stringSQL.Append("WHERE ID_Produto != '" + id_produto + "' ");
+                stringSQL.Append("AND NR_EAN = '" + nr_ean + "' ");
+                stringSQL.Append("ORDER BY ID_Produto DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                sqlDataReader = sqlCommand.ExecuteReader();
+
+                if (sqlDataReader.HasRows)
+                {
+                    DS_Mensagem = "EAN já cadastrado.";
+                }
+
+                sqlCommand.Dispose();
+                sqlDataReader.Close();
+                stringSQL.Clear();
+
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("1 ");
+                stringSQL.Append("FROM TB_Produto ");
+                stringSQL.Append("WHERE ID_Produto != '" + id_produto + "' ");
+                stringSQL.Append("AND NM_Produto = '" + nm_produto + "' ");
+                stringSQL.Append("AND ID_Marca = '" + id_marca + "' ");
+                stringSQL.Append("ORDER BY ID_Produto DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                sqlDataReader = sqlCommand.ExecuteReader();
+
+                if (sqlDataReader.HasRows)
+                {
+                    DS_Mensagem += " Produto já cadastrado para a marca selecionada.";
+                }
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+
+            return DS_Mensagem;
+        }
     }
 }

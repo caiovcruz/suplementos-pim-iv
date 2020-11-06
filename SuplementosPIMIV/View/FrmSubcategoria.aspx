@@ -52,8 +52,8 @@
 
                             <asp:TextBox CssClass="TextBox" ID="txbID_Subcategoria" Visible="false" runat="server"></asp:TextBox>
 
-                            <asp:Label CssClass="Label" runat="server" Width="69.2%" Text="Nome"></asp:Label>
-                            <asp:Label CssClass="Label" runat="server" Width="30%" Text="Categoria base"></asp:Label>
+                            <asp:Label CssClass="Label" runat="server" Width="77%" Text="Nome"></asp:Label>
+                            <asp:Label CssClass="Label" runat="server" Width="20%" Text="Categoria base"></asp:Label>
 
                             <asp:TextBox CssClass="TextBox" ID="txbNM_Subcategoria" runat="server" MaxLengh="50"
                                 placeholder="Nome da subcategoria" OnTextChanged="txbNM_Subcategoria_TextChanged"
@@ -81,6 +81,7 @@
                             <asp:Button CssClass="Button" ID="btnIncluir" runat="server" Text="Incluir" OnClick="btnIncluir_Click" />
                             <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
                             <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
+                            <asp:Button CssClass="Button" ID="btnAtivarStatus" runat="server" Text="Ativar" OnClick="btnAtivarStatus_Click" />
 
                         </ContentTemplate>
                     </asp:UpdatePanel>
@@ -98,6 +99,8 @@
 
                     <asp:UpdatePanel ID="updConsulta" runat="server">
                         <ContentTemplate>
+
+                            <asp:CheckBox ID="chkStatusInativo" runat="server" Text="Inativas" AutoPostBack="true" OnCheckedChanged="chkStatusInativo_CheckedChanged" />
 
                             <asp:TextBox CssClass="TextBox" ID="txbNM_SubcategoriaConsultar" MaxLengh="50"
                                 placeholder="Buscar subcategoria" runat="server" OnTextChanged="txbNM_SubcategoriaConsultar_TextChanged"

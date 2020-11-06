@@ -20,7 +20,7 @@ namespace SuplementosPIMIV.View
             {
                 LimparCampos();
                 CarregarSabores();
-                BloquearBotoes();
+                BloquearComponentes();
             }
         }
 
@@ -30,8 +30,9 @@ namespace SuplementosPIMIV.View
             txbNM_Sabor.Text = "";
         }
 
-        private void BloquearBotoes()
+        private void BloquearComponentes()
         {
+            btnAtivarStatus.Enabled = false;
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = false;
             btnExcluir.Enabled = false;
@@ -45,7 +46,7 @@ namespace SuplementosPIMIV.View
             myControllerSabor = new ControllerSabor(Session["ConnectionString"].ToString());
 
             // passando a fonte de dados para o GridView
-            gvwExibe.DataSource = myControllerSabor.Exibir();
+            gvwExibe.DataSource = myControllerSabor.Exibir(chkStatusInativo.Checked ? 0 : 1);
 
             // associando os dados para carregar e exibir
             gvwExibe.DataBind();
@@ -63,8 +64,8 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho
                 // instanciar um objeto da classe sabor, carregar tela e consultar
-                myControllerSabor = new ControllerSabor(txbNM_SaborConsultar.Text, false, Session["ConnectionString"].ToString());
-                gvwExibe.DataSource = myControllerSabor.Consultar();
+                myControllerSabor = new ControllerSabor(Session["ConnectionString"].ToString());
+                gvwExibe.DataSource = myControllerSabor.Consultar(chkStatusInativo.Checked ? 0 : 1, txbNM_SaborConsultar.Text);
                 gvwExibe.DataBind();
             }
             else
@@ -88,6 +89,7 @@ namespace SuplementosPIMIV.View
         {
             // validar a entrada de dados para incluir
             myValidar = new Validar();
+            myControllerSabor = new ControllerSabor(Session["ConnectionString"].ToString());
             string mDs_Msg = "";
 
             if (myValidar.CampoPreenchido(txbNM_Sabor.Text))
@@ -100,23 +102,9 @@ namespace SuplementosPIMIV.View
                 }
                 else
                 {
-                    bool SaborCadastrado = false;
-
-                    foreach (GridViewRow row in gvwExibe.Rows)
+                    if (!myControllerSabor.VerificarProdutoCadastrado(txbID_Sabor.Text, txbNM_Sabor.Text).Equals(""))
                     {
-                        if (txbID_Sabor.Text != row.Cells[1].Text)
-                        {
-                            if (row.Cells[2].Text.Equals(txbNM_Sabor.Text))
-                            {
-                                SaborCadastrado = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (SaborCadastrado.Equals(true))
-                    {
-                        mDs_Msg = " Sabor já cadastrado.";
+                        mDs_Msg += " " + myControllerSabor.DS_Mensagem + " Verifique nos sabores ativos e inativos!";
                     }
                 }
             }
@@ -139,7 +127,6 @@ namespace SuplementosPIMIV.View
                 // instanciar um objeto da classe sabor, carregar tela e incluir
                 myControllerSabor = new ControllerSabor(
                     txbNM_Sabor.Text,
-                    true,
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -147,7 +134,7 @@ namespace SuplementosPIMIV.View
                 {
                     // tudo certinho!
                     LimparCampos();
-                    BloquearBotoes();
+                    BloquearComponentes();
                     CarregarSabores();
                     lblDS_Mensagem.Text = "Incluído com sucesso!";
                 }
@@ -183,7 +170,7 @@ namespace SuplementosPIMIV.View
                 {
                     // tudo certinho!
                     LimparCampos();
-                    BloquearBotoes();
+                    BloquearComponentes();
                     CarregarSabores();
                     lblDS_Mensagem.Text = "Alterado com sucesso!";
                 }
@@ -203,16 +190,35 @@ namespace SuplementosPIMIV.View
         private void Excluir()
         {
             // instanciar um objeto da classe sabor e carregar tela e consultar
-            myControllerSabor = new ControllerSabor(Convert.ToInt32(txbID_Sabor.Text), Session["ConnectionString"].ToString());
+            myControllerSabor = new ControllerSabor(Convert.ToInt32(txbID_Sabor.Text), 'E', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerSabor.DS_Mensagem == "OK")
             {
                 // tudo certinho!
                 LimparCampos();
-                BloquearBotoes();
+                BloquearComponentes();
                 CarregarSabores();
                 lblDS_Mensagem.Text = "Excluído com sucesso!";
+            }
+            else
+            {
+                // exibir erro!
+                lblDS_Mensagem.Text = myControllerSabor.DS_Mensagem;
+            }
+        }
+
+        private void Ativar()
+        {
+            // instanciar um objeto da classe sabor e carregar tela e ativar
+            myControllerSabor = new ControllerSabor(Convert.ToInt32(txbID_Sabor.Text), 'A', Session["ConnectionString"].ToString());
+
+            // o que ocorreu?
+            if (myControllerSabor.DS_Mensagem == "OK")
+            {
+                // tudo certinho!
+                CarregarSabores();
+                lblDS_Mensagem.Text = "Ativado com sucesso!";
             }
             else
             {
@@ -239,7 +245,7 @@ namespace SuplementosPIMIV.View
         protected void btnLimpar_Click(object sender, EventArgs e)
         {
             LimparCampos();
-            BloquearBotoes();
+            BloquearComponentes();
         }
 
         protected void btnConsultar_Click(object sender, EventArgs e)
@@ -286,12 +292,34 @@ namespace SuplementosPIMIV.View
             txbID_Sabor.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text);
             txbNM_Sabor.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text);
 
+            CheckBox ativo = (CheckBox)gvwExibe.SelectedRow.Cells[3].Controls[0];
+            if (!ativo.Checked)
+            {
+                btnAtivarStatus.Enabled = true;
+                btnExcluir.Enabled = false;
+            }
+            else
+            {
+                btnAtivarStatus.Enabled = false;
+                btnExcluir.Enabled = true;
+            }
+
             lblDS_Mensagem.Text = "";
 
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = true;
-            btnExcluir.Enabled = true;
             btnLimpar.Enabled = true;
+        }
+
+        protected void chkStatusInativo_CheckedChanged(object sender, EventArgs e)
+        {
+            CarregarSabores();
+        }
+
+        protected void btnAtivarStatus_Click(object sender, EventArgs e)
+        {
+            Ativar();
+            btnAtivarStatus.Enabled = false;
         }
     }
 }

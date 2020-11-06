@@ -22,7 +22,7 @@ namespace SuplementosPIMIV.View
                 LimparCampos();
                 CarregarSubcategorias();
                 CarregarCategorias();
-                BloquearBotoes();
+                BloquearComponentes();
             }
         }
 
@@ -35,8 +35,9 @@ namespace SuplementosPIMIV.View
             lblDS_Mensagem.Text = "";
         }
 
-        private void BloquearBotoes()
+        private void BloquearComponentes()
         {
+            btnAtivarStatus.Enabled = false;
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = false;
             btnExcluir.Enabled = false;
@@ -50,7 +51,7 @@ namespace SuplementosPIMIV.View
             myControllerSubcategoria = new ControllerSubcategoria(Session["ConnectionString"].ToString());
 
             // passando a fonte de dados para o GridView
-            gvwExibe.DataSource = myControllerSubcategoria.Exibir();
+            gvwExibe.DataSource = myControllerSubcategoria.Exibir(chkStatusInativo.Checked ? 0 : 1);
 
             // associando os dados para carregar e exibir
             gvwExibe.DataBind();
@@ -60,7 +61,7 @@ namespace SuplementosPIMIV.View
         {
             myControllerCategoria = new ControllerCategoria(Session["ConnectionString"].ToString());
 
-            ddlID_Categoria.DataSource = myControllerCategoria.Exibir();
+            ddlID_Categoria.DataSource = myControllerCategoria.Exibir(1);
             ddlID_Categoria.DataTextField = "NM_Categoria";
             ddlID_Categoria.DataValueField = "ID_Categoria";
             ddlID_Categoria.DataBind();
@@ -80,9 +81,9 @@ namespace SuplementosPIMIV.View
             if (mDs_Msg == "")
             {
                 // tudo certinho
-                // instanciar um objeto da classe categoria, carregar tela e consultar
-                myControllerCategoria = new ControllerCategoria(txbNM_SubcategoriaConsultar.Text, Session["ConnectionString"].ToString());
-                gvwExibe.DataSource = myControllerCategoria.Consultar();
+                // instanciar um objeto da classe subcategoria, carregar tela e consultar
+                myControllerSubcategoria = new ControllerSubcategoria(Session["ConnectionString"].ToString());
+                gvwExibe.DataSource = myControllerSubcategoria.Consultar(chkStatusInativo.Checked ? 0 : 1, txbNM_SubcategoriaConsultar.Text);
                 gvwExibe.DataBind();
             }
             else
@@ -110,6 +111,7 @@ namespace SuplementosPIMIV.View
         {
             // validar a entrada de dados para incluir
             myValidar = new Validar();
+            myControllerSubcategoria = new ControllerSubcategoria(Session["ConnectionString"].ToString());
             string mDs_Msg = "";
 
             if (myValidar.CampoPreenchido(txbNM_Subcategoria.Text))
@@ -122,25 +124,7 @@ namespace SuplementosPIMIV.View
                 }
                 else
                 {
-                    bool categoriaCadastrada = false;
-
-                    foreach (GridViewRow row in gvwExibe.Rows)
-                    {
-                        if (txbID_Subcategoria.Text != row.Cells[1].Text)
-                        {
-                            if (row.Cells[2].Text.Equals(txbNM_Subcategoria.Text))
-                            {
-                                categoriaCadastrada = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (categoriaCadastrada.Equals(true))
-                    {
-                        mDs_Msg = " Subcategoria já cadastrada.";
-                    }
-                    else
+                    if (myControllerSubcategoria.VerificarSubcategoriaCadastrada(txbID_Subcategoria.Text, txbNM_Subcategoria.Text, ddlID_Categoria.SelectedValue).Equals(""))
                     {
                         if (myValidar.CampoPreenchido(txbDS_Subcategoria.Text))
                         {
@@ -155,6 +139,10 @@ namespace SuplementosPIMIV.View
                         {
                             mDs_Msg += " A descrição deve estar preenchida.";
                         }
+                    }
+                    else
+                    {
+                        mDs_Msg += " " + myControllerSubcategoria.DS_Mensagem + " Verifique nas subcategorias ativas e inativas!";
                     }
                 }
             }
@@ -186,7 +174,7 @@ namespace SuplementosPIMIV.View
                 {
                     // tudo certinho!
                     LimparCampos();
-                    BloquearBotoes();
+                    BloquearComponentes();
                     CarregarSubcategorias();
                     lblDS_Mensagem.Text = "Incluído com sucesso!";
                 }
@@ -224,7 +212,7 @@ namespace SuplementosPIMIV.View
                 {
                     // tudo certinho!
                     LimparCampos();
-                    BloquearBotoes();
+                    BloquearComponentes();
                     CarregarSubcategorias();
                     lblDS_Mensagem.Text = "Alterado com sucesso!";
                 }
@@ -244,16 +232,35 @@ namespace SuplementosPIMIV.View
         private void Excluir()
         {
             // instanciar um objeto da classe subcategoria e carregar tela e consultar
-            myControllerCategoria = new ControllerCategoria(Convert.ToInt32(txbID_Subcategoria.Text), Session["ConnectionString"].ToString());
+            myControllerSubcategoria = new ControllerSubcategoria(Convert.ToInt32(txbID_Subcategoria.Text), 'E', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerSubcategoria.DS_Mensagem == "OK")
             {
                 // tudo certinho!
                 LimparCampos();
-                BloquearBotoes();
+                BloquearComponentes();
                 CarregarSubcategorias();
                 lblDS_Mensagem.Text = "Excluído com sucesso!";
+            }
+            else
+            {
+                // exibir erro!
+                lblDS_Mensagem.Text = myControllerSubcategoria.DS_Mensagem;
+            }
+        }
+
+        private void Ativar()
+        {
+            // instanciar um objeto da classe categoria e carregar tela e ativar
+            myControllerSubcategoria = new ControllerSubcategoria(Convert.ToInt32(txbID_Subcategoria.Text), 'A', Session["ConnectionString"].ToString());
+
+            // o que ocorreu?
+            if (myControllerSubcategoria.DS_Mensagem == "OK")
+            {
+                // tudo certinho!
+                CarregarSubcategorias();
+                lblDS_Mensagem.Text = "Ativado com sucesso!";
             }
             else
             {
@@ -280,7 +287,7 @@ namespace SuplementosPIMIV.View
         protected void btnLimpar_Click(object sender, EventArgs e)
         {
             LimparCampos();
-            BloquearBotoes();
+            BloquearComponentes();
         }
 
         protected void btnConsultar_Click(object sender, EventArgs e)
@@ -288,13 +295,13 @@ namespace SuplementosPIMIV.View
             CarregarSubcategoriasConsultar();
         }
 
-        protected void ddlID_Categoria_SelectedIndexChanged(object sender, EventArgs e)
+        protected void txbNM_Subcategoria_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
-            txbNM_Subcategoria.Focus();
+            ddlID_Categoria.Focus();
         }
 
-        protected void txbNM_Subcategoria_TextChanged(object sender, EventArgs e)
+        protected void ddlID_Categoria_SelectedIndexChanged(object sender, EventArgs e)
         {
             IncludeFields();
             txbDS_Subcategoria.Focus();
@@ -347,12 +354,34 @@ namespace SuplementosPIMIV.View
             ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text);
             txbDS_Subcategoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[5].Text);
 
+            CheckBox ativo = (CheckBox)gvwExibe.SelectedRow.Cells[6].Controls[0];
+            if (!ativo.Checked)
+            {
+                btnAtivarStatus.Enabled = true;
+                btnExcluir.Enabled = false;
+            }
+            else
+            {
+                btnAtivarStatus.Enabled = false;
+                btnExcluir.Enabled = true;
+            }
+
             lblDS_Mensagem.Text = "";
 
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = true;
-            btnExcluir.Enabled = true;
             btnLimpar.Enabled = true;
+        }
+
+        protected void chkStatusInativo_CheckedChanged(object sender, EventArgs e)
+        {
+            CarregarSubcategorias();
+        }
+
+        protected void btnAtivarStatus_Click(object sender, EventArgs e)
+        {
+            Ativar();
+            btnAtivarStatus.Enabled = false;
         }
     }
 }

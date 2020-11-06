@@ -8,7 +8,7 @@ namespace Validacao
 
         public bool CampoPreenchido(string campo)
         {
-            if (campo == string.Empty)
+            if (string.IsNullOrWhiteSpace(campo))
             {
                 return false;
             }

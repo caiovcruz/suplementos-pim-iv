@@ -66,16 +66,16 @@ namespace SuplementosPIMIV.Model
             Alterar();
         }
 
-        public ModelProduto(int id_produto, string acao, string connectionString)
+        public ModelProduto(int id_produto, char acao, string connectionString)
         {
             ID_Produto = id_produto;
             ConnectionString = connectionString;
 
-            if (acao.Equals("Excluir"))
+            if (acao.Equals('E'))
             {
                 Excluir();
             }
-            else if (acao.Equals("Ativar"))
+            else if (acao.Equals('A'))
             {
                 Ativar();
             }

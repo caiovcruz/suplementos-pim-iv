@@ -43,18 +43,19 @@ namespace SuplementosPIMIV.Model
             Alterar();
         }
 
-        public ModelCategoria(string nm_categoria, string connectionString)
-        {
-            NM_Categoria = nm_categoria;
-            ConnectionString = connectionString;
-        }
-
-        public ModelCategoria(int id_categoria, string connectionString)
+        public ModelCategoria(int id_categoria, char acao, string connectionString)
         {
             ID_Categoria = id_categoria;
             ConnectionString = connectionString;
 
-            Excluir();
+            if (acao.Equals('E'))
+            {
+                Excluir();
+            }
+            else if (acao.Equals('A'))
+            {
+                Ativar();
+            }
         }
 
         public void Incluir()
@@ -123,7 +124,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public DataTable Consultar()
+        public DataTable Consultar(int status, string texto)
         {
             DataTable dataTable = new DataTable();
 
@@ -136,10 +137,11 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("SELECT ");
                 stringSQL.Append("ID_Categoria, ");
                 stringSQL.Append("NM_Categoria, ");
-                stringSQL.Append("DS_Categoria ");
+                stringSQL.Append("DS_Categoria, ");
+                stringSQL.Append("Ativo ");
                 stringSQL.Append("FROM TB_Categoria ");
-                stringSQL.Append("WHERE Ativo = 1 ");
-                stringSQL.Append("AND NM_Categoria LIKE '" + NM_Categoria + "' + '%' ");
+                stringSQL.Append("WHERE Ativo = " + status + " ");
+                stringSQL.Append("AND NM_Categoria LIKE '" + texto + "' + '%' ");
                 stringSQL.Append("ORDER BY ID_Categoria DESC");
 
                 sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
@@ -189,7 +191,37 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public DataTable Exibir()
+        public void Ativar()
+        {
+            DS_Mensagem = "";
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("UPDATE TB_Categoria SET ");
+                stringSQL.Append("Ativo = 1 ");
+                stringSQL.Append("WHERE ID_Categoria = '" + ID_Categoria + "'");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                int result = sqlCommand.ExecuteNonQuery();
+
+                DS_Mensagem = result > 0 ? "OK" : "Erro ao ativar";
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+        }
+
+        public DataTable Exibir(int status)
         {
             DataTable dataTable = new DataTable();
 
@@ -202,9 +234,10 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("SELECT ");
                 stringSQL.Append("ID_Categoria, ");
                 stringSQL.Append("NM_Categoria, ");
-                stringSQL.Append("DS_Categoria ");
+                stringSQL.Append("DS_Categoria, ");
+                stringSQL.Append("Ativo ");
                 stringSQL.Append("FROM TB_Categoria ");
-                stringSQL.Append("WHERE Ativo = 1 ");
+                stringSQL.Append("WHERE Ativo = " + status + " ");
                 stringSQL.Append("ORDER BY ID_Categoria DESC");
 
                 sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
@@ -222,6 +255,44 @@ namespace SuplementosPIMIV.Model
             }
 
             return dataTable;
+        }
+
+        public string VerificarCategoriaCadastrada(string id_categoria, string nm_categoria)
+        {
+            DS_Mensagem = "";
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("1 ");
+                stringSQL.Append("FROM TB_Categoria ");
+                stringSQL.Append("WHERE ID_Categoria != '" + id_categoria + "' ");
+                stringSQL.Append("AND NM_Categoria = '" + nm_categoria + "' ");
+                stringSQL.Append("ORDER BY ID_Categoria DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                sqlDataReader = sqlCommand.ExecuteReader();
+
+                if (sqlDataReader.HasRows)
+                {
+                    DS_Mensagem = "Categoria já cadastrada.";
+                }
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+
+            return DS_Mensagem;
         }
     }
 }

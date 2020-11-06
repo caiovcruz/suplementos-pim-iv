@@ -20,7 +20,7 @@ namespace SuplementosPIMIV.View
             {
                 LimparCampos();
                 CarregarMarcas();
-                BloquearBotoes();
+                BloquearComponentes();
             }
         }
 
@@ -30,8 +30,9 @@ namespace SuplementosPIMIV.View
             txbNM_Marca.Text = "";
         }
 
-        private void BloquearBotoes()
+        private void BloquearComponentes()
         {
+            btnAtivarStatus.Enabled = false;
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = false;
             btnExcluir.Enabled = false;
@@ -45,7 +46,7 @@ namespace SuplementosPIMIV.View
             myControllerMarca = new ControllerMarca(Session["ConnectionString"].ToString());
 
             // passando a fonte de dados para o GridView
-            gvwExibe.DataSource = myControllerMarca.Exibir();
+            gvwExibe.DataSource = myControllerMarca.Exibir(chkStatusInativo.Checked ? 0 : 1);
 
             // associando os dados para carregar e exibir
             gvwExibe.DataBind();
@@ -63,8 +64,8 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho
                 // instanciar um objeto da classe marca, carregar tela e consultar
-                myControllerMarca = new ControllerMarca(txbNM_MarcaConsultar.Text, false, Session["ConnectionString"].ToString());
-                gvwExibe.DataSource = myControllerMarca.Consultar();
+                myControllerMarca = new ControllerMarca(Session["ConnectionString"].ToString());
+                gvwExibe.DataSource = myControllerMarca.Consultar(chkStatusInativo.Checked ? 0 : 1, txbNM_MarcaConsultar.Text);
                 gvwExibe.DataBind();
             }
             else
@@ -88,6 +89,7 @@ namespace SuplementosPIMIV.View
         {
             // validar a entrada de dados para incluir
             myValidar = new Validar();
+            myControllerMarca = new ControllerMarca(Session["ConnectionString"].ToString());
             string mDs_Msg = "";
 
             if (myValidar.CampoPreenchido(txbNM_Marca.Text))
@@ -100,23 +102,9 @@ namespace SuplementosPIMIV.View
                 }
                 else
                 {
-                    bool MarcaCadastrada = false;
-
-                    foreach (GridViewRow row in gvwExibe.Rows)
+                    if (!myControllerMarca.VerificarMarcaCadastrada(txbID_Marca.Text, txbNM_Marca.Text).Equals(""))
                     {
-                        if (txbID_Marca.Text != row.Cells[1].Text)
-                        {
-                            if (row.Cells[2].Text.Equals(txbNM_Marca.Text))
-                            {
-                                MarcaCadastrada = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (MarcaCadastrada.Equals(true))
-                    {
-                        mDs_Msg = " Marca já cadastrada.";
+                        mDs_Msg += " " + myControllerMarca.DS_Mensagem + " Verifique nas marcas ativas e inativas!";
                     }
                 }
             }
@@ -139,7 +127,6 @@ namespace SuplementosPIMIV.View
                 // instanciar um objeto da classe marca, carregar tela e incluir
                 myControllerMarca = new ControllerMarca(
                     txbNM_Marca.Text,
-                    true,
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -147,7 +134,7 @@ namespace SuplementosPIMIV.View
                 {
                     // tudo certinho!
                     LimparCampos();
-                    BloquearBotoes();
+                    BloquearComponentes();
                     CarregarMarcas();
                     lblDS_Mensagem.Text = "Incluído com sucesso!";
                 }
@@ -183,7 +170,7 @@ namespace SuplementosPIMIV.View
                 {
                     // tudo certinho!
                     LimparCampos();
-                    BloquearBotoes();
+                    BloquearComponentes();
                     CarregarMarcas();
                     lblDS_Mensagem.Text = "Alterado com sucesso!";
                 }
@@ -203,16 +190,35 @@ namespace SuplementosPIMIV.View
         private void Excluir()
         {
             // instanciar um objeto da classe sabor e carregar tela e consultar
-            myControllerMarca = new ControllerMarca(Convert.ToInt32(txbID_Marca.Text), Session["ConnectionString"].ToString());
+            myControllerMarca = new ControllerMarca(Convert.ToInt32(txbID_Marca.Text), 'E', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerMarca.DS_Mensagem == "OK")
             {
                 // tudo certinho!
                 LimparCampos();
-                BloquearBotoes();
+                BloquearComponentes();
                 CarregarMarcas();
                 lblDS_Mensagem.Text = "Excluído com sucesso!";
+            }
+            else
+            {
+                // exibir erro!
+                lblDS_Mensagem.Text = myControllerMarca.DS_Mensagem;
+            }
+        }
+
+        private void Ativar()
+        {
+            // instanciar um objeto da classe marca e carregar tela e ativar
+            myControllerMarca = new ControllerMarca(Convert.ToInt32(txbID_Marca.Text), 'A', Session["ConnectionString"].ToString());
+
+            // o que ocorreu?
+            if (myControllerMarca.DS_Mensagem == "OK")
+            {
+                // tudo certinho!
+                CarregarMarcas();
+                lblDS_Mensagem.Text = "Ativado com sucesso!";
             }
             else
             {
@@ -239,7 +245,7 @@ namespace SuplementosPIMIV.View
         protected void btnLimpar_Click(object sender, EventArgs e)
         {
             LimparCampos();
-            BloquearBotoes();
+            BloquearComponentes();
         }
 
         protected void btnConsultar_Click(object sender, EventArgs e)
@@ -286,12 +292,34 @@ namespace SuplementosPIMIV.View
             txbID_Marca.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text);
             txbNM_Marca.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text);
 
+            CheckBox ativo = (CheckBox)gvwExibe.SelectedRow.Cells[3].Controls[0];
+            if (!ativo.Checked)
+            {
+                btnAtivarStatus.Enabled = true;
+                btnExcluir.Enabled = false;
+            }
+            else
+            {
+                btnAtivarStatus.Enabled = false;
+                btnExcluir.Enabled = true;
+            }
+
             lblDS_Mensagem.Text = "";
 
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = true;
-            btnExcluir.Enabled = true;
             btnLimpar.Enabled = true;
+        }
+
+        protected void chkStatusInativo_CheckedChanged(object sender, EventArgs e)
+        {
+            CarregarMarcas();
+        }
+
+        protected void btnAtivarStatus_Click(object sender, EventArgs e)
+        {
+            Ativar();
+            btnAtivarStatus.Enabled = false;
         }
     }
 }

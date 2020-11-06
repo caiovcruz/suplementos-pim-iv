@@ -39,12 +39,12 @@ namespace SuplementosPIMIV.View
             txbID_Produto.Text = "";
             txbNR_EAN.Text = "";
             txbNM_Produto.Text = "";
-            ddlID_Marca.SelectedIndex = 0;
+            ddlID_MarcaProduto.SelectedIndex = 0;
             txbDS_Produto.Text = "";
-            ddlID_Categoria.SelectedIndex = 0;
-            ddlID_Subcategoria.SelectedIndex = 0;
-            ddlID_Subcategoria.Enabled = false;
-            ddlID_Sabor.SelectedIndex = 0;
+            ddlID_CategoriaProduto.SelectedIndex = 0;
+            ddlID_SubcategoriaProduto.SelectedIndex = 0;
+            ddlID_SubcategoriaProduto.Enabled = false;
+            ddlID_SaborProduto.SelectedIndex = 0;
             txbQTD_Estoque.Text = "";
             txbPR_Venda.Text = "";
             txbPR_Custo.Text = "";
@@ -79,52 +79,52 @@ namespace SuplementosPIMIV.View
         {
             myControllerMarca = new ControllerMarca(Session["ConnectionString"].ToString());
 
-            ddlID_Marca.DataSource = myControllerMarca.Exibir();
-            ddlID_Marca.DataTextField = "NM_Marca";
-            ddlID_Marca.DataValueField = "ID_Marca";
-            ddlID_Marca.DataBind();
+            ddlID_MarcaProduto.DataSource = myControllerMarca.Exibir(1);
+            ddlID_MarcaProduto.DataTextField = "NM_Marca";
+            ddlID_MarcaProduto.DataValueField = "ID_Marca";
+            ddlID_MarcaProduto.DataBind();
 
-            ddlID_Marca.Items.Insert(0, "Marca");
-            ddlID_Marca.SelectedIndex = 0;
+            ddlID_MarcaProduto.Items.Insert(0, "Marca");
+            ddlID_MarcaProduto.SelectedIndex = 0;
         }
 
         private void CarregarCategorias()
         {
             myControllerCategoria = new ControllerCategoria(Session["ConnectionString"].ToString());
 
-            ddlID_Categoria.DataSource = myControllerCategoria.Exibir();
-            ddlID_Categoria.DataTextField = "NM_Categoria";
-            ddlID_Categoria.DataValueField = "ID_Categoria";
-            ddlID_Categoria.DataBind();
+            ddlID_CategoriaProduto.DataSource = myControllerCategoria.Exibir(1);
+            ddlID_CategoriaProduto.DataTextField = "NM_Categoria";
+            ddlID_CategoriaProduto.DataValueField = "ID_Categoria";
+            ddlID_CategoriaProduto.DataBind();
 
-            ddlID_Categoria.Items.Insert(0, "Categoria");
-            ddlID_Categoria.SelectedIndex = 0;
+            ddlID_CategoriaProduto.Items.Insert(0, "Categoria");
+            ddlID_CategoriaProduto.SelectedIndex = 0;
         }
 
         private void CarregarSubcategorias()
         {
             myControllerSubcategoria = new ControllerSubcategoria(Session["ConnectionString"].ToString());
 
-            ddlID_Subcategoria.DataSource = myControllerSubcategoria.Exibir();
-            ddlID_Subcategoria.DataTextField = "NM_Subcategoria";
-            ddlID_Subcategoria.DataValueField = "ID_Subcategoria";
-            ddlID_Subcategoria.DataBind();
+            ddlID_SubcategoriaProduto.DataSource = myControllerSubcategoria.Exibir(1);
+            ddlID_SubcategoriaProduto.DataTextField = "NM_Subcategoria";
+            ddlID_SubcategoriaProduto.DataValueField = "ID_Subcategoria";
+            ddlID_SubcategoriaProduto.DataBind();
 
-            ddlID_Subcategoria.Items.Insert(0, "Subcategoria");
-            ddlID_Subcategoria.SelectedIndex = 0;
+            ddlID_SubcategoriaProduto.Items.Insert(0, "Subcategoria");
+            ddlID_SubcategoriaProduto.SelectedIndex = 0;
         }
 
         private void CarregarSabores()
         {
             myControllerSabor = new ControllerSabor(Session["ConnectionString"].ToString());
 
-            ddlID_Sabor.DataSource = myControllerSabor.Exibir();
-            ddlID_Sabor.DataTextField = "NM_Sabor";
-            ddlID_Sabor.DataValueField = "ID_Sabor";
-            ddlID_Sabor.DataBind();
+            ddlID_SaborProduto.DataSource = myControllerSabor.Exibir(1);
+            ddlID_SaborProduto.DataTextField = "NM_Sabor";
+            ddlID_SaborProduto.DataValueField = "ID_Sabor";
+            ddlID_SaborProduto.DataBind();
 
-            ddlID_Sabor.Items.Insert(0, "Sabor");
-            ddlID_Sabor.SelectedIndex = 0;
+            ddlID_SaborProduto.Items.Insert(0, "Sabor");
+            ddlID_SaborProduto.SelectedIndex = 0;
         }
 
         private void CarregarProdutosConsultar()
@@ -188,10 +188,10 @@ namespace SuplementosPIMIV.View
                 txbDS_Produto.Text.Length > 0 &&
                 txbPR_Venda.Text.Length > 0 &&
                 txbPR_Custo.Text.Length > 0 &&
-                ddlID_Marca.SelectedIndex != 0 &&
-                ddlID_Categoria.SelectedIndex != 0 &&
-                ddlID_Subcategoria.SelectedIndex != 0 &&
-                ddlID_Sabor.SelectedIndex != 0 &&
+                ddlID_MarcaProduto.SelectedIndex != 0 &&
+                ddlID_CategoriaProduto.SelectedIndex != 0 &&
+                ddlID_SubcategoriaProduto.SelectedIndex != 0 &&
+                ddlID_SaborProduto.SelectedIndex != 0 &&
                 txbID_Produto.Text.Length == 0;
 
             btnLimpar.Enabled =
@@ -201,10 +201,10 @@ namespace SuplementosPIMIV.View
                 txbQTD_Estoque.Text.Length > 0 ||
                 txbPR_Venda.Text.Length > 0 ||
                 txbPR_Custo.Text.Length > 0 ||
-                ddlID_Marca.SelectedIndex != 0 ||
-                ddlID_Categoria.SelectedIndex != 0 ||
-                ddlID_Subcategoria.SelectedIndex != 0 ||
-                ddlID_Sabor.SelectedIndex != 0;
+                ddlID_MarcaProduto.SelectedIndex != 0 ||
+                ddlID_CategoriaProduto.SelectedIndex != 0 ||
+                ddlID_SubcategoriaProduto.SelectedIndex != 0 ||
+                ddlID_SaborProduto.SelectedIndex != 0;
         }
 
         private string ValidateFields()
@@ -246,7 +246,7 @@ namespace SuplementosPIMIV.View
                                 }
                                 else
                                 {
-                                    if (myControllerProduto.VerificarProdutoCadastrado(txbID_Produto.Text, txbNR_EAN.Text, txbNM_Produto.Text, ddlID_Marca.SelectedValue).Equals(""))
+                                    if (myControllerProduto.VerificarProdutoCadastrado(txbID_Produto.Text, txbNR_EAN.Text, txbNM_Produto.Text, ddlID_MarcaProduto.SelectedValue).Equals(""))
                                     {
                                         if (myValidar.CampoPreenchido(txbDS_Produto.Text))
                                         {
@@ -288,7 +288,7 @@ namespace SuplementosPIMIV.View
                                     }
                                     else
                                     {
-                                        mDs_Msg += " " + myControllerProduto.DS_Mensagem;
+                                        mDs_Msg += " " + myControllerProduto.DS_Mensagem + " Verifique nos produtos ativos e inativos!";
                                     }
                                 }
                             }
@@ -318,10 +318,10 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe produto, carregar tela e incluir
                 myControllerProduto = new ControllerProduto(
-                    Convert.ToInt32(ddlID_Marca.SelectedValue),
-                    Convert.ToInt32(ddlID_Categoria.SelectedValue),
-                    Convert.ToInt32(ddlID_Subcategoria.SelectedValue),
-                    Convert.ToInt32(ddlID_Sabor.SelectedValue),
+                    Convert.ToInt32(ddlID_MarcaProduto.SelectedValue),
+                    Convert.ToInt32(ddlID_CategoriaProduto.SelectedValue),
+                    Convert.ToInt32(ddlID_SubcategoriaProduto.SelectedValue),
+                    Convert.ToInt32(ddlID_SaborProduto.SelectedValue),
                     txbNR_EAN.Text,
                     txbNM_Produto.Text,
                     txbDS_Produto.Text,
@@ -376,10 +376,10 @@ namespace SuplementosPIMIV.View
                 // instanciar um objeto da classe produto, carregar tela e alterar
                 myControllerProduto = new ControllerProduto(
                     Convert.ToInt32(txbID_Produto.Text),
-                    Convert.ToInt32(ddlID_Marca.SelectedValue),
-                    Convert.ToInt32(ddlID_Categoria.SelectedValue),
-                    Convert.ToInt32(ddlID_Subcategoria.SelectedValue),
-                    Convert.ToInt32(ddlID_Sabor.SelectedValue),
+                    Convert.ToInt32(ddlID_MarcaProduto.SelectedValue),
+                    Convert.ToInt32(ddlID_CategoriaProduto.SelectedValue),
+                    Convert.ToInt32(ddlID_SubcategoriaProduto.SelectedValue),
+                    Convert.ToInt32(ddlID_SaborProduto.SelectedValue),
                     txbNR_EAN.Text,
                     txbNM_Produto.Text,
                     txbDS_Produto.Text,
@@ -411,8 +411,8 @@ namespace SuplementosPIMIV.View
 
         private void Excluir()
         {
-            // instanciar um objeto da classe produto e carregar tela e consultar
-            myControllerProduto = new ControllerProduto(Convert.ToInt32(txbID_Produto.Text), "Excluir", Session["ConnectionString"].ToString());
+            // instanciar um objeto da classe produto e carregar tela e excluir
+            myControllerProduto = new ControllerProduto(Convert.ToInt32(txbID_Produto.Text), 'E', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerProduto.DS_Mensagem == "OK")
@@ -432,8 +432,8 @@ namespace SuplementosPIMIV.View
 
         private void Ativar()
         {
-            // instanciar um objeto da classe produto e carregar tela e consultar
-            myControllerProduto = new ControllerProduto(Convert.ToInt32(txbID_Produto.Text), "Ativar", Session["ConnectionString"].ToString());
+            // instanciar um objeto da classe produto e carregar tela e ativar
+            myControllerProduto = new ControllerProduto(Convert.ToInt32(txbID_Produto.Text), 'A', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerProduto.DS_Mensagem == "OK")
@@ -514,25 +514,32 @@ namespace SuplementosPIMIV.View
             txbID_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text);
             txbNR_EAN.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text);
             txbNM_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text);
-            ddlID_Marca.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[4].Text);
-            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[6].Text);
-            ddlID_Subcategoria.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[8].Text);
-            ddlID_Subcategoria.Enabled = true;
-            ddlID_Sabor.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[10].Text);
+            ddlID_MarcaProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[4].Text);
+            ddlID_CategoriaProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[6].Text);
+            ddlID_SubcategoriaProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[8].Text);
+            ddlID_SubcategoriaProduto.Enabled = true;
+            ddlID_SaborProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[10].Text);
             txbDS_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[12].Text);
             txbQTD_Estoque.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[13].Text);
             txbPR_Custo.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[14].Text);
             txbPR_Venda.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[15].Text);
 
             CheckBox ativo = (CheckBox)gvwExibe.SelectedRow.Cells[16].Controls[0];
-            if (!ativo.Checked) btnAtivarStatus.Enabled = true;
-            else btnAtivarStatus.Enabled = false;
+            if (!ativo.Checked)
+            {
+                btnAtivarStatus.Enabled = true;
+                btnExcluir.Enabled = false;
+            }
+            else
+            {
+                btnAtivarStatus.Enabled = false;
+                btnExcluir.Enabled = true;
+            }
 
             lblDS_Mensagem.Text = "";
 
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = true;
-            btnExcluir.Enabled = true;
             btnLimpar.Enabled = true;
         }
 
@@ -567,17 +574,16 @@ namespace SuplementosPIMIV.View
         protected void txbNR_EAN_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
-            btnAtivarStatus.Visible = true;
             txbNM_Produto.Focus();
         }
 
         protected void txbNM_Produto_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
-            ddlID_Marca.Focus();
+            ddlID_MarcaProduto.Focus();
         }
 
-        protected void ddlID_Marca_SelectedIndexChanged(object sender, EventArgs e)
+        protected void ddlID_MarcaProduto_SelectedIndexChanged(object sender, EventArgs e)
         {
             IncludeFields();
             txbDS_Produto.Focus();
@@ -586,24 +592,24 @@ namespace SuplementosPIMIV.View
         protected void txbDS_Produto_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
-            ddlID_Categoria.Focus();
+            ddlID_CategoriaProduto.Focus();
         }
 
-        protected void ddlID_Categoria_SelectedIndexChanged(object sender, EventArgs e)
+        protected void ddlID_CategoriaProduto_SelectedIndexChanged(object sender, EventArgs e)
         {
             IncludeFields();
 
-            ddlID_Subcategoria.Enabled = ddlID_Categoria.SelectedIndex != 0;
-            ddlID_Subcategoria.Focus();
+            ddlID_SubcategoriaProduto.Enabled = ddlID_CategoriaProduto.SelectedIndex != 0;
+            ddlID_SubcategoriaProduto.Focus();
         }
 
-        protected void ddlID_Subcategoria_SelectedIndexChanged(object sender, EventArgs e)
+        protected void ddlID_SubcategoriaProduto_SelectedIndexChanged(object sender, EventArgs e)
         {
             IncludeFields();
-            ddlID_Sabor.Focus();
+            ddlID_SaborProduto.Focus();
         }
 
-        protected void ddlID_Sabor_SelectedIndexChanged(object sender, EventArgs e)
+        protected void ddlID_SaborProduto_SelectedIndexChanged(object sender, EventArgs e)
         {
             IncludeFields();
             txbPR_Custo.Focus();

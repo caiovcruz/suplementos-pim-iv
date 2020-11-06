@@ -60,15 +60,6 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.TextBox txbNR_EAN;
 
         /// <summary>
-        /// Controle btnAtivarStatus.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAtivarStatus;
-
-        /// <summary>
         /// Controle txbNM_Produto.
         /// </summary>
         /// <remarks>
@@ -78,13 +69,13 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.TextBox txbNM_Produto;
 
         /// <summary>
-        /// Controle ddlID_Marca.
+        /// Controle ddlID_MarcaProduto.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlID_Marca;
+        protected global::System.Web.UI.WebControls.DropDownList ddlID_MarcaProduto;
 
         /// <summary>
         /// Controle txbDS_Produto.
@@ -96,22 +87,22 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.TextBox txbDS_Produto;
 
         /// <summary>
-        /// Controle ddlID_Categoria.
+        /// Controle ddlID_CategoriaProduto.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlID_Categoria;
+        protected global::System.Web.UI.WebControls.DropDownList ddlID_CategoriaProduto;
 
         /// <summary>
-        /// Controle ddlID_Sabor.
+        /// Controle ddlID_SaborProduto.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlID_Sabor;
+        protected global::System.Web.UI.WebControls.DropDownList ddlID_SaborProduto;
 
         /// <summary>
         /// Controle txbPR_Custo.
@@ -123,13 +114,13 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.TextBox txbPR_Custo;
 
         /// <summary>
-        /// Controle ddlID_Subcategoria.
+        /// Controle ddlID_SubcategoriaProduto.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlID_Subcategoria;
+        protected global::System.Web.UI.WebControls.DropDownList ddlID_SubcategoriaProduto;
 
         /// <summary>
         /// Controle txbQTD_Estoque.
@@ -193,6 +184,15 @@ namespace SuplementosPIMIV.View
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnExcluir;
+
+        /// <summary>
+        /// Controle btnAtivarStatus.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAtivarStatus;
 
         /// <summary>
         /// Controle updConsulta.

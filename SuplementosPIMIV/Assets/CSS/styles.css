@@ -202,7 +202,7 @@ body {
     width: 32%;
 }
 
-#ddlID_Categoria, #ddlID_Subcategoria, #ddlID_Sabor {
+#ddlID_CategoriaProduto, #ddlID_SubcategoriaProduto, #ddlID_SaborProduto {
     width: 100%;
 }
 
@@ -238,7 +238,7 @@ body {
         background-color: #ff4343;
     }
 
-#btnIncluir, #btnAlterar, #btnExcluir {
+#btnIncluir, #btnAlterar, #btnExcluir, #btnAtivarStatus {
     float: right;
     margin-left: 15px;
 }
@@ -286,7 +286,7 @@ body {
 }
 
 #txbNM_Subcategoria {
-    width: 69.2%;
+    width: 77%;
 }
 
 #txbDS_Subcategoria {

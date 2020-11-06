@@ -59,8 +59,6 @@
                             <asp:TextBox CssClass="TextBox" ID="txbNR_EAN" runat="server" MaxLengh="13"
                                 placeholder="Escaneie o cód. barras" OnTextChanged="txbNR_EAN_TextChanged" AutoPostBack="true"></asp:TextBox>
 
-                            <asp:Button CssClass="Button" ID="btnAtivarStatus" runat="server" Text="Ativar" OnClick="btnAtivarStatus_Click" />
-
                             <div id="internoColunasProduto">
 
                                 <div class="colunasProduto">
@@ -71,8 +69,8 @@
                                     <asp:TextBox CssClass="TextBox" ID="txbNM_Produto" runat="server" MaxLengh="50"
                                         placeholder="Nome do produto" OnTextChanged="txbNM_Produto_TextChanged" AutoPostBack="true"></asp:TextBox>
 
-                                    <asp:DropDownList CssClass="TextBox" ID="ddlID_Marca" runat="server"
-                                        OnSelectedIndexChanged="ddlID_Marca_SelectedIndexChanged" AutoPostBack="true">
+                                    <asp:DropDownList CssClass="TextBox" ID="ddlID_MarcaProduto" runat="server"
+                                        OnSelectedIndexChanged="ddlID_MarcaProduto_SelectedIndexChanged" AutoPostBack="true">
                                     </asp:DropDownList>
 
                                     <br />
@@ -87,15 +85,15 @@
                                 <div class="colunasProduto" id="colunaProduto2">
 
                                     <asp:Label CssClass="Label" runat="server" Width="100%" Text="Categoria"></asp:Label>
-                                    <asp:DropDownList CssClass="TextBox" ID="ddlID_Categoria" runat="server"
-                                        OnSelectedIndexChanged="ddlID_Categoria_SelectedIndexChanged" AutoPostBack="true">
+                                    <asp:DropDownList CssClass="TextBox" ID="ddlID_CategoriaProduto" runat="server"
+                                        OnSelectedIndexChanged="ddlID_CategoriaProduto_SelectedIndexChanged" AutoPostBack="true">
                                     </asp:DropDownList>
 
                                     <br />
 
                                     <asp:Label CssClass="Label" runat="server" Width="100%" Text="Sabor"></asp:Label>
-                                    <asp:DropDownList CssClass="TextBox" ID="ddlID_Sabor" runat="server"
-                                        OnSelectedIndexChanged="ddlID_Sabor_SelectedIndexChanged" AutoPostBack="true">
+                                    <asp:DropDownList CssClass="TextBox" ID="ddlID_SaborProduto" runat="server"
+                                        OnSelectedIndexChanged="ddlID_SaborProduto_SelectedIndexChanged" AutoPostBack="true">
                                     </asp:DropDownList>
 
                                     <br />
@@ -108,8 +106,8 @@
 
                                 <div class="colunasProduto" id="colunaProduto3">
                                     <asp:Label CssClass="Label" runat="server" Width="100%" Text="Subcategoria"></asp:Label>
-                                    <asp:DropDownList CssClass="TextBox" ID="ddlID_Subcategoria" runat="server"
-                                        OnSelectedIndexChanged="ddlID_Subcategoria_SelectedIndexChanged" AutoPostBack="true">
+                                    <asp:DropDownList CssClass="TextBox" ID="ddlID_SubcategoriaProduto" runat="server"
+                                        OnSelectedIndexChanged="ddlID_SubcategoriaProduto_SelectedIndexChanged" AutoPostBack="true">
                                     </asp:DropDownList>
 
                                     <br />
@@ -139,6 +137,7 @@
                             <asp:Button CssClass="Button" ID="btnIncluir" runat="server" Text="Incluir" OnClick="btnIncluir_Click" />
                             <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
                             <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
+                            <asp:Button CssClass="Button" ID="btnAtivarStatus" runat="server" Text="Ativar" OnClick="btnAtivarStatus_Click" />
 
                         </ContentTemplate>
                     </asp:UpdatePanel>

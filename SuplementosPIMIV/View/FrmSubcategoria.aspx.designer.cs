@@ -123,6 +123,15 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.Button btnExcluir;
 
         /// <summary>
+        /// Controle btnAtivarStatus.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAtivarStatus;
+
+        /// <summary>
         /// Controle updConsulta.
         /// </summary>
         /// <remarks>
@@ -130,6 +139,15 @@ namespace SuplementosPIMIV.View
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel updConsulta;
+
+        /// <summary>
+        /// Controle chkStatusInativo.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkStatusInativo;
 
         /// <summary>
         /// Controle txbNM_SubcategoriaConsultar.

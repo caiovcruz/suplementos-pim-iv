@@ -131,9 +131,9 @@ namespace SuplementosPIMIV.View
         {
             // validar a entrada de dados para consulta
             myValidar = new Validar();
-            string mDs_Msg = (myValidar.TamanhoCampo(txbConsultar.Text, 50)) ? "" : " Limite de caracteres para o nome excedido, " +
+            string mDs_Msg = (myValidar.TamanhoCampo(txbConsultar.Text.Trim(), 50)) ? "" : " Limite de caracteres para o nome excedido, " +
                                                                                               "o limite para este campo é: 50 caracteres, " +
-                                                                                              "quantidade utilizada: " + txbConsultar.Text.Length + "."; ;
+                                                                                              "quantidade utilizada: " + txbConsultar.Text.Trim().Length + "."; ;
 
             if (mDs_Msg == "")
             {
@@ -153,10 +153,10 @@ namespace SuplementosPIMIV.View
                 if (ddlFiltro.SelectedValue.Equals("Preço Venda"))
                 {
                     filtro = "PROD.PR_Venda";
-                    txbConsultar.Text = txbConsultar.Text.Replace(",", ".");
+                    txbConsultar.Text = txbConsultar.Text.Trim().Replace(",", ".");
                 }
 
-                gvwExibe.DataSource = myControllerProduto.Consultar(chkStatusInativo.Checked ? 0 : 1, filtro, txbConsultar.Text);
+                gvwExibe.DataSource = myControllerProduto.Consultar(chkStatusInativo.Checked ? 0 : 1, filtro, txbConsultar.Text.Trim());
                 gvwExibe.DataBind();
             }
             else
@@ -183,24 +183,24 @@ namespace SuplementosPIMIV.View
         private void IncludeFields()
         {
             btnIncluir.Enabled =
-                txbNR_EAN.Text.Length > 0 &&
-                txbNM_Produto.Text.Length > 0 &&
-                txbDS_Produto.Text.Length > 0 &&
-                txbPR_Venda.Text.Length > 0 &&
-                txbPR_Custo.Text.Length > 0 &&
+                txbNR_EAN.Text.Trim().Length > 0 &&
+                txbNM_Produto.Text.Trim().Length > 0 &&
+                txbDS_Produto.Text.Trim().Length > 0 &&
+                txbPR_Venda.Text.Trim().Length > 0 &&
+                txbPR_Custo.Text.Trim().Length > 0 &&
                 ddlID_MarcaProduto.SelectedIndex != 0 &&
                 ddlID_CategoriaProduto.SelectedIndex != 0 &&
                 ddlID_SubcategoriaProduto.SelectedIndex != 0 &&
                 ddlID_SaborProduto.SelectedIndex != 0 &&
-                txbID_Produto.Text.Length == 0;
+                txbID_Produto.Text.Trim().Length == 0;
 
             btnLimpar.Enabled =
-                txbNR_EAN.Text.Length > 0 ||
-                txbNM_Produto.Text.Length > 0 ||
-                txbDS_Produto.Text.Length > 0 ||
-                txbQTD_Estoque.Text.Length > 0 ||
-                txbPR_Venda.Text.Length > 0 ||
-                txbPR_Custo.Text.Length > 0 ||
+                txbNR_EAN.Text.Trim().Length > 0 ||
+                txbNM_Produto.Text.Trim().Length > 0 ||
+                txbDS_Produto.Text.Trim().Length > 0 ||
+                txbQTD_Estoque.Text.Trim().Length > 0 ||
+                txbPR_Venda.Text.Trim().Length > 0 ||
+                txbPR_Custo.Text.Trim().Length > 0 ||
                 ddlID_MarcaProduto.SelectedIndex != 0 ||
                 ddlID_CategoriaProduto.SelectedIndex != 0 ||
                 ddlID_SubcategoriaProduto.SelectedIndex != 0 ||
@@ -214,47 +214,48 @@ namespace SuplementosPIMIV.View
             myControllerProduto = new ControllerProduto(Session["ConnectionString"].ToString());
             string mDs_Msg = "";
 
-            if (myValidar.CampoPreenchido(txbNR_EAN.Text))
+            if (myValidar.CampoPreenchido(txbNR_EAN.Text.Trim()))
             {
-                if (!myValidar.TamanhoCampo(txbNR_EAN.Text, 13))
+                if (!myValidar.TamanhoCampo(txbNR_EAN.Text.Trim(), 13))
                 {
                     mDs_Msg = " Limite de caracteres para o EAN excedido, " +
                                   "o limite para este campo é: 13 caracteres, " +
-                                  "quantidade utilizada: " + txbNR_EAN.Text.Length + ".";
+                                  "quantidade utilizada: " + txbNR_EAN.Text.Trim().Length + ".";
                 }
                 else
                 {
-                    if (!myValidar.Numero(txbNR_EAN.Text))
+                    if (!myValidar.Numero(txbNR_EAN.Text.Trim()))
                     {
                         mDs_Msg = " O EAN deve ser numérico.";
                     }
                     else
                     {
-                        if (!myValidar.EAN(txbNR_EAN.Text))
+                        if (!myValidar.EAN(txbNR_EAN.Text.Trim()))
                         {
                             mDs_Msg = " EAN inválido.";
                         }
                         else
                         {
-                            if (myValidar.CampoPreenchido(txbNM_Produto.Text))
+                            if (myValidar.CampoPreenchido(txbNM_Produto.Text.Trim()))
                             {
-                                if (!myValidar.TamanhoCampo(txbNM_Produto.Text, 50))
+                                if (!myValidar.TamanhoCampo(txbNM_Produto.Text.Trim(), 50))
                                 {
                                     mDs_Msg = " Limite de caracteres para o nome excedido, " +
                                                   "o limite para este campo é: 50 caracteres, " +
-                                                  "quantidade utilizada: " + txbNM_Produto.Text.Length + ".";
+                                                  "quantidade utilizada: " + txbNM_Produto.Text.Trim().Length + ".";
                                 }
                                 else
                                 {
-                                    if (myControllerProduto.VerificarProdutoCadastrado(txbID_Produto.Text, txbNR_EAN.Text, txbNM_Produto.Text, ddlID_MarcaProduto.SelectedValue).Equals(""))
+                                    if (myControllerProduto.VerificarProdutoCadastrado(txbID_Produto.Text.Trim(), txbNR_EAN.Text.Trim(), 
+                                        txbNM_Produto.Text.Trim(), ddlID_MarcaProduto.SelectedValue).Equals(""))
                                     {
-                                        if (myValidar.CampoPreenchido(txbDS_Produto.Text))
+                                        if (myValidar.CampoPreenchido(txbDS_Produto.Text.Trim()))
                                         {
-                                            if (!myValidar.TamanhoCampo(txbDS_Produto.Text, 3000))
+                                            if (!myValidar.TamanhoCampo(txbDS_Produto.Text.Trim(), 3000))
                                             {
                                                 mDs_Msg += " Limite de caracteres para descrição excedido, " +
                                                               "o limite para este campo é: 3000 caracteres, " +
-                                                              "quantidade utilizada: " + txbDS_Produto.Text.Length + ".";
+                                                              "quantidade utilizada: " + txbDS_Produto.Text.Trim().Length + ".";
                                             }
                                         }
                                         else
@@ -262,9 +263,9 @@ namespace SuplementosPIMIV.View
                                             mDs_Msg += " A descrição deve estar preenchida.";
                                         }
 
-                                        if (myValidar.CampoPreenchido(txbPR_Custo.Text))
+                                        if (myValidar.CampoPreenchido(txbPR_Custo.Text.Trim()))
                                         {
-                                            if (!myValidar.Valor(txbPR_Custo.Text))
+                                            if (!myValidar.Valor(txbPR_Custo.Text.Trim()))
                                             {
                                                 mDs_Msg += " O preço de custo deve ser um valor numérico, no formato: 9.999.999,99.";
                                             }
@@ -274,9 +275,9 @@ namespace SuplementosPIMIV.View
                                             mDs_Msg += " O preço de custo deve estar preenchido.";
                                         }
 
-                                        if (myValidar.CampoPreenchido(txbPR_Venda.Text))
+                                        if (myValidar.CampoPreenchido(txbPR_Venda.Text.Trim()))
                                         {
-                                            if (!myValidar.Valor(txbPR_Venda.Text))
+                                            if (!myValidar.Valor(txbPR_Venda.Text.Trim()))
                                             {
                                                 mDs_Msg += " O preço de venda deve ser um valor numérico, no formato: 9.999.999,99.";
                                             }
@@ -322,11 +323,11 @@ namespace SuplementosPIMIV.View
                     Convert.ToInt32(ddlID_CategoriaProduto.SelectedValue),
                     Convert.ToInt32(ddlID_SubcategoriaProduto.SelectedValue),
                     Convert.ToInt32(ddlID_SaborProduto.SelectedValue),
-                    txbNR_EAN.Text,
-                    txbNM_Produto.Text,
-                    txbDS_Produto.Text,
-                    Convert.ToDouble(txbPR_Custo.Text),
-                    Convert.ToDouble(txbPR_Venda.Text),
+                    txbNR_EAN.Text.Trim(),
+                    txbNM_Produto.Text.Trim(),
+                    txbDS_Produto.Text.Trim(),
+                    Convert.ToDouble(txbPR_Custo.Text.Trim()),
+                    Convert.ToDouble(txbPR_Venda.Text.Trim()),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -375,16 +376,16 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe produto, carregar tela e alterar
                 myControllerProduto = new ControllerProduto(
-                    Convert.ToInt32(txbID_Produto.Text),
+                    Convert.ToInt32(txbID_Produto.Text.Trim()),
                     Convert.ToInt32(ddlID_MarcaProduto.SelectedValue),
                     Convert.ToInt32(ddlID_CategoriaProduto.SelectedValue),
                     Convert.ToInt32(ddlID_SubcategoriaProduto.SelectedValue),
                     Convert.ToInt32(ddlID_SaborProduto.SelectedValue),
-                    txbNR_EAN.Text,
-                    txbNM_Produto.Text,
-                    txbDS_Produto.Text,
-                    Convert.ToDouble(txbPR_Custo.Text),
-                    Convert.ToDouble(txbPR_Venda.Text),
+                    txbNR_EAN.Text.Trim(),
+                    txbNM_Produto.Text.Trim(),
+                    txbDS_Produto.Text.Trim(),
+                    Convert.ToDouble(txbPR_Custo.Text.Trim()),
+                    Convert.ToDouble(txbPR_Venda.Text.Trim()),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -412,7 +413,7 @@ namespace SuplementosPIMIV.View
         private void Excluir()
         {
             // instanciar um objeto da classe produto e carregar tela e excluir
-            myControllerProduto = new ControllerProduto(Convert.ToInt32(txbID_Produto.Text), 'E', Session["ConnectionString"].ToString());
+            myControllerProduto = new ControllerProduto(Convert.ToInt32(txbID_Produto.Text.Trim()), 'E', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerProduto.DS_Mensagem == "OK")
@@ -433,7 +434,7 @@ namespace SuplementosPIMIV.View
         private void Ativar()
         {
             // instanciar um objeto da classe produto e carregar tela e ativar
-            myControllerProduto = new ControllerProduto(Convert.ToInt32(txbID_Produto.Text), 'A', Session["ConnectionString"].ToString());
+            myControllerProduto = new ControllerProduto(Convert.ToInt32(txbID_Produto.Text.Trim()), 'A', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerProduto.DS_Mensagem == "OK")
@@ -511,18 +512,18 @@ namespace SuplementosPIMIV.View
 
         protected void gvwExibe_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txbID_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text);
-            txbNR_EAN.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text);
-            txbNM_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text);
-            ddlID_MarcaProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[4].Text);
-            ddlID_CategoriaProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[6].Text);
-            ddlID_SubcategoriaProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[8].Text);
+            txbID_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text.Trim());
+            txbNR_EAN.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text.Trim());
+            txbNM_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text.Trim());
+            ddlID_MarcaProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[4].Text.Trim());
+            ddlID_CategoriaProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[6].Text.Trim());
+            ddlID_SubcategoriaProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[8].Text.Trim());
             ddlID_SubcategoriaProduto.Enabled = true;
-            ddlID_SaborProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[10].Text);
-            txbDS_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[12].Text);
-            txbQTD_Estoque.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[13].Text);
-            txbPR_Custo.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[14].Text);
-            txbPR_Venda.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[15].Text);
+            ddlID_SaborProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[10].Text.Trim());
+            txbDS_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[12].Text.Trim());
+            txbQTD_Estoque.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[13].Text.Trim());
+            txbPR_Custo.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[14].Text.Trim());
+            txbPR_Venda.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[15].Text.Trim());
 
             CheckBox ativo = (CheckBox)gvwExibe.SelectedRow.Cells[16].Controls[0];
             if (!ativo.Checked)
@@ -559,7 +560,7 @@ namespace SuplementosPIMIV.View
 
         protected void txbConsultar_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txbConsultar.Text))
+            if (!string.IsNullOrWhiteSpace(txbConsultar.Text.Trim()))
             {
                 btnConsultar.Enabled = true;
                 btnConsultar.Focus();

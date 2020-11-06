@@ -54,7 +54,7 @@ namespace SuplementosPIMIV.View
         {
             // validar a entrada de dados para consulta
             myValidar = new Validar();
-            string mDs_Msg = (myValidar.TamanhoCampo(txbNM_CategoriaConsultar.Text, 50)) ? "" : " Limite de caracteres para o nome excedido, " +
+            string mDs_Msg = (myValidar.TamanhoCampo(txbNM_CategoriaConsultar.Text.Trim(), 50)) ? "" : " Limite de caracteres para o nome excedido, " +
                                                                                               "o limite para este campo é: 50 caracteres, " +
                                                                                               "quantidade utilizada: " + txbNM_CategoriaConsultar.Text.Length + "."; ;
 
@@ -63,7 +63,7 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe categoria, carregar tela e consultar
                 myControllerCategoria = new ControllerCategoria(Session["ConnectionString"].ToString());
-                gvwExibe.DataSource = myControllerCategoria.Consultar(chkStatusInativo.Checked ? 0 : 1, txbNM_CategoriaConsultar.Text);
+                gvwExibe.DataSource = myControllerCategoria.Consultar(chkStatusInativo.Checked ? 0 : 1, txbNM_CategoriaConsultar.Text.Trim());
                 gvwExibe.DataBind();
             }
             else
@@ -76,13 +76,13 @@ namespace SuplementosPIMIV.View
         private void IncludeFields()
         {
             btnIncluir.Enabled =
-                txbNM_Categoria.Text.Length > 0 &&
-                txbDS_Categoria.Text.Length > 0 &&
-                txbID_Categoria.Text.Length == 0;
+                txbNM_Categoria.Text.Trim().Length > 0 &&
+                txbDS_Categoria.Text.Trim().Length > 0 &&
+                txbID_Categoria.Text.Trim().Length == 0;
 
             btnLimpar.Enabled =
-                txbNM_Categoria.Text.Length > 0 ||
-                txbDS_Categoria.Text.Length > 0;
+                txbNM_Categoria.Text.Trim().Length > 0 ||
+                txbDS_Categoria.Text.Trim().Length > 0;
         }
 
         private string ValidateFields()
@@ -92,25 +92,25 @@ namespace SuplementosPIMIV.View
             myControllerCategoria = new ControllerCategoria(Session["ConnectionString"].ToString());
             string mDs_Msg = "";
 
-            if (myValidar.CampoPreenchido(txbNM_Categoria.Text))
+            if (myValidar.CampoPreenchido(txbNM_Categoria.Text.Trim()))
             {
-                if (!myValidar.TamanhoCampo(txbNM_Categoria.Text, 50))
+                if (!myValidar.TamanhoCampo(txbNM_Categoria.Text.Trim(), 50))
                 {
                     mDs_Msg = " Limite de caracteres para o nome excedido, " +
                                   "o limite para este campo é: 50 caracteres, " +
-                                  "quantidade utilizada: " + txbNM_Categoria.Text.Length + ".";
+                                  "quantidade utilizada: " + txbNM_Categoria.Text.Trim().Length + ".";
                 }
                 else
                 {
-                    if (myControllerCategoria.VerificarCategoriaCadastrada(txbID_Categoria.Text, txbNM_Categoria.Text).Equals(""))
+                    if (myControllerCategoria.VerificarCategoriaCadastrada(txbID_Categoria.Text.Trim(), txbNM_Categoria.Text.Trim()).Equals(""))
                     {
-                        if (myValidar.CampoPreenchido(txbDS_Categoria.Text))
+                        if (myValidar.CampoPreenchido(txbDS_Categoria.Text.Trim()))
                         {
-                            if (!myValidar.TamanhoCampo(txbDS_Categoria.Text, 1500))
+                            if (!myValidar.TamanhoCampo(txbDS_Categoria.Text.Trim(), 1500))
                             {
                                 mDs_Msg += " Limite de caracteres para descrição excedido, " +
                                               "o limite para este campo é: 3000 caracteres, " +
-                                              "quantidade utilizada: " + txbDS_Categoria.Text.Length + ".";
+                                              "quantidade utilizada: " + txbDS_Categoria.Text.Trim().Length + ".";
                             }
                         }
                         else
@@ -142,8 +142,8 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe categoria, carregar tela e incluir
                 myControllerCategoria = new ControllerCategoria(
-                    txbNM_Categoria.Text,
-                    txbDS_Categoria.Text,
+                    txbNM_Categoria.Text.Trim(),
+                    txbDS_Categoria.Text.Trim(),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -178,9 +178,9 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe categoria, carregar tela e alterar
                 myControllerCategoria = new ControllerCategoria(
-                    Convert.ToInt32(txbID_Categoria.Text),
-                    txbNM_Categoria.Text,
-                    txbDS_Categoria.Text,
+                    Convert.ToInt32(txbID_Categoria.Text.Trim()),
+                    txbNM_Categoria.Text.Trim(),
+                    txbDS_Categoria.Text.Trim(),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -208,7 +208,7 @@ namespace SuplementosPIMIV.View
         private void Excluir()
         {
             // instanciar um objeto da classe categoria e carregar tela e excluir
-            myControllerCategoria = new ControllerCategoria(Convert.ToInt32(txbID_Categoria.Text), 'E', Session["ConnectionString"].ToString());
+            myControllerCategoria = new ControllerCategoria(Convert.ToInt32(txbID_Categoria.Text.Trim()), 'E', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerCategoria.DS_Mensagem == "OK")
@@ -229,7 +229,7 @@ namespace SuplementosPIMIV.View
         private void Ativar()
         {
             // instanciar um objeto da classe categoria e carregar tela e ativar
-            myControllerCategoria = new ControllerCategoria(Convert.ToInt32(txbID_Categoria.Text), 'A', Session["ConnectionString"].ToString());
+            myControllerCategoria = new ControllerCategoria(Convert.ToInt32(txbID_Categoria.Text.Trim()), 'A', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerCategoria.DS_Mensagem == "OK")
@@ -284,7 +284,7 @@ namespace SuplementosPIMIV.View
 
         protected void txbNM_CategoriaConsultar_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txbNM_CategoriaConsultar.Text))
+            if (!string.IsNullOrWhiteSpace(txbNM_CategoriaConsultar.Text.Trim()))
             {
                 btnConsultar.Enabled = true;
                 btnConsultar.Focus();
@@ -316,9 +316,9 @@ namespace SuplementosPIMIV.View
 
         protected void gvwExibe_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txbID_Categoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text);
-            txbNM_Categoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text);
-            txbDS_Categoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text);
+            txbID_Categoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text.Trim());
+            txbNM_Categoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text.Trim());
+            txbDS_Categoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text.Trim());
 
             CheckBox ativo = (CheckBox)gvwExibe.SelectedRow.Cells[4].Controls[0];
             if (!ativo.Checked)

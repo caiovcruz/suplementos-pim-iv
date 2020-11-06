@@ -74,16 +74,16 @@ namespace SuplementosPIMIV.View
         {
             // validar a entrada de dados para consulta
             myValidar = new Validar();
-            string mDs_Msg = (myValidar.TamanhoCampo(txbNM_SubcategoriaConsultar.Text, 50)) ? "" : " Limite de caracteres para o nome excedido, " +
+            string mDs_Msg = (myValidar.TamanhoCampo(txbNM_SubcategoriaConsultar.Text.Trim(), 50)) ? "" : " Limite de caracteres para o nome excedido, " +
                                                                                               "o limite para este campo é: 50 caracteres, " +
-                                                                                              "quantidade utilizada: " + txbNM_SubcategoriaConsultar.Text.Length + "."; ;
+                                                                                              "quantidade utilizada: " + txbNM_SubcategoriaConsultar.Text.Trim().Length + "."; ;
 
             if (mDs_Msg == "")
             {
                 // tudo certinho
                 // instanciar um objeto da classe subcategoria, carregar tela e consultar
                 myControllerSubcategoria = new ControllerSubcategoria(Session["ConnectionString"].ToString());
-                gvwExibe.DataSource = myControllerSubcategoria.Consultar(chkStatusInativo.Checked ? 0 : 1, txbNM_SubcategoriaConsultar.Text);
+                gvwExibe.DataSource = myControllerSubcategoria.Consultar(chkStatusInativo.Checked ? 0 : 1, txbNM_SubcategoriaConsultar.Text.Trim());
                 gvwExibe.DataBind();
             }
             else
@@ -97,14 +97,14 @@ namespace SuplementosPIMIV.View
         {
             btnIncluir.Enabled =
                 ddlID_Categoria.SelectedIndex != 0 &&
-                txbNM_Subcategoria.Text.Length > 0 &&
-                txbDS_Subcategoria.Text.Length > 0 &&
-                txbID_Subcategoria.Text.Length == 0;
+                txbNM_Subcategoria.Text.Trim().Length > 0 &&
+                txbDS_Subcategoria.Text.Trim().Length > 0 &&
+                txbID_Subcategoria.Text.Trim().Length == 0;
 
             btnLimpar.Enabled =
                 ddlID_Categoria.SelectedIndex != 0 ||
-                txbNM_Subcategoria.Text.Length > 0 ||
-                txbDS_Subcategoria.Text.Length > 0;
+                txbNM_Subcategoria.Text.Trim().Length > 0 ||
+                txbDS_Subcategoria.Text.Trim().Length > 0;
         }
 
         private string ValidateFields()
@@ -114,25 +114,26 @@ namespace SuplementosPIMIV.View
             myControllerSubcategoria = new ControllerSubcategoria(Session["ConnectionString"].ToString());
             string mDs_Msg = "";
 
-            if (myValidar.CampoPreenchido(txbNM_Subcategoria.Text))
+            if (myValidar.CampoPreenchido(txbNM_Subcategoria.Text.Trim()))
             {
-                if (!myValidar.TamanhoCampo(txbNM_Subcategoria.Text, 50))
+                if (!myValidar.TamanhoCampo(txbNM_Subcategoria.Text.Trim(), 50))
                 {
                     mDs_Msg = " Limite de caracteres para o nome excedido, " +
                                   "o limite para este campo é: 50 caracteres, " +
-                                  "quantidade utilizada: " + txbNM_Subcategoria.Text.Length + ".";
+                                  "quantidade utilizada: " + txbNM_Subcategoria.Text.Trim().Length + ".";
                 }
                 else
                 {
-                    if (myControllerSubcategoria.VerificarSubcategoriaCadastrada(txbID_Subcategoria.Text, txbNM_Subcategoria.Text, ddlID_Categoria.SelectedValue).Equals(""))
+                    if (myControllerSubcategoria.VerificarSubcategoriaCadastrada(txbID_Subcategoria.Text.Trim(), txbNM_Subcategoria.Text.Trim(),
+                        ddlID_Categoria.SelectedValue).Equals(""))
                     {
-                        if (myValidar.CampoPreenchido(txbDS_Subcategoria.Text))
+                        if (myValidar.CampoPreenchido(txbDS_Subcategoria.Text.Trim()))
                         {
-                            if (!myValidar.TamanhoCampo(txbDS_Subcategoria.Text, 1500))
+                            if (!myValidar.TamanhoCampo(txbDS_Subcategoria.Text.Trim(), 1500))
                             {
                                 mDs_Msg += " Limite de caracteres para descrição excedido, " +
                                               "o limite para este campo é: 3000 caracteres, " +
-                                              "quantidade utilizada: " + txbDS_Subcategoria.Text.Length + ".";
+                                              "quantidade utilizada: " + txbDS_Subcategoria.Text.Trim().Length + ".";
                             }
                         }
                         else
@@ -165,8 +166,8 @@ namespace SuplementosPIMIV.View
                 // instanciar um objeto da classe subcategoria, carregar tela e incluir
                 myControllerSubcategoria = new ControllerSubcategoria(
                     Convert.ToInt32(ddlID_Categoria.SelectedValue),
-                    txbNM_Subcategoria.Text,
-                    txbDS_Subcategoria.Text,
+                    txbNM_Subcategoria.Text.Trim(),
+                    txbDS_Subcategoria.Text.Trim(),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -201,10 +202,10 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe subcategoria, carregar tela e alterar
                 myControllerSubcategoria = new ControllerSubcategoria(
-                    Convert.ToInt32(txbID_Subcategoria.Text),
+                    Convert.ToInt32(txbID_Subcategoria.Text.Trim()),
                     Convert.ToInt32(ddlID_Categoria.SelectedValue),
-                    txbNM_Subcategoria.Text,
-                    txbDS_Subcategoria.Text,
+                    txbNM_Subcategoria.Text.Trim(),
+                    txbDS_Subcategoria.Text.Trim(),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -232,7 +233,7 @@ namespace SuplementosPIMIV.View
         private void Excluir()
         {
             // instanciar um objeto da classe subcategoria e carregar tela e consultar
-            myControllerSubcategoria = new ControllerSubcategoria(Convert.ToInt32(txbID_Subcategoria.Text), 'E', Session["ConnectionString"].ToString());
+            myControllerSubcategoria = new ControllerSubcategoria(Convert.ToInt32(txbID_Subcategoria.Text.Trim()), 'E', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerSubcategoria.DS_Mensagem == "OK")
@@ -253,7 +254,7 @@ namespace SuplementosPIMIV.View
         private void Ativar()
         {
             // instanciar um objeto da classe categoria e carregar tela e ativar
-            myControllerSubcategoria = new ControllerSubcategoria(Convert.ToInt32(txbID_Subcategoria.Text), 'A', Session["ConnectionString"].ToString());
+            myControllerSubcategoria = new ControllerSubcategoria(Convert.ToInt32(txbID_Subcategoria.Text.Trim()), 'A', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerSubcategoria.DS_Mensagem == "OK")
@@ -314,7 +315,7 @@ namespace SuplementosPIMIV.View
 
         protected void txbNM_SubcategoriaConsultar_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txbNM_SubcategoriaConsultar.Text))
+            if (!string.IsNullOrWhiteSpace(txbNM_SubcategoriaConsultar.Text.Trim()))
             {
                 btnConsultar.Enabled = true;
                 btnConsultar.Focus();
@@ -349,10 +350,10 @@ namespace SuplementosPIMIV.View
 
         protected void gvwExibe_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txbID_Subcategoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text);
-            txbNM_Subcategoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text);
-            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text);
-            txbDS_Subcategoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[5].Text);
+            txbID_Subcategoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text.Trim());
+            txbNM_Subcategoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text.Trim());
+            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text.Trim());
+            txbDS_Subcategoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[5].Text.Trim());
 
             CheckBox ativo = (CheckBox)gvwExibe.SelectedRow.Cells[6].Controls[0];
             if (!ativo.Checked)

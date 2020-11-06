@@ -58,14 +58,14 @@ namespace SuplementosPIMIV.View
             myValidar = new Validar();
             string mDs_Msg = (myValidar.TamanhoCampo(txbNM_MarcaConsultar.Text, 50)) ? "" : " Limite de caracteres para o nome excedido, " +
                                                                                               "o limite para este campo é: 50 caracteres, " +
-                                                                                              "quantidade utilizada: " + txbNM_MarcaConsultar.Text.Length + "."; ;
+                                                                                              "quantidade utilizada: " + txbNM_MarcaConsultar.Text.Trim().Length + "."; ;
 
             if (mDs_Msg == "")
             {
                 // tudo certinho
                 // instanciar um objeto da classe marca, carregar tela e consultar
                 myControllerMarca = new ControllerMarca(Session["ConnectionString"].ToString());
-                gvwExibe.DataSource = myControllerMarca.Consultar(chkStatusInativo.Checked ? 0 : 1, txbNM_MarcaConsultar.Text);
+                gvwExibe.DataSource = myControllerMarca.Consultar(chkStatusInativo.Checked ? 0 : 1, txbNM_MarcaConsultar.Text.Trim());
                 gvwExibe.DataBind();
             }
             else
@@ -78,11 +78,11 @@ namespace SuplementosPIMIV.View
         private void IncludeFields()
         {
             btnIncluir.Enabled =
-                txbNM_Marca.Text.Length > 0 &&
-                txbID_Marca.Text.Length == 0;
+                txbNM_Marca.Text.Trim().Length > 0 &&
+                txbID_Marca.Text.Trim().Length == 0;
 
             btnLimpar.Enabled =
-                txbNM_Marca.Text.Length > 0;
+                txbNM_Marca.Text.Trim().Length > 0;
         }
 
         private string ValidateFields()
@@ -92,17 +92,17 @@ namespace SuplementosPIMIV.View
             myControllerMarca = new ControllerMarca(Session["ConnectionString"].ToString());
             string mDs_Msg = "";
 
-            if (myValidar.CampoPreenchido(txbNM_Marca.Text))
+            if (myValidar.CampoPreenchido(txbNM_Marca.Text.Trim()))
             {
-                if (!myValidar.TamanhoCampo(txbNM_Marca.Text, 50))
+                if (!myValidar.TamanhoCampo(txbNM_Marca.Text.Trim(), 50))
                 {
                     mDs_Msg = " Limite de caracteres para o nome excedido, " +
                                   "o limite para este campo é: 50 caracteres, " +
-                                  "quantidade utilizada: " + txbNM_Marca.Text.Length + ".";
+                                  "quantidade utilizada: " + txbNM_Marca.Text.Trim().Length + ".";
                 }
                 else
                 {
-                    if (!myControllerMarca.VerificarMarcaCadastrada(txbID_Marca.Text, txbNM_Marca.Text).Equals(""))
+                    if (!myControllerMarca.VerificarMarcaCadastrada(txbID_Marca.Text.Trim(), txbNM_Marca.Text.Trim()).Equals(""))
                     {
                         mDs_Msg += " " + myControllerMarca.DS_Mensagem + " Verifique nas marcas ativas e inativas!";
                     }
@@ -126,7 +126,7 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe marca, carregar tela e incluir
                 myControllerMarca = new ControllerMarca(
-                    txbNM_Marca.Text,
+                    txbNM_Marca.Text.Trim(),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -161,8 +161,8 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe sabor, carregar tela e alterar
                 myControllerMarca = new ControllerMarca(
-                    Convert.ToInt32(txbID_Marca.Text),
-                    txbNM_Marca.Text,
+                    Convert.ToInt32(txbID_Marca.Text.Trim()),
+                    txbNM_Marca.Text.Trim(),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -190,7 +190,7 @@ namespace SuplementosPIMIV.View
         private void Excluir()
         {
             // instanciar um objeto da classe sabor e carregar tela e consultar
-            myControllerMarca = new ControllerMarca(Convert.ToInt32(txbID_Marca.Text), 'E', Session["ConnectionString"].ToString());
+            myControllerMarca = new ControllerMarca(Convert.ToInt32(txbID_Marca.Text.Trim()), 'E', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerMarca.DS_Mensagem == "OK")
@@ -211,7 +211,7 @@ namespace SuplementosPIMIV.View
         private void Ativar()
         {
             // instanciar um objeto da classe marca e carregar tela e ativar
-            myControllerMarca = new ControllerMarca(Convert.ToInt32(txbID_Marca.Text), 'A', Session["ConnectionString"].ToString());
+            myControllerMarca = new ControllerMarca(Convert.ToInt32(txbID_Marca.Text.Trim()), 'A', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerMarca.DS_Mensagem == "OK")
@@ -260,7 +260,7 @@ namespace SuplementosPIMIV.View
 
         protected void txbNM_MarcaConsultar_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txbNM_MarcaConsultar.Text))
+            if (!string.IsNullOrWhiteSpace(txbNM_MarcaConsultar.Text.Trim()))
             {
                 btnConsultar.Enabled = true;
                 btnConsultar.Focus();
@@ -289,8 +289,8 @@ namespace SuplementosPIMIV.View
 
         protected void gvwExibe_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txbID_Marca.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text);
-            txbNM_Marca.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text);
+            txbID_Marca.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text.Trim());
+            txbNM_Marca.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text.Trim());
 
             CheckBox ativo = (CheckBox)gvwExibe.SelectedRow.Cells[3].Controls[0];
             if (!ativo.Checked)

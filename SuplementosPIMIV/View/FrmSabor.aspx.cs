@@ -56,16 +56,16 @@ namespace SuplementosPIMIV.View
         {
             // validar a entrada de dados para consulta
             myValidar = new Validar();
-            string mDs_Msg = (myValidar.TamanhoCampo(txbNM_SaborConsultar.Text, 50)) ? "" : " Limite de caracteres para o nome excedido, " +
+            string mDs_Msg = (myValidar.TamanhoCampo(txbNM_SaborConsultar.Text.Trim(), 50)) ? "" : " Limite de caracteres para o nome excedido, " +
                                                                                               "o limite para este campo é: 50 caracteres, " +
-                                                                                              "quantidade utilizada: " + txbNM_SaborConsultar.Text.Length + "."; ;
+                                                                                              "quantidade utilizada: " + txbNM_SaborConsultar.Text.Trim().Length + "."; ;
 
             if (mDs_Msg == "")
             {
                 // tudo certinho
                 // instanciar um objeto da classe sabor, carregar tela e consultar
                 myControllerSabor = new ControllerSabor(Session["ConnectionString"].ToString());
-                gvwExibe.DataSource = myControllerSabor.Consultar(chkStatusInativo.Checked ? 0 : 1, txbNM_SaborConsultar.Text);
+                gvwExibe.DataSource = myControllerSabor.Consultar(chkStatusInativo.Checked ? 0 : 1, txbNM_SaborConsultar.Text.Trim());
                 gvwExibe.DataBind();
             }
             else
@@ -78,11 +78,11 @@ namespace SuplementosPIMIV.View
         private void IncludeFields()
         {
             btnIncluir.Enabled =
-                txbNM_Sabor.Text.Length > 0 &&
-                txbID_Sabor.Text.Length == 0;
+                txbNM_Sabor.Text.Trim().Length > 0 &&
+                txbID_Sabor.Text.Trim().Length == 0;
 
             btnLimpar.Enabled =
-                txbNM_Sabor.Text.Length > 0;
+                txbNM_Sabor.Text.Trim().Length > 0;
         }
 
         private string ValidateFields()
@@ -92,17 +92,17 @@ namespace SuplementosPIMIV.View
             myControllerSabor = new ControllerSabor(Session["ConnectionString"].ToString());
             string mDs_Msg = "";
 
-            if (myValidar.CampoPreenchido(txbNM_Sabor.Text))
+            if (myValidar.CampoPreenchido(txbNM_Sabor.Text.Trim()))
             {
-                if (!myValidar.TamanhoCampo(txbNM_Sabor.Text, 50))
+                if (!myValidar.TamanhoCampo(txbNM_Sabor.Text.Trim(), 50))
                 {
                     mDs_Msg = " Limite de caracteres para o nome excedido, " +
                                   "o limite para este campo é: 50 caracteres, " +
-                                  "quantidade utilizada: " + txbNM_Sabor.Text.Length + ".";
+                                  "quantidade utilizada: " + txbNM_Sabor.Text.Trim().Length + ".";
                 }
                 else
                 {
-                    if (!myControllerSabor.VerificarProdutoCadastrado(txbID_Sabor.Text, txbNM_Sabor.Text).Equals(""))
+                    if (!myControllerSabor.VerificarProdutoCadastrado(txbID_Sabor.Text.Trim(), txbNM_Sabor.Text.Trim()).Equals(""))
                     {
                         mDs_Msg += " " + myControllerSabor.DS_Mensagem + " Verifique nos sabores ativos e inativos!";
                     }
@@ -126,7 +126,7 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe sabor, carregar tela e incluir
                 myControllerSabor = new ControllerSabor(
-                    txbNM_Sabor.Text,
+                    txbNM_Sabor.Text.Trim(),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -161,8 +161,8 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe sabor, carregar tela e alterar
                 myControllerSabor = new ControllerSabor(
-                    Convert.ToInt32(txbID_Sabor.Text),
-                    txbNM_Sabor.Text,
+                    Convert.ToInt32(txbID_Sabor.Text.Trim()),
+                    txbNM_Sabor.Text.Trim(),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -190,7 +190,7 @@ namespace SuplementosPIMIV.View
         private void Excluir()
         {
             // instanciar um objeto da classe sabor e carregar tela e consultar
-            myControllerSabor = new ControllerSabor(Convert.ToInt32(txbID_Sabor.Text), 'E', Session["ConnectionString"].ToString());
+            myControllerSabor = new ControllerSabor(Convert.ToInt32(txbID_Sabor.Text.Trim()), 'E', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerSabor.DS_Mensagem == "OK")
@@ -211,7 +211,7 @@ namespace SuplementosPIMIV.View
         private void Ativar()
         {
             // instanciar um objeto da classe sabor e carregar tela e ativar
-            myControllerSabor = new ControllerSabor(Convert.ToInt32(txbID_Sabor.Text), 'A', Session["ConnectionString"].ToString());
+            myControllerSabor = new ControllerSabor(Convert.ToInt32(txbID_Sabor.Text.Trim()), 'A', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerSabor.DS_Mensagem == "OK")
@@ -260,7 +260,7 @@ namespace SuplementosPIMIV.View
 
         protected void txbNM_SaborConsultar_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txbNM_SaborConsultar.Text))
+            if (!string.IsNullOrWhiteSpace(txbNM_SaborConsultar.Text.Trim()))
             {
                 btnConsultar.Enabled = true;
                 btnConsultar.Focus();
@@ -289,8 +289,8 @@ namespace SuplementosPIMIV.View
 
         protected void gvwExibe_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txbID_Sabor.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text);
-            txbNM_Sabor.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text);
+            txbID_Sabor.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text.Trim());
+            txbNM_Sabor.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text.Trim());
 
             CheckBox ativo = (CheckBox)gvwExibe.SelectedRow.Cells[3].Controls[0];
             if (!ativo.Checked)

@@ -41,8 +41,8 @@ namespace SuplementosPIMIV.View
             string mDs_Msg = "";
 
             // Capturar dados da tela
-            mDs_Usuario = txbDS_Usuario.Text;
-            mDs_Senha = txbDS_Senha.Text;
+            mDs_Usuario = txbDS_Usuario.Text.Trim();
+            mDs_Senha = txbDS_Senha.Text.Trim();
 
             myValidar = new Validar();
 

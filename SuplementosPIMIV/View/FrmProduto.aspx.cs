@@ -246,51 +246,73 @@ namespace SuplementosPIMIV.View
                                 }
                                 else
                                 {
-                                    if (myControllerProduto.VerificarProdutoCadastrado(txbID_Produto.Text.Trim(), txbNR_EAN.Text.Trim(), 
-                                        txbNM_Produto.Text.Trim(), ddlID_MarcaProduto.SelectedValue).Equals(""))
+                                    if (ddlID_MarcaProduto.SelectedIndex.Equals(0))
                                     {
-                                        if (myValidar.CampoPreenchido(txbDS_Produto.Text.Trim()))
-                                        {
-                                            if (!myValidar.TamanhoCampo(txbDS_Produto.Text.Trim(), 3000))
-                                            {
-                                                mDs_Msg += " Limite de caracteres para descrição excedido, " +
-                                                              "o limite para este campo é: 3000 caracteres, " +
-                                                              "quantidade utilizada: " + txbDS_Produto.Text.Trim().Length + ".";
-                                            }
-                                        }
-                                        else
-                                        {
-                                            mDs_Msg += " A descrição deve estar preenchida.";
-                                        }
-
-                                        if (myValidar.CampoPreenchido(txbPR_Custo.Text.Trim()))
-                                        {
-                                            if (!myValidar.Valor(txbPR_Custo.Text.Trim()))
-                                            {
-                                                mDs_Msg += " O preço de custo deve ser um valor numérico, no formato: 9.999.999,99.";
-                                            }
-                                        }
-                                        else
-                                        {
-                                            mDs_Msg += " O preço de custo deve estar preenchido.";
-                                        }
-
-                                        if (myValidar.CampoPreenchido(txbPR_Venda.Text.Trim()))
-                                        {
-                                            if (!myValidar.Valor(txbPR_Venda.Text.Trim()))
-                                            {
-                                                mDs_Msg += " O preço de venda deve ser um valor numérico, no formato: 9.999.999,99.";
-                                            }
-                                        }
-                                        else
-                                        {
-                                            mDs_Msg += " O preço de venda deve estar preenchido.";
-                                        }
+                                        mDs_Msg = " É necessário selecionar uma marca.";
                                     }
                                     else
                                     {
-                                        mDs_Msg += " " + myControllerProduto.DS_Mensagem + " Verifique nos produtos ativos e inativos!";
-                                    }
+                                        if (myControllerProduto.VerificarProdutoCadastrado(txbID_Produto.Text.Trim(), txbNR_EAN.Text.Trim(),
+                                        txbNM_Produto.Text.Trim(), ddlID_MarcaProduto.SelectedValue).Equals(""))
+                                        {
+                                            if (myValidar.CampoPreenchido(txbDS_Produto.Text.Trim()))
+                                            {
+                                                if (!myValidar.TamanhoCampo(txbDS_Produto.Text.Trim(), 3000))
+                                                {
+                                                    mDs_Msg += " Limite de caracteres para descrição excedido, " +
+                                                                  "o limite para este campo é: 3000 caracteres, " +
+                                                                  "quantidade utilizada: " + txbDS_Produto.Text.Trim().Length + ".";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                mDs_Msg += " A descrição deve estar preenchida.";
+                                            }
+
+                                            if (ddlID_CategoriaProduto.SelectedIndex.Equals(0))
+                                            {
+                                                mDs_Msg += " É necessário selecionar uma categoria.";
+                                            }
+
+                                            if (ddlID_SubcategoriaProduto.SelectedIndex.Equals(0))
+                                            {
+                                                mDs_Msg += " É necessário selecionar uma subcategoria.";
+                                            }
+
+                                            if (ddlID_SaborProduto.SelectedIndex.Equals(0))
+                                            {
+                                                mDs_Msg += " É necessário selecionar um sabor.";
+                                            }
+
+                                            if (myValidar.CampoPreenchido(txbPR_Custo.Text.Trim()))
+                                            {
+                                                if (!myValidar.Valor(txbPR_Custo.Text.Trim()))
+                                                {
+                                                    mDs_Msg += " O preço de custo deve ser um valor numérico, no formato: 9.999.999,99.";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                mDs_Msg += " O preço de custo deve estar preenchido.";
+                                            }
+
+                                            if (myValidar.CampoPreenchido(txbPR_Venda.Text.Trim()))
+                                            {
+                                                if (!myValidar.Valor(txbPR_Venda.Text.Trim()))
+                                                {
+                                                    mDs_Msg += " O preço de venda deve ser um valor numérico, no formato: 9.999.999,99.";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                mDs_Msg += " O preço de venda deve estar preenchido.";
+                                            }
+                                        }
+                                        else
+                                        {
+                                            mDs_Msg += " " + myControllerProduto.DS_Mensagem + " Verifique nos produtos ativos e inativos!";
+                                        }
+                                    }                                    
                                 }
                             }
                             else
@@ -512,14 +534,54 @@ namespace SuplementosPIMIV.View
 
         protected void gvwExibe_SelectedIndexChanged(object sender, EventArgs e)
         {
+            lblDS_Mensagem.Text = "";
+
             txbID_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text.Trim());
             txbNR_EAN.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text.Trim());
             txbNM_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text.Trim());
-            ddlID_MarcaProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[4].Text.Trim());
-            ddlID_CategoriaProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[6].Text.Trim());
-            ddlID_SubcategoriaProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[8].Text.Trim());
-            ddlID_SubcategoriaProduto.Enabled = true;
-            ddlID_SaborProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[10].Text.Trim());
+
+            try
+            {
+                ddlID_MarcaProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[4].Text.Trim());
+            }
+            catch (Exception)
+            {
+                lblDS_Mensagem.Text = "Marca [ " + gvwExibe.SelectedRow.Cells[5].Text.Trim() + " ] inativa";
+                ddlID_MarcaProduto.SelectedIndex = 0;
+            }
+
+            try
+            {
+                ddlID_CategoriaProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[6].Text.Trim());
+            }
+            catch (Exception)
+            {
+                lblDS_Mensagem.Text += " Categoria [ " + gvwExibe.SelectedRow.Cells[7].Text.Trim() + " ] inativa";
+                ddlID_CategoriaProduto.SelectedIndex = 0;
+            }
+
+            try
+            {
+                ddlID_SubcategoriaProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[8].Text.Trim());
+                ddlID_SubcategoriaProduto.Enabled = true;
+            }
+            catch (Exception)
+            {
+                lblDS_Mensagem.Text += " Subcategoria [ " + gvwExibe.SelectedRow.Cells[9].Text.Trim() + " ] inativa";
+                ddlID_SubcategoriaProduto.SelectedIndex = 0;
+                ddlID_SubcategoriaProduto.Enabled = true;
+            }
+
+            try
+            {
+                ddlID_SaborProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[10].Text.Trim());
+            }
+            catch (Exception)
+            {
+                lblDS_Mensagem.Text += " Sabor [ " + gvwExibe.SelectedRow.Cells[10].Text.Trim() + " ] inativo";
+                ddlID_SaborProduto.SelectedIndex = 0;
+            }
+
             txbDS_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[12].Text.Trim());
             txbQTD_Estoque.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[13].Text.Trim());
             txbPR_Custo.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[14].Text.Trim());
@@ -536,8 +598,6 @@ namespace SuplementosPIMIV.View
                 btnAtivarStatus.Enabled = false;
                 btnExcluir.Enabled = true;
             }
-
-            lblDS_Mensagem.Text = "";
 
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = true;

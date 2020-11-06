@@ -124,26 +124,33 @@ namespace SuplementosPIMIV.View
                 }
                 else
                 {
-                    if (myControllerSubcategoria.VerificarSubcategoriaCadastrada(txbID_Subcategoria.Text.Trim(), txbNM_Subcategoria.Text.Trim(),
-                        ddlID_Categoria.SelectedValue).Equals(""))
+                    if (ddlID_Categoria.SelectedIndex.Equals(0))
                     {
-                        if (myValidar.CampoPreenchido(txbDS_Subcategoria.Text.Trim()))
+                        mDs_Msg = " É necessário selecionar uma categoria base.";
+                    }
+                    else
+                    {
+                        if (myControllerSubcategoria.VerificarSubcategoriaCadastrada(txbID_Subcategoria.Text.Trim(), 
+                            txbNM_Subcategoria.Text.Trim(), ddlID_Categoria.SelectedValue).Equals(""))
                         {
-                            if (!myValidar.TamanhoCampo(txbDS_Subcategoria.Text.Trim(), 1500))
+                            if (myValidar.CampoPreenchido(txbDS_Subcategoria.Text.Trim()))
                             {
-                                mDs_Msg += " Limite de caracteres para descrição excedido, " +
-                                              "o limite para este campo é: 3000 caracteres, " +
-                                              "quantidade utilizada: " + txbDS_Subcategoria.Text.Trim().Length + ".";
+                                if (!myValidar.TamanhoCampo(txbDS_Subcategoria.Text.Trim(), 1500))
+                                {
+                                    mDs_Msg += " Limite de caracteres para descrição excedido, " +
+                                                  "o limite para este campo é: 3000 caracteres, " +
+                                                  "quantidade utilizada: " + txbDS_Subcategoria.Text.Trim().Length + ".";
+                                }
+                            }
+                            else
+                            {
+                                mDs_Msg += " A descrição deve estar preenchida.";
                             }
                         }
                         else
                         {
-                            mDs_Msg += " A descrição deve estar preenchida.";
+                            mDs_Msg += " " + myControllerSubcategoria.DS_Mensagem + " Verifique nas subcategorias ativas e inativas!";
                         }
-                    }
-                    else
-                    {
-                        mDs_Msg += " " + myControllerSubcategoria.DS_Mensagem + " Verifique nas subcategorias ativas e inativas!";
                     }
                 }
             }
@@ -350,9 +357,21 @@ namespace SuplementosPIMIV.View
 
         protected void gvwExibe_SelectedIndexChanged(object sender, EventArgs e)
         {
+            lblDS_Mensagem.Text = "";
+
             txbID_Subcategoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text.Trim());
             txbNM_Subcategoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text.Trim());
-            ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text.Trim());
+
+            try
+            {
+                ddlID_Categoria.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text.Trim());
+            }
+            catch (Exception)
+            {
+                lblDS_Mensagem.Text += " Categoria [ " + gvwExibe.SelectedRow.Cells[4].Text.Trim() + " ] inativa";
+                ddlID_Categoria.SelectedIndex = 0;
+            }
+
             txbDS_Subcategoria.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[5].Text.Trim());
 
             CheckBox ativo = (CheckBox)gvwExibe.SelectedRow.Cells[6].Controls[0];
@@ -366,8 +385,6 @@ namespace SuplementosPIMIV.View
                 btnAtivarStatus.Enabled = false;
                 btnExcluir.Enabled = true;
             }
-
-            lblDS_Mensagem.Text = "";
 
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = true;

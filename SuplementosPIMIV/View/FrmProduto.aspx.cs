@@ -30,7 +30,8 @@ namespace SuplementosPIMIV.View
                 CarregarSubcategorias();
                 CarregarSabores();
                 CarregarFiltrosDeBusca();
-                BloquearComponentes();
+                BloquearComponentesCadastro();
+                BloquearComponentesExibe();
             }
         }
 
@@ -51,16 +52,20 @@ namespace SuplementosPIMIV.View
             lblDS_Mensagem.Text = "";
         }
 
-        private void BloquearComponentes()
+        private void BloquearComponentesCadastro()
         {
             btnAtivarStatus.Enabled = false;
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = false;
             btnExcluir.Enabled = false;
             btnLimpar.Enabled = false;
+            txbQTD_Estoque.Enabled = false;
+        }
+
+        private void BloquearComponentesExibe()
+        {          
             btnConsultar.Enabled = false;
             txbConsultar.Enabled = false;
-            txbQTD_Estoque.Enabled = false;
         }
 
         private void CarregarProdutos()
@@ -364,7 +369,7 @@ namespace SuplementosPIMIV.View
                     {
                         // tudo certinho!
                         LimparCampos();
-                        BloquearComponentes();
+                        BloquearComponentesCadastro();
                         CarregarProdutos();
                         lblDS_Mensagem.Text = "Incluído com sucesso!";
                     }
@@ -415,7 +420,7 @@ namespace SuplementosPIMIV.View
                 {
                     // tudo certinho!
                     LimparCampos();
-                    BloquearComponentes();
+                    BloquearComponentesCadastro();
                     CarregarProdutos();
                     lblDS_Mensagem.Text = "Alterado com sucesso!";
                 }
@@ -442,7 +447,7 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho!
                 LimparCampos();
-                BloquearComponentes();
+                BloquearComponentesCadastro();
                 CarregarProdutos();
                 lblDS_Mensagem.Text = "Excluído com sucesso!";
             }
@@ -495,7 +500,7 @@ namespace SuplementosPIMIV.View
         protected void btnLimpar_Click(object sender, EventArgs e)
         {
             LimparCampos();
-            BloquearComponentes();
+            BloquearComponentesCadastro();
         }
 
         protected void gvwExibe_RowDataBound(object sender, GridViewRowEventArgs e)

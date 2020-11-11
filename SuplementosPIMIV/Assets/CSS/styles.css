@@ -352,7 +352,7 @@ body {
 }
 
 #cadastroMovEstoque {
-    margin: 0px 19% 0px 19%;
+    margin: 0px 25% 0px 25%;
 }
 
 #cadInternoMovEstoque, #exibeInternoMovEstoque {
@@ -363,7 +363,7 @@ body {
     width: 100%;
     position: inherit;
     display: grid;
-    grid-template-columns: 52% 24% 24%;
+    grid-template-columns: 33% 33% 33%;
 }
 
 .colunasMovEstoque {
@@ -374,7 +374,7 @@ body {
     margin-left: 15px;
 }
 
-#ddlID_ProdutoMovimentacaoEstoque, #txbQTD_MovimentacaoEstoque, #ddlDS_MovimentacaoEstoque {
+#ddlID_ProdutoMovimentacaoEstoque, #txbQTD_MovimentacaoEstoque, #ddlDS_MovimentacaoEstoque, #txbDT_MovimentacaoEstoque {
     width: 100%;
 }
 

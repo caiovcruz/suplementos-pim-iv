@@ -22,7 +22,8 @@ namespace SuplementosPIMIV.View
                 LimparCampos();
                 CarregarSubcategorias();
                 CarregarCategorias();
-                BloquearComponentes();
+                BloquearComponentesCadastro();
+                BloquearComponentesExibe();
             }
         }
 
@@ -35,13 +36,17 @@ namespace SuplementosPIMIV.View
             lblDS_Mensagem.Text = "";
         }
 
-        private void BloquearComponentes()
+        private void BloquearComponentesCadastro()
         {
             btnAtivarStatus.Enabled = false;
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = false;
             btnExcluir.Enabled = false;
             btnLimpar.Enabled = false;
+        }
+
+        private void BloquearComponentesExibe()
+        {
             btnConsultar.Enabled = false;
         }
 
@@ -182,7 +187,7 @@ namespace SuplementosPIMIV.View
                 {
                     // tudo certinho!
                     LimparCampos();
-                    BloquearComponentes();
+                    BloquearComponentesCadastro();
                     CarregarSubcategorias();
                     lblDS_Mensagem.Text = "Incluído com sucesso!";
                 }
@@ -220,7 +225,7 @@ namespace SuplementosPIMIV.View
                 {
                     // tudo certinho!
                     LimparCampos();
-                    BloquearComponentes();
+                    BloquearComponentesCadastro();
                     CarregarSubcategorias();
                     lblDS_Mensagem.Text = "Alterado com sucesso!";
                 }
@@ -247,7 +252,7 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho!
                 LimparCampos();
-                BloquearComponentes();
+                BloquearComponentesCadastro();
                 CarregarSubcategorias();
                 lblDS_Mensagem.Text = "Excluído com sucesso!";
             }
@@ -295,7 +300,7 @@ namespace SuplementosPIMIV.View
         protected void btnLimpar_Click(object sender, EventArgs e)
         {
             LimparCampos();
-            BloquearComponentes();
+            BloquearComponentesCadastro();
         }
 
         protected void btnConsultar_Click(object sender, EventArgs e)

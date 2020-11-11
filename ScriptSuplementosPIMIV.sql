@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS TB_Login;
+DROP TABLE IF EXISTS TB_MovimentacaoEstoque;
 DROP TABLE IF EXISTS TB_Estoque;
 DROP TABLE IF EXISTS TB_Produto;
 DROP TABLE IF EXISTS TB_Marca;
@@ -76,6 +77,18 @@ CREATE TABLE TB_Estoque
     Ativo BIT NOT NULL,
     PRIMARY KEY (ID_Produto),
 	FOREIGN KEY (ID_Produto) REFERENCES TB_Produto(ID_Produto)
+);
+
+CREATE TABLE TB_MovimentacaoEstoque
+(
+	ID_MovimentacaoEstoque INT IDENTITY(1,1),
+	ID_Produto INT NOT NULL,
+	QTD_MovimentacaoEstoque INT NOT NULL,
+	DS_MovimentacaoEstoque VARCHAR(20) NOT NULL,
+	DT_MovimentacaoEstoque DATETIME,
+	QTD_Estoque INT NOT NULL,
+	PRIMARY KEY(ID_MovimentacaoEstoque),
+	FOREIGN KEY(ID_Produto) REFERENCES TB_Produto(ID_Produto)
 );
 
 GO
@@ -181,6 +194,23 @@ VALUES
 	1,
 	10,
     1
+);
+
+INSERT INTO TB_MovimentacaoEstoque
+(
+	ID_Produto,
+	QTD_MovimentacaoEstoque,
+	DS_MovimentacaoEstoque,
+	DT_MovimentacaoEstoque,
+	QTD_Estoque
+)
+VALUES
+(
+	1,
+	2,
+	'Entrada',
+	'2020-10-01',
+	5
 );
 
 SELECT 

@@ -78,13 +78,13 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.DropDownList ddlDS_MovimentacaoEstoque;
 
         /// <summary>
-        /// Controle Calendar.
+        /// Controle txbDT_MovimentacaoEstoque.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar Calendar;
+        protected global::System.Web.UI.WebControls.TextBox txbDT_MovimentacaoEstoque;
 
         /// <summary>
         /// Controle lblDS_Mensagem.

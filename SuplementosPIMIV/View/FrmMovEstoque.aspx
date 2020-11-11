@@ -11,6 +11,8 @@
 
     <link href="~/Assets/css/styles.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="~/Assets/img/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="~/Assets/img/favicon-16x16.png" sizes="16x16" />
     <script src="https://kit.fontawesome.com/de6e3c9fed.js" crossorigin="anonymous"></script>
 
 </head>
@@ -53,24 +55,22 @@
 
                             <asp:TextBox CssClass="TextBox" ID="txbID_MovimentacaoEstoque" Visible="false" runat="server"></asp:TextBox>
 
+                            <asp:Label CssClass="Label" runat="server" Width="100%" Text="Produto"></asp:Label>
+
+                            <br />
+
+                            <asp:DropDownList CssClass="DropDownList" ID="ddlID_ProdutoMovimentacaoEstoque" runat="server"
+                                OnSelectedIndexChanged="ddlID_ProdutoMovimentacaoEstoque_SelectedIndexChanged" AutoPostBack="true">
+                            </asp:DropDownList>
+
+                            <br />
+
                             <div id="internoColunasMovEstoque">
 
-                                <div class="colunasMovEstoque">
-
-                                    <asp:Label CssClass="Label" runat="server" Width="50%" Text="Produto"></asp:Label>
-                                    
-                                    <br />
-
-                                    <asp:DropDownList CssClass="DropDownList" ID="ddlID_ProdutoMovimentacaoEstoque" runat="server"
-                                        OnSelectedIndexChanged="ddlID_ProdutoMovimentacaoEstoque_SelectedIndexChanged" AutoPostBack="true">
-                                    </asp:DropDownList>
-
-                                </div>
-
-                                <div class="colunasMovEstoque" id="colunaMovEstoque2">
+                                <div class="colunasMovEstoque" id="colunaMovEstoque1">
 
                                     <asp:Label CssClass="Label" runat="server" Width="24%" Text="Quantidade"></asp:Label>
-                                    
+
                                     <br />
 
                                     <asp:TextBox CssClass="TextBox" ID="txbQTD_MovimentacaoEstoque" runat="server" MaxLengh="50"
@@ -79,10 +79,10 @@
 
                                 </div>
 
-                                <div class="colunasMovEstoque" id="colunaMovEstoque3">
+                                <div class="colunasMovEstoque" id="colunaMovEstoque2">
 
                                     <asp:Label CssClass="Label" runat="server" Width="24%" Text="Movimentação"></asp:Label>
-                                    
+
                                     <br />
 
                                     <asp:DropDownList CssClass="DropDownList" ID="ddlDS_MovimentacaoEstoque" runat="server"
@@ -91,22 +91,17 @@
 
                                 </div>
 
+                                <div class="colunasMovEstoque" id="colunaMovEstoque3">
+
+                                    <asp:Label CssClass="Label" runat="server" Width="24%" Text="Data"></asp:Label>
+
+                                    <br />
+
+                                    <asp:TextBox CssClass="TextBox" ID="txbDT_MovimentacaoEstoque" runat="server" AutoPostBack="true"></asp:TextBox>
+
+                                </div>
+
                             </div>
-
-
-
-                            <br />
-
-                            <asp:Calendar ID="Calendar" runat="server" BackColor="WhiteSmoke" BorderColor="White" BorderWidth="1px"
-                                Font-Names="Roboto" Font-Size="12pt" ForeColor="Black" Height="190px" NextPrevFormat="FullMonth"
-                                Width="100%">
-                                <DayHeaderStyle Font-Bold="True" Font-Size="8pt" />
-                                <NextPrevStyle Font-Bold="True" Font-Size="8pt" ForeColor="#333333" VerticalAlign="Bottom" />
-                                <OtherMonthDayStyle ForeColor="#999999" />
-                                <SelectedDayStyle BackColor="#333399" ForeColor="White" />
-                                <TitleStyle BackColor="White" BorderColor="Black" BorderWidth="4px" Font-Bold="True" Font-Size="12pt" ForeColor="#333399" />
-                                <TodayDayStyle BackColor="#CCCCCC" />
-                            </asp:Calendar>
 
                             <br />
 

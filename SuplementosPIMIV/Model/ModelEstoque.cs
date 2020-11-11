@@ -106,5 +106,37 @@ namespace SuplementosPIMIV.Model
                 sqlConnection.Close();
             }
         }
+
+        public int QuantidadeTotalEstoque(int id_produto)
+        {
+            int qtd_total = 0;
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("QTD_Estoque ");
+                stringSQL.Append("FROM TB_Estoque ");
+                stringSQL.Append("WHERE ID_Produto = '" + id_produto + "' ");
+                stringSQL.Append("ORDER BY ID_Produto DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                qtd_total = Convert.ToInt32(sqlCommand.ExecuteScalar());
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+
+            return qtd_total;
+        }
     }
 }

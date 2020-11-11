@@ -29,6 +29,7 @@
                 </button>
                 <div class="dropdown-content">
                     <a href="FrmProduto.aspx">Produtos</a>
+                    <a href="FrmMovEstoque.aspx">Mov.Estoques</a>
                     <a href="FrmMarca.aspx">Marcas</a>
                     <a href="FrmSabor.aspx">Sabores</a>
                     <a href="FrmSubcategoria.aspx">Subcategorias</a>

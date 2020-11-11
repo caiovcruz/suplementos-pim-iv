@@ -29,6 +29,7 @@
                 </button>
                 <div class="dropdown-content">
                     <a href="FrmProduto.aspx">Produtos</a>
+                    <a href="FrmMovEstoque.aspx">Mov.Estoques</a>
                     <a href="FrmMarca.aspx">Marcas</a>
                     <a href="FrmSabor.aspx">Sabores</a>
                     <a href="FrmSubcategoria.aspx">Subcategorias</a>
@@ -69,7 +70,7 @@
                                     <asp:TextBox CssClass="TextBox" ID="txbNM_Produto" runat="server" MaxLengh="50"
                                         placeholder="Nome do produto" OnTextChanged="txbNM_Produto_TextChanged" AutoPostBack="true"></asp:TextBox>
 
-                                    <asp:DropDownList CssClass="TextBox" ID="ddlID_MarcaProduto" runat="server"
+                                    <asp:DropDownList CssClass="DropDownList" ID="ddlID_MarcaProduto" runat="server"
                                         OnSelectedIndexChanged="ddlID_MarcaProduto_SelectedIndexChanged" AutoPostBack="true">
                                     </asp:DropDownList>
 
@@ -85,14 +86,14 @@
                                 <div class="colunasProduto" id="colunaProduto2">
 
                                     <asp:Label CssClass="Label" runat="server" Width="100%" Text="Categoria"></asp:Label>
-                                    <asp:DropDownList CssClass="TextBox" ID="ddlID_CategoriaProduto" runat="server"
+                                    <asp:DropDownList CssClass="DropDownList" ID="ddlID_CategoriaProduto" runat="server"
                                         OnSelectedIndexChanged="ddlID_CategoriaProduto_SelectedIndexChanged" AutoPostBack="true">
                                     </asp:DropDownList>
 
                                     <br />
 
                                     <asp:Label CssClass="Label" runat="server" Width="100%" Text="Sabor"></asp:Label>
-                                    <asp:DropDownList CssClass="TextBox" ID="ddlID_SaborProduto" runat="server"
+                                    <asp:DropDownList CssClass="DropDownList" ID="ddlID_SaborProduto" runat="server"
                                         OnSelectedIndexChanged="ddlID_SaborProduto_SelectedIndexChanged" AutoPostBack="true">
                                     </asp:DropDownList>
 
@@ -106,7 +107,7 @@
 
                                 <div class="colunasProduto" id="colunaProduto3">
                                     <asp:Label CssClass="Label" runat="server" Width="100%" Text="Subcategoria"></asp:Label>
-                                    <asp:DropDownList CssClass="TextBox" ID="ddlID_SubcategoriaProduto" runat="server"
+                                    <asp:DropDownList CssClass="DropDownList" ID="ddlID_SubcategoriaProduto" runat="server"
                                         OnSelectedIndexChanged="ddlID_SubcategoriaProduto_SelectedIndexChanged" AutoPostBack="true">
                                     </asp:DropDownList>
 

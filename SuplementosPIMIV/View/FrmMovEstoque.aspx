@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FrmSubcategoria.aspx.cs" Inherits="SuplementosPIMIV.View.FrmSubcategoria" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FrmMovEstoque.aspx.cs" Inherits="SuplementosPIMIV.View.FrmEstoque" %>
 
 <!DOCTYPE html>
 
@@ -7,7 +7,7 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <title>Cadastro de Subcategorias</title>
+    <title>Movimentação de Estoques</title>
 
     <link href="~/Assets/css/styles.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
@@ -15,7 +15,7 @@
 
 </head>
 <body>
-    <form id="formSubcategoria" runat="server">
+    <form id="formEstoque" runat="server">
         <asp:ScriptManager ID="scpManager" runat="server"></asp:ScriptManager>
 
         <!-- Menu -------------------------------------- -->
@@ -40,36 +40,73 @@
 
         <div class="conteiner">
 
-            <div id="cadastroSubcategoria">
+            <div id="cadastroMovEstoque">
 
-                <div id="cadInternoSubcategoria">
+                <div id="cadInternoMovEstoque">
 
-                    <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Cadastro de Subcategorias"></asp:Label>
+                    <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Movimentação de Estoques"></asp:Label>
 
                     <br />
 
                     <asp:UpdatePanel ID="updCadastro" runat="server">
                         <ContentTemplate>
 
-                            <asp:TextBox CssClass="TextBox" ID="txbID_Subcategoria" Visible="false" runat="server"></asp:TextBox>
+                            <asp:TextBox CssClass="TextBox" ID="txbID_MovimentacaoEstoque" Visible="false" runat="server"></asp:TextBox>
 
-                            <asp:Label CssClass="Label" runat="server" Width="77%" Text="Nome"></asp:Label>
-                            <asp:Label CssClass="Label" runat="server" Width="20%" Text="Categoria base"></asp:Label>
+                            <div id="internoColunasMovEstoque">
 
-                            <asp:TextBox CssClass="TextBox" ID="txbNM_Subcategoria" runat="server" MaxLengh="50"
-                                placeholder="Nome da subcategoria" OnTextChanged="txbNM_Subcategoria_TextChanged"
-                                AutoPostBack="true"></asp:TextBox>
+                                <div class="colunasMovEstoque">
 
-                            <asp:DropDownList CssClass="TextBox" ID="ddlID_Categoria" runat="server"
-                                OnSelectedIndexChanged="ddlID_Categoria_SelectedIndexChanged" AutoPostBack="true">
-                            </asp:DropDownList>
+                                    <asp:Label CssClass="Label" runat="server" Width="50%" Text="Produto"></asp:Label>
+                                    
+                                    <br />
+
+                                    <asp:DropDownList CssClass="DropDownList" ID="ddlID_ProdutoMovimentacaoEstoque" runat="server"
+                                        OnSelectedIndexChanged="ddlID_ProdutoMovimentacaoEstoque_SelectedIndexChanged" AutoPostBack="true">
+                                    </asp:DropDownList>
+
+                                </div>
+
+                                <div class="colunasMovEstoque" id="colunaMovEstoque2">
+
+                                    <asp:Label CssClass="Label" runat="server" Width="24%" Text="Quantidade"></asp:Label>
+                                    
+                                    <br />
+
+                                    <asp:TextBox CssClass="TextBox" ID="txbQTD_MovimentacaoEstoque" runat="server" MaxLengh="50"
+                                        placeholder="Quantidade" OnTextChanged="txbQTD_MovimentacaoEstoque_TextChanged"
+                                        AutoPostBack="true"></asp:TextBox>
+
+                                </div>
+
+                                <div class="colunasMovEstoque" id="colunaMovEstoque3">
+
+                                    <asp:Label CssClass="Label" runat="server" Width="24%" Text="Movimentação"></asp:Label>
+                                    
+                                    <br />
+
+                                    <asp:DropDownList CssClass="DropDownList" ID="ddlDS_MovimentacaoEstoque" runat="server"
+                                        OnSelectedIndexChanged="ddlDS_MovimentacaoEstoque_SelectedIndexChanged" AutoPostBack="true">
+                                    </asp:DropDownList>
+
+                                </div>
+
+                            </div>
+
+
 
                             <br />
 
-                            <asp:Label CssClass="Label" runat="server" Width="100%" Text="Descrição"></asp:Label>
-                            <asp:TextBox CssClass="TextBox" ID="txbDS_Subcategoria" runat="server" MaxLengh="1500"
-                                TextMode="MultiLine" Wrap="true" placeholder="Descrição da subcategoria"
-                                OnTextChanged="txbDS_Subcategoria_TextChanged" AutoPostBack="true"></asp:TextBox>
+                            <asp:Calendar ID="Calendar" runat="server" BackColor="WhiteSmoke" BorderColor="White" BorderWidth="1px"
+                                Font-Names="Roboto" Font-Size="12pt" ForeColor="Black" Height="190px" NextPrevFormat="FullMonth"
+                                Width="100%">
+                                <DayHeaderStyle Font-Bold="True" Font-Size="8pt" />
+                                <NextPrevStyle Font-Bold="True" Font-Size="8pt" ForeColor="#333333" VerticalAlign="Bottom" />
+                                <OtherMonthDayStyle ForeColor="#999999" />
+                                <SelectedDayStyle BackColor="#333399" ForeColor="White" />
+                                <TitleStyle BackColor="White" BorderColor="Black" BorderWidth="4px" Font-Bold="True" Font-Size="12pt" ForeColor="#333399" />
+                                <TodayDayStyle BackColor="#CCCCCC" />
+                            </asp:Calendar>
 
                             <br />
 
@@ -80,9 +117,7 @@
 
                             <asp:Button CssClass="Button" ID="btnLimpar" runat="server" Text="Limpar" OnClick="btnLimpar_Click" />
                             <asp:Button CssClass="Button" ID="btnIncluir" runat="server" Text="Incluir" OnClick="btnIncluir_Click" />
-                            <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
                             <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
-                            <asp:Button CssClass="Button" ID="btnAtivarStatus" runat="server" Text="Ativar" OnClick="btnAtivarStatus_Click" />
 
                         </ContentTemplate>
                     </asp:UpdatePanel>
@@ -93,18 +128,16 @@
 
             <br />
 
-            <div id="exibeSubcategoria">
-                <div id="exibeInternoSubcategoria">
+            <div id="exibeMovEstoque">
+                <div id="exibeInternoMovEstoque">
 
                     <br />
 
                     <asp:UpdatePanel ID="updConsulta" runat="server">
                         <ContentTemplate>
 
-                            <asp:CheckBox ID="chkStatusInativo" runat="server" Text="Inativas" AutoPostBack="true" OnCheckedChanged="chkStatusInativo_CheckedChanged" />
-
-                            <asp:TextBox CssClass="TextBox" ID="txbNM_SubcategoriaConsultar" MaxLengh="50"
-                                placeholder="Buscar subcategoria" runat="server" OnTextChanged="txbNM_SubcategoriaConsultar_TextChanged"
+                            <asp:TextBox CssClass="TextBox" ID="txbNM_ProdutoConsultar" MaxLengh="50"
+                                placeholder="Buscar produto" runat="server" OnTextChanged="txbNM_ProdutoConsultar_TextChanged"
                                 AutoPostBack="true"></asp:TextBox>
 
                             <asp:Button CssClass="Button" ID="btnConsultar" runat="server" Text="Consultar"

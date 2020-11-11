@@ -117,6 +117,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="View\FrmCategoria.aspx" />
+    <Content Include="View\FrmMovEstoque.aspx" />
     <Content Include="View\FrmLogin.aspx" />
     <Content Include="View\FrmMarca.aspx" />
     <Content Include="View\FrmMenuPrincipal.aspx" />
@@ -149,6 +150,13 @@
     </Compile>
     <Compile Include="View\FrmCategoria.aspx.designer.cs">
       <DependentUpon>FrmCategoria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\FrmMovEstoque.aspx.cs">
+      <DependentUpon>FrmMovEstoque.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\FrmMovEstoque.aspx.designer.cs">
+      <DependentUpon>FrmMovEstoque.aspx</DependentUpon>
     </Compile>
     <Compile Include="View\FrmLogin.aspx.cs">
       <DependentUpon>FrmLogin.aspx</DependentUpon>

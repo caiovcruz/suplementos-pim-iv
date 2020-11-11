@@ -546,7 +546,7 @@ namespace SuplementosPIMIV.View
             }
             catch (Exception)
             {
-                lblDS_Mensagem.Text = "Marca [ " + gvwExibe.SelectedRow.Cells[5].Text.Trim() + " ] inativa";
+                lblDS_Mensagem.Text = "Marca [ " + gvwExibe.SelectedRow.Cells[5].Text.Trim() + " ] inativa.";
                 ddlID_MarcaProduto.SelectedIndex = 0;
             }
 
@@ -556,7 +556,7 @@ namespace SuplementosPIMIV.View
             }
             catch (Exception)
             {
-                lblDS_Mensagem.Text += " Categoria [ " + gvwExibe.SelectedRow.Cells[7].Text.Trim() + " ] inativa";
+                lblDS_Mensagem.Text += " Categoria [ " + gvwExibe.SelectedRow.Cells[7].Text.Trim() + " ] inativa.";
                 ddlID_CategoriaProduto.SelectedIndex = 0;
             }
 
@@ -567,7 +567,7 @@ namespace SuplementosPIMIV.View
             }
             catch (Exception)
             {
-                lblDS_Mensagem.Text += " Subcategoria [ " + gvwExibe.SelectedRow.Cells[9].Text.Trim() + " ] inativa";
+                lblDS_Mensagem.Text += " Subcategoria [ " + gvwExibe.SelectedRow.Cells[9].Text.Trim() + " ] inativa.";
                 ddlID_SubcategoriaProduto.SelectedIndex = 0;
                 ddlID_SubcategoriaProduto.Enabled = true;
             }
@@ -578,7 +578,7 @@ namespace SuplementosPIMIV.View
             }
             catch (Exception)
             {
-                lblDS_Mensagem.Text += " Sabor [ " + gvwExibe.SelectedRow.Cells[10].Text.Trim() + " ] inativo";
+                lblDS_Mensagem.Text += " Sabor [ " + gvwExibe.SelectedRow.Cells[10].Text.Trim() + " ] inativo.";
                 ddlID_SaborProduto.SelectedIndex = 0;
             }
 

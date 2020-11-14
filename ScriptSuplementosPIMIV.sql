@@ -1,4 +1,6 @@
 DROP TABLE IF EXISTS TB_Login;
+DROP TABLE IF EXISTS TB_NivelAcesso;
+DROP TABLE IF EXISTS TB_Funcionario;
 DROP TABLE IF EXISTS TB_MovimentacaoEstoque;
 DROP TABLE IF EXISTS TB_Estoque;
 DROP TABLE IF EXISTS TB_Produto;
@@ -8,13 +10,45 @@ DROP TABLE IF EXISTS TB_Subcategoria;
 DROP TABLE IF EXISTS TB_Sabor;
 GO
 
-CREATE TABLE TB_Login 
+CREATE TABLE TB_Funcionario
 (
-	ID_Login INT IDENTITY(1,1),
+	ID_Funcionario INT PRIMARY KEY IDENTITY(1,1),
+	NM_Funcionario VARCHAR(50) NOT NULL,
+	DS_Sexo VARCHAR(1),
+	DT_Nascimento DATE,
+	NR_CPF NUMERIC(11) NOT NULL,
+	NR_Telefone NUMERIC(11) NOT NULL,
+	DS_Email VARCHAR(35),
+	NR_CEP VARCHAR(10),
+	DS_Logradouro VARCHAR(50) NOT NULL,
+	NR_Casa VARCHAR(5) NOT NULL,
+	NM_Bairro VARCHAR(50) NOT NULL,
+	DS_Complemento VARCHAR(50),
+	NM_Cidade VARCHAR(30),
+	DS_UF VARCHAR(2),
+	DS_Cargo VARCHAR(30) NOT NULL,
+	VL_Salario DECIMAL(7,2) NOT NULL,
+	DT_Admissao DATE NOT NULL,
+	DT_Demissao DATE,
+	Ativo BIT NOT NULL
+);
+
+CREATE TABLE TB_NivelAcesso
+(
+	ID_NivelAcesso INT PRIMARY KEY IDENTITY(1,1),
+	DS_NivelAcesso VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE TB_Login
+(
+	ID_Login INT PRIMARY KEY IDENTITY(1,1),
+	ID_NivelAcesso INT NOT NULL,
+	ID_Funcionario INT NOT NULL,
 	DS_Usuario VARCHAR(20) NOT NULL,
 	DS_Senha VARCHAR(20) NOT NULL,
 	Ativo BIT NOT NULL,
-    PRIMARY KEY (ID_Login)
+	FOREIGN KEY (ID_NivelAcesso) REFERENCES TB_NivelAcesso(ID_NivelAcesso),
+	FOREIGN KEY (ID_Funcionario) REFERENCES TB_Funcionario(ID_Funcionario)
 );
 
 CREATE TABLE TB_Categoria
@@ -92,18 +126,73 @@ CREATE TABLE TB_MovimentacaoEstoque
 );
 
 GO
-  
-  INSERT INTO TB_Login
+
+INSERT INTO TB_Funcionario
 (
+	NM_Funcionario,
+	DS_Sexo,
+	DT_Nascimento,
+	NR_CPF,
+	NR_Telefone,
+	DS_Email,
+	NR_CEP,
+	DS_Logradouro,
+	NR_Casa,
+	NM_Bairro,
+	DS_Complemento,
+	NM_Cidade,
+	DS_UF,
+	DS_Cargo,
+	VL_Salario,
+	DT_Admissao,
+	Ativo
+)
+
+VALUES
+(
+	'Caio',
+	'M',
+	'2001-01-08',
+	43867140812,
+	15974079495,
+	'caio.vcruz@outlook.com',
+	18076290,
+	'Rubião de Almeida',
+	1426,
+	'Jardim São Conrado',
+	'',
+	'Sorocaba',
+	'SP',
+	'Gerente',
+	11000.00,
+	'2010-01-08',
+	1
+);
+  
+INSERT INTO TB_NivelAcesso
+(
+	DS_NivelAcesso
+)
+VALUES
+(
+	'Gerente'
+);
+
+INSERT INTO TB_Login
+(
+	ID_NivelAcesso,
+	ID_Funcionario,
 	DS_Usuario,
     DS_Senha,
     Ativo
 )
 VALUES
 (
-	'admin',
-    'admin',
-    1
+	1,
+    1,
+    'caiovcruz',
+	'cruz123',
+	1
 );
 
 INSERT INTO TB_Categoria

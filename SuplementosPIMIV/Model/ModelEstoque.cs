@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
-using System.Web;
 
 namespace SuplementosPIMIV.Model
 {
@@ -18,7 +15,6 @@ namespace SuplementosPIMIV.Model
         // Variaveis de Conexão
         SqlConnection sqlConnection;                            // Conexão do SGBD
         SqlCommand sqlCommand;                                  // Command que envia um 'comando' para o SGBD
-        SqlDataReader sqlDataReader;                            // Retorno do Command (DataReader) espécie de tabela/leitura 'apenas pra frente'
 
         public ModelEstoque(string connectionString)
         {

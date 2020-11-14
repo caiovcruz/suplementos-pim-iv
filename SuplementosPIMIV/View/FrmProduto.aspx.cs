@@ -1,8 +1,5 @@
-﻿using MySqlX.XDevAPI.Relational;
-using SuplementosPIMIV.Controller;
+﻿using SuplementosPIMIV.Controller;
 using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Validacao;

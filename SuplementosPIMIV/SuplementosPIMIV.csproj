@@ -130,6 +130,7 @@
   <ItemGroup>
     <Compile Include="Controller\ControllerCategoria.cs" />
     <Compile Include="Controller\ControllerEstoque.cs" />
+    <Compile Include="Controller\ControllerFuncionario.cs" />
     <Compile Include="Controller\ControllerLogin.cs" />
     <Compile Include="Controller\ControllerMarca.cs" />
     <Compile Include="Controller\ControllerMovEstoque.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Controller\ControllerSubcategoria.cs" />
     <Compile Include="Model\ModelCategoria.cs" />
     <Compile Include="Model\ModelEstoque.cs" />
+    <Compile Include="Model\ModelFuncionario.cs" />
     <Compile Include="Model\ModelLogin.cs" />
     <Compile Include="Model\ModelMarca.cs" />
     <Compile Include="Model\ModelMovEstoque.cs" />

@@ -382,3 +382,87 @@ body {
     width: 48.5%;
     margin: 0px 15px 0px 240px;
 }
+
+#cadastroFuncionario, #exibeFuncionario {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border-color: gainsboro;
+}
+
+#cadastroFuncionario {
+    margin: 0px 10% 0px 10%;
+}
+
+#cadInternoFuncionario, #exibeInternoFuncionario {
+    margin: 0px 5% 0px 10%;
+}
+
+#internoColunasFuncionario {
+    width: 100%;
+    position: inherit;
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+
+#internoColunasFuncionario2 {
+    border-radius: 10px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.6) 100%), url(../img/funcionario.jpeg);
+    background-size: cover;
+}
+
+.colunasFuncionario {
+    float: left;
+}
+
+#linhaFuncionario1, #linhaFuncionario2, #linhaFuncionario3, #linhaFuncionario4, #linhaFuncionario5 {
+    width: 100%;
+    position: inherit;
+    display: grid;
+}
+
+#linhaFuncionario2 {
+    grid-template-columns: 25% 50% 25%;
+}
+
+#linhaFuncionario3 {
+    grid-template-columns: 30% 70%;
+}
+
+#linhaFuncionario4 {
+    grid-template-columns: 20% 60% 20%;
+}
+
+#linhaFuncionario5 {
+    grid-template-columns: 50% 50%;
+}
+
+.coluna {
+    margin-left: 15px;
+}
+
+#internoColunasFuncionario1 .TextBox {
+    width: 100%;
+}
+
+#ddlDS_Sexo {
+    width: 100%;
+}
+
+#ddlDiaNascimentoFuncionario {
+    width: 20%;
+}
+
+#ddlMesNascimentoFuncionario {
+    width: 45%;
+}
+
+#ddlAnoNascimentoFuncionario {
+    width: 32%;
+}
+
+#colunaCargo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+}

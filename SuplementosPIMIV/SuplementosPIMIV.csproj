@@ -43,6 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=20.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <HintPath>..\packages\AjaxControlToolkit.20.1.0\lib\net40\AjaxControlToolkit.dll</HintPath>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.3.1\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -117,6 +120,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="View\FrmCategoria.aspx" />
+    <Content Include="View\FrmFuncionario.aspx" />
     <Content Include="View\FrmMovEstoque.aspx" />
     <Content Include="View\FrmLogin.aspx" />
     <Content Include="View\FrmMarca.aspx" />
@@ -154,6 +158,13 @@
     </Compile>
     <Compile Include="View\FrmCategoria.aspx.designer.cs">
       <DependentUpon>FrmCategoria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\FrmFuncionario.aspx.cs">
+      <DependentUpon>FrmFuncionario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\FrmFuncionario.aspx.designer.cs">
+      <DependentUpon>FrmFuncionario.aspx</DependentUpon>
     </Compile>
     <Compile Include="View\FrmMovEstoque.aspx.cs">
       <DependentUpon>FrmMovEstoque.aspx</DependentUpon>

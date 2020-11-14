@@ -37,6 +37,7 @@
                     <a href="FrmSubcategoria.aspx">Subcategorias</a>
                     <a href="FrmCategoria.aspx">Categorias</a>
                 </div>
+                <a href="FrmFuncionario.aspx">Funcionários</a>
             </div>
         </div>
 

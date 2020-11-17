@@ -699,5 +699,11 @@ namespace SuplementosPIMIV.View
             Ativar();
             btnAtivarStatus.Enabled = false;
         }
+
+        protected void gvwExibe_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvwExibe.PageIndex = e.NewPageIndex;
+            CarregarProdutos();
+        }
     }
 }

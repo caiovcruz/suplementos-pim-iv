@@ -103,7 +103,7 @@
 
                             <asp:GridView CssClass="gvwExibe" ID="gvwExibe" runat="server" CellPadding="5" GridLines="Horizontal"
                                 AlternatingRowStyle-BackColor="WhiteSmoke" OnRowDataBound="gvwExibe_RowDataBound"
-                                OnSelectedIndexChanged="gvwExibe_SelectedIndexChanged" AllowPaging="true" PageSize="10">
+                                OnSelectedIndexChanged="gvwExibe_SelectedIndexChanged" OnPageIndexChanging="gvwExibe_PageIndexChanging" AllowPaging="true" PageSize="10">
                                 <Columns>
                                     <asp:TemplateField>
                                         <ItemTemplate>

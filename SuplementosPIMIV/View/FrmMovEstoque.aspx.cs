@@ -297,5 +297,11 @@ namespace SuplementosPIMIV.View
         {
             IncludeFields();
         }
+
+        protected void gvwExibe_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvwExibe.PageIndex = e.NewPageIndex;
+            CarregarMovimentacoesEstoque();
+        }
     }
 }

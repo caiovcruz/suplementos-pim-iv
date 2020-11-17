@@ -406,7 +406,7 @@ body {
 
 #internoColunasFuncionario2 {
     border-radius: 10px;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.6) 100%), url(../img/funcionario.jpeg);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.7) 100%), url(../img/funcionario.jpeg);
     background-size: cover;
 }
 
@@ -464,5 +464,5 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center
+    align-items: center;
 }

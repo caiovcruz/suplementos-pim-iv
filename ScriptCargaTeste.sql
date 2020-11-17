@@ -1,21 +1,3 @@
-DROP TABLE IF EXISTS TB_Cidade;
-DROP TABLE IF EXISTS TB_UF;
-
-CREATE TABLE TB_UF
-(
-	ID_UF INT PRIMARY KEY IDENTITY(1,1),
-	NM_UF VARCHAR(75) NOT NULL,
-	DS_UF VARCHAR(5) NOT NULL 
-);
-
-CREATE TABLE TB_Cidade
-(
-	ID_Cidade INT PRIMARY KEY,
-	ID_UF INT NOT NULL,
-	NM_Cidade VARCHAR(120) NOT NULL,
-	FOREIGN KEY(ID_UF) REFERENCES TB_UF(ID_UF)
-);
-
 INSERT INTO TB_UF 
 (
 	NM_UF, 
@@ -5626,3 +5608,178 @@ INSERT INTO TB_Cidade(ID_Cidade, NM_Cidade, ID_UF) VALUES
 (5562, 'Tupiratins', 27),
 (5563, 'Wanderlândia', 27),
 (5564, 'Xambioá', 27);
+
+INSERT INTO TB_Funcionario
+(
+	NM_Funcionario,
+	DS_Sexo,
+	DT_Nascimento,
+	NR_CPF,
+	NR_Telefone,
+	DS_Email,
+	NR_CEP,
+	DS_Logradouro,
+	NR_Casa,
+	NM_Bairro,
+	DS_Complemento,
+	ID_UF,
+	ID_Cidade,
+	DS_Cargo,
+	VL_Salario,
+	DT_Admissao,
+	Ativo
+)
+
+VALUES
+(
+	'Caio',
+	'Masculino',
+	'2001-01-08',
+	43867140812,
+	15974079495,
+	'caio.vcruz@outlook.com',
+	18076290,
+	'Rubião de Almeida',
+	1426,
+	'Jardim São Conrado',
+	'',
+	8,
+	1,
+	'Gerente',
+	11000.00,
+	'2010-01-08',
+	1
+);
+  
+INSERT INTO TB_NivelAcesso
+(
+	DS_NivelAcesso
+)
+VALUES
+(
+	'Gerente'
+);
+
+INSERT INTO TB_Login
+(
+	ID_NivelAcesso,
+	ID_Funcionario,
+	DS_Usuario,
+    DS_Senha,
+    Ativo
+)
+VALUES
+(
+	1,
+    1,
+    'caiovcruz',
+	'cruz123',
+	1
+);
+
+INSERT INTO TB_Categoria
+(
+	NM_Categoria,
+    DS_Categoria,
+    Ativo
+)
+VALUES
+(
+	'Proteina',
+    'Categoria utilizada para wheys em geral',
+    1
+);
+  
+INSERT INTO TB_Subcategoria
+(
+	ID_Categoria,
+	NM_Subcategoria,
+    DS_Subcategoria,
+    Ativo
+)
+VALUES
+(
+	1,
+	'Concentrada',
+    'Categoria utilizada para wheys concentrados',
+    1
+); 
+  
+INSERT INTO TB_Sabor
+(
+    NM_Sabor,
+    Ativo
+)
+VALUES
+(
+	'Chocolate',
+    1
+); 
+  
+INSERT INTO TB_Marca
+(
+	NM_Marca,
+    Ativo
+)
+VALUES
+(
+	'Muscle Definition',
+    1
+);
+  
+INSERT INTO TB_Produto
+(
+    ID_Marca,
+	ID_Categoria,
+    ID_Subcategoria,
+	ID_Sabor,
+	NR_EAN,
+	NM_Produto,
+    DS_Produto,
+	PR_Custo,
+    PR_Venda,
+    Ativo
+)
+VALUES
+(
+	1,
+	1,
+    1,
+    1,
+	'7895461257854',
+	'WHEY 100% 900g',
+    'Tabela Nutricional: 32g (dose) = 5,8g carboidrato, 20g proteína, 8g glutamina, 4,5 BCAA',
+    50.00,
+    70.00,
+    1
+);
+
+INSERT INTO TB_Estoque
+(
+	ID_Produto,
+	QTD_Estoque,
+    Ativo
+)
+VALUES
+(
+	1,
+	10,
+    1
+);
+
+INSERT INTO TB_MovimentacaoEstoque
+(
+	ID_Produto,
+	QTD_MovimentacaoEstoque,
+	DS_MovimentacaoEstoque,
+	DT_MovimentacaoEstoque,
+	QTD_Estoque
+)
+VALUES
+(
+	1,
+	2,
+	'Entrada',
+	'2020-10-01',
+	5
+);

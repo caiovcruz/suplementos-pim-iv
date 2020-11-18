@@ -24,6 +24,24 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.HtmlControls.HtmlForm formMenuPrincipal;
 
         /// <summary>
+        /// Controle lbtnMeuLogin.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbtnMeuLogin;
+
+        /// <summary>
+        /// Controle lblNM_FuncionarioLogin.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNM_FuncionarioLogin;
+
+        /// <summary>
         /// Controle lbtnDropProdutos.
         /// </summary>
         /// <remarks>

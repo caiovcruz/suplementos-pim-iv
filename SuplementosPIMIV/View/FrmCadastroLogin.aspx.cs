@@ -11,7 +11,10 @@ namespace SuplementosPIMIV.View
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (!IsPostBack)
+            {
+                lblNM_FuncionarioLogin.Text = Cache["NM_FuncionarioLogin"].ToString();
+            }
         }
 
         protected void btnLimpar_Click(object sender, EventArgs e)

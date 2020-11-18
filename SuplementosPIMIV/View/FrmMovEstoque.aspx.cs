@@ -23,6 +23,7 @@ namespace SuplementosPIMIV.View
                 CarregarTiposMovimentacao();
                 BloquearComponentesCadastro();
                 BloquearComponentesExibe();
+                lblNM_FuncionarioLogin.Text = Cache["NM_FuncionarioLogin"].ToString();
             }
         }
 

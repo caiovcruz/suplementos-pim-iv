@@ -24,11 +24,14 @@
 
         <!-- Menu -------------------------------------- -->
         <div class="navbar">
-            <a href="FrmMenuPrincipal.aspx">Menu</a>
-            <a href="">PDV</a>
+            <asp:LinkButton CssClass="dropbtn" ID="lbtnMeuLogin" Font-Underline="false" runat="server" PostBackUrl="~/View/FrmMarca.aspx">
+                <i class="fas fa-user-circle fa-lg" style="margin-right: 2px;"></i>
+                <asp:Label ID="lblNM_FuncionarioLogin" runat="server"></asp:Label>
+            </asp:LinkButton>
+            <a href=""><i class="fas fa-store-alt" style="margin-right: 5px;"></i>PDV</a>
             <div class="dropdown">
                 <asp:LinkButton CssClass="dropbtn" ID="lbtnDropProdutos" Font-Underline="false" runat="server">
-                    Produtos <i class="fa fa-caret-down"></i></asp:LinkButton>
+                    <i class="fas fa-tablets" style="margin-right: 2px;"></i> Produtos <i class="fa fa-caret-down"></i></asp:LinkButton>
                 <div class="dropdown-content">
                     <a href="FrmProduto.aspx">Produtos</a>
                     <a href="FrmMovEstoque.aspx">Mov.Estoques</a>
@@ -40,7 +43,7 @@
             </div>
             <div class="dropdown">
                 <asp:LinkButton CssClass="dropbtn" ID="lbtnDropFuncionarios" Font-Underline="false" runat="server">
-                    Funcionários <i class="fa fa-caret-down"></i></asp:LinkButton>
+                   <i class="fas fa-user-tie fa-sm" style="margin-right: 2px;"></i> Funcionários <i class="fa fa-caret-down"></i></asp:LinkButton>
                 <div class="dropdown-content">
                     <a href="FrmFuncionario.aspx">Funcionários</a>
                     <a href="FrmCadastroLogin.aspx">Cadastro de Login</a>

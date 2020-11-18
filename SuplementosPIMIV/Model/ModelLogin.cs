@@ -6,6 +6,8 @@ namespace SuplementosPIMIV.Model
 {
     public class ModelLogin
     {
+        public string ID_NivelAcesso { get; set; }
+        public string NM_FuncionarioLogin { get; set; }
         public string DS_Usuario { get; set; }
         public string DS_Senha { get; set; }
         public string DS_Mensagem { get; set; }
@@ -27,6 +29,8 @@ namespace SuplementosPIMIV.Model
         public string Acessar()
         {
             DS_Mensagem = "";
+            ID_NivelAcesso = "";
+            NM_FuncionarioLogin = "";
 
             try
             {
@@ -35,8 +39,10 @@ namespace SuplementosPIMIV.Model
 
                 StringBuilder stringSQL = new StringBuilder();
                 stringSQL.Append("SELECT ");
-                stringSQL.Append("1 ");
-                stringSQL.Append("FROM TB_Login ");
+                stringSQL.Append("LOG.ID_NivelAcesso, ");
+                stringSQL.Append("FUN.NM_Funcionario ");
+                stringSQL.Append("FROM TB_Login AS LOG ");
+                stringSQL.Append("INNER JOIN TB_Funcionario AS FUN ON LOG.ID_Funcionario = FUN.ID_Funcionario ");
                 stringSQL.Append("WHERE DS_Usuario = '" + DS_Usuario + "' ");
                 stringSQL.Append("AND DS_Senha = '" + DS_Senha + "'");
 
@@ -45,7 +51,13 @@ namespace SuplementosPIMIV.Model
 
                 if (sqlDataReader.HasRows)
                 {
-                    DS_Mensagem = "Ok";
+                    DS_Mensagem = "OK";
+
+                    while (sqlDataReader.Read())
+                    {
+                        ID_NivelAcesso = sqlDataReader["ID_NivelAcesso"].ToString();
+                        NM_FuncionarioLogin = sqlDataReader["NM_Funcionario"].ToString();
+                    }
                 }
                 else
                 {

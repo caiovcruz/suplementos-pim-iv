@@ -59,10 +59,12 @@ namespace SuplementosPIMIV.View
                 myControllerLogin = new ControllerLogin(mDs_Usuario, mDs_Senha, Session["ConnectionString"].ToString());
                 mDs_Msg = myControllerLogin.Acessar();
 
-                if (mDs_Msg == "Ok")
+                if (mDs_Msg != "")
                 {
                     LimparCampos();
                     lblDS_Msg.Text = "";
+                    Cache["ID_NivelAcesso"] = myControllerLogin.ID_NivelAcesso;
+                    Cache["NM_FuncionarioLogin"] = myControllerLogin.NM_FuncionarioLogin;
                     Response.Redirect("FrmMenuPrincipal.aspx");
                 }
                 else

@@ -119,6 +119,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="View\FrmCadastroLogin.aspx" />
     <Content Include="View\FrmCategoria.aspx" />
     <Content Include="View\FrmFuncionario.aspx" />
     <Content Include="View\FrmMovEstoque.aspx" />
@@ -152,6 +153,13 @@
     <Compile Include="Model\ModelSubcategoria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validacao.cs" />
+    <Compile Include="View\FrmCadastroLogin.aspx.cs">
+      <DependentUpon>FrmCadastroLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\FrmCadastroLogin.aspx.designer.cs">
+      <DependentUpon>FrmCadastroLogin.aspx</DependentUpon>
+    </Compile>
     <Compile Include="View\FrmCategoria.aspx.cs">
       <DependentUpon>FrmCategoria.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

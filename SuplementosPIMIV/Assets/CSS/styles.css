@@ -535,3 +535,42 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+#cadastroLogin, #exibeLogin {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border-color: gainsboro;
+    box-shadow: 5px 10px 10px #efefef;
+}
+
+#cadastroLogin {
+    margin: 0px 25% 0px 25%;
+}
+
+#cadInternoLogin, #exibeInternoLogin {
+    margin: 0px 5% 0px 10%;
+}
+
+#internoColunasLogin {
+    width: 100%;
+    position: inherit;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.colunasLogin {
+    float: left;
+}
+
+#ddlID_Funcionario, #ddlID_NivelAcesso, div#internoColunasLogin #txbDS_Usuario, div#internoColunasLogin #txbDS_Senha {
+    width: 100%;
+}
+
+#colunaLogin2, #colunaLogin4 {
+    margin-left: 15px;
+}
+
+#txbNM_FuncionarioLoginConsultar {
+    width: 48.5%;
+    margin: 0px 15px 0px 240px;
+}

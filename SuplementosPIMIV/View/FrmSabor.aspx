@@ -38,7 +38,16 @@
                     <a href="FrmCategoria.aspx">Categorias</a>
                 </div>
             </div>
-            <a href="FrmFuncionario.aspx">Funcionários</a>
+            <div class="dropdown">
+                <button class="dropbtn">
+                    Funcionários
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="FrmFuncionario.aspx">Funcionários</a>
+                    <a href="FrmCadastroLogin.aspx">Cadastro de Login</a>
+                </div>
+            </div>
         </div>
 
         <div class="conteiner">

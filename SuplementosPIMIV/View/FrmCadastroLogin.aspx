@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FrmMovEstoque.aspx.cs" Inherits="SuplementosPIMIV.View.FrmEstoque" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FrmCadastroLogin.aspx.cs" Inherits="SuplementosPIMIV.View.FrmCadastroLogin" %>
 
 <!DOCTYPE html>
 
@@ -7,7 +7,7 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <title>Movimentação de Estoques</title>
+    <title>Cadastro de login</title>
 
     <link href="~/Assets/css/styles.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
@@ -17,7 +17,7 @@
 
 </head>
 <body>
-    <form id="formEstoque" runat="server">
+    <form id="formCadastroLogin" runat="server">
         <asp:ScriptManager ID="scpManager" runat="server"></asp:ScriptManager>
 
         <!-- Menu -------------------------------------- -->
@@ -52,63 +52,45 @@
 
         <div class="conteiner">
 
-            <div id="cadastroMovEstoque">
+            <div id="cadastroLogin">
 
-                <div id="cadInternoMovEstoque">
+                <div id="cadInternoLogin">
 
-                    <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Movimentação de Estoques"></asp:Label>
+                    <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Cadastro de Login"></asp:Label>
 
                     <br />
 
                     <asp:UpdatePanel ID="updCadastro" runat="server">
                         <ContentTemplate>
 
-                            <asp:TextBox CssClass="TextBox" ID="txbID_MovimentacaoEstoque" Visible="false" runat="server"></asp:TextBox>
+                            <asp:TextBox CssClass="TextBox" ID="txbID_Login" Visible="false" runat="server"></asp:TextBox>
 
-                            <asp:Label CssClass="Label" runat="server" Width="100%" Text="Produto"></asp:Label>
+                            <div id="internoColunasLogin">
 
-                            <br />
-
-                            <asp:DropDownList CssClass="DropDownList" ID="ddlID_ProdutoMovimentacaoEstoque" runat="server"
-                                OnSelectedIndexChanged="ddlID_ProdutoMovimentacaoEstoque_SelectedIndexChanged" AutoPostBack="true">
-                            </asp:DropDownList>
-
-                            <br />
-
-                            <div id="internoColunasMovEstoque">
-
-                                <div class="colunasMovEstoque" id="colunaMovEstoque1">
-
-                                    <asp:Label CssClass="Label" runat="server" Width="24%" Text="Quantidade"></asp:Label>
-
-                                    <br />
-
-                                    <asp:TextBox CssClass="TextBox" ID="txbQTD_MovimentacaoEstoque" runat="server" MaxLengh="50"
-                                        placeholder="Quantidade" OnTextChanged="txbQTD_MovimentacaoEstoque_TextChanged"
-                                        AutoPostBack="true"></asp:TextBox>
-
-                                </div>
-
-                                <div class="colunasMovEstoque" id="colunaMovEstoque2">
-
-                                    <asp:Label CssClass="Label" runat="server" Width="24%" Text="Movimentação"></asp:Label>
-
-                                    <br />
-
-                                    <asp:DropDownList CssClass="DropDownList" ID="ddlDS_MovimentacaoEstoque" runat="server"
-                                        OnSelectedIndexChanged="ddlDS_MovimentacaoEstoque_SelectedIndexChanged" AutoPostBack="true">
+                                <div class="colunasLogin" id="colunaLogin1">
+                                    <asp:Label CssClass="Label" runat="server" Width="100%" Text="Funcionário"></asp:Label>
+                                    <asp:DropDownList CssClass="DropDownList" ID="ddlID_Funcionario" runat="server"
+                                        OnSelectedIndexChanged="ddlID_Funcionario_SelectedIndexChanged" AutoPostBack="true">
                                     </asp:DropDownList>
-
                                 </div>
 
-                                <div class="colunasMovEstoque" id="colunaMovEstoque3">
+                                <div class="colunasLogin" id="colunaLogin2">
+                                    <asp:Label CssClass="Label" runat="server" Width="100%" Text="Usuário"></asp:Label>
+                                    <asp:TextBox CssClass="TextBox" ID="txbDS_Usuario" runat="server" MaxLengh="20"
+                                        placeholder="Nome de usuário" OnTextChanged="txbDS_Usuario_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                </div>
 
-                                    <asp:Label CssClass="Label" runat="server" Width="24%" Text="Data"></asp:Label>
+                                <div class="colunasLogin" id="colunaLogin3">
+                                    <asp:Label CssClass="Label" runat="server" Width="100%" Text="Nível de Acesso"></asp:Label>
+                                    <asp:DropDownList CssClass="DropDownList" ID="ddlID_NivelAcesso" runat="server"
+                                        OnSelectedIndexChanged="ddlID_NivelAcesso_SelectedIndexChanged" AutoPostBack="true">
+                                    </asp:DropDownList>
+                                </div>
 
-                                    <br />
-
-                                    <asp:TextBox CssClass="TextBox" ID="txbDT_MovimentacaoEstoque" runat="server" AutoPostBack="true"></asp:TextBox>
-
+                                <div class="colunasLogin" id="colunaLogin4">
+                                    <asp:Label CssClass="Label" runat="server" Width="100%" Text="Senha"></asp:Label>
+                                    <asp:TextBox CssClass="TextBox" ID="txbDS_Senha" runat="server" MaxLengh="20"
+                                        placeholder="Senha do usuário" OnTextChanged="txbDS_Senha_TextChanged" AutoPostBack="true"></asp:TextBox>
                                 </div>
 
                             </div>
@@ -122,6 +104,7 @@
 
                             <asp:Button CssClass="Button" ID="btnLimpar" runat="server" Text="Limpar" OnClick="btnLimpar_Click" />
                             <asp:Button CssClass="Button" ID="btnIncluir" runat="server" Text="Incluir" OnClick="btnIncluir_Click" />
+                            <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
                             <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
 
                         </ContentTemplate>
@@ -135,16 +118,16 @@
             <br />
             <br />
 
-            <div id="exibeMovEstoque">
-                <div id="exibeInternoMovEstoque">
+            <div id="exibeLogin">
+                <div id="exibeInternoLogin">
 
                     <br />
 
                     <asp:UpdatePanel ID="updConsulta" runat="server">
                         <ContentTemplate>
 
-                            <asp:TextBox CssClass="TextBox" ID="txbNM_ProdutoConsultar" MaxLengh="50"
-                                placeholder="Buscar produto" runat="server" OnTextChanged="txbNM_ProdutoConsultar_TextChanged"
+                            <asp:TextBox CssClass="TextBox" ID="txbNM_FuncionarioLoginConsultar" MaxLengh="50"
+                                placeholder="Buscar funcionário" runat="server" OnTextChanged="txbNM_FuncionarioLoginConsultar_TextChanged"
                                 AutoPostBack="true"></asp:TextBox>
 
                             <asp:Button CssClass="Button" ID="btnConsultar" runat="server" Text="Consultar"
@@ -155,7 +138,8 @@
                             <div style="overflow: auto;">
                                 <asp:GridView CssClass="gvwExibe" ID="gvwExibe" runat="server" CellPadding="5" GridLines="Horizontal"
                                     AlternatingRowStyle-BackColor="WhiteSmoke" OnRowDataBound="gvwExibe_RowDataBound"
-                                    OnSelectedIndexChanged="gvwExibe_SelectedIndexChanged" OnPageIndexChanging="gvwExibe_PageIndexChanging" AllowPaging="true" PageSize="10">
+                                    OnSelectedIndexChanged="gvwExibe_SelectedIndexChanged" OnPageIndexChanging="gvwExibe_PageIndexChanging" AllowPaging="true"
+                                    PageSize="10">
                                     <Columns>
                                         <asp:TemplateField>
                                             <ItemTemplate>

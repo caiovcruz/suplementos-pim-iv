@@ -25,10 +25,8 @@
             <a href="FrmMenuPrincipal.aspx">Menu</a>
             <a href="">PDV</a>
             <div class="dropdown">
-                <button class="dropbtn">
-                    Produtos
-                    <i class="fa fa-caret-down"></i>
-                </button>
+                <asp:LinkButton CssClass="dropbtn" ID="lbtnDropProdutos" Font-Underline="false" runat="server">
+                    Produtos <i class="fa fa-caret-down"></i></asp:LinkButton>
                 <div class="dropdown-content">
                     <a href="FrmProduto.aspx">Produtos</a>
                     <a href="FrmMovEstoque.aspx">Mov.Estoques</a>
@@ -39,10 +37,8 @@
                 </div>
             </div>
             <div class="dropdown">
-                <button class="dropbtn">
-                    Funcionários
-                    <i class="fa fa-caret-down"></i>
-                </button>
+                <asp:LinkButton CssClass="dropbtn" ID="lbtnDropFuncionarios" Font-Underline="false" runat="server">
+                    Funcionários <i class="fa fa-caret-down"></i></asp:LinkButton>
                 <div class="dropdown-content">
                     <a href="FrmFuncionario.aspx">Funcionários</a>
                     <a href="FrmCadastroLogin.aspx">Cadastro de Login</a>

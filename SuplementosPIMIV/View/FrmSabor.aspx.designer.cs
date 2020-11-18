@@ -33,6 +33,24 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.ScriptManager scpManager;
 
         /// <summary>
+        /// Controle lbtnDropProdutos.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbtnDropProdutos;
+
+        /// <summary>
+        /// Controle lbtnDropFuncionarios.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbtnDropFuncionarios;
+
+        /// <summary>
         /// Controle updCadastro.
         /// </summary>
         /// <remarks>

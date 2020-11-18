@@ -37,8 +37,8 @@
                     <a href="FrmSubcategoria.aspx">Subcategorias</a>
                     <a href="FrmCategoria.aspx">Categorias</a>
                 </div>
-                <a href="FrmFuncionario.aspx">Funcionários</a>
             </div>
+            <a href="FrmFuncionario.aspx">Funcionários</a>
         </div>
 
         <div class="conteiner">
@@ -87,6 +87,8 @@
                 <br />
             </div>
 
+            <br />
+            <br />
             <br />
 
             <div id="exibeCategoria">

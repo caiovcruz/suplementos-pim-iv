@@ -48,7 +48,7 @@ namespace SuplementosPIMIV.View
             txbDS_Complemento.Text = "";
             ddlDS_Cargo.SelectedIndex = 0;
             txbVL_Salario.Text = "";
-            txbDT_Admissao.Text = DateTime.Today.ToString("dd/MM/yyyy");
+            txbDT_Admissao.Text = DateTime.Now.ToString();
             txbDT_Admissao.Enabled = false;
             ddlDS_UF.SelectedIndex = 0;
             ddlNM_Cidade.DataSource = null;
@@ -245,7 +245,6 @@ namespace SuplementosPIMIV.View
 
 
             btnLimpar.Enabled =
-                txbID_Funcionario.Text.Trim().Length == 0 ||
                 txbNM_Funcionario.Text.Trim().Length > 0 ||
                 txbNR_CPF.Text.Trim().Length > 0 ||
                 ddlDiaNascimentoFuncionario.SelectedIndex != 0 ||
@@ -481,7 +480,7 @@ namespace SuplementosPIMIV.View
                     Convert.ToInt32(ddlNM_Cidade.SelectedValue),
                     ddlDS_Cargo.SelectedValue,
                     Convert.ToDouble(txbVL_Salario.Text.Trim()),
-                    DateTime.Today,
+                    DateTime.Now,
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -538,7 +537,7 @@ namespace SuplementosPIMIV.View
                     Convert.ToInt32(ddlNM_Cidade.SelectedValue),
                     ddlDS_Cargo.SelectedValue,
                     Convert.ToDouble(txbVL_Salario.Text.Trim()),
-                    DateTime.Today,
+                    Convert.ToDateTime(txbDT_Admissao.Text.Trim()),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -790,86 +789,103 @@ namespace SuplementosPIMIV.View
         protected void txbNM_Funcionario_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            txbNR_CPF.Focus();
         }
 
         protected void txbNR_CPF_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            ddlDiaNascimentoFuncionario.Focus();
         }
 
         protected void ddlDiaNascimentoFuncionario_SelectedIndexChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            ddlMesNascimentoFuncionario.Focus();
         }
 
         protected void ddlMesNascimentoFuncionario_SelectedIndexChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            ddlAnoNascimentoFuncionario.Focus();
         }
 
         protected void ddlAnoNascimentoFuncionario_SelectedIndexChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            ddlDS_Sexo.Focus();
         }
 
         protected void ddlDS_Sexo_SelectedIndexChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            txbNR_Telefone.Focus();
         }
 
         protected void txbNR_Telefone_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            txbDS_Email.Focus();
         }
 
         protected void txbDS_Email_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            txbNR_CEP.Focus();
         }
 
         protected void txbNR_CEP_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            txbDS_Logradouro.Focus();
         }
 
         protected void txbDS_Logradouro_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            txbNR_Casa.Focus();
         }
 
         protected void txbNR_Casa_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            txbNM_Bairro.Focus();
         }
 
         protected void txbNM_Bairro_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            txbDS_Complemento.Focus();
         }
 
         protected void txbDS_Complemento_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            ddlDS_Cargo.Focus();
         }
 
         protected void ddlDS_Cargo_SelectedIndexChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            txbVL_Salario.Focus();
         }
 
         protected void txbVL_Salario_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            txbDT_Admissao.Focus();
         }
 
         protected void txbDT_Admissao_TextChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            ddlDS_UF.Focus();
         }
 
         protected void ddlDS_UF_SelectedIndexChanged(object sender, EventArgs e)
         {
             IncludeFields();
+            ddlNM_Cidade.Focus();
 
             if (ddlDS_UF.SelectedIndex != 0)
             {

@@ -123,6 +123,8 @@
             </div>
 
             <br />
+            <br />
+            <br />
 
             <div id="exibeMovEstoque">
                 <div id="exibeInternoMovEstoque">

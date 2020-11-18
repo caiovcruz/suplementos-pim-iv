@@ -78,9 +78,10 @@
                                         <div>
                                             <asp:Label CssClass="Label" runat="server" Width="100%" Text="CPF"></asp:Label>
                                             <asp:TextBox CssClass="TextBox" ID="txbNR_CPF" runat="server" MaxLengh="11"
-                                                OnTextChanged="txbNR_CPF_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                                OnTextChanged="txbNR_CPF_TextChanged" placeholder="999.999.999-99" 
+                                                AutoPostBack="true"></asp:TextBox>
                                             <ajaxToolkit:MaskedEditExtender TargetControlID="txbNR_CPF" ID="mdeNR_CPF"
-                                                Mask="999,999,999-99" MaskType="Number" ClearMaskOnLostFocus="false"
+                                                Mask="999,999,999-99" MaskType="Number" ClearMaskOnLostFocus="true"
                                                 runat="server" />
                                         </div>
 
@@ -116,9 +117,10 @@
                                         <div>
                                             <asp:Label CssClass="Label" runat="server" Width="100%" Text="Telefone"></asp:Label>
                                             <asp:TextBox CssClass="TextBox" ID="txbNR_Telefone" runat="server"
-                                                MaxLengh="11" OnTextChanged="txbNR_Telefone_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                                MaxLengh="11" OnTextChanged="txbNR_Telefone_TextChanged" placeholder="(99)99999-9999" 
+                                                AutoPostBack="true"></asp:TextBox>
                                             <ajaxToolkit:MaskedEditExtender TargetControlID="txbNR_Telefone" ID="mdeNR_Telefone"
-                                                Mask="(99)99999-9999" MaskType="Number" ClearMaskOnLostFocus="false"
+                                                Mask="(99)99999-9999" MaskType="Number" ClearMaskOnLostFocus="true"
                                                 runat="server" />
                                         </div>
 
@@ -136,21 +138,24 @@
                                         <div>
                                             <asp:Label CssClass="Label" runat="server" Width="100%" Text="CEP"></asp:Label>
                                             <asp:TextBox CssClass="TextBox" ID="txbNR_CEP" runat="server" MaxLengh="8"
-                                                OnTextChanged="txbNR_CEP_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                                OnTextChanged="txbNR_CEP_TextChanged" placeholder="99999-999" 
+                                                AutoPostBack="true"></asp:TextBox>
                                             <ajaxToolkit:MaskedEditExtender TargetControlID="txbNR_CEP" ID="mdeNR_CEP"
-                                                Mask="99999-999" MaskType="Number" ClearMaskOnLostFocus="false" runat="server" />
+                                                Mask="99999-999" MaskType="Number" ClearMaskOnLostFocus="true" runat="server" />
                                         </div>
 
                                         <div class="coluna">
                                             <asp:Label CssClass="Label" runat="server" Width="100%" Text="Logradouro"></asp:Label>
                                             <asp:TextBox CssClass="TextBox" ID="txbDS_Logradouro" runat="server" MaxLengh="50"
-                                                OnTextChanged="txbDS_Logradouro_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                                OnTextChanged="txbDS_Logradouro_TextChanged" placeholder="Rua/Avenida/Alameda das flores" 
+                                                AutoPostBack="true"></asp:TextBox>
                                         </div>
 
                                         <div class="coluna">
                                             <asp:Label CssClass="Label" runat="server" Width="100%" Text="Nº"></asp:Label>
                                             <asp:TextBox CssClass="TextBox" ID="txbNR_Casa" runat="server" MaxLengh="5"
-                                                OnTextChanged="txbNR_Casa_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                                OnTextChanged="txbNR_Casa_TextChanged" placeholder="99999" 
+                                                AutoPostBack="true"></asp:TextBox>
                                         </div>
 
                                     </div>
@@ -160,13 +165,15 @@
                                         <div>
                                             <asp:Label CssClass="Label" runat="server" Width="100%" Text="Bairro"></asp:Label>
                                             <asp:TextBox CssClass="TextBox" ID="txbNM_Bairro" runat="server" MaxLengh="50"
-                                                OnTextChanged="txbNM_Bairro_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                                OnTextChanged="txbNM_Bairro_TextChanged" placeholder="Jardim/Conjunto/Vila/Parque Três Meninos" 
+                                                AutoPostBack="true"></asp:TextBox>
                                         </div>
 
                                         <div class="coluna">
                                             <asp:Label CssClass="Label" runat="server" Width="100%" Text="Complemento"></asp:Label>
                                             <asp:TextBox CssClass="TextBox" ID="txbDS_Complemento" runat="server" MaxLengh="50"
-                                                OnTextChanged="txbDS_Complemento_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                                OnTextChanged="txbDS_Complemento_TextChanged" placeholder="QD/APTO/SN/CASA 2" 
+                                                AutoPostBack="true"></asp:TextBox>
                                         </div>
 
                                     </div>
@@ -228,6 +235,8 @@
                 <br />
             </div>
 
+            <br />
+            <br />
             <br />
 
             <div id="exibeFuncionario">

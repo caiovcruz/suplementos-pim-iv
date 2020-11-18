@@ -132,6 +132,7 @@ body {
     background-color: #FFFFFF;
     border-radius: 10px;
     border-color: gainsboro;
+    box-shadow: 5px 10px 10px #efefef;
 }
 
 #cadastroProduto {
@@ -223,19 +224,81 @@ body {
 #btnIncluir {
     color: #FFFFFF;
     background-color: #00a4ff;
+    opacity: 0.5
 }
 
+    #btnIncluir:enabled {
+        opacity: 1;
+    }
+
     #btnIncluir:not([disabled]):hover {
-        background-color: #4ec0ff;
+        opacity: 0.7;
+    }
+
+#btnAlterar {
+    background-color: #efefef;
+    opacity: 0.5
+}
+
+    #btnAlterar:enabled {
+        opacity: 1;
+    }
+
+    #btnAlterar:not([disabled]):hover {
+        opacity: 0.7;
     }
 
 #btnExcluir {
     color: #FFFFFF;
     background-color: #ff2626;
+    opacity: 0.5
 }
 
+    #btnExcluir:enabled {
+        opacity: 1;
+    }
+
     #btnExcluir:not([disabled]):hover {
-        background-color: #ff4343;
+        opacity: 0.7;
+    }
+
+#btnAtivarStatus {
+    background-color: #efefef;
+    opacity: 0.5
+}
+
+    #btnAtivarStatus:enabled {
+        opacity: 1;
+    }
+
+    #btnAtivarStatus:not([disabled]):hover {
+        opacity: 0.7;
+    }
+
+#btnLimpar {
+    background-color: #efefef;
+    opacity: 0.5
+}
+
+    #btnLimpar:enabled {
+        opacity: 1;
+    }
+
+    #btnLimpar:not([disabled]):hover {
+        opacity: 0.7;
+    }
+
+#btnConsultar {
+    background-color: #efefef;
+    opacity: 0.5
+}
+
+    #btnConsultar:enabled {
+        opacity: 1;
+    }
+
+    #btnConsultar:not([disabled]):hover {
+        opacity: 0.7;
     }
 
 #btnIncluir, #btnAlterar, #btnExcluir, #btnAtivarStatus {
@@ -247,6 +310,7 @@ body {
     background-color: #FFFFFF;
     border-radius: 10px;
     border-color: gainsboro;
+    box-shadow: 5px 10px 10px #efefef;
 }
 
 #cadastroCategoria {
@@ -275,6 +339,7 @@ body {
     background-color: #FFFFFF;
     border-radius: 10px;
     border-color: gainsboro;
+    box-shadow: 5px 10px 10px #efefef;
 }
 
 #cadastroSubcategoria {
@@ -303,6 +368,7 @@ body {
     background-color: #FFFFFF;
     border-radius: 10px;
     border-color: gainsboro;
+    box-shadow: 5px 10px 10px #efefef;
 }
 
 #cadastroSabor {
@@ -326,6 +392,7 @@ body {
     background-color: #FFFFFF;
     border-radius: 10px;
     border-color: gainsboro;
+    box-shadow: 5px 10px 10px #efefef;
 }
 
 #cadastroMarca {
@@ -349,6 +416,7 @@ body {
     background-color: #FFFFFF;
     border-radius: 10px;
     border-color: gainsboro;
+    box-shadow: 5px 10px 10px #efefef;
 }
 
 #cadastroMovEstoque {
@@ -387,6 +455,7 @@ body {
     background-color: #FFFFFF;
     border-radius: 10px;
     border-color: gainsboro;
+    box-shadow: 5px 10px 10px #efefef;
 }
 
 #cadastroFuncionario {

@@ -151,6 +151,8 @@
             </div>
 
             <br />
+            <br />
+            <br />
 
             <div id="exibeProduto">
                 <div id="exibeInternoProduto">

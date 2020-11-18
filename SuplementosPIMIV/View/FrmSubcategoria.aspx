@@ -95,6 +95,8 @@
             </div>
 
             <br />
+            <br />
+            <br />
 
             <div id="exibeSubcategoria">
                 <div id="exibeInternoSubcategoria">

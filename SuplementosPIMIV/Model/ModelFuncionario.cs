@@ -235,7 +235,9 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("FUNC.NR_Casa, ");
                 stringSQL.Append("FUNC.NM_Bairro, ");
                 stringSQL.Append("FUNC.DS_Complemento, ");
+                stringSQL.Append("FUNC.ID_Cidade, ");
                 stringSQL.Append("CID.NM_Cidade, ");
+                stringSQL.Append("FUNC.ID_UF, ");
                 stringSQL.Append("UF.DS_UF, ");
                 stringSQL.Append("FUNC.DS_Cargo, ");
                 stringSQL.Append("FORMAT(FUNC.VL_Salario, 'N2') AS VL_Salario, ");

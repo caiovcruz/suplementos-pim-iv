@@ -16,37 +16,37 @@
 </head>
 <body>
     <form id="formLogin" runat="server">
-        <div id="Login">
+                <div id="Login">
 
-            <div id="logInterno">
+            <div id="InternoLogin">
 
                 <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Iniciar Sessão"></asp:Label>
 
                 <br />
+
+                <asp:TextBox CssClass="TextBox" ID="txbID_Login" Visible="false" runat="server"></asp:TextBox>
+
+                <asp:Label CssClass="Label" ID="lblDS_Usuario" runat="server" Width="100%" Text="Usuário"></asp:Label>
+                <asp:TextBox CssClass="TextBox" ID="txbDS_Usuario" runat="server" MaxLengh="20"
+                    placeholder="Nome de usuário"></asp:TextBox>
+
                 <br />
 
-                <asp:TextBox CssClass="TextBox" ID="txbDS_Usuario" MaxLength="20" placeholder="Usuário" runat="server"></asp:TextBox>
+                <asp:Label CssClass="Label" ID="lblDS_Senha" runat="server" Width="100%" Text="Senha"></asp:Label>
+                <asp:TextBox CssClass="TextBox" ID="txbDS_Senha" runat="server" MaxLengh="20"
+                    placeholder="Senha do usuário" TextMode="Password"></asp:TextBox>
 
                 <br />
 
-                <asp:TextBox CssClass="TextBox" ID="txbDS_Senha" TextMode="Password" MaxLength="20"
-                    placeholder="Senha" runat="server"></asp:TextBox>
+                <asp:Label CssClass="Msg" ID="lblDS_Mensagem" runat="server" Text=""></asp:Label>
 
                 <br />
                 <br />
 
                 <asp:Button CssClass="Button" ID="btnAcessar" runat="server" Text="Login" OnClick="btnAcessar_Click" />
 
-                <br />
-                <br />
-
-                <div>
-                    <asp:Label CssClass="Msg" ID="lblDS_Msg" runat="server" Text=""></asp:Label>
-                </div>
-
-                <br />
-
             </div>
+            <br />
         </div>
     </form>
 </body>

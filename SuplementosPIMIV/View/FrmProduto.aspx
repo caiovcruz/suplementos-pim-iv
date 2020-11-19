@@ -22,7 +22,7 @@
 
         <!-- Menu -------------------------------------- -->
         <div class="navbar">
-            <asp:LinkButton CssClass="dropbtn" ID="lbtnMeuLogin" Font-Underline="false" runat="server" PostBackUrl="~/View/FrmMarca.aspx">
+            <asp:LinkButton CssClass="dropbtn" ID="lbtnMeuLogin" Font-Underline="false" runat="server" PostBackUrl="~/View/FrmMeuLogin.aspx">
                 <i class="fas fa-user-circle fa-lg" style="margin-right: 2px;"></i>
                 <asp:Label ID="lblNM_FuncionarioLogin" runat="server"></asp:Label>
             </asp:LinkButton>

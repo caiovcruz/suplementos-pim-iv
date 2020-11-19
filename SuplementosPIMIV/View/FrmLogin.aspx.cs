@@ -52,7 +52,7 @@ namespace SuplementosPIMIV.View
             mDs_Msg += (myValidar.CampoPreenchido(mDs_Senha)) ? "" : " Preencha o campo senha.";
             txbDS_Senha.BorderColor = (myValidar.CampoPreenchido(mDs_Senha)) ? Color.Black : Color.Red;
 
-            lblDS_Msg.Text = mDs_Msg;
+            lblDS_Mensagem.Text = mDs_Msg;
 
             if (mDs_Msg == "")
             {
@@ -62,14 +62,15 @@ namespace SuplementosPIMIV.View
                 if (mDs_Msg != "")
                 {
                     LimparCampos();
-                    lblDS_Msg.Text = "";
+                    lblDS_Mensagem.Text = "";
+                    Cache["ID_Login"] = myControllerLogin.ID_Login;
                     Cache["ID_NivelAcesso"] = myControllerLogin.ID_NivelAcesso;
                     Cache["NM_FuncionarioLogin"] = myControllerLogin.NM_FuncionarioLogin;
                     Response.Redirect("FrmMenuPrincipal.aspx");
                 }
                 else
                 {
-                    lblDS_Msg.Text = mDs_Msg;
+                    lblDS_Mensagem.Text = mDs_Msg;
                 }
             }
         }

@@ -122,10 +122,10 @@
     <Content Include="View\FrmCadastroLogin.aspx" />
     <Content Include="View\FrmCategoria.aspx" />
     <Content Include="View\FrmFuncionario.aspx" />
+    <Content Include="View\FrmMeuLogin.aspx" />
     <Content Include="View\FrmMovEstoque.aspx" />
     <Content Include="View\FrmLogin.aspx" />
     <Content Include="View\FrmMarca.aspx" />
-    <Content Include="View\FrmMenuPrincipal.aspx" />
     <Content Include="View\FrmProduto.aspx" />
     <Content Include="Assets\css\styles.css" />
     <Content Include="View\FrmSabor.aspx" />
@@ -174,6 +174,13 @@
     <Compile Include="View\FrmFuncionario.aspx.designer.cs">
       <DependentUpon>FrmFuncionario.aspx</DependentUpon>
     </Compile>
+    <Compile Include="View\FrmMeuLogin.aspx.cs">
+      <DependentUpon>FrmMeuLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\FrmMeuLogin.aspx.designer.cs">
+      <DependentUpon>FrmMeuLogin.aspx</DependentUpon>
+    </Compile>
     <Compile Include="View\FrmMovEstoque.aspx.cs">
       <DependentUpon>FrmMovEstoque.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -194,13 +201,6 @@
     </Compile>
     <Compile Include="View\FrmMarca.aspx.designer.cs">
       <DependentUpon>FrmMarca.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="View\FrmMenuPrincipal.aspx.cs">
-      <DependentUpon>FrmMenuPrincipal.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="View\FrmMenuPrincipal.aspx.designer.cs">
-      <DependentUpon>FrmMenuPrincipal.aspx</DependentUpon>
     </Compile>
     <Compile Include="View\FrmProduto.aspx.cs">
       <DependentUpon>FrmProduto.aspx</DependentUpon>

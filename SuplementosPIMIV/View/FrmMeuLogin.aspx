@@ -1,12 +1,13 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FrmMenuPrincipal.aspx.cs" Inherits="SuplementosPIMIV.View.FrmMenuPrincipal" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="FrmMeuLogin.aspx.cs" Inherits="SuplementosPIMIV.View.FrmMeuLogin" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <title>Menu Principal</title>
+    <title>Meu login</title>
 
     <link href="~/Assets/css/styles.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
@@ -16,11 +17,10 @@
 
 </head>
 <body>
-    <form id="formMenuPrincipal" runat="server">
-
+    <form id="formMeuLogin" runat="server">
         <!-- Menu -------------------------------------- -->
         <div class="navbar">
-            <asp:LinkButton CssClass="dropbtn" ID="lbtnMeuLogin" Font-Underline="false" runat="server" PostBackUrl="~/View/FrmMarca.aspx">
+            <asp:LinkButton CssClass="dropbtn" ID="lbtnMeuLogin" Font-Underline="false" runat="server" PostBackUrl="~/View/FrmMeuLogin.aspx">
                 <i class="fas fa-user-circle fa-lg" style="margin-right: 2px;"></i>
                 <asp:Label ID="lblNM_FuncionarioLogin" runat="server"></asp:Label>
             </asp:LinkButton>
@@ -47,11 +47,42 @@
             </div>
         </div>
 
-        <br />
+        <div id="cadastroMeuLogin">
 
-        <!-- Menu -------------------------------------- -->
-        <div class="conteudo"></div>
+            <div id="cadInternoMeuLogin">
 
+                <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Meu Login"></asp:Label>
+
+                <br />
+
+                <asp:TextBox CssClass="TextBox" ID="txbID_Login" Visible="false" runat="server"></asp:TextBox>
+
+                <asp:Label CssClass="Label" ID="lblDS_UsuarioMeuLogin" runat="server" Width="100%" Text="Usuário"></asp:Label>
+                <asp:TextBox CssClass="TextBox" ID="txbDS_UsuarioMeuLogin" runat="server" MaxLengh="20"
+                    placeholder="Nome de usuário"></asp:TextBox>
+
+                <br />
+
+                <asp:Label CssClass="Label" ID="lblDS_SenhaMeuLogin" runat="server" Width="100%" Text="Senha"></asp:Label>
+                <asp:TextBox CssClass="TextBox" ID="txbDS_SenhaMeuLogin" runat="server" MaxLengh="20"
+                    placeholder="Senha do usuário" TextMode="Password"></asp:TextBox>
+
+                <br />
+
+                <asp:Label CssClass="Msg" ID="lblDS_Mensagem" runat="server" Text=""></asp:Label>
+
+                <br />
+                <br />
+
+                <asp:Button CssClass="Button" ID="btnSalvar" runat="server" Text="Salvar" OnClick="btnSalvar_Click" />
+                <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
+
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
     </form>
 </body>
 </html>

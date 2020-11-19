@@ -293,6 +293,7 @@ namespace SuplementosPIMIV.Model
 
                 StringBuilder stringSQL = new StringBuilder();
                 stringSQL.Append("SELECT ");
+                stringSQL.Append("LOG.ID_Login, ");
                 stringSQL.Append("LOG.ID_NivelAcesso, ");
                 stringSQL.Append("FUN.NM_Funcionario ");
                 stringSQL.Append("FROM TB_Login AS LOG ");
@@ -309,6 +310,7 @@ namespace SuplementosPIMIV.Model
 
                     while (sqlDataReader.Read())
                     {
+                        ID_Login = Convert.ToInt32(sqlDataReader["ID_Login"].ToString());
                         ID_NivelAcesso = Convert.ToInt32(sqlDataReader["ID_NivelAcesso"].ToString());
                         NM_FuncionarioLogin = sqlDataReader["NM_Funcionario"].ToString();
                     }

@@ -11,17 +11,53 @@ namespace SuplementosPIMIV.View
 {
 
 
-    public partial class FrmLogin
+    public partial class FrmMeuLogin
     {
 
         /// <summary>
-        /// Controle formLogin.
+        /// Controle formMeuLogin.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm formLogin;
+        protected global::System.Web.UI.HtmlControls.HtmlForm formMeuLogin;
+
+        /// <summary>
+        /// Controle lbtnMeuLogin.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbtnMeuLogin;
+
+        /// <summary>
+        /// Controle lblNM_FuncionarioLogin.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNM_FuncionarioLogin;
+
+        /// <summary>
+        /// Controle lbtnDropProdutos.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbtnDropProdutos;
+
+        /// <summary>
+        /// Controle lbtnDropFuncionarios.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbtnDropFuncionarios;
 
         /// <summary>
         /// Controle txbID_Login.
@@ -33,40 +69,40 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.TextBox txbID_Login;
 
         /// <summary>
-        /// Controle lblDS_Usuario.
+        /// Controle lblDS_UsuarioMeuLogin.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDS_Usuario;
+        protected global::System.Web.UI.WebControls.Label lblDS_UsuarioMeuLogin;
 
         /// <summary>
-        /// Controle txbDS_Usuario.
+        /// Controle txbDS_UsuarioMeuLogin.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbDS_Usuario;
+        protected global::System.Web.UI.WebControls.TextBox txbDS_UsuarioMeuLogin;
 
         /// <summary>
-        /// Controle lblDS_Senha.
+        /// Controle lblDS_SenhaMeuLogin.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDS_Senha;
+        protected global::System.Web.UI.WebControls.Label lblDS_SenhaMeuLogin;
 
         /// <summary>
-        /// Controle txbDS_Senha.
+        /// Controle txbDS_SenhaMeuLogin.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbDS_Senha;
+        protected global::System.Web.UI.WebControls.TextBox txbDS_SenhaMeuLogin;
 
         /// <summary>
         /// Controle lblDS_Mensagem.
@@ -78,12 +114,21 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.Label lblDS_Mensagem;
 
         /// <summary>
-        /// Controle btnAcessar.
+        /// Controle btnSalvar.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAcessar;
+        protected global::System.Web.UI.WebControls.Button btnSalvar;
+
+        /// <summary>
+        /// Controle btnAlterar.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAlterar;
     }
 }

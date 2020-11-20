@@ -26,7 +26,7 @@
                 <i class="fas fa-user-circle fa-lg" style="margin-right: 2px;"></i>
                 <asp:Label ID="lblNM_FuncionarioLogin" runat="server"></asp:Label>
             </asp:LinkButton>
-            <a href=""><i class="fas fa-store-alt" style="margin-right: 5px;"></i>PDV</a>
+            <a href="FrmPDV.aspx"><i class="fas fa-store-alt" style="margin-right: 5px;"></i>PDV</a>
             <div class="dropdown">
                 <asp:LinkButton CssClass="dropbtn" ID="lbtnDropProdutos" Font-Underline="false" runat="server">
                     <i class="fas fa-tablets" style="margin-right: 2px;"></i> Produtos <i class="fa fa-caret-down"></i></asp:LinkButton>
@@ -81,8 +81,8 @@
 
                                 <div class="colunasLogin" id="colunaLogin3">
                                     <asp:Label CssClass="Label" runat="server" Width="100%" Text="Nível de Acesso"></asp:Label>
-                                    <asp:DropDownList CssClass="DropDownList" ID="ddlID_NivelAcesso" runat="server"
-                                        OnSelectedIndexChanged="ddlID_NivelAcesso_SelectedIndexChanged" AutoPostBack="true">
+                                    <asp:DropDownList CssClass="DropDownList" ID="ddlDS_NivelAcesso" runat="server"
+                                        OnSelectedIndexChanged="ddlDS_NivelAcesso_SelectedIndexChanged" AutoPostBack="true">
                                     </asp:DropDownList>
                                 </div>
 
@@ -105,6 +105,7 @@
                             <asp:Button CssClass="Button" ID="btnIncluir" runat="server" Text="Incluir" OnClick="btnIncluir_Click" />
                             <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
                             <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
+                            <asp:Button CssClass="Button" ID="btnAtivarStatus" runat="server" Text="Ativar" OnClick="btnAtivarStatus_Click" />
 
                         </ContentTemplate>
                     </asp:UpdatePanel>
@@ -124,6 +125,8 @@
 
                     <asp:UpdatePanel ID="updConsulta" runat="server">
                         <ContentTemplate>
+
+                            <asp:CheckBox ID="chkStatusInativo" runat="server" Text="Inativos" AutoPostBack="true" OnCheckedChanged="chkStatusInativo_CheckedChanged" />
 
                             <asp:TextBox CssClass="TextBox" ID="txbNM_FuncionarioLoginConsultar" MaxLengh="50"
                                 placeholder="Buscar funcionário" runat="server" OnTextChanged="txbNM_FuncionarioLoginConsultar_TextChanged"

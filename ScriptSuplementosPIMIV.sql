@@ -38,20 +38,14 @@ CREATE TABLE TB_Funcionario
 	FOREIGN KEY (ID_Cidade) REFERENCES TB_Cidade(ID_Cidade)
 );
 
-CREATE TABLE TB_NivelAcesso
-(
-	ID_NivelAcesso INT PRIMARY KEY IDENTITY(1,1),
-	DS_NivelAcesso VARCHAR(10) NOT NULL
-);
-
 CREATE TABLE TB_Login
 (
 	ID_Login INT PRIMARY KEY IDENTITY(1,1),
-	ID_NivelAcesso INT NOT NULL,
 	ID_Funcionario INT NOT NULL,
+	DS_NivelAcesso VARCHAR(10) NOT NULL,
 	DS_Usuario VARCHAR(20) NOT NULL,
 	DS_Senha VARCHAR(20) NOT NULL,
-	FOREIGN KEY (ID_NivelAcesso) REFERENCES TB_NivelAcesso(ID_NivelAcesso),
+	Ativo BIT NOT NULL,
 	FOREIGN KEY (ID_Funcionario) REFERENCES TB_Funcionario(ID_Funcionario)
 );
 

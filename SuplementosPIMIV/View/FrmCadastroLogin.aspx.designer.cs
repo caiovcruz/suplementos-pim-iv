@@ -105,13 +105,13 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.TextBox txbDS_Usuario;
 
         /// <summary>
-        /// Controle ddlID_NivelAcesso.
+        /// Controle ddlDS_NivelAcesso.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlID_NivelAcesso;
+        protected global::System.Web.UI.WebControls.DropDownList ddlDS_NivelAcesso;
 
         /// <summary>
         /// Controle txbDS_Senha.
@@ -121,6 +121,15 @@ namespace SuplementosPIMIV.View
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txbDS_Senha;
+
+        /// <summary>
+        /// Controle mdeNR_CPF.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::AjaxControlToolkit.MaskedEditExtender mdeNR_CPF;
 
         /// <summary>
         /// Controle lblDS_Mensagem.
@@ -168,6 +177,15 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.Button btnExcluir;
 
         /// <summary>
+        /// Controle btnAtivarStatus.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAtivarStatus;
+
+        /// <summary>
         /// Controle updConsulta.
         /// </summary>
         /// <remarks>
@@ -175,6 +193,15 @@ namespace SuplementosPIMIV.View
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel updConsulta;
+
+        /// <summary>
+        /// Controle chkStatusInativo.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkStatusInativo;
 
         /// <summary>
         /// Controle txbNM_FuncionarioLoginConsultar.

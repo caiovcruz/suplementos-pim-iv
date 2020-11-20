@@ -126,6 +126,7 @@
     <Content Include="View\FrmMovEstoque.aspx" />
     <Content Include="View\FrmLogin.aspx" />
     <Content Include="View\FrmMarca.aspx" />
+    <Content Include="View\FrmPDV.aspx" />
     <Content Include="View\FrmProduto.aspx" />
     <Content Include="Assets\css\styles.css" />
     <Content Include="View\FrmSabor.aspx" />
@@ -201,6 +202,13 @@
     </Compile>
     <Compile Include="View\FrmMarca.aspx.designer.cs">
       <DependentUpon>FrmMarca.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\FrmPDV.aspx.cs">
+      <DependentUpon>FrmPDV.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\FrmPDV.aspx.designer.cs">
+      <DependentUpon>FrmPDV.aspx</DependentUpon>
     </Compile>
     <Compile Include="View\FrmProduto.aspx.cs">
       <DependentUpon>FrmProduto.aspx</DependentUpon>

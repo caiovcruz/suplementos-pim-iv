@@ -24,6 +24,15 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.HtmlControls.HtmlForm formMeuLogin;
 
         /// <summary>
+        /// Controle scpManager.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager scpManager;
+
+        /// <summary>
         /// Controle lbtnMeuLogin.
         /// </summary>
         /// <remarks>
@@ -87,6 +96,15 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.TextBox txbDS_UsuarioMeuLogin;
 
         /// <summary>
+        /// Controle updSenha.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel updSenha;
+
+        /// <summary>
         /// Controle lblDS_SenhaMeuLogin.
         /// </summary>
         /// <remarks>
@@ -94,6 +112,15 @@ namespace SuplementosPIMIV.View
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDS_SenhaMeuLogin;
+
+        /// <summary>
+        /// Controle txbDS_SenhaMeuLoginMascara.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txbDS_SenhaMeuLoginMascara;
 
         /// <summary>
         /// Controle txbDS_SenhaMeuLogin.
@@ -105,6 +132,24 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.TextBox txbDS_SenhaMeuLogin;
 
         /// <summary>
+        /// Controle lbtnVisualizarSenha.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbtnVisualizarSenha;
+
+        /// <summary>
+        /// Controle lbtnMascararSenha.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbtnMascararSenha;
+
+        /// <summary>
         /// Controle lblDS_Mensagem.
         /// </summary>
         /// <remarks>
@@ -114,15 +159,6 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.Label lblDS_Mensagem;
 
         /// <summary>
-        /// Controle btnSalvar.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSalvar;
-
-        /// <summary>
         /// Controle btnAlterar.
         /// </summary>
         /// <remarks>
@@ -130,5 +166,14 @@ namespace SuplementosPIMIV.View
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAlterar;
+
+        /// <summary>
+        /// Controle btnSalvar.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSalvar;
     }
 }

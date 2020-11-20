@@ -122,10 +122,28 @@ body {
     text-align: center;
 }
 
+#InternoLogin {
+    margin: 0px 25px 0px 25px;
+}
+
 div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
     text-align: left;
-    margin-left: 25px;
 }
+
+#btnAcessar {
+    width: 100%;
+    background-color: #32CD32;
+    color: #ffffff;
+    opacity: 0.5
+}
+
+    #btnAcessar:enabled {
+        opacity: 1;
+    }
+
+    #btnAcessar:not([disabled]):hover {
+        opacity: 0.7;
+    }
 
 #cadastroProduto, #exibeProduto {
     background-color: #FFFFFF;
@@ -576,7 +594,7 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
     float: left;
 }
 
-#ddlID_Funcionario, #ddlID_NivelAcesso, div#internoColunasLogin #txbDS_Usuario, div#internoColunasLogin #txbDS_Senha {
+#ddlID_Funcionario, #ddlDS_NivelAcesso, div#internoColunasLogin #txbDS_Usuario, div#internoColunasLogin #txbDS_Senha {
     width: 100%;
 }
 
@@ -601,15 +619,22 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
     background-color: #FFFFFF;
     border-radius: 10px;
     border-color: gainsboro;
-    margin: 10% 42% 10% 42%;
+    margin: 8% 42% 5% 42%;
     text-align: center;
+}
+
+#cadInternoMeuLogin {
+    margin: 0px 25px 0px 25px;
 }
 
 div#cadInternoMeuLogin #lblDS_UsuarioMeuLogin, div#cadInternoMeuLogin #lblDS_SenhaMeuLogin {
     text-align: left;
-    margin-left: 25px;
 }
 
-div#cadInternoMeuLogin #btnSalvar {
-    margin-right: 15px;
+div#cadastroMeuLogin #btnSalvar, div#cadastroMeuLogin #btnAlterar {
+    width: 100%;
+}
+
+#txbDS_UsuarioMeuLogin, #txbDS_SenhaMeuLogin {
+    width: 100%;
 }

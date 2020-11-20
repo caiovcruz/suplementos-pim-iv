@@ -5650,20 +5650,11 @@ VALUES
 	'2010-01-08',
 	1
 );
-  
-INSERT INTO TB_NivelAcesso
-(
-	DS_NivelAcesso
-)
-VALUES
-(
-	'Gerente'
-);
 
 INSERT INTO TB_Login
 (
-	ID_NivelAcesso,
 	ID_Funcionario,
+	DS_NivelAcesso,
 	DS_Usuario,
     DS_Senha,
     Ativo
@@ -5671,7 +5662,7 @@ INSERT INTO TB_Login
 VALUES
 (
 	1,
-    1,
+    'Gerente',
     'caiovcruz',
 	'cruz123',
 	1

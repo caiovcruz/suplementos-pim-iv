@@ -18,13 +18,15 @@
 </head>
 <body>
     <form id="formMeuLogin" runat="server">
+        <asp:ScriptManager ID="scpManager" runat="server"></asp:ScriptManager>
+
         <!-- Menu -------------------------------------- -->
         <div class="navbar">
             <asp:LinkButton CssClass="dropbtn" ID="lbtnMeuLogin" Font-Underline="false" runat="server" PostBackUrl="~/View/FrmMeuLogin.aspx">
                 <i class="fas fa-user-circle fa-lg" style="margin-right: 2px;"></i>
                 <asp:Label ID="lblNM_FuncionarioLogin" runat="server"></asp:Label>
             </asp:LinkButton>
-            <a href=""><i class="fas fa-store-alt" style="margin-right: 5px;"></i>PDV</a>
+            <a href="FrmPDV.aspx"><i class="fas fa-store-alt" style="margin-right: 5px;"></i>PDV</a>
             <div class="dropdown">
                 <asp:LinkButton CssClass="dropbtn" ID="lbtnDropProdutos" Font-Underline="false" runat="server">
                     <i class="fas fa-tablets" style="margin-right: 2px;"></i> Produtos <i class="fa fa-caret-down"></i></asp:LinkButton>
@@ -63,9 +65,28 @@
 
                 <br />
 
-                <asp:Label CssClass="Label" ID="lblDS_SenhaMeuLogin" runat="server" Width="100%" Text="Senha"></asp:Label>
-                <asp:TextBox CssClass="TextBox" ID="txbDS_SenhaMeuLogin" runat="server" MaxLengh="20"
-                    placeholder="Senha do usuário" TextMode="Password"></asp:TextBox>
+                <asp:UpdatePanel ID="updSenha" runat="server">
+                    <ContentTemplate>
+
+                        <asp:Label CssClass="Label" ID="lblDS_SenhaMeuLogin" runat="server" Width="100%" Text="Senha"></asp:Label>
+                        <asp:TextBox CssClass="TextBox" ID="txbDS_SenhaMeuLoginMascara" runat="server" MaxLengh="20"
+                            placeholder="Senha do usuário">
+                        </asp:TextBox>
+                        <asp:TextBox CssClass="TextBox" ID="txbDS_SenhaMeuLogin" runat="server" MaxLengh="20"
+                            placeholder="Senha do usuário">
+                        </asp:TextBox>
+
+                        <br />
+
+                        <asp:LinkButton CssClass="dropbtn" ID="lbtnVisualizarSenha" Font-Underline="false" OnClick="lbtnVisualizarSenha_Click" ToolTip="Visualizar Senha" runat="server">
+                        <i class="far fa-eye fa-lg" style="margin-right: 2px;"></i>
+                        </asp:LinkButton>
+                        <asp:LinkButton CssClass="dropbtn" ID="lbtnMascararSenha" Font-Underline="false" OnClick="lbtnMascararSenha_Click" ToolTip="Mascarar Senha" runat="server">
+                        <i class="far fa-eye-slash fa-lg" style="margin-right: 2px;"></i>
+                        </asp:LinkButton>
+
+                    </ContentTemplate>
+                </asp:UpdatePanel>
 
                 <br />
 
@@ -74,10 +95,14 @@
                 <br />
                 <br />
 
-                <asp:Button CssClass="Button" ID="btnSalvar" runat="server" Text="Salvar" OnClick="btnSalvar_Click" />
                 <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
+                <asp:Button CssClass="Button" ID="btnSalvar" runat="server" Text="Salvar" OnClick="btnSalvar_Click" />
 
             </div>
+
+            <br />
+            <br />
+            <br />
             <br />
             <br />
             <br />

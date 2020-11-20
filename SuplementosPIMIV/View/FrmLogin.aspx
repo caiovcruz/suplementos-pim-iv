@@ -43,7 +43,7 @@
                 <br />
                 <br />
 
-                <asp:Button CssClass="Button" ID="btnAcessar" runat="server" Text="Login" OnClick="btnAcessar_Click" />
+                <asp:Button CssClass="Button" ID="btnAcessar" runat="server" Text="Acessar" OnClick="btnAcessar_Click" />
 
             </div>
             <br />

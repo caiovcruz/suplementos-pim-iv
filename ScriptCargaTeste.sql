@@ -5737,7 +5737,7 @@ VALUES
 	1,
     1,
     1,
-	'7895461257854',
+	'0608473184014',
 	'WHEY 100% 900g',
     'Tabela Nutricional: 32g (dose) = 5,8g carboidrato, 20g proteína, 8g glutamina, 4,5 BCAA',
     50.00,

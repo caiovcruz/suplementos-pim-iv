@@ -15,11 +15,19 @@ namespace SuplementosPIMIV.View
         {
             if (!IsPostBack)
             {
-                LimparCampos();
-                CarregarSabores();
-                BloquearComponentesCadastro();
-                BloquearComponentesExibe();
-                lblNM_FuncionarioLogin.Text = Cache["NM_FuncionarioLogin"].ToString();
+                if (Session["ConnectionString"] != null)
+                {
+                    LimparCampos();
+                    CarregarSabores();
+                    BloquearComponentesCadastro();
+                    BloquearComponentesExibe();
+
+                    lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
+                }
+                else
+                {
+                    Response.Redirect("FrmLogin.aspx");
+                }
             }
         }
 

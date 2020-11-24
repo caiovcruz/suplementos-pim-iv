@@ -49,104 +49,102 @@
             </div>
         </div>
 
-        <div class="conteiner">
+        <div id="cadastroCategoria">
 
-            <div id="cadastroCategoria">
+            <div id="cadInternoCategoria">
 
-                <div id="cadInternoCategoria">
+                <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Cadastro de Categorias"></asp:Label>
 
-                    <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Cadastro de Categorias"></asp:Label>
-
-                    <br />
-
-                    <asp:UpdatePanel ID="updCadastro" runat="server">
-                        <ContentTemplate>
-
-                            <asp:TextBox CssClass="TextBox" ID="txbID_Categoria" Visible="false" runat="server"></asp:TextBox>
-
-                            <asp:Label CssClass="Label" runat="server" Width="100%" Text="Nome"></asp:Label>
-                            <asp:TextBox CssClass="TextBox" ID="txbNM_Categoria" runat="server" MaxLengh="50"
-                                placeholder="Nome da categoria" OnTextChanged="txbNM_Categoria_TextChanged" AutoPostBack="true"></asp:TextBox>
-
-                            <br />
-
-                            <asp:Label CssClass="Label" runat="server" Width="100%" Text="Descrição"></asp:Label>
-                            <asp:TextBox CssClass="TextBox" ID="txbDS_Categoria" runat="server" MaxLengh="1500"
-                                TextMode="MultiLine" Wrap="true" placeholder="Descrição da categoria"
-                                OnTextChanged="txbDS_Categoria_TextChanged" AutoPostBack="true"></asp:TextBox>
-
-                            <br />
-
-                            <asp:Label CssClass="Msg" ID="lblDS_Mensagem" runat="server" Text=""></asp:Label>
-
-                            <br />
-                            <br />
-
-                            <asp:Button CssClass="Button" ID="btnLimpar" runat="server" Text="Limpar" OnClick="btnLimpar_Click" />
-                            <asp:Button CssClass="Button" ID="btnIncluir" runat="server" Text="Incluir" OnClick="btnIncluir_Click" />
-                            <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
-                            <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
-                            <asp:Button CssClass="Button" ID="btnAtivarStatus" runat="server" Text="Ativar" OnClick="btnAtivarStatus_Click" />
-
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-
-                </div>
                 <br />
+
+                <asp:UpdatePanel ID="updCadastro" runat="server">
+                    <ContentTemplate>
+
+                        <asp:TextBox CssClass="TextBox" ID="txbID_Categoria" Visible="false" runat="server"></asp:TextBox>
+
+                        <asp:Label CssClass="Label" runat="server" Width="100%" Text="Nome"></asp:Label>
+                        <asp:TextBox CssClass="TextBox" ID="txbNM_Categoria" runat="server" MaxLengh="50"
+                            placeholder="Nome da categoria" OnTextChanged="txbNM_Categoria_TextChanged" AutoPostBack="true"></asp:TextBox>
+
+                        <br />
+
+                        <asp:Label CssClass="Label" runat="server" Width="100%" Text="Descrição"></asp:Label>
+                        <asp:TextBox CssClass="TextBox" ID="txbDS_Categoria" runat="server" MaxLengh="1500"
+                            TextMode="MultiLine" Wrap="true" placeholder="Descrição da categoria"
+                            OnTextChanged="txbDS_Categoria_TextChanged" AutoPostBack="true"></asp:TextBox>
+
+                        <br />
+
+                        <asp:Label CssClass="Msg" ID="lblDS_Mensagem" runat="server" Text=""></asp:Label>
+
+                        <br />
+                        <br />
+
+                        <asp:Button CssClass="Button" ID="btnLimpar" runat="server" Text="Limpar" OnClick="btnLimpar_Click" />
+                        <asp:Button CssClass="Button" ID="btnIncluir" runat="server" Text="Incluir" OnClick="btnIncluir_Click" />
+                        <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
+                        <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
+                        <asp:Button CssClass="Button" ID="btnAtivarStatus" runat="server" Text="Ativar" OnClick="btnAtivarStatus_Click" />
+
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+
+            </div>
+            <br />
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+        <div id="exibeCategoria">
+            <div id="exibeInternoCategoria">
+
+                <br />
+
+                <asp:UpdatePanel ID="updConsulta" runat="server">
+                    <ContentTemplate>
+
+                        <asp:CheckBox ID="chkStatusInativo" runat="server" Text="Inativas" AutoPostBack="true" OnCheckedChanged="chkStatusInativo_CheckedChanged" />
+
+                        <asp:TextBox CssClass="TextBox" ID="txbNM_CategoriaConsultar" MaxLengh="50"
+                            placeholder="Buscar categoria" runat="server" OnTextChanged="txbNM_CategoriaConsultar_TextChanged"
+                            AutoPostBack="true"></asp:TextBox>
+
+                        <asp:Button CssClass="Button" ID="btnConsultar" runat="server" Text="Consultar"
+                            OnClick="btnConsultar_Click" />
+
+                        <br />
+
+                        <div style="overflow: auto;">
+                            <asp:GridView CssClass="gvwExibe" ID="gvwExibe" runat="server" CellPadding="5" GridLines="Horizontal"
+                                AlternatingRowStyle-BackColor="WhiteSmoke" OnRowDataBound="gvwExibe_RowDataBound"
+                                OnSelectedIndexChanged="gvwExibe_SelectedIndexChanged" OnPageIndexChanging="gvwExibe_PageIndexChanging" AllowPaging="true" PageSize="10">
+                                <Columns>
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="lbSelecionar" runat="server" CausesValidation="False"
+                                                CommandName="Select" Style="display: none;"></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                                <HeaderStyle BackColor="WhiteSmoke" BorderStyle="Solid" BorderColor="Black" Font-Bold="True" />
+                            </asp:GridView>
+                        </div>
+
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+
             </div>
 
             <br />
-            <br />
-            <br />
-
-            <div id="exibeCategoria">
-                <div id="exibeInternoCategoria">
-
-                    <br />
-
-                    <asp:UpdatePanel ID="updConsulta" runat="server">
-                        <ContentTemplate>
-
-                            <asp:CheckBox ID="chkStatusInativo" runat="server" Text="Inativas" AutoPostBack="true" OnCheckedChanged="chkStatusInativo_CheckedChanged" />
-
-                            <asp:TextBox CssClass="TextBox" ID="txbNM_CategoriaConsultar" MaxLengh="50"
-                                placeholder="Buscar categoria" runat="server" OnTextChanged="txbNM_CategoriaConsultar_TextChanged"
-                                AutoPostBack="true"></asp:TextBox>
-
-                            <asp:Button CssClass="Button" ID="btnConsultar" runat="server" Text="Consultar"
-                                OnClick="btnConsultar_Click" />
-
-                            <br />
-
-                            <div style="overflow: auto;">
-                                <asp:GridView CssClass="gvwExibe" ID="gvwExibe" runat="server" CellPadding="5" GridLines="Horizontal"
-                                    AlternatingRowStyle-BackColor="WhiteSmoke" OnRowDataBound="gvwExibe_RowDataBound"
-                                    OnSelectedIndexChanged="gvwExibe_SelectedIndexChanged" OnPageIndexChanging="gvwExibe_PageIndexChanging" AllowPaging="true" PageSize="10">
-                                    <Columns>
-                                        <asp:TemplateField>
-                                            <ItemTemplate>
-                                                <asp:LinkButton ID="lbSelecionar" runat="server" CausesValidation="False"
-                                                    CommandName="Select" Style="display: none;"></asp:LinkButton>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                    </Columns>
-                                    <HeaderStyle BackColor="WhiteSmoke" BorderStyle="Solid" BorderColor="Black" Font-Bold="True" />
-                                </asp:GridView>
-                            </div>
-
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-
-                </div>
-
-                <br />
-                <br />
-
-            </div>
-
             <br />
 
         </div>
+
+        <br />
+        <br />
+
     </form>
 </body>
 </html>

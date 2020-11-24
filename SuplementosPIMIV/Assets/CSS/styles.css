@@ -97,15 +97,6 @@ body {
     color: #F00;
 }
 
-.conteudo {
-    background: silver;
-    margin-left: 23%;
-}
-
-.conteiner {
-    display: grid;
-}
-
 #formLogin {
     height: 100%;
     background-image: url(../img/bLogin.jpg);
@@ -141,8 +132,20 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
         opacity: 1;
     }
 
+    #btnAcessar:disabled {
+        cursor: not-allowed;
+    }
+
     #btnAcessar:not([disabled]):hover {
-        opacity: 0.7;
+        opacity: 0.9;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 6px #999;
+        transition: all .2s ease-in-out
+    }
+
+    #btnAcessar:active {
+        box-shadow: 0 5px #666;
+        transform: translateY(2px);
     }
 
 #cadastroProduto, #exibeProduto {
@@ -248,8 +251,20 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
         opacity: 1;
     }
 
+    #btnIncluir:disabled {
+        cursor: not-allowed;
+    }
+
     #btnIncluir:not([disabled]):hover {
-        opacity: 0.7;
+        opacity: 0.9;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 6px #999;
+        transition: all .2s ease-in-out
+    }
+
+    #btnIncluir:active {
+        box-shadow: 0 5px #666;
+        transform: translateY(2px);
     }
 
 #btnAlterar {
@@ -261,8 +276,20 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
         opacity: 1;
     }
 
+    #btnAlterar:disabled {
+        cursor: not-allowed;
+    }
+
     #btnAlterar:not([disabled]):hover {
-        opacity: 0.7;
+        opacity: 0.9;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 6px #999;
+        transition: all .2s ease-in-out
+    }
+
+    #btnAlterar:active {
+        box-shadow: 0 5px #666;
+        transform: translateY(2px);
     }
 
 #btnExcluir {
@@ -275,8 +302,20 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
         opacity: 1;
     }
 
+    #btnExcluir:disabled {
+        cursor: not-allowed;
+    }
+
     #btnExcluir:not([disabled]):hover {
-        opacity: 0.7;
+        opacity: 0.9;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 6px #999;
+        transition: all .2s ease-in-out
+    }
+
+    #btnExcluir:active {
+        box-shadow: 0 5px #666;
+        transform: translateY(2px);
     }
 
 #btnAtivarStatus {
@@ -288,8 +327,20 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
         opacity: 1;
     }
 
+    #btnAtivarStatus:disabled {
+        cursor: not-allowed;
+    }
+
     #btnAtivarStatus:not([disabled]):hover {
-        opacity: 0.7;
+        opacity: 0.9;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 6px #999;
+        transition: all .2s ease-in-out
+    }
+
+    #btnAtivarStatus:active {
+        box-shadow: 0 5px #666;
+        transform: translateY(2px);
     }
 
 #btnLimpar {
@@ -301,8 +352,20 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
         opacity: 1;
     }
 
+    #btnLimpar:disabled {
+        cursor: not-allowed;
+    }
+
     #btnLimpar:not([disabled]):hover {
-        opacity: 0.7;
+        opacity: 0.9;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 6px #999;
+        transition: all .2s ease-in-out
+    }
+
+    #btnLimpar:active {
+        box-shadow: 0 5px #666;
+        transform: translateY(2px);
     }
 
 #btnConsultar {
@@ -314,10 +377,21 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
         opacity: 1;
     }
 
-    #btnConsultar:not([disabled]):hover {
-        opacity: 0.7;
+    #btnConsultar:disabled {
+        cursor: not-allowed;
     }
 
+    #btnConsultar:not([disabled]):hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 6px #999;
+        transition: all .2s ease-in-out
+    }
+
+    #btnConsultar:active {
+        box-shadow: 0 5px #666;
+        transform: translateY(2px);
+    }
 
 #btnSalvar {
     background-color: #32CD32;
@@ -329,8 +403,46 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
         opacity: 1;
     }
 
+    #btnSalvar:disabled {
+        cursor: not-allowed;
+    }
+
     #btnSalvar:not([disabled]):hover {
-        opacity: 0.7;
+        opacity: 0.9;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 6px #999;
+        transition: all .2s ease-in-out
+    }
+
+    #btnSalvar:active {
+        box-shadow: 0 5px #666;
+        transform: translateY(2px);
+    }
+
+#btnCancelar {
+    color: #FFFFFF;
+    background-color: #ff2626;
+    opacity: 0.5
+}
+
+    #btnCancelar:enabled {
+        opacity: 1;
+    }
+
+    #btnCancelar:disabled {
+        cursor: not-allowed;
+    }
+
+    #btnCancelar:not([disabled]):hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 6px #999;
+        transition: all .2s ease-in-out
+    }
+
+    #btnCancelar:active {
+        box-shadow: 0 5px #666;
+        transform: translateY(2px);
     }
 
 #btnIncluir, #btnAlterar, #btnExcluir, #btnAtivarStatus, #btnSalvar {
@@ -631,10 +743,72 @@ div#cadInternoMeuLogin #lblDS_UsuarioMeuLogin, div#cadInternoMeuLogin #lblDS_Sen
     text-align: left;
 }
 
-div#cadastroMeuLogin #btnSalvar, div#cadastroMeuLogin #btnAlterar {
+div#cadInternoMeuLogin #btnSalvar, div#cadInternoMeuLogin #btnAlterar {
     width: 100%;
 }
 
+div#cadInternoMeuLogin #btnSalvar {
+    margin-bottom: 10px;
+}
+
+#cadInternoMeuLogin {
+    padding-bottom: 140px;
+}
+
 #txbDS_UsuarioMeuLogin, #txbDS_SenhaMeuLogin {
+    width: 100%;
+}
+
+#cadastroVendaProduto, #exibeVendaProduto {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border-color: gainsboro;
+    box-shadow: 5px 10px 10px #efefef;
+}
+
+#cadastroVendaProduto, #exibeVendaProduto {
+    margin: 0px 15% 0px 15%;
+}
+
+#cadInternoVendaProduto, #exibeInternoVendaProduto {
+    margin: 0px 5% 0px 10%;
+}
+
+#internoColunasVendaProduto {
+    width: 100%;
+    position: inherit;
+    display: grid;
+    grid-template-columns: 60% 20% 20%;
+}
+
+.colunasVendaProduto {
+    float: left;
+}
+
+#colunaVendaProduto2, #colunaVendaProduto3 {
+    margin-left: 15px;
+}
+
+#txbProduto, #txbPR_Produto, #txbQTD_Produto {
+    width: 100%;
+}
+
+#internoColunasVendaProdutoFinaliza {
+    width: 100%;
+    position: inherit;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+
+#txbDT_Venda, #ddlDS_TipoPagamento, #ddlNR_Parcelas, #txbVL_Total, #txbVL_Recebido {
+    width: 100%;
+}
+
+#valorRecebido {
+    width: 23.5%;
+    margin-left: 76.5%;
+}
+
+div#exibeInternoVendaProduto #gvwExibe {
     width: 100%;
 }

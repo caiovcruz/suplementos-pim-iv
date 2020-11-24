@@ -64,10 +64,10 @@ namespace SuplementosPIMIV.View
                     LimparCampos();
                     lblDS_Mensagem.Text = "";
 
-                    Cache["ID_Login"] = myControllerLogin.ID_Login;
-                    Cache["ID_Funcionario"] = myControllerLogin.ID_Funcionario;
-                    Cache["DS_NivelAcesso"] = myControllerLogin.DS_NivelAcesso;
-                    Cache["NM_FuncionarioLogin"] = myControllerLogin.NM_FuncionarioLogin;
+                    Session["ID_Login"] = myControllerLogin.ID_Login;
+                    Session["ID_Funcionario"] = myControllerLogin.ID_Funcionario;
+                    Session["DS_NivelAcesso"] = myControllerLogin.DS_NivelAcesso;
+                    Session["NM_FuncionarioLogin"] = myControllerLogin.NM_FuncionarioLogin;
 
                     Response.Redirect("FrmPDV.aspx");
                 }

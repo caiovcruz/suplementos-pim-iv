@@ -20,16 +20,24 @@ namespace SuplementosPIMIV.View
         {
             if (!IsPostBack)
             {
-                LimparCampos();
-                CarregarProdutos();
-                CarregarMarcas();
-                CarregarCategorias();
-                CarregarSubcategorias();
-                CarregarSabores();
-                CarregarFiltrosDeBusca();
-                BloquearComponentesCadastro();
-                BloquearComponentesExibe();
-                lblNM_FuncionarioLogin.Text = Cache["NM_FuncionarioLogin"].ToString();
+                if (Session["ConnectionString"] != null)
+                {
+                    LimparCampos();
+                    CarregarProdutos();
+                    CarregarMarcas();
+                    CarregarCategorias();
+                    CarregarSubcategorias();
+                    CarregarSabores();
+                    CarregarFiltrosDeBusca();
+                    BloquearComponentesCadastro();
+                    BloquearComponentesExibe();
+
+                    lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
+                }
+                else
+                {
+                    Response.Redirect("FrmLogin.aspx");
+                }
             }
         }
 
@@ -61,7 +69,7 @@ namespace SuplementosPIMIV.View
         }
 
         private void BloquearComponentesExibe()
-        {          
+        {
             btnConsultar.Enabled = false;
             txbConsultar.Enabled = false;
         }
@@ -159,7 +167,9 @@ namespace SuplementosPIMIV.View
                     txbConsultar.Text = txbConsultar.Text.Trim().Replace(",", ".");
                 }
 
-                gvwExibe.DataSource = myControllerProduto.Consultar(chkStatusInativo.Checked ? 0 : 1, filtro, txbConsultar.Text.Trim());
+                filtro += " LIKE '" + txbConsultar.Text.Trim() + "' + '%' ";
+
+                gvwExibe.DataSource = myControllerProduto.Consultar(chkStatusInativo.Checked ? 0 : 1, filtro);
                 gvwExibe.DataBind();
             }
             else
@@ -315,7 +325,7 @@ namespace SuplementosPIMIV.View
                                         {
                                             mDs_Msg += " " + myControllerProduto.DS_Mensagem + " Verifique nos produtos ativos e inativos!";
                                         }
-                                    }                                    
+                                    }
                                 }
                             }
                             else

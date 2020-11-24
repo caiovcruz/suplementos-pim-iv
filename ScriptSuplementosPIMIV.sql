@@ -51,42 +51,38 @@ CREATE TABLE TB_Login
 
 CREATE TABLE TB_Categoria
 (
-	ID_Categoria INT IDENTITY(1,1),
+	ID_Categoria INT PRIMARY KEY IDENTITY(1,1),
 	NM_Categoria VARCHAR(50) NOT NULL,
 	DS_Categoria VARCHAR(1500) NOT NULL,
-    Ativo BIT NOT NULL,
-    PRIMARY KEY (ID_Categoria)
+    Ativo BIT NOT NULL
 );
 
 CREATE TABLE TB_Subcategoria
 (
-	ID_Subcategoria INT IDENTITY(1,1),
+	ID_Subcategoria INT PRIMARY KEY IDENTITY(1,1),
     ID_Categoria INT NOT NULL,
     NM_Subcategoria VARCHAR(50) NOT NULL,
     DS_Subcategoria VARCHAR(1500) NOT NULL,
-    Ativo BIT NOT NULL,
-    PRIMARY KEY (ID_Subcategoria)
+    Ativo BIT NOT NULL
 );
 
 CREATE TABLE TB_Sabor
 (
-	ID_Sabor INT IDENTITY(1,1),
+	ID_Sabor INT PRIMARY KEY IDENTITY(1,1),
     NM_Sabor VARCHAR(50) NOT NULL,
-    Ativo BIT NOT NULL,
-    PRIMARY KEY (ID_Sabor)
+    Ativo BIT NOT NULL
 );
 
 CREATE TABLE TB_Marca
 (
-	ID_Marca INT IDENTITY(1,1),
+	ID_Marca INT PRIMARY KEY IDENTITY(1,1),
     NM_Marca VARCHAR(50) NOT NULL,
-    Ativo BIT NOT NULL,
-    PRIMARY KEY (ID_Marca)
+    Ativo BIT NOT NULL
 );
 
 CREATE TABLE TB_Produto 
 (
-	ID_Produto INT IDENTITY(1,1),
+	ID_Produto INT PRIMARY KEY IDENTITY(1,1),
     ID_Marca INT NOT NULL,
     ID_Categoria INT NOT NULL,
     ID_Subcategoria INT NOT NULL,
@@ -97,7 +93,6 @@ CREATE TABLE TB_Produto
 	PR_Custo DECIMAL(10,2) NOT NULL,
     PR_Venda DECIMAL(10,2) NOT NULL,
     Ativo BIT NOT NULL,
-    PRIMARY KEY (ID_Produto),
     FOREIGN KEY (ID_Categoria) REFERENCES TB_Categoria(ID_Categoria),
     FOREIGN KEY (ID_Subcategoria) REFERENCES TB_Subcategoria(ID_Subcategoria)
 );
@@ -113,14 +108,35 @@ CREATE TABLE TB_Estoque
 
 CREATE TABLE TB_MovimentacaoEstoque
 (
-	ID_MovimentacaoEstoque INT IDENTITY(1,1),
+	ID_MovimentacaoEstoque INT PRIMARY KEY IDENTITY(1,1),
 	ID_Produto INT NOT NULL,
 	QTD_MovimentacaoEstoque INT NOT NULL,
 	DS_MovimentacaoEstoque VARCHAR(20) NOT NULL,
 	DT_MovimentacaoEstoque DATETIME,
 	QTD_Estoque INT NOT NULL,
-	PRIMARY KEY(ID_MovimentacaoEstoque),
 	FOREIGN KEY(ID_Produto) REFERENCES TB_Produto(ID_Produto)
+);
+
+CREATE TABLE TB_Venda
+(
+	ID_Venda INT PRIMARY KEY IDENTITY(1,1),
+	ID_Funcionario INT NOT NULL,
+	DT_Venda DATETIME NOT NULL,
+	DS_TipoPagamento VARCHAR(20),
+	NR_Parcelas INT,
+	VL_Total DECIMAL(10,2),
+	FOREIGN KEY (ID_Funcionario) REFERENCES TB_Funcionario(ID_Funcionario)
+);
+
+CREATE TABLE TB_ItemVenda
+(
+	ID_Venda INT NOT NULL,
+	ID_Produto INT NOT NULL,
+	QTD_ItemVenda INT NOT NULL,
+	VL_Subtotal DECIMAL(10,2) NOT NULL,
+	PRIMARY KEY (ID_Venda, ID_Produto),
+	FOREIGN KEY (ID_Venda) REFERENCES TB_Venda(ID_Venda) ON DELETE CASCADE,
+	FOREIGN KEY (ID_Produto) REFERENCES	TB_Produto(ID_Produto)
 );
 
 GO

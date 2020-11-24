@@ -123,15 +123,6 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.TextBox txbDS_Senha;
 
         /// <summary>
-        /// Controle mdeNR_CPF.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::AjaxControlToolkit.MaskedEditExtender mdeNR_CPF;
-
-        /// <summary>
         /// Controle lblDS_Mensagem.
         /// </summary>
         /// <remarks>

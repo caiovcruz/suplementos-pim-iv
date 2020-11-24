@@ -169,7 +169,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public DataTable Consultar(int status, string filtro, string texto)
+        public DataTable Consultar(int status, string filtro)
         {
             DataTable dataTable = new DataTable();
 
@@ -203,12 +203,26 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("INNER JOIN TB_Sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor ");
                 stringSQL.Append("INNER JOIN TB_Estoque AS EST ON PROD.ID_Produto = EST.ID_Produto ");
                 stringSQL.Append("WHERE PROD.Ativo = " + status + " ");
-                stringSQL.Append("AND " + filtro + " LIKE '" + texto + "' + '%' ");
+                stringSQL.Append("AND " + filtro + " ");
                 stringSQL.Append("ORDER BY PROD.ID_Produto DESC");
 
                 sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
                 sqlDataReader = sqlCommand.ExecuteReader();
                 dataTable.Load(sqlDataReader);
+
+                sqlDataReader = sqlCommand.ExecuteReader();
+                if (sqlDataReader.HasRows)
+                {
+                    while (sqlDataReader.Read())
+                    {
+                        ID_Produto = Convert.ToInt32(sqlDataReader["ID_Produto"].ToString());
+                        NM_Produto = sqlDataReader["NM_Produto"].ToString() + " ➯ " +
+                            sqlDataReader["NM_Marca"].ToString() + " ➯ " +
+                            sqlDataReader["NM_Sabor"].ToString();
+                        PR_Venda = Convert.ToDouble(sqlDataReader["PR_Venda"].ToString());
+                    }
+                }
+
             }
             catch (Exception e)
             {
@@ -334,8 +348,8 @@ namespace SuplementosPIMIV.Model
             }
 
             return dataTable;
-        } 
-        
+        }
+
         public string VerificarProdutoCadastrado(string id_produto, string nr_ean, string nm_produto, string id_marca)
         {
             DS_Mensagem = "";

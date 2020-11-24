@@ -16,12 +16,20 @@ namespace SuplementosPIMIV.View
         {
             if (!IsPostBack)
             {
-                LimparCampos();
-                CarregarSubcategorias();
-                CarregarCategorias();
-                BloquearComponentesCadastro();
-                BloquearComponentesExibe();
-                lblNM_FuncionarioLogin.Text = Cache["NM_FuncionarioLogin"].ToString();
+                if (Session["ConnectionString"] != null)
+                {
+                    LimparCampos();
+                    CarregarSubcategorias();
+                    CarregarCategorias();
+                    BloquearComponentesCadastro();
+                    BloquearComponentesExibe();
+
+                    lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
+                }
+                else
+                {
+                    Response.Redirect("FrmLogin.aspx");
+                }
             }
         }
 
@@ -133,7 +141,7 @@ namespace SuplementosPIMIV.View
                     }
                     else
                     {
-                        if (myControllerSubcategoria.VerificarSubcategoriaCadastrada(txbID_Subcategoria.Text.Trim(), 
+                        if (myControllerSubcategoria.VerificarSubcategoriaCadastrada(txbID_Subcategoria.Text.Trim(),
                             txbNM_Subcategoria.Text.Trim(), ddlID_Categoria.SelectedValue).Equals(""))
                         {
                             if (myValidar.CampoPreenchido(txbDS_Subcategoria.Text.Trim()))

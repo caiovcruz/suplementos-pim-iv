@@ -49,97 +49,95 @@
             </div>
         </div>
 
-        <div class="conteiner">
+        <div id="cadastroSabor">
 
-            <div id="cadastroSabor">
+            <div id="cadInternoSabor">
 
-                <div id="cadInternoSabor">
+                <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Cadastro de Sabores"></asp:Label>
 
-                    <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Cadastro de Sabores"></asp:Label>
-
-                    <br />
-
-                    <asp:UpdatePanel ID="updCadastro" runat="server">
-                        <ContentTemplate>
-
-                            <asp:TextBox CssClass="TextBox" ID="txbID_Sabor" Visible="false" runat="server"></asp:TextBox>
-
-                            <asp:Label CssClass="Label" runat="server" Width="100%" Text="Nome"></asp:Label>
-                            <asp:TextBox CssClass="TextBox" ID="txbNM_Sabor" runat="server" MaxLengh="50"
-                                placeholder="Nome do Sabor" OnTextChanged="txbNM_Sabor_TextChanged" AutoPostBack="true"></asp:TextBox>
-
-                            <br />
-
-                            <asp:Label CssClass="Msg" ID="lblDS_Mensagem" runat="server" Text=""></asp:Label>
-
-                            <br />
-                            <br />
-
-                            <asp:Button CssClass="Button" ID="btnLimpar" runat="server" Text="Limpar" OnClick="btnLimpar_Click" />
-                            <asp:Button CssClass="Button" ID="btnIncluir" runat="server" Text="Incluir" OnClick="btnIncluir_Click" />
-                            <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
-                            <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
-                            <asp:Button CssClass="Button" ID="btnAtivarStatus" runat="server" Text="Ativar" OnClick="btnAtivarStatus_Click" />
-
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-
-                </div>
                 <br />
+
+                <asp:UpdatePanel ID="updCadastro" runat="server">
+                    <ContentTemplate>
+
+                        <asp:TextBox CssClass="TextBox" ID="txbID_Sabor" Visible="false" runat="server"></asp:TextBox>
+
+                        <asp:Label CssClass="Label" runat="server" Width="100%" Text="Nome"></asp:Label>
+                        <asp:TextBox CssClass="TextBox" ID="txbNM_Sabor" runat="server" MaxLengh="50"
+                            placeholder="Nome do Sabor" OnTextChanged="txbNM_Sabor_TextChanged" AutoPostBack="true"></asp:TextBox>
+
+                        <br />
+
+                        <asp:Label CssClass="Msg" ID="lblDS_Mensagem" runat="server" Text=""></asp:Label>
+
+                        <br />
+                        <br />
+
+                        <asp:Button CssClass="Button" ID="btnLimpar" runat="server" Text="Limpar" OnClick="btnLimpar_Click" />
+                        <asp:Button CssClass="Button" ID="btnIncluir" runat="server" Text="Incluir" OnClick="btnIncluir_Click" />
+                        <asp:Button CssClass="Button" ID="btnAlterar" runat="server" Text="Alterar" OnClick="btnAlterar_Click" />
+                        <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
+                        <asp:Button CssClass="Button" ID="btnAtivarStatus" runat="server" Text="Ativar" OnClick="btnAtivarStatus_Click" />
+
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+
+            </div>
+            <br />
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+        <div id="exibeSabor">
+            <div id="exibeInternoSabor">
+
+                <br />
+
+                <asp:UpdatePanel ID="updConsulta" runat="server">
+                    <ContentTemplate>
+
+                        <asp:CheckBox ID="chkStatusInativo" runat="server" Text="Inativos" AutoPostBack="true" OnCheckedChanged="chkStatusInativo_CheckedChanged" />
+
+                        <asp:TextBox CssClass="TextBox" ID="txbNM_SaborConsultar" MaxLengh="50"
+                            placeholder="Buscar Sabor" runat="server" OnTextChanged="txbNM_SaborConsultar_TextChanged"
+                            AutoPostBack="true"></asp:TextBox>
+
+                        <asp:Button CssClass="Button" ID="btnConsultar" runat="server" Text="Consultar"
+                            OnClick="btnConsultar_Click" />
+
+                        <br />
+
+                        <div style="overflow: auto;">
+                            <asp:GridView CssClass="gvwExibe" ID="gvwExibe" runat="server" CellPadding="5" GridLines="Horizontal"
+                                AlternatingRowStyle-BackColor="WhiteSmoke" OnRowDataBound="gvwExibe_RowDataBound"
+                                OnSelectedIndexChanged="gvwExibe_SelectedIndexChanged" OnPageIndexChanging="gvwExibe_PageIndexChanging" AllowPaging="true" PageSize="10">
+                                <Columns>
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="lbSelecionar" runat="server" CausesValidation="False"
+                                                CommandName="Select" Style="display: none;"></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                                <HeaderStyle BackColor="WhiteSmoke" BorderStyle="Solid" BorderColor="Black" Font-Bold="True" />
+                            </asp:GridView>
+                        </div>
+
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+
             </div>
 
             <br />
-            <br />
-            <br />
-
-            <div id="exibeSabor">
-                <div id="exibeInternoSabor">
-
-                    <br />
-
-                    <asp:UpdatePanel ID="updConsulta" runat="server">
-                        <ContentTemplate>
-
-                            <asp:CheckBox ID="chkStatusInativo" runat="server" Text="Inativos" AutoPostBack="true" OnCheckedChanged="chkStatusInativo_CheckedChanged" />
-
-                            <asp:TextBox CssClass="TextBox" ID="txbNM_SaborConsultar" MaxLengh="50"
-                                placeholder="Buscar Sabor" runat="server" OnTextChanged="txbNM_SaborConsultar_TextChanged"
-                                AutoPostBack="true"></asp:TextBox>
-
-                            <asp:Button CssClass="Button" ID="btnConsultar" runat="server" Text="Consultar"
-                                OnClick="btnConsultar_Click" />
-
-                            <br />
-
-                            <div style="overflow: auto;">
-                                <asp:GridView CssClass="gvwExibe" ID="gvwExibe" runat="server" CellPadding="5" GridLines="Horizontal"
-                                    AlternatingRowStyle-BackColor="WhiteSmoke" OnRowDataBound="gvwExibe_RowDataBound"
-                                    OnSelectedIndexChanged="gvwExibe_SelectedIndexChanged" OnPageIndexChanging="gvwExibe_PageIndexChanging" AllowPaging="true" PageSize="10">
-                                    <Columns>
-                                        <asp:TemplateField>
-                                            <ItemTemplate>
-                                                <asp:LinkButton ID="lbSelecionar" runat="server" CausesValidation="False"
-                                                    CommandName="Select" Style="display: none;"></asp:LinkButton>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                    </Columns>
-                                    <HeaderStyle BackColor="WhiteSmoke" BorderStyle="Solid" BorderColor="Black" Font-Bold="True" />
-                                </asp:GridView>
-                            </div>
-
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-
-                </div>
-
-                <br />
-                <br />
-
-            </div>
-
             <br />
 
         </div>
+
+        <br />
+        <br />
+
     </form>
 </body>
 </html>

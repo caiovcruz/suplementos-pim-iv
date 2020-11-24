@@ -17,13 +17,21 @@ namespace SuplementosPIMIV.View
         {
             if (!IsPostBack)
             {
-                LimparCampos();
-                CarregarMovimentacoesEstoque();
-                CarregarProdutos();
-                CarregarTiposMovimentacao();
-                BloquearComponentesCadastro();
-                BloquearComponentesExibe();
-                lblNM_FuncionarioLogin.Text = Cache["NM_FuncionarioLogin"].ToString();
+                if (Session["ConnectionString"] != null)
+                {
+                    LimparCampos();
+                    CarregarMovimentacoesEstoque();
+                    CarregarProdutos();
+                    CarregarTiposMovimentacao();
+                    BloquearComponentesCadastro();
+                    BloquearComponentesExibe();
+
+                    lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
+                }
+                else
+                {
+                    Response.Redirect("FrmLogin.aspx");
+                }
             }
         }
 
@@ -34,7 +42,7 @@ namespace SuplementosPIMIV.View
             txbQTD_MovimentacaoEstoque.Text = "";
             ddlDS_MovimentacaoEstoque.SelectedIndex = 0;
             txbDT_MovimentacaoEstoque.Text = DateTime.Now.ToString();
-            lblDS_Mensagem.Text = "";           
+            lblDS_Mensagem.Text = "";
         }
 
         private void BloquearComponentesCadastro()

@@ -18,9 +18,17 @@ namespace SuplementosPIMIV.View
         {
             if (!IsPostBack)
             {
-                CarregarMeuLogin();
-                DesbloquearComponentes(false);
-                lblNM_FuncionarioLogin.Text = Cache["NM_FuncionarioLogin"].ToString();
+                if (Session["ConnectionString"] != null)
+                {
+                    CarregarMeuLogin();
+                    DesbloquearComponentes(false);
+
+                    lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
+                }
+                else
+                {
+                    Response.Redirect("FrmLogin.aspx");
+                }
             }
         }
 
@@ -34,7 +42,7 @@ namespace SuplementosPIMIV.View
         private void CarregarMeuLogin()
         {
             myControllerLogin = new ControllerLogin(Session["ConnectionString"].ToString());
-            myControllerLogin.GetLogin(Cache["ID_Login"].ToString());
+            myControllerLogin.GetLogin(Session["ID_Login"].ToString());
 
             // o que ocorreu?
             if (myControllerLogin.DS_Mensagem == "OK")
@@ -53,6 +61,7 @@ namespace SuplementosPIMIV.View
 
                 txbDS_SenhaMeuLogin.Visible = false;
                 txbDS_SenhaMeuLoginMascara.Visible = true;
+                txbDS_SenhaMeuLoginMascara.Enabled = false;
                 lbtnVisualizarSenha.Visible = true;
                 lbtnMascararSenha.Visible = false;
             }
@@ -86,7 +95,7 @@ namespace SuplementosPIMIV.View
                     }
                     else
                     {
-                        if (myControllerLogin.VerificarLoginCadastrado(Cache["ID_Login"].ToString(), Cache["ID_Funcionario"].ToString(), txbDS_UsuarioMeuLogin.Text.Trim()).Equals(""))
+                        if (myControllerLogin.VerificarLoginCadastrado(Session["ID_Login"].ToString(), Session["ID_Funcionario"].ToString(), txbDS_UsuarioMeuLogin.Text.Trim()).Equals(""))
                         {
                             if (myValidar.CampoPreenchido(txbDS_SenhaMeuLogin.Text.Trim()))
                             {
@@ -134,9 +143,9 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe login, carregar tela e alterar
                 myControllerLogin = new ControllerLogin(
-                    Convert.ToInt32(Cache["ID_Login"].ToString()),
-                    Convert.ToInt32(Cache["ID_Funcionario"].ToString()),
-                    Cache["DS_NivelAcesso"].ToString(),
+                    Convert.ToInt32(Session["ID_Login"].ToString()),
+                    Convert.ToInt32(Session["ID_Funcionario"].ToString()),
+                    Session["DS_NivelAcesso"].ToString(),
                     txbDS_UsuarioMeuLogin.Text.Trim(),
                     txbDS_SenhaMeuLogin.Text.Trim(),
                     Session["ConnectionString"].ToString());

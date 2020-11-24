@@ -18,16 +18,24 @@ namespace SuplementosPIMIV.View
         {
             if (!IsPostBack)
             {
-                LimparCampos();
-                CarregarFuncionarios();
-                CarregarSexo();
-                CarregarDatasNascimento();
-                CarregarCargos();
-                CarregarUFs();
-                CarregarFiltrosDeBusca();
-                BloquearComponentesCadastro();
-                BloquearComponentesExibe();
-                lblNM_FuncionarioLogin.Text = Cache["NM_FuncionarioLogin"].ToString();
+                if (Session["ConnectionString"] != null)
+                {
+                    LimparCampos();
+                    CarregarFuncionarios();
+                    CarregarSexo();
+                    CarregarDatasNascimento();
+                    CarregarCargos();
+                    CarregarUFs();
+                    CarregarFiltrosDeBusca();
+                    BloquearComponentesCadastro();
+                    BloquearComponentesExibe();
+
+                    lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
+                }
+                else
+                {
+                    Response.Redirect("FrmLogin.aspx");
+                }
             }
         }
 
@@ -97,10 +105,10 @@ namespace SuplementosPIMIV.View
         {
             ddlDiaNascimentoFuncionario.Items.Insert(0, "Dia");
 
-            for (int i = 1; i <= 31 ; i++)
+            for (int i = 1; i <= 31; i++)
             {
                 ddlDiaNascimentoFuncionario.Items.Insert(i, Convert.ToString(i));
-            }                    
+            }
 
             ddlMesNascimentoFuncionario.Items.Insert(0, "Mês");
             ddlMesNascimentoFuncionario.Items.Insert(1, "Janeiro");

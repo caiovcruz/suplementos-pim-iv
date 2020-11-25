@@ -16,12 +16,13 @@ namespace SuplementosPIMIV.View
         private ControllerEstoque myControllerEstoque;
         private ControllerVenda myControllerVenda;
         private ControllerItemVenda myControllerItemVenda;
+        private ControllerMovEstoque myControllerMovEstoque;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                if (Session["ConnectionString"] != null)
+                if (Session["ConnectionString"] != null && Session["NM_FuncionarioLogin"] != null)
                 {
                     LimparCamposCadastro();
                     BloquearComponentesCadastro();
@@ -52,6 +53,8 @@ namespace SuplementosPIMIV.View
             txbProduto.Text = "";
             txbPR_Produto.Text = "";
             txbQTD_Produto.Text = "";
+            lblDS_Mensagem.Text = "";
+            AlterarCorQTD_Produto(System.Drawing.Color.Black);
         }
 
         private void LimparCamposFinaliza()
@@ -105,6 +108,13 @@ namespace SuplementosPIMIV.View
             gvwExibe.DataBind();
         }
 
+        private void AlterarCorQTD_Produto(System.Drawing.Color color)
+        {
+            lblQTD_Produto.ForeColor = color;
+            txbQTD_Produto.ForeColor = color;
+            txbQTD_Produto.BorderColor = color;
+        }
+
         private void ConsultarEANProduto()
         {
             lblDS_Mensagem.Text = "";
@@ -144,8 +154,6 @@ namespace SuplementosPIMIV.View
                 mDs_Msg = " O código de barras deve estar preenchido.";
             }
 
-
-
             if (mDs_Msg == "")
             {
                 // tudo certinho
@@ -153,16 +161,34 @@ namespace SuplementosPIMIV.View
                 myControllerProduto = new ControllerProduto(Session["ConnectionString"].ToString());
                 myControllerProduto.Consultar(1, "PROD.NR_EAN = '" + txbNR_EAN.Text.Trim() + "' ");
 
-                txbID_Produto.Text = myControllerProduto.ID_Produto.ToString();
-                txbProduto.Text = myControllerProduto.NM_Produto;
-                txbPR_Produto.Text = myControllerProduto.PR_Venda.ToString("N2");
-
-                myControllerEstoque = new ControllerEstoque(Session["ConnectionString"].ToString());
-
-                if (myControllerEstoque.QuantidadeTotalEstoque(myControllerProduto.ID_Produto) <= 0)
+                if (!myControllerProduto.ID_Produto.Equals(0))
                 {
-                    txbQTD_Produto.Text = "ESGOTADO";
-                    txbQTD_Produto.ReadOnly = true;
+                    txbID_Produto.Text = myControllerProduto.ID_Produto.ToString();
+                    txbProduto.Text = myControllerProduto.NM_Produto;
+                    txbPR_Produto.Text = myControllerProduto.PR_Venda.ToString("N2");
+
+                    myControllerEstoque = new ControllerEstoque(Session["ConnectionString"].ToString());
+
+                    if (myControllerEstoque.QuantidadeTotalEstoque(myControllerProduto.ID_Produto) <= 0)
+                    {
+                        txbQTD_Produto.Text = "ESGOTADO";
+                        AlterarCorQTD_Produto(System.Drawing.Color.Red);
+                        txbQTD_Produto.ReadOnly = true;
+                    }
+                    else
+                    {
+                        txbQTD_Produto.Text = "";
+                        AlterarCorQTD_Produto(System.Drawing.Color.Black);
+                        txbQTD_Produto.ReadOnly = false;
+                    }
+
+                    btnLimpar.Enabled = true;
+                }
+                else
+                {
+                    AlterarCorQTD_Produto(System.Drawing.Color.Black);
+                    txbQTD_Produto.Text = "";
+                    lblDS_Mensagem.Text = "Produto inexistente ou inativo. ☞ Verifique o EAN ou Consulte o gerente! ☜";
                 }
             }
             else
@@ -350,6 +376,23 @@ namespace SuplementosPIMIV.View
                 // o que ocorreu?
                 if (myControllerVenda.DS_Mensagem == "OK")
                 {
+                    string nm_produtoErro = "";
+
+                    foreach (GridViewRow row in gvwExibe.Rows)
+                    {
+                        myControllerMovEstoque = new ControllerMovEstoque(
+                            Convert.ToInt32(row.Cells[2].Text),
+                            Convert.ToInt32(row.Cells[8].Text),
+                            "Saída",
+                            DateTime.Now,
+                            Session["ConnectionString"].ToString());
+
+                        if (myControllerMovEstoque.DS_Mensagem != "OK")
+                        {
+                            nm_produtoErro += "Produto ➯ | " + row.Cells[4].Text + " ➯ " + row.Cells[5].Text + " ➯ " + row.Cells[6].Text + " |. ";
+                        }
+                    }
+
                     // tudo certinho!
                     txbID_Venda.Text = "";
                     LimparCamposCadastro();
@@ -358,6 +401,14 @@ namespace SuplementosPIMIV.View
                     BloquearComponentesFinaliza();
                     LimparMensagens();
                     lblDS_MensagemFinal.Text = "Venda realizada com sucesso!";
+
+                    if (nm_produtoErro != "")
+                    {
+                        lblDS_MensagemFinal.Text += 
+                            " #Erro ao atualizar o estoque dos seguintes produtos: " + 
+                            nm_produtoErro +
+                            " ☞ Informe o gerente! ☜";
+                    }
                 }
                 else
                 {

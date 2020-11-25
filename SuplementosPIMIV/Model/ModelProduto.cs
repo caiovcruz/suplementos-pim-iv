@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
@@ -295,6 +296,42 @@ namespace SuplementosPIMIV.Model
                 sqlCommand.Dispose();
                 sqlConnection.Close();
             }
+        }
+
+        public DataTable ListarProdutos(int status)
+        {
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("PROD.ID_Produto, ");
+                stringSQL.Append("CONCAT(PROD.NM_Produto, ' – ', MAR.NM_Marca, ' – ', SAB.NM_Sabor) AS NM_Produto ");
+                stringSQL.Append("FROM TB_Produto AS PROD ");
+                stringSQL.Append("INNER JOIN TB_Marca AS MAR ON PROD.ID_Marca = MAR.ID_Marca ");
+                stringSQL.Append("INNER JOIN TB_Sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor ");
+                stringSQL.Append("WHERE PROD.Ativo = " + status + " ");
+                stringSQL.Append("ORDER BY PROD.ID_Produto DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                sqlDataReader = sqlCommand.ExecuteReader();
+                dataTable.Load(sqlDataReader);
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+
+            return dataTable;
         }
 
         public DataTable Exibir(int status)

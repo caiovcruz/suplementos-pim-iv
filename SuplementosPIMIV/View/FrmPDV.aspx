@@ -89,7 +89,7 @@
 
                             <div class="colunasVendaProduto" id="colunaVendaProduto3">
 
-                                <asp:Label CssClass="Label" runat="server" Width="100%" Text="Quantidade"></asp:Label>
+                                <asp:Label CssClass="Label" ID="lblQTD_Produto" runat="server" Width="100%" Text="Quantidade"></asp:Label>
                                 <asp:TextBox CssClass="TextBox" ID="txbQTD_Produto" runat="server" MaxLengh="10"
                                     placeholder="Quantidade" OnTextChanged="txbQTD_Produto_TextChanged" AutoPostBack="true"></asp:TextBox>
 

@@ -17,7 +17,7 @@ namespace SuplementosPIMIV.View
         {
             if (!IsPostBack)
             {
-                if (Session["ConnectionString"] != null)
+                if (Session["ConnectionString"] != null && Session["NM_FuncionarioLogin"] != null)
                 {
                     LimparCampos();
                     CarregarMovimentacoesEstoque();
@@ -76,7 +76,7 @@ namespace SuplementosPIMIV.View
         {
             myControllerProduto = new ControllerProduto(Session["ConnectionString"].ToString());
 
-            ddlID_ProdutoMovimentacaoEstoque.DataSource = myControllerProduto.Exibir(1);
+            ddlID_ProdutoMovimentacaoEstoque.DataSource = myControllerProduto.ListarProdutos(1);
             ddlID_ProdutoMovimentacaoEstoque.DataTextField = "NM_Produto";
             ddlID_ProdutoMovimentacaoEstoque.DataValueField = "ID_Produto";
             ddlID_ProdutoMovimentacaoEstoque.DataBind();
@@ -248,10 +248,12 @@ namespace SuplementosPIMIV.View
                 e.Row.Cells[1].Text = "#";
                 e.Row.Cells[2].Visible = false;
                 e.Row.Cells[3].Text = "Produto";
-                e.Row.Cells[4].Text = "Quantidade";
-                e.Row.Cells[5].Text = "Movimentação";
-                e.Row.Cells[6].Text = "Data";
-                e.Row.Cells[7].Text = "Estoque total";
+                e.Row.Cells[4].Text = "Marca";
+                e.Row.Cells[5].Text = "Sabor";
+                e.Row.Cells[6].Text = "Quantidade";
+                e.Row.Cells[7].Text = "Movimentação";
+                e.Row.Cells[8].Text = "Data";
+                e.Row.Cells[9].Text = "Estoque total";
             }
         }
 

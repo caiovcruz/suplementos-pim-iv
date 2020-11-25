@@ -14,7 +14,7 @@ namespace SuplementosPIMIV.View
         {
             if (!IsPostBack)
             {
-                if (Session["ConnectionString"] != null)
+                if (Session["ConnectionString"] != null && Session["NM_FuncionarioLogin"] != null)
                 {
                     LimparCampos();
                     CarregarCategorias();

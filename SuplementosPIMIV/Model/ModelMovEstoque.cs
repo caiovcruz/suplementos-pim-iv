@@ -103,8 +103,8 @@ namespace SuplementosPIMIV.Model
                         sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
                         result = sqlCommand.ExecuteNonQuery();
 
-                        DS_Mensagem += result > 0 ? " Movimentação excluída, por favor cadastre novamente." : 
-                            " Erro ao excluir movimentação, por favor exclua manualmente e recadastre-a.";
+                        DS_Mensagem += result > 0 ? " Movimentação de estoque excluída, por favor cadastre novamente." : 
+                            " Erro ao excluir movimentação de estoque, por favor exclua manualmente e recadastre-a.";
                     }
                 }
             }
@@ -162,12 +162,16 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("MOV.ID_MovimentacaoEstoque, ");
                 stringSQL.Append("MOV.ID_Produto, ");
                 stringSQL.Append("PROD.NM_Produto, ");
+                stringSQL.Append("MAR.NM_Marca, ");
+                stringSQL.Append("SAB.NM_Sabor, ");
                 stringSQL.Append("MOV.QTD_MovimentacaoEstoque, ");
                 stringSQL.Append("MOV.DS_MovimentacaoEstoque, ");
                 stringSQL.Append("MOV.DT_MovimentacaoEstoque, ");
                 stringSQL.Append("MOV.QTD_Estoque ");
                 stringSQL.Append("FROM TB_MovimentacaoEstoque AS MOV ");
                 stringSQL.Append("INNER JOIN TB_Produto AS PROD ON MOV.ID_Produto = PROD.ID_Produto ");
+                stringSQL.Append("INNER JOIN TB_Marca AS MAR ON PROD.ID_Marca = MAR.ID_Marca ");
+                stringSQL.Append("INNER JOIN TB_Sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor ");
                 stringSQL.Append("WHERE PROD.NM_Produto LIKE '" + texto + "' + '%' ");
                 stringSQL.Append("ORDER BY MOV.ID_MovimentacaoEstoque DESC");
 
@@ -202,12 +206,16 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("MOV.ID_MovimentacaoEstoque, ");
                 stringSQL.Append("MOV.ID_Produto, ");
                 stringSQL.Append("PROD.NM_Produto, ");
+                stringSQL.Append("MAR.NM_Marca, ");
+                stringSQL.Append("SAB.NM_Sabor, ");
                 stringSQL.Append("MOV.QTD_MovimentacaoEstoque, ");
                 stringSQL.Append("MOV.DS_MovimentacaoEstoque, ");
                 stringSQL.Append("MOV.DT_MovimentacaoEstoque, ");
                 stringSQL.Append("MOV.QTD_Estoque ");
                 stringSQL.Append("FROM TB_MovimentacaoEstoque AS MOV ");
                 stringSQL.Append("INNER JOIN TB_Produto AS PROD ON MOV.ID_Produto = PROD.ID_Produto ");
+                stringSQL.Append("INNER JOIN TB_Marca AS MAR ON PROD.ID_Marca = MAR.ID_Marca ");
+                stringSQL.Append("INNER JOIN TB_Sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor ");
                 stringSQL.Append("ORDER BY MOV.ID_MovimentacaoEstoque DESC");
 
                 sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);

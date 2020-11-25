@@ -148,6 +148,10 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
         transform: translateY(2px);
     }
 
+    #btnAcessar:focus {
+        outline: none;
+    }
+
 #cadastroProduto, #exibeProduto {
     background-color: #FFFFFF;
     border-radius: 10px;
@@ -267,6 +271,10 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
         transform: translateY(2px);
     }
 
+    #btnIncluir:focus {
+        outline: none;
+    }
+
 #btnAlterar {
     background-color: #efefef;
     opacity: 0.5
@@ -290,6 +298,10 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
     #btnAlterar:active {
         box-shadow: 0 5px #666;
         transform: translateY(2px);
+    }
+
+    #btnAlterar:focus {
+        outline: none;
     }
 
 #btnExcluir {
@@ -318,6 +330,10 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
         transform: translateY(2px);
     }
 
+    #btnExcluir:focus {
+        outline: none;
+    }
+
 #btnAtivarStatus {
     background-color: #efefef;
     opacity: 0.5
@@ -341,6 +357,10 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
     #btnAtivarStatus:active {
         box-shadow: 0 5px #666;
         transform: translateY(2px);
+    }
+
+    #btnAtivarStatus:focus {
+        outline: none;
     }
 
 #btnLimpar {
@@ -368,6 +388,10 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
         transform: translateY(2px);
     }
 
+    #btnLimpar:focus {
+        outline: none;
+    }
+
 #btnConsultar {
     background-color: #efefef;
     opacity: 0.5
@@ -391,6 +415,10 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
     #btnConsultar:active {
         box-shadow: 0 5px #666;
         transform: translateY(2px);
+    }
+
+    #btnConsultar:focus {
+        outline: none;
     }
 
 #btnSalvar {
@@ -419,6 +447,10 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
         transform: translateY(2px);
     }
 
+    #btnSalvar:focus {
+        outline: none;
+    }
+
 #btnCancelar {
     color: #FFFFFF;
     background-color: #ff2626;
@@ -443,6 +475,10 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
     #btnCancelar:active {
         box-shadow: 0 5px #666;
         transform: translateY(2px);
+    }
+
+    #btnCancelar:focus {
+        outline: none;
     }
 
 #btnIncluir, #btnAlterar, #btnExcluir, #btnAtivarStatus, #btnSalvar {

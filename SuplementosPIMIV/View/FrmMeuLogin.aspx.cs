@@ -24,6 +24,13 @@ namespace SuplementosPIMIV.View
                     DesbloquearComponentes(false);
 
                     lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
+
+                    if (!Session["DS_NivelAcesso"].ToString().Equals("Gerente"))
+                    {
+                        lbtnRelatorios.Visible = false;
+                        lbtnDropFuncionarios.Visible = false;
+                        lbtnDropProdutos.Visible = false;
+                    }
                 }
                 else
                 {

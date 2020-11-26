@@ -121,6 +121,10 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
     text-align: left;
 }
 
+div#InternoLogin #txbDS_Usuario, div#InternoLogin #txbDS_Senha {
+    width: 100%;
+} 
+
 #btnAcessar {
     width: 100%;
     background-color: #32CD32;
@@ -182,6 +186,13 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
     margin-left: 15px;
 }
 
+#linhaProduto1 {
+    width: 100%;
+    position: inherit;
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+
 .gvwExibe {
     width: 95%;
     text-align: center;
@@ -214,17 +225,13 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
     margin: 0px 15px 0px 15px;
 }
 
-#txbNM_Produto {
-    width: 67%;
+#txbNM_Produto, #ddlID_MarcaProduto {
+    width: 100%;
 }
 
 #txbDS_Produto {
     width: 100%;
     height: 120px;
-}
-
-#ddlID_Marca {
-    width: 32%;
 }
 
 #ddlID_CategoriaProduto, #ddlID_SubcategoriaProduto, #ddlID_SaborProduto {
@@ -791,7 +798,7 @@ div#cadInternoMeuLogin #btnSalvar {
     padding-bottom: 140px;
 }
 
-#txbDS_UsuarioMeuLogin, #txbDS_SenhaMeuLogin {
+#txbDS_UsuarioMeuLogin, #txbDS_SenhaMeuLogin, #txbDS_SenhaMeuLoginMascara {
     width: 100%;
 }
 
@@ -847,4 +854,40 @@ div#cadInternoMeuLogin #btnSalvar {
 
 div#exibeInternoVendaProduto #gvwExibe {
     width: 100%;
+}
+
+#exibeRelatorio {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border-color: gainsboro;
+    box-shadow: 5px 10px 10px #efefef;
+    margin: 0px 10% 0px 10%;
+}
+
+#exibeInternoRelatorio {
+    margin: 0px 5% 0px 10%;
+}
+
+#internoColunasRelatorio {
+    width: 100%;
+    position: inherit;
+    display: grid;
+    grid-template-columns: 40% 40% 20%;
+    text-align: center;
+}
+
+#ddlDiaRelatorioInicio, #ddlDiaRelatorioFinal {
+    width: 20%;
+}
+
+#ddlMesRelatorioInicio, #ddlMesRelatorioFinal {
+    width: 45%;
+}
+
+#ddlAnoRelatorioInicio, #ddlAnoRelatorioFinal {
+    width: 32%;
+}
+
+div#internoColunasRelatorio #btnConsultar {
+    margin-top: 20px;
 }

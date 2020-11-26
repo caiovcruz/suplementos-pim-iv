@@ -11,17 +11,17 @@ namespace SuplementosPIMIV.View
 {
 
 
-    public partial class FrmCategoria
+    public partial class FrmRelatorio
     {
 
         /// <summary>
-        /// Controle formCategoria.
+        /// Controle formRelatorio.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm formCategoria;
+        protected global::System.Web.UI.HtmlControls.HtmlForm formRelatorio;
 
         /// <summary>
         /// Controle scpManager.
@@ -78,96 +78,6 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.LinkButton lbtnRelatorios;
 
         /// <summary>
-        /// Controle updCadastro.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel updCadastro;
-
-        /// <summary>
-        /// Controle txbID_Categoria.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbID_Categoria;
-
-        /// <summary>
-        /// Controle txbNM_Categoria.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbNM_Categoria;
-
-        /// <summary>
-        /// Controle txbDS_Categoria.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbDS_Categoria;
-
-        /// <summary>
-        /// Controle lblDS_Mensagem.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDS_Mensagem;
-
-        /// <summary>
-        /// Controle btnLimpar.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLimpar;
-
-        /// <summary>
-        /// Controle btnIncluir.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnIncluir;
-
-        /// <summary>
-        /// Controle btnAlterar.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAlterar;
-
-        /// <summary>
-        /// Controle btnExcluir.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnExcluir;
-
-        /// <summary>
-        /// Controle btnAtivarStatus.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAtivarStatus;
-
-        /// <summary>
         /// Controle updConsulta.
         /// </summary>
         /// <remarks>
@@ -177,22 +87,58 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.UpdatePanel updConsulta;
 
         /// <summary>
-        /// Controle chkStatusInativo.
+        /// Controle ddlDiaRelatorioInicio.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkStatusInativo;
+        protected global::System.Web.UI.WebControls.DropDownList ddlDiaRelatorioInicio;
 
         /// <summary>
-        /// Controle txbNM_CategoriaConsultar.
+        /// Controle ddlMesRelatorioInicio.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbNM_CategoriaConsultar;
+        protected global::System.Web.UI.WebControls.DropDownList ddlMesRelatorioInicio;
+
+        /// <summary>
+        /// Controle ddlAnoRelatorioInicio.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAnoRelatorioInicio;
+
+        /// <summary>
+        /// Controle ddlDiaRelatorioFinal.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlDiaRelatorioFinal;
+
+        /// <summary>
+        /// Controle ddlMesRelatorioFinal.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlMesRelatorioFinal;
+
+        /// <summary>
+        /// Controle ddlAnoRelatorioFinal.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAnoRelatorioFinal;
 
         /// <summary>
         /// Controle btnConsultar.

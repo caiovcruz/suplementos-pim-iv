@@ -19,14 +19,21 @@ namespace SuplementosPIMIV.View
             {
                 if (Session["ConnectionString"] != null && Session["NM_FuncionarioLogin"] != null)
                 {
-                    LimparCampos();
-                    CarregarMovimentacoesEstoque();
-                    CarregarProdutos();
-                    CarregarTiposMovimentacao();
-                    BloquearComponentesCadastro();
-                    BloquearComponentesExibe();
+                    if (Session["DS_NivelAcesso"].ToString().Equals("Gerente"))
+                    {
+                        LimparCampos();
+                        CarregarMovimentacoesEstoque();
+                        CarregarProdutos();
+                        CarregarTiposMovimentacao();
+                        BloquearComponentesCadastro();
+                        BloquearComponentesExibe();
 
-                    lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
+                        lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
+                    }
+                    else
+                    {
+                        Response.Redirect("FrmPDV.aspx");
+                    }
                 }
                 else
                 {
@@ -90,6 +97,7 @@ namespace SuplementosPIMIV.View
             ddlDS_MovimentacaoEstoque.Items.Insert(0, "Movimentação");
             ddlDS_MovimentacaoEstoque.Items.Insert(1, "Entrada");
             ddlDS_MovimentacaoEstoque.Items.Insert(2, "Saída");
+            ddlDS_MovimentacaoEstoque.Items.Insert(3, "Venda");
 
             ddlDS_MovimentacaoEstoque.SelectedIndex = 0;
         }
@@ -128,6 +136,11 @@ namespace SuplementosPIMIV.View
                     if (ddlDS_MovimentacaoEstoque.SelectedValue.Equals("Saída") && qtd_movimentacaoEstoque > qtd_estoque)
                     {
                         mDs_Msg += " Quantidade ultrapassada para movimentação de saída [ Quantidade máxima disponível: " + qtd_estoque + " ].";
+                    }
+
+                    if (ddlDS_MovimentacaoEstoque.SelectedValue.Equals("Venda") && qtd_movimentacaoEstoque > qtd_estoque)
+                    {
+                        mDs_Msg += " Quantidade ultrapassada para movimentação de venda [ Quantidade máxima disponível: " + qtd_estoque + " ].";
                     }
                 }
             }
@@ -273,19 +286,19 @@ namespace SuplementosPIMIV.View
                 ddlID_ProdutoMovimentacaoEstoque.SelectedIndex = 0;
             }
 
-            txbQTD_MovimentacaoEstoque.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[4].Text.Trim());
+            txbQTD_MovimentacaoEstoque.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[6].Text.Trim());
 
             try
             {
-                ddlDS_MovimentacaoEstoque.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[5].Text.Trim());
+                ddlDS_MovimentacaoEstoque.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[7].Text.Trim());
             }
             catch (Exception)
             {
-                lblDS_Mensagem.Text += " Movimentação [ " + gvwExibe.SelectedRow.Cells[5].Text.Trim() + " ] inativa.";
+                lblDS_Mensagem.Text += " Movimentação [ " + gvwExibe.SelectedRow.Cells[7].Text.Trim() + " ] inativa.";
                 ddlDS_MovimentacaoEstoque.SelectedIndex = 0;
             }
 
-            txbDT_MovimentacaoEstoque.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[6].Text.Trim());
+            txbDT_MovimentacaoEstoque.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[8].Text.Trim());
 
             btnIncluir.Enabled = false;
             btnExcluir.Enabled = true;

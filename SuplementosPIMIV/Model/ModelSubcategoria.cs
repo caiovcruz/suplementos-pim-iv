@@ -269,6 +269,46 @@ namespace SuplementosPIMIV.Model
             return dataTable;
         }
 
+        public DataTable Filtrar(int status, int id_categoria)
+        {
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("SUB.ID_Subcategoria, ");
+                stringSQL.Append("SUB.NM_Subcategoria, ");
+                stringSQL.Append("SUB.ID_Categoria, ");
+                stringSQL.Append("CAT.NM_Categoria, ");
+                stringSQL.Append("SUB.DS_Subcategoria, ");
+                stringSQL.Append("SUB.Ativo ");
+                stringSQL.Append("FROM TB_Subcategoria AS SUB ");
+                stringSQL.Append("INNER JOIN TB_Categoria AS CAT ON SUB.ID_Categoria = CAT.ID_Categoria ");
+                stringSQL.Append("WHERE SUB.Ativo = " + status + " ");
+                stringSQL.Append("AND SUB.ID_Categoria = " + id_categoria + " ");
+                stringSQL.Append("ORDER BY SUB.ID_Subcategoria DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                sqlDataReader = sqlCommand.ExecuteReader();
+                dataTable.Load(sqlDataReader);
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+
+            return dataTable;
+        }
+
         public string VerificarSubcategoriaCadastrada(string id_subcategoria, string nm_subcategoria, string id_categoria)
         {
             DS_Mensagem = "";

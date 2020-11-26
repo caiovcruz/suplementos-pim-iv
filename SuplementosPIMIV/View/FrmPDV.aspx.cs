@@ -31,6 +31,13 @@ namespace SuplementosPIMIV.View
                     LimparMensagens();
 
                     lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
+
+                    if (!Session["DS_NivelAcesso"].ToString().Equals("Gerente"))
+                    {
+                        lbtnRelatorios.Visible = false;
+                        lbtnDropFuncionarios.Visible = false;
+                        lbtnDropProdutos.Visible = false;
+                    }
                 }
                 else
                 {
@@ -383,7 +390,7 @@ namespace SuplementosPIMIV.View
                         myControllerMovEstoque = new ControllerMovEstoque(
                             Convert.ToInt32(row.Cells[2].Text),
                             Convert.ToInt32(row.Cells[8].Text),
-                            "Saída",
+                            "Venda",
                             DateTime.Now,
                             Session["ConnectionString"].ToString());
 

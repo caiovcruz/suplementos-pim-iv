@@ -20,17 +20,24 @@ namespace SuplementosPIMIV.View
             {
                 if (Session["ConnectionString"] != null && Session["NM_FuncionarioLogin"] != null)
                 {
-                    LimparCampos();
-                    CarregarFuncionarios();
-                    CarregarSexo();
-                    CarregarDatasNascimento();
-                    CarregarCargos();
-                    CarregarUFs();
-                    CarregarFiltrosDeBusca();
-                    BloquearComponentesCadastro();
-                    BloquearComponentesExibe();
+                    if (Session["DS_NivelAcesso"].ToString().Equals("Gerente"))
+                    {
+                        LimparCampos();
+                        CarregarFuncionarios();
+                        CarregarSexo();
+                        CarregarDatasNascimento();
+                        CarregarCargos();
+                        CarregarUFs();
+                        CarregarFiltrosDeBusca();
+                        BloquearComponentesCadastro();
+                        BloquearComponentesExibe();
 
-                    lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
+                        lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
+                    }
+                    else
+                    {
+                        Response.Redirect("FrmPDV.aspx");
+                    }
                 }
                 else
                 {

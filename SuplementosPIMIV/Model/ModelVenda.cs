@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -154,6 +155,44 @@ namespace SuplementosPIMIV.Model
                 sqlCommand.Dispose();
                 sqlConnection.Close();
             }
+        }
+
+        public DataTable Exibir()
+        {
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("VEN.ID_Venda, ");
+                stringSQL.Append("FUN.NM_Funcionario, ");
+                stringSQL.Append("VEN.DT_Venda, ");
+                stringSQL.Append("VEN.DS_TipoPagamento, ");
+                stringSQL.Append("VEN.NR_Parcelas, ");
+                stringSQL.Append("FORMAT(VEN.VL_Total, 'N2') AS VL_Total ");
+                stringSQL.Append("FROM TB_Venda AS VEN ");
+                stringSQL.Append("INNER JOIN TB_Funcionario AS FUN ON VEN.ID_Funcionario = FUN.ID_Funcionario ");
+                stringSQL.Append("ORDER BY VEN.ID_Venda DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                sqlDataReader = sqlCommand.ExecuteReader();
+                dataTable.Load(sqlDataReader);
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+
+            return dataTable;
         }
     }
 }

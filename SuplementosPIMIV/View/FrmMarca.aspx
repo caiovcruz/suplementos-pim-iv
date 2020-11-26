@@ -47,6 +47,8 @@
                     <a href="FrmCadastroLogin.aspx">Cadastro de Login</a>
                 </div>
             </div>
+            <asp:LinkButton CssClass="dropbtn" ID="lbtnRelatorios" Font-Underline="false" runat="server" PostBackUrl="~/View/FrmRelatorio.aspx">
+                   <i class="fas fa-chart-line fa-sm" style="margin-right: 2px;"></i> Relatórios </asp:LinkButton>
         </div>
 
         <div id="cadastroMarca">

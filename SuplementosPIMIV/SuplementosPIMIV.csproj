@@ -129,6 +129,7 @@
     <Content Include="View\FrmPDV.aspx" />
     <Content Include="View\FrmProduto.aspx" />
     <Content Include="Assets\css\styles.css" />
+    <Content Include="View\FrmRelatorio.aspx" />
     <Content Include="View\FrmSabor.aspx" />
     <Content Include="View\FrmSubcategoria.aspx" />
     <Content Include="Web.config" />
@@ -220,6 +221,13 @@
     </Compile>
     <Compile Include="View\FrmProduto.aspx.designer.cs">
       <DependentUpon>FrmProduto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\FrmRelatorio.aspx.cs">
+      <DependentUpon>FrmRelatorio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\FrmRelatorio.aspx.designer.cs">
+      <DependentUpon>FrmRelatorio.aspx</DependentUpon>
     </Compile>
     <Compile Include="View\FrmSabor.aspx.cs">
       <DependentUpon>FrmSabor.aspx</DependentUpon>

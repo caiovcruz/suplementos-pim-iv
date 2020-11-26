@@ -47,6 +47,8 @@
                     <a href="FrmCadastroLogin.aspx">Cadastro de Login</a>
                 </div>
             </div>
+            <asp:LinkButton CssClass="dropbtn" ID="lbtnRelatorios" Font-Underline="false" runat="server" PostBackUrl="~/View/FrmRelatorio.aspx">
+                   <i class="fas fa-chart-line fa-sm" style="margin-right: 2px;"></i> Relatórios </asp:LinkButton>
         </div>
 
         <div id="cadastroProduto">
@@ -73,15 +75,26 @@
 
                             <div class="colunasProduto">
 
-                                <asp:Label CssClass="Label" runat="server" Width="67%" Text="Nome"></asp:Label>
-                                <asp:Label CssClass="Label" runat="server" Width="30%" Text="Marca"></asp:Label>
+                                <div class="colunasProduto" id="linhaProduto1">
 
-                                <asp:TextBox CssClass="TextBox" ID="txbNM_Produto" runat="server" MaxLengh="50"
-                                    placeholder="Nome do produto" OnTextChanged="txbNM_Produto_TextChanged" AutoPostBack="true"></asp:TextBox>
+                                    <div>
 
-                                <asp:DropDownList CssClass="DropDownList" ID="ddlID_MarcaProduto" runat="server"
-                                    OnSelectedIndexChanged="ddlID_MarcaProduto_SelectedIndexChanged" AutoPostBack="true">
-                                </asp:DropDownList>
+                                        <asp:Label CssClass="Label" runat="server" Width="100%" Text="Nome"></asp:Label>
+                                        <asp:TextBox CssClass="TextBox" ID="txbNM_Produto" runat="server" MaxLengh="50"
+                                            placeholder="Nome do produto" OnTextChanged="txbNM_Produto_TextChanged" AutoPostBack="true"></asp:TextBox>
+
+                                    </div>
+
+                                    <div class="coluna">
+
+                                        <asp:Label CssClass="Label" runat="server" Width="100%" Text="Marca"></asp:Label>
+                                        <asp:DropDownList CssClass="DropDownList" ID="ddlID_MarcaProduto" runat="server"
+                                            OnSelectedIndexChanged="ddlID_MarcaProduto_SelectedIndexChanged" AutoPostBack="true">
+                                        </asp:DropDownList>
+
+                                    </div>
+
+                                </div>
 
                                 <br />
 

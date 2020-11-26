@@ -22,17 +22,23 @@ namespace SuplementosPIMIV.View
             {
                 if (Session["ConnectionString"] != null && Session["NM_FuncionarioLogin"] != null)
                 {
-                    LimparCampos();
-                    CarregarProdutos();
-                    CarregarMarcas();
-                    CarregarCategorias();
-                    CarregarSubcategorias();
-                    CarregarSabores();
-                    CarregarFiltrosDeBusca();
-                    BloquearComponentesCadastro();
-                    BloquearComponentesExibe();
+                    if (Session["DS_NivelAcesso"].ToString().Equals("Gerente"))
+                    {
+                        LimparCampos();
+                        CarregarProdutos();
+                        CarregarMarcas();
+                        CarregarCategorias();
+                        CarregarSabores();
+                        CarregarFiltrosDeBusca();
+                        BloquearComponentesCadastro();
+                        BloquearComponentesExibe();
 
-                    lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
+                        lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
+                    }
+                    else
+                    {
+                        Response.Redirect("FrmPDV.aspx");
+                    }
                 }
                 else
                 {
@@ -116,7 +122,7 @@ namespace SuplementosPIMIV.View
         {
             myControllerSubcategoria = new ControllerSubcategoria(Session["ConnectionString"].ToString());
 
-            ddlID_SubcategoriaProduto.DataSource = myControllerSubcategoria.Exibir(1);
+            ddlID_SubcategoriaProduto.DataSource = myControllerSubcategoria.Filtrar(1, Convert.ToInt32(ddlID_CategoriaProduto.SelectedValue));
             ddlID_SubcategoriaProduto.DataTextField = "NM_Subcategoria";
             ddlID_SubcategoriaProduto.DataValueField = "ID_Subcategoria";
             ddlID_SubcategoriaProduto.DataBind();
@@ -674,6 +680,7 @@ namespace SuplementosPIMIV.View
             IncludeFields();
 
             ddlID_SubcategoriaProduto.Enabled = ddlID_CategoriaProduto.SelectedIndex != 0;
+            CarregarSubcategorias();
             ddlID_SubcategoriaProduto.Focus();
         }
 

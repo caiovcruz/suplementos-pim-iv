@@ -404,7 +404,7 @@ namespace SuplementosPIMIV.View
             }
             catch (Exception)
             {
-                lblDS_Mensagem.Text += " Funcionário [ " + gvwExibe.SelectedRow.Cells[2].Text.Trim() + " ] inativo.";
+                lblDS_Mensagem.Text += " Funcionário [ " + gvwExibe.SelectedRow.Cells[3].Text.Trim() + " ] inativo.";
                 ddlID_Funcionario.SelectedIndex = 0;
             }
 

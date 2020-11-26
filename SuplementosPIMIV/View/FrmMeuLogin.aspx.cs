@@ -16,9 +16,10 @@ namespace SuplementosPIMIV.View
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+
+            if (Session["ConnectionString"] != null && Session["NM_FuncionarioLogin"] != null)
             {
-                if (Session["ConnectionString"] != null && Session["NM_FuncionarioLogin"] != null)
+                if (!IsPostBack)
                 {
                     CarregarMeuLogin();
                     DesbloquearComponentes(false);
@@ -32,10 +33,10 @@ namespace SuplementosPIMIV.View
                         lbtnDropProdutos.Visible = false;
                     }
                 }
-                else
-                {
-                    Response.Redirect("FrmLogin.aspx");
-                }
+            }
+            else
+            {
+                Response.Redirect("FrmLogin.aspx");
             }
         }
 

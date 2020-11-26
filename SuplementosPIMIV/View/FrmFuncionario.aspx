@@ -24,10 +24,17 @@
 
         <!-- Menu -------------------------------------- -->
         <div class="navbar">
-            <asp:LinkButton CssClass="dropbtn" ID="lbtnMeuLogin" Font-Underline="false" runat="server" PostBackUrl="~/View/FrmMeuLogin.aspx">
-                <i class="fas fa-user-circle fa-lg" style="margin-right: 2px;"></i>
-                <asp:Label ID="lblNM_FuncionarioLogin" runat="server"></asp:Label>
-            </asp:LinkButton>
+            <div class="dropdown">
+                <asp:LinkButton CssClass="dropbtn" ID="lbtnMeuLogin" Font-Underline="false" runat="server" PostBackUrl="~/View/FrmMeuLogin.aspx">
+                    <i class="fas fa-user-circle fa-lg" style="margin-right: 2px;"></i>
+                    <asp:Label ID="lblNM_FuncionarioLogin" runat="server"></asp:Label>
+                </asp:LinkButton>
+                <div class="dropdown-content">
+                    <a href="FrmMeuLogin.aspx">Meu Login</a>
+                    <asp:LinkButton ID="lbtnSair" Font-Underline="false" runat="server" PostBackUrl="~/View/FrmLogin.aspx">
+                   <i class="fas fa-sign-out-alt fa-lg" style="margin-right: 2px;"></i>Sair</asp:LinkButton>
+                </div>
+            </div>
             <a href="FrmPDV.aspx"><i class="fas fa-store-alt" style="margin-right: 5px;"></i>PDV</a>
             <div class="dropdown">
                 <asp:LinkButton CssClass="dropbtn" ID="lbtnDropProdutos" Font-Underline="false" runat="server">

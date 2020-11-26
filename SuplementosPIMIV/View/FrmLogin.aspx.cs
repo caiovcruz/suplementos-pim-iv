@@ -16,6 +16,10 @@ namespace SuplementosPIMIV.View
             {
                 // ConnectionString
                 Session["ConnectionString"] = "Server=DRACCON\\SQLEXPRESS;Database=DB_Suplementos_PDV;Trusted_Connection=True;";
+                Session["ID_Login"] = null;
+                Session["ID_Funcionario"] = null;
+                Session["DS_NivelAcesso"] = null;
+                Session["NM_FuncionarioLogin"] = null;
 
                 txbDS_Usuario.Focus();
             }
@@ -56,20 +60,27 @@ namespace SuplementosPIMIV.View
 
             if (mDs_Msg == "")
             {
-                myControllerLogin = new ControllerLogin(mDs_Usuario, mDs_Senha, Session["ConnectionString"].ToString());
+                myControllerLogin = new ControllerLogin(mDs_Usuario, Session["ConnectionString"].ToString());
                 mDs_Msg = myControllerLogin.Acessar();
 
                 if (mDs_Msg == "OK")
                 {
-                    LimparCampos();
-                    lblDS_Mensagem.Text = "";
+                    if (BCrypt.Net.BCrypt.Verify(mDs_Senha, myControllerLogin.DS_Senha))
+                    {
+                        LimparCampos();
+                        lblDS_Mensagem.Text = "";
 
-                    Session["ID_Login"] = myControllerLogin.ID_Login;
-                    Session["ID_Funcionario"] = myControllerLogin.ID_Funcionario;
-                    Session["DS_NivelAcesso"] = myControllerLogin.DS_NivelAcesso;
-                    Session["NM_FuncionarioLogin"] = myControllerLogin.NM_FuncionarioLogin;
+                        Session["ID_Login"] = myControllerLogin.ID_Login;
+                        Session["ID_Funcionario"] = myControllerLogin.ID_Funcionario;
+                        Session["DS_NivelAcesso"] = myControllerLogin.DS_NivelAcesso;
+                        Session["NM_FuncionarioLogin"] = myControllerLogin.NM_FuncionarioLogin;
 
-                    Response.Redirect("FrmPDV.aspx");
+                        Response.Redirect("FrmPDV.aspx");
+                    }
+                    else
+                    {
+                        lblDS_Mensagem.Text = "Senha incorreta!";
+                    }
                 }
                 else
                 {

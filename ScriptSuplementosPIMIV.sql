@@ -44,7 +44,7 @@ CREATE TABLE TB_Login
 	ID_Funcionario INT NOT NULL,
 	DS_NivelAcesso VARCHAR(10) NOT NULL,
 	DS_Usuario VARCHAR(20) NOT NULL,
-	DS_Senha VARCHAR(20) NOT NULL,
+	DS_Senha VARCHAR(100) NOT NULL,
 	Ativo BIT NOT NULL,
 	FOREIGN KEY (ID_Funcionario) REFERENCES TB_Funcionario(ID_Funcionario)
 );

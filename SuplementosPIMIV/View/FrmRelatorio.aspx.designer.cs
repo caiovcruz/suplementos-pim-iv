@@ -51,6 +51,15 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.Label lblNM_FuncionarioLogin;
 
         /// <summary>
+        /// Controle lbtnSair.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbtnSair;
+
+        /// <summary>
         /// Controle lbtnDropProdutos.
         /// </summary>
         /// <remarks>

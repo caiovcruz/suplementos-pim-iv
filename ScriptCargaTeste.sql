@@ -5663,8 +5663,8 @@ VALUES
 (
 	1,
     'Gerente',
-    'caiovcruz',
-	'cruz123',
+    'caiovcruz123',
+	'$2a$11$h7KvlKvugjtNv2lY9/00B.dbXoY253yCtoy3BuNCST224sEQDG0cW',
 	1
 );
 

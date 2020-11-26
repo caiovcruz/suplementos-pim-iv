@@ -20,9 +20,9 @@ namespace SuplementosPIMIV.View
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (Session["ConnectionString"] != null && Session["NM_FuncionarioLogin"] != null)
             {
-                if (Session["ConnectionString"] != null && Session["NM_FuncionarioLogin"] != null)
+                if (!IsPostBack)
                 {
                     LimparCamposCadastro();
                     BloquearComponentesCadastro();
@@ -39,10 +39,10 @@ namespace SuplementosPIMIV.View
                         lbtnDropProdutos.Visible = false;
                     }
                 }
-                else
-                {
-                    Response.Redirect("FrmLogin.aspx");
-                }
+            }
+            else
+            {
+                Response.Redirect("FrmLogin.aspx");
             }
         }
 
@@ -427,8 +427,8 @@ namespace SuplementosPIMIV.View
 
                     if (nm_produtoErro != "")
                     {
-                        lblDS_MensagemFinal.Text += 
-                            " #Erro ao atualizar o estoque dos seguintes produtos: " + 
+                        lblDS_MensagemFinal.Text +=
+                            " #Erro ao atualizar o estoque dos seguintes produtos: " +
                             nm_produtoErro +
                             " ☞ Informe o gerente! ☜";
                     }
@@ -652,7 +652,7 @@ namespace SuplementosPIMIV.View
                 Server.HtmlDecode(gvwExibe.SelectedRow.Cells[5].Text.Trim()) + " ➯ " +
                 Server.HtmlDecode(gvwExibe.SelectedRow.Cells[6].Text.Trim());
 
-            txbVL_LucroProduto.Text = (Convert.ToDouble(gvwExibe.SelectedRow.Cells[8].Text.Trim()) - 
+            txbVL_LucroProduto.Text = (Convert.ToDouble(gvwExibe.SelectedRow.Cells[8].Text.Trim()) -
                 Convert.ToDouble(gvwExibe.SelectedRow.Cells[7].Text.Trim())).ToString("N2");
 
             txbPR_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[8].Text.Trim());

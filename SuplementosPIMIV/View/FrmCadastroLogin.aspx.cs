@@ -2,10 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Validacao;
+using BCrypt.Net;
 
 namespace SuplementosPIMIV.View
 {
@@ -17,11 +20,12 @@ namespace SuplementosPIMIV.View
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+
+            if (Session["ConnectionString"] != null && Session["NM_FuncionarioLogin"] != null)
             {
-                if (Session["ConnectionString"] != null && Session["NM_FuncionarioLogin"] != null)
+                if (Session["DS_NivelAcesso"].ToString().Equals("Gerente"))
                 {
-                    if (Session["DS_NivelAcesso"].ToString().Equals("Gerente"))
+                    if (!IsPostBack)
                     {
                         LimparCampos();
                         CarregarLogins();
@@ -32,15 +36,15 @@ namespace SuplementosPIMIV.View
 
                         lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
                     }
-                    else
-                    {
-                        Response.Redirect("FrmPDV.aspx");
-                    }
                 }
                 else
                 {
-                    Response.Redirect("FrmLogin.aspx");
+                    Response.Redirect("FrmPDV.aspx");
                 }
+            }
+            else
+            {
+                Response.Redirect("FrmLogin.aspx");
             }
         }
 
@@ -189,7 +193,14 @@ namespace SuplementosPIMIV.View
 
                                         if (txbDS_Senha.Text.Trim().Length < 10)
                                         {
-                                            mDs_Msg += " A senha do usuário deve conter pelo menos 10 caracteres";
+                                            mDs_Msg += " A senha do usuário deve conter pelo menos 10 caracteres.";
+                                        }
+                                        else
+                                        {
+                                            if (txbDS_Usuario.Text.Trim() == txbDS_Senha.Text.Trim())
+                                            {
+                                                mDs_Msg += " O nome de usuário e senha não podem ser iguais.";
+                                            }
                                         }
                                     }
                                 }
@@ -220,14 +231,14 @@ namespace SuplementosPIMIV.View
             string mDs_Msg = ValidateFields();
 
             if (mDs_Msg == "")
-            {
+            {                         
                 // tudo certinho
                 // instanciar um objeto da classe login, carregar tela e incluir
                 myControllerLogin = new ControllerLogin(
                     Convert.ToInt32(ddlID_Funcionario.SelectedValue),
                     ddlDS_NivelAcesso.SelectedValue,
                     txbDS_Usuario.Text.Trim(),
-                    txbDS_Senha.Text.Trim(),
+                    BCrypt.Net.BCrypt.HashPassword(txbDS_Senha.Text.Trim()),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -266,7 +277,7 @@ namespace SuplementosPIMIV.View
                     Convert.ToInt32(ddlID_Funcionario.SelectedValue),
                     ddlDS_NivelAcesso.SelectedValue,
                     txbDS_Usuario.Text.Trim(),
-                    txbDS_Senha.Text.Trim(),
+                    BCrypt.Net.BCrypt.HashPassword(txbDS_Senha.Text.Trim()),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -410,7 +421,6 @@ namespace SuplementosPIMIV.View
 
             ddlDS_NivelAcesso.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[4].Text.Trim());
             txbDS_Usuario.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[5].Text.Trim());
-            txbDS_Senha.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[6].Text.Trim());
 
             CheckBox ativo = (CheckBox)gvwExibe.SelectedRow.Cells[7].Controls[0];
             if (!ativo.Checked)

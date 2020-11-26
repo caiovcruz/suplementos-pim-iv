@@ -156,6 +156,15 @@ div#InternoLogin #txbDS_Usuario, div#InternoLogin #txbDS_Senha {
         outline: none;
     }
 
+#lbtnMeuLogin {
+    padding-right: 30px;
+}
+
+#lbtnSair {
+    font-size: 14px;
+    font-weight: bold;
+}
+
 #cadastroProduto, #exibeProduto {
     background-color: #FFFFFF;
     border-radius: 10px;

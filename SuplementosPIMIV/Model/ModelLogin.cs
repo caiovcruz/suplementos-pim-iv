@@ -65,10 +65,9 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public ModelLogin(string ds_usuario, string ds_senha, string connectionString)
+        public ModelLogin(string ds_usuario, string connectionString)
         {
             DS_Usuario = ds_usuario;
-            DS_Senha = ds_senha;
             ConnectionString = connectionString;
         }
 
@@ -407,12 +406,12 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("LOG.ID_Login, ");
                 stringSQL.Append("LOG.ID_Funcionario, ");
                 stringSQL.Append("FUN.NM_Funcionario, ");
-                stringSQL.Append("LOG.DS_NivelAcesso ");
+                stringSQL.Append("LOG.DS_NivelAcesso, ");
+                stringSQL.Append("LOG.DS_Senha ");
                 stringSQL.Append("FROM TB_Login AS LOG ");
                 stringSQL.Append("INNER JOIN TB_Funcionario AS FUN ON LOG.ID_Funcionario = FUN.ID_Funcionario ");
                 stringSQL.Append("WHERE LOG.Ativo = 1 ");
                 stringSQL.Append("AND DS_Usuario = '" + DS_Usuario + "'");
-                stringSQL.Append("AND DS_Senha = '" + DS_Senha + "'");
 
                 sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
                 sqlDataReader = sqlCommand.ExecuteReader();
@@ -427,6 +426,7 @@ namespace SuplementosPIMIV.Model
                         ID_Funcionario = Convert.ToInt32(sqlDataReader["ID_Funcionario"].ToString());
                         DS_NivelAcesso = sqlDataReader["DS_NivelAcesso"].ToString();
                         NM_FuncionarioLogin = sqlDataReader["NM_Funcionario"].ToString();
+                        DS_Senha = sqlDataReader["DS_Senha"].ToString();
                     }
                 }
                 else

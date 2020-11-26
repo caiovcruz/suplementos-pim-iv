@@ -15,11 +15,12 @@ namespace SuplementosPIMIV.View
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+
+            if (Session["ConnectionString"] != null && Session["NM_FuncionarioLogin"] != null)
             {
-                if (Session["ConnectionString"] != null && Session["NM_FuncionarioLogin"] != null)
+                if (Session["DS_NivelAcesso"].ToString().Equals("Gerente"))
                 {
-                    if (Session["DS_NivelAcesso"].ToString().Equals("Gerente"))
+                    if (!IsPostBack)
                     {
                         LimparCampos();
                         CarregarMovimentacoesEstoque();
@@ -30,15 +31,15 @@ namespace SuplementosPIMIV.View
 
                         lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
                     }
-                    else
-                    {
-                        Response.Redirect("FrmPDV.aspx");
-                    }
                 }
                 else
                 {
-                    Response.Redirect("FrmLogin.aspx");
+                    Response.Redirect("FrmPDV.aspx");
                 }
+            }
+            else
+            {
+                Response.Redirect("FrmLogin.aspx");
             }
         }
 

@@ -220,6 +220,7 @@ namespace SuplementosPIMIV.Model
                         NM_Produto = sqlDataReader["NM_Produto"].ToString() + " ➯ " +
                             sqlDataReader["NM_Marca"].ToString() + " ➯ " +
                             sqlDataReader["NM_Sabor"].ToString();
+                        PR_Custo = Convert.ToDouble(sqlDataReader["PR_Custo"].ToString());
                         PR_Venda = Convert.ToDouble(sqlDataReader["PR_Venda"].ToString());
                     }
                 }

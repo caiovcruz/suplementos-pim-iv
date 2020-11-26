@@ -125,6 +125,7 @@ CREATE TABLE TB_Venda
 	DS_TipoPagamento VARCHAR(20),
 	NR_Parcelas INT,
 	VL_Total DECIMAL(10,2),
+	VL_Lucro DECIMAL(10,2),
 	FOREIGN KEY (ID_Funcionario) REFERENCES TB_Funcionario(ID_Funcionario)
 );
 
@@ -134,6 +135,7 @@ CREATE TABLE TB_ItemVenda
 	ID_Produto INT NOT NULL,
 	QTD_ItemVenda INT NOT NULL,
 	VL_Subtotal DECIMAL(10,2) NOT NULL,
+	VL_Lucro DECIMAL(10,2) NOT NULL,
 	PRIMARY KEY (ID_Venda, ID_Produto),
 	FOREIGN KEY (ID_Venda) REFERENCES TB_Venda(ID_Venda) ON DELETE CASCADE,
 	FOREIGN KEY (ID_Produto) REFERENCES	TB_Produto(ID_Produto)

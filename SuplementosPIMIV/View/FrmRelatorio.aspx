@@ -51,13 +51,16 @@
                    <i class="fas fa-chart-line fa-sm" style="margin-right: 2px;"></i> Relatórios </asp:LinkButton>
         </div>
 
-        <div id="exibeRelatorio">
-            <div id="exibeInternoRelatorio">
+        <asp:UpdatePanel ID="updExibe" runat="server">
+            <ContentTemplate>
 
-                <br />
+                <div class="exibeRelatorio">
+                    <div class="exibeInternoRelatorio">
 
-                <asp:UpdatePanel ID="updConsulta" runat="server">
-                    <ContentTemplate>
+                        <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Vendas"></asp:Label>
+                        <asp:TextBox CssClass="TextBox" ID="txbID_Venda" Visible="false" runat="server"></asp:TextBox>
+
+                        <br />
 
                         <div id="internoColunasRelatorio">
 
@@ -106,14 +109,52 @@
 
                             </div>
 
+                            <div class="coluna">
+
+                                <asp:Button CssClass="Button" ID="btnLimpar" runat="server" Text="Limpar"
+                                    OnClick="btnLimpar_Click" />
+
+                            </div>
+
                         </div>
+
+                        <br />
+
+                        <div class="internoColunasRelatorio2">
+
+                            <div>
+
+                                <i class="fas fa-check-square"></i>
+                                <asp:Label CssClass="Label" ID="lblQTD_VendasRealizadas" runat="server" Text="Vendas realizadas: "></asp:Label>
+
+                            </div>
+
+                            <div class="coluna">
+
+                                <i class="fas fa-file-invoice-dollar" style="color: green;"></i>
+                                <asp:Label CssClass="Label" ID="lblVL_TotalVendas" runat="server" Text="Vendas R$"></asp:Label>
+
+                            </div>
+
+                            <div class="coluna">
+
+                                <i class="fas fa-funnel-dollar" style="color: blue;"></i>
+                                <asp:Label CssClass="Label" ID="lblVL_TotalLucro" runat="server" Text="Lucro R$"></asp:Label>
+
+                            </div>
+
+                        </div>
+
+                        <br />
+
+                        <asp:Label CssClass="Msg" ID="lblDS_Mensagem" runat="server" Text=""></asp:Label>
 
                         <br />
 
                         <div style="overflow: auto;">
                             <asp:GridView CssClass="gvwExibe" ID="gvwExibe" runat="server" CellPadding="5" GridLines="Horizontal"
                                 AlternatingRowStyle-BackColor="WhiteSmoke" OnRowDataBound="gvwExibe_RowDataBound"
-                                OnSelectedIndexChanged="gvwExibe_SelectedIndexChanged" OnPageIndexChanging="gvwExibe_PageIndexChanging" AllowPaging="true" PageSize="10">
+                                OnSelectedIndexChanged="gvwExibe_SelectedIndexChanged" OnPageIndexChanging="gvwExibe_PageIndexChanging" AllowPaging="true" PageSize="20">
                                 <Columns>
                                     <asp:TemplateField>
                                         <ItemTemplate>
@@ -126,19 +167,84 @@
                             </asp:GridView>
                         </div>
 
-                    </ContentTemplate>
-                </asp:UpdatePanel>
+                    </div>
 
-            </div>
+                    <br />
+                    <br />
 
-            <br />
-            <br />
+                </div>
 
-        </div>
+                <br />
+                <br />
 
-        <br />
-        <br />
+                <div class="exibeRelatorio">
+                    <div class="exibeInternoRelatorio">
 
+                        <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Itens da Venda"></asp:Label>
+
+                        <br />
+
+                        <div class="internoColunasRelatorio2">
+
+                            <div>
+
+                                <i class="fas fa-boxes"></i>
+                                <asp:Label CssClass="Label" ID="lblQTD_Itens" runat="server" Text="Quantidade Itens: 0"></asp:Label>
+
+                            </div>
+
+                            <div class="coluna">
+
+                                <i class="fas fa-file-invoice-dollar" style="color: green;"></i>
+                                <asp:Label CssClass="Label" ID="lblVL_TotalVendaItem" runat="server" Text="Venda R$0,00"></asp:Label>
+
+                            </div>
+
+                            <div class="coluna">
+
+                                <i class="fas fa-funnel-dollar" style="color: blue;"></i>
+                                <asp:Label CssClass="Label" ID="lblVL_TotalLucroItem" runat="server" Text="Lucro R$0,00"></asp:Label>
+
+                            </div>
+
+                        </div>
+
+                        <br />
+
+                        <div style="overflow: auto;">
+                            <asp:GridView CssClass="gvwExibe" ID="gvwExibeItensVenda" runat="server" CellPadding="5" GridLines="Horizontal"
+                                AlternatingRowStyle-BackColor="WhiteSmoke" OnRowDataBound="gvwExibeItensVenda_RowDataBound"
+                                OnPageIndexChanging="gvwExibeItensVenda_PageIndexChanging" AllowPaging="true" PageSize="10">
+                                <Columns>
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="lbSelecionar" runat="server" CausesValidation="False"
+                                                CommandName="Select" Style="display: none;"></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                                <HeaderStyle BackColor="WhiteSmoke" BorderStyle="Solid" BorderColor="Black" Font-Bold="True" />
+                            </asp:GridView>
+                        </div>
+
+                        <br />
+                        <br />
+
+                        <asp:Button CssClass="Button" ID="btnLimparItensVenda" runat="server" Text="Limpar"
+                            OnClick="btnLimparItensVenda_Click" />
+
+                    </div>
+
+                    <br />
+                    <br />
+
+                </div>
+
+                <br />
+                <br />
+
+            </ContentTemplate>
+        </asp:UpdatePanel>
     </form>
 </body>
 </html>

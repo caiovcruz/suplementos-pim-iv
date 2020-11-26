@@ -14,6 +14,7 @@ namespace SuplementosPIMIV.Model
         public int ID_Produto { get; set; }
         public int QTD_ItemVenda { get; set; }
         public double VL_Subtotal { get; set; }
+        public double VL_Lucro { get; set; }
         public string DS_Mensagem { get; set; }
 
         private string ConnectionString = "";
@@ -28,12 +29,13 @@ namespace SuplementosPIMIV.Model
             ConnectionString = connectionString;
         }
 
-        public ModelItemVenda(int id_venda, int id_produto, int qtd_itemVenda, double vl_subtotal, char acao, string connectionString)
+        public ModelItemVenda(int id_venda, int id_produto, int qtd_itemVenda, double vl_subtotal, double vl_lucro, char acao, string connectionString)
         {
             ID_Venda = id_venda;
             ID_Produto = id_produto;
             QTD_ItemVenda = qtd_itemVenda;
             VL_Subtotal = vl_subtotal;
+            VL_Lucro = vl_lucro;
             ConnectionString = connectionString;
 
             if (acao.Equals('I'))
@@ -69,12 +71,14 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("ID_Venda, ");
                 stringSQL.Append("ID_Produto, ");
                 stringSQL.Append("QTD_ItemVenda, ");
-                stringSQL.Append("VL_Subtotal)");
+                stringSQL.Append("VL_Subtotal, ");
+                stringSQL.Append("VL_Lucro)");
                 stringSQL.Append("VALUES (");
                 stringSQL.Append("'" + ID_Venda + "', ");
                 stringSQL.Append("'" + ID_Produto + "', ");
                 stringSQL.Append("'" + QTD_ItemVenda + "', ");
-                stringSQL.Append("'" + VL_Subtotal + "')");
+                stringSQL.Append("'" + VL_Subtotal + "', ");
+                stringSQL.Append("'" + VL_Lucro + "')");
 
                 sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
                 int result = sqlCommand.ExecuteNonQuery();
@@ -104,7 +108,8 @@ namespace SuplementosPIMIV.Model
                 StringBuilder stringSQL = new StringBuilder();
                 stringSQL.Append("UPDATE TB_ItemVenda SET ");
                 stringSQL.Append("QTD_ItemVenda = '" + QTD_ItemVenda + "', ");
-                stringSQL.Append("VL_Subtotal = REPLACE( REPLACE('" + VL_Subtotal + "', '.' ,'' ), ',', '.' ) ");
+                stringSQL.Append("VL_Subtotal = REPLACE( REPLACE('" + VL_Subtotal + "', '.' ,'' ), ',', '.' ), ");
+                stringSQL.Append("VL_Lucro = REPLACE( REPLACE('" + VL_Lucro + "', '.' ,'' ), ',', '.' ) ");
                 stringSQL.Append("WHERE ID_Venda = '" + ID_Venda + "' ");
                 stringSQL.Append("AND ID_Produto = '" + ID_Produto + "' ");
 
@@ -171,9 +176,11 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("PROD.NM_Produto, ");
                 stringSQL.Append("MAR.NM_Marca, ");
                 stringSQL.Append("SAB.NM_Sabor, ");
+                stringSQL.Append("FORMAT(PROD.PR_Custo, 'N2') AS PR_Custo, ");
                 stringSQL.Append("FORMAT(PROD.PR_Venda, 'N2') AS PR_Venda, ");
                 stringSQL.Append("ITEM.QTD_ItemVenda, ");
-                stringSQL.Append("FORMAT(ITEM.VL_Subtotal, 'N2') AS VL_Subtotal ");
+                stringSQL.Append("FORMAT(ITEM.VL_Subtotal, 'N2') AS VL_Subtotal, ");
+                stringSQL.Append("FORMAT(ITEM.VL_Lucro, 'N2') AS VL_Lucro ");
                 stringSQL.Append("FROM TB_ItemVenda AS ITEM ");
                 stringSQL.Append("INNER JOIN TB_Produto AS PROD ON ITEM.ID_Produto = PROD.ID_Produto ");
                 stringSQL.Append("INNER JOIN TB_Marca AS MAR ON PROD.ID_Marca = MAR.ID_Marca ");

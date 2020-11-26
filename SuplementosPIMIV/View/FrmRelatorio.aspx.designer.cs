@@ -78,13 +78,22 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.LinkButton lbtnRelatorios;
 
         /// <summary>
-        /// Controle updConsulta.
+        /// Controle updExibe.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel updConsulta;
+        protected global::System.Web.UI.UpdatePanel updExibe;
+
+        /// <summary>
+        /// Controle txbID_Venda.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txbID_Venda;
 
         /// <summary>
         /// Controle ddlDiaRelatorioInicio.
@@ -150,6 +159,51 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.Button btnConsultar;
 
         /// <summary>
+        /// Controle btnLimpar.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLimpar;
+
+        /// <summary>
+        /// Controle lblQTD_VendasRealizadas.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblQTD_VendasRealizadas;
+
+        /// <summary>
+        /// Controle lblVL_TotalVendas.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVL_TotalVendas;
+
+        /// <summary>
+        /// Controle lblVL_TotalLucro.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVL_TotalLucro;
+
+        /// <summary>
+        /// Controle lblDS_Mensagem.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDS_Mensagem;
+
+        /// <summary>
         /// Controle gvwExibe.
         /// </summary>
         /// <remarks>
@@ -157,5 +211,50 @@ namespace SuplementosPIMIV.View
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvwExibe;
+
+        /// <summary>
+        /// Controle lblQTD_Itens.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblQTD_Itens;
+
+        /// <summary>
+        /// Controle lblVL_TotalVendaItem.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVL_TotalVendaItem;
+
+        /// <summary>
+        /// Controle lblVL_TotalLucroItem.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVL_TotalLucroItem;
+
+        /// <summary>
+        /// Controle gvwExibeItensVenda.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvwExibeItensVenda;
+
+        /// <summary>
+        /// Controle btnLimparItensVenda.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLimparItensVenda;
     }
 }

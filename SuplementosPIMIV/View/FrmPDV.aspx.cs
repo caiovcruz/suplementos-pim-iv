@@ -174,6 +174,8 @@ namespace SuplementosPIMIV.View
                     txbProduto.Text = myControllerProduto.NM_Produto;
                     txbPR_Produto.Text = myControllerProduto.PR_Venda.ToString("N2");
 
+                    txbVL_LucroProduto.Text = (myControllerProduto.PR_Venda - myControllerProduto.PR_Custo).ToString("N2");
+
                     myControllerEstoque = new ControllerEstoque(Session["ConnectionString"].ToString());
 
                     if (myControllerEstoque.QuantidadeTotalEstoque(myControllerProduto.ID_Produto) <= 0)
@@ -296,10 +298,22 @@ namespace SuplementosPIMIV.View
 
             foreach (GridViewRow row in gvwExibe.Rows)
             {
-                valorTotal += Convert.ToDouble(row.Cells[9].Text);
+                valorTotal += Convert.ToDouble(row.Cells[10].Text);
             }
 
             txbVL_Total.Text = valorTotal.ToString("N2");
+        }
+
+        private double GetValorLucroTotal()
+        {
+            double valorLucro = 0;
+
+            foreach (GridViewRow row in gvwExibe.Rows)
+            {
+                valorLucro += Convert.ToDouble(row.Cells[11].Text);
+            }
+
+            return valorLucro;
         }
 
         private void Incluir()
@@ -335,6 +349,7 @@ namespace SuplementosPIMIV.View
                         Convert.ToInt32(txbID_Produto.Text.Trim()),
                         Convert.ToInt32(txbQTD_Produto.Text.Trim()),
                         Convert.ToDouble(txbPR_Produto.Text.Trim()) * Convert.ToInt32(txbQTD_Produto.Text.Trim()),
+                        Convert.ToDouble(txbVL_LucroProduto.Text.Trim()) * Convert.ToInt32(txbQTD_Produto.Text.Trim()),
                         'I',
                         Session["ConnectionString"].ToString());
 
@@ -378,6 +393,7 @@ namespace SuplementosPIMIV.View
                     ddlDS_TipoPagamento.SelectedValue,
                     Convert.ToInt32(ddlNR_Parcelas.SelectedValue),
                     Convert.ToDouble(txbVL_Total.Text.Trim()),
+                    GetValorLucroTotal(),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -389,7 +405,7 @@ namespace SuplementosPIMIV.View
                     {
                         myControllerMovEstoque = new ControllerMovEstoque(
                             Convert.ToInt32(row.Cells[2].Text),
-                            Convert.ToInt32(row.Cells[8].Text),
+                            Convert.ToInt32(row.Cells[9].Text),
                             "Venda",
                             DateTime.Now,
                             Session["ConnectionString"].ToString());
@@ -478,6 +494,7 @@ namespace SuplementosPIMIV.View
                     Convert.ToInt32(txbID_Produto.Text.Trim()),
                     Convert.ToInt32(txbQTD_Produto.Text.Trim()),
                     Convert.ToDouble(txbPR_Produto.Text.Trim()) * Convert.ToInt32(txbQTD_Produto.Text.Trim()),
+                    Convert.ToDouble(txbVL_LucroProduto.Text.Trim()) * Convert.ToInt32(txbQTD_Produto.Text.Trim()),
                     'A',
                     Session["ConnectionString"].ToString());
 
@@ -602,6 +619,8 @@ namespace SuplementosPIMIV.View
                 LinkButton lb = (LinkButton)e.Row.FindControl("lbSelecionar");
                 e.Row.Attributes.Add("onClick", Page.ClientScript.GetPostBackEventReference(lb, ""));
 
+                e.Row.Cells[7].Visible = false;
+                e.Row.Cells[11].Visible = false;
             }
 
             if (e.Row.RowType == DataControlRowType.Header)
@@ -612,9 +631,11 @@ namespace SuplementosPIMIV.View
                 e.Row.Cells[4].Text = "Produto";
                 e.Row.Cells[5].Text = "Marca";
                 e.Row.Cells[6].Text = "Sabor";
-                e.Row.Cells[7].Text = "Preço";
-                e.Row.Cells[8].Text = "Quantidade";
-                e.Row.Cells[9].Text = "Subtotal";
+                e.Row.Cells[7].Visible = false;
+                e.Row.Cells[8].Text = "Preço";
+                e.Row.Cells[9].Text = "Quantidade";
+                e.Row.Cells[10].Text = "Subtotal";
+                e.Row.Cells[11].Visible = false;
             }
         }
 
@@ -631,8 +652,11 @@ namespace SuplementosPIMIV.View
                 Server.HtmlDecode(gvwExibe.SelectedRow.Cells[5].Text.Trim()) + " ➯ " +
                 Server.HtmlDecode(gvwExibe.SelectedRow.Cells[6].Text.Trim());
 
-            txbPR_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[7].Text.Trim());
-            txbQTD_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[8].Text.Trim());
+            txbVL_LucroProduto.Text = (Convert.ToDouble(gvwExibe.SelectedRow.Cells[8].Text.Trim()) - 
+                Convert.ToDouble(gvwExibe.SelectedRow.Cells[7].Text.Trim())).ToString("N2");
+
+            txbPR_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[8].Text.Trim());
+            txbQTD_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[9].Text.Trim());
             txbQTD_Produto.Enabled = true;
 
             txbNR_EAN.ReadOnly = true;

@@ -21,14 +21,14 @@ namespace SuplementosPIMIV.View
                 {
                     if (Session["DS_NivelAcesso"].ToString().Equals("Gerente"))
                     {
-                        // instanciando um objeto da classe ControllerItemVenda
-                        myControllerVenda = new ControllerVenda(Session["ConnectionString"].ToString());
+                        LimparItensVenda();
+                        LimparCamposVenda();
+                        CarregarDatas();
+                        CarregarVendas();
+                        BloquearComponentesRelatorioVendas();
+                        DesbloquearComponentesRelatorioItensVenda(false);
 
-                        // passando a fonte de dados para o GridView
-                        gvwExibe.DataSource = myControllerVenda.Exibir();
-
-                        // associando os dados para carregar e exibir
-                        gvwExibe.DataBind();
+                        lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
                     }
                     else
                     {
@@ -42,54 +42,319 @@ namespace SuplementosPIMIV.View
             }
         }
 
+        private void LimparCamposVenda()
+        {
+            ddlDiaRelatorioInicio.SelectedIndex = 0;
+            ddlMesRelatorioInicio.SelectedIndex = 0;
+            ddlAnoRelatorioInicio.SelectedIndex = 0;
+
+            ddlDiaRelatorioFinal.SelectedIndex = 0;
+            ddlMesRelatorioFinal.SelectedIndex = 0;
+            ddlAnoRelatorioFinal.SelectedIndex = 0;
+
+            btnConsultar.Enabled = false;
+        }
+
+        private void LimparItensVenda()
+        {
+            gvwExibeItensVenda.DataSource = null;
+            gvwExibeItensVenda.DataBind();
+
+            DesbloquearComponentesRelatorioItensVenda(false);
+
+            lblQTD_Itens.Text = "Quantidade Itens: 0";
+            lblVL_TotalVendaItem.Text = "Venda R$0,00";
+            lblVL_TotalLucroItem.Text = "Lucro R$0,00";
+        }
+
+        private void BloquearComponentesRelatorioVendas()
+        {
+            btnConsultar.Enabled = false;
+            btnLimpar.Enabled = false;
+        }
+
+        private void DesbloquearComponentesRelatorioItensVenda(bool acao)
+        {
+            btnLimparItensVenda.Visible = acao;
+        }
+
+        private void CarregarVendas()
+        {
+            // instanciando um objeto da classe ControllerVenda
+            myControllerVenda = new ControllerVenda(Session["ConnectionString"].ToString());
+
+            // passando a fonte de dados para o GridView
+            gvwExibe.DataSource = myControllerVenda.Exibir();
+
+            // associando os dados para carregar e exibir
+            gvwExibe.DataBind();
+
+            CalcularRelatorioVendas();
+        }
+
+        private void CarregarVendasConsultar()
+        {
+            // instanciar um objeto da classe venda, carregar tela e consultar
+            myControllerVenda = new ControllerVenda(Session["ConnectionString"].ToString());
+
+            // criando a data de nascimento com datetime
+            DateTime dataInicio = new DateTime(
+                Convert.ToInt32(ddlAnoRelatorioInicio.SelectedValue),
+                ddlMesRelatorioInicio.SelectedIndex,
+                Convert.ToInt32(ddlDiaRelatorioInicio.SelectedValue));
+
+            DateTime dataFinal = new DateTime(
+                Convert.ToInt32(ddlAnoRelatorioFinal.SelectedValue),
+                ddlMesRelatorioFinal.SelectedIndex,
+                Convert.ToInt32(ddlDiaRelatorioFinal.SelectedValue));
+
+            gvwExibe.DataSource = myControllerVenda.Consultar(dataInicio, dataFinal);
+            gvwExibe.DataBind();
+
+            CalcularRelatorioVendas();
+        }
+
+        private void CarregarItensVenda(int id_venda)
+        {
+            // instanciando um objeto da classe ControllerItemVenda
+            myControllerItemVenda = new ControllerItemVenda(Session["ConnectionString"].ToString());
+
+            // passando a fonte de dados para o GridView
+            gvwExibeItensVenda.DataSource = myControllerItemVenda.Exibir(id_venda);
+
+            // associando os dados para carregar e exibir
+            gvwExibeItensVenda.DataBind();
+
+            CalcularRelatorioItensVenda();
+        }
+
+        private void CalcularRelatorioVendas()
+        {
+            int contadorVendas = 0;
+            double valorTotalVendas = 0;
+            double valorTotalLucro = 0;
+
+            foreach (GridViewRow row in gvwExibe.Rows)
+            {
+                contadorVendas += row.Cells[6].Text.Equals("&nbsp;") ? 0 : 1;
+                valorTotalVendas += row.Cells[6].Text.Equals("&nbsp;") ? 0 : Convert.ToDouble(row.Cells[6].Text);
+                valorTotalLucro += row.Cells[7].Text.Equals("&nbsp;") ? 0 : Convert.ToDouble(row.Cells[7].Text);
+            }
+
+            lblQTD_VendasRealizadas.Text = "Vendas realizadas: " + contadorVendas.ToString();
+            lblVL_TotalVendas.Text = "Vendas R$" + valorTotalVendas.ToString("N2");
+            lblVL_TotalLucro.Text = "Lucro R$" + valorTotalLucro.ToString("N2");
+        }
+
+        private void CalcularRelatorioItensVenda()
+        {
+            double valorTotalVendaItem = 0;
+            double valorTotalLucroItem = 0;
+
+            foreach (GridViewRow row in gvwExibeItensVenda.Rows)
+            {
+                valorTotalVendaItem += row.Cells[10].Text.Equals(DBNull.Value) ? 0 : Convert.ToDouble(row.Cells[10].Text);
+                valorTotalLucroItem += row.Cells[11].Text.Equals(DBNull.Value) ? 0 : Convert.ToDouble(row.Cells[11].Text);
+            }
+
+            lblQTD_Itens.Text = "Quantidade Itens: " + gvwExibeItensVenda.Rows.Count.ToString();
+            lblVL_TotalVendaItem.Text = "Venda R$" + valorTotalVendaItem.ToString("N2");
+            lblVL_TotalLucroItem.Text = "Lucro R$" + valorTotalLucroItem.ToString("N2");
+        }
+
+        private void CarregarDatas()
+        {
+            ddlDiaRelatorioInicio.Items.Insert(0, "Dia");
+            ddlDiaRelatorioFinal.Items.Insert(0, "Dia");
+
+            for (int i = 1; i <= 31; i++)
+            {
+                ddlDiaRelatorioInicio.Items.Insert(i, Convert.ToString(i));
+                ddlDiaRelatorioFinal.Items.Insert(i, Convert.ToString(i));
+            }
+
+            ddlMesRelatorioInicio.Items.Insert(0, "Mês");
+            ddlMesRelatorioFinal.Items.Insert(0, "Mês");
+            ddlMesRelatorioInicio.Items.Insert(1, "Janeiro");
+            ddlMesRelatorioFinal.Items.Insert(1, "Janeiro");
+            ddlMesRelatorioInicio.Items.Insert(2, "Fevereiro");
+            ddlMesRelatorioFinal.Items.Insert(2, "Fevereiro");
+            ddlMesRelatorioInicio.Items.Insert(3, "Março");
+            ddlMesRelatorioFinal.Items.Insert(3, "Março");
+            ddlMesRelatorioInicio.Items.Insert(4, "Abril");
+            ddlMesRelatorioFinal.Items.Insert(4, "Abril");
+            ddlMesRelatorioInicio.Items.Insert(5, "Maio");
+            ddlMesRelatorioFinal.Items.Insert(5, "Maio");
+            ddlMesRelatorioInicio.Items.Insert(6, "Junho");
+            ddlMesRelatorioFinal.Items.Insert(6, "Junho");
+            ddlMesRelatorioInicio.Items.Insert(7, "Julho");
+            ddlMesRelatorioFinal.Items.Insert(7, "Julho");
+            ddlMesRelatorioInicio.Items.Insert(8, "Agosto");
+            ddlMesRelatorioFinal.Items.Insert(8, "Agosto");
+            ddlMesRelatorioInicio.Items.Insert(9, "Setembro");
+            ddlMesRelatorioFinal.Items.Insert(9, "Setembro");
+            ddlMesRelatorioInicio.Items.Insert(10, "Outubro");
+            ddlMesRelatorioFinal.Items.Insert(10, "Outubro");
+            ddlMesRelatorioInicio.Items.Insert(11, "Novembro");
+            ddlMesRelatorioFinal.Items.Insert(11, "Novembro");
+            ddlMesRelatorioInicio.Items.Insert(12, "Dezembro");
+            ddlMesRelatorioFinal.Items.Insert(12, "Dezembro");
+
+            ddlMesRelatorioInicio.SelectedIndex = 0;
+            ddlMesRelatorioFinal.SelectedIndex = 0;
+
+            ddlAnoRelatorioInicio.Items.Insert(0, "Ano");
+            ddlAnoRelatorioFinal.Items.Insert(0, "Ano");
+
+            for (int i = 2020; i <= DateTime.Today.Year; i++)
+            {
+                ddlAnoRelatorioInicio.Items.Add(Convert.ToString(i));
+                ddlAnoRelatorioFinal.Items.Add(Convert.ToString(i));
+            }
+
+            ddlAnoRelatorioInicio.SelectedIndex = 0;
+            ddlAnoRelatorioFinal.SelectedIndex = 0;
+        }
+
+        private void SearchFields()
+        {
+            btnConsultar.Enabled =
+                ddlDiaRelatorioInicio.SelectedIndex != 0 &&
+                ddlMesRelatorioInicio.SelectedIndex != 0 &&
+                ddlAnoRelatorioInicio.SelectedIndex != 0 &&
+                ddlDiaRelatorioFinal.SelectedIndex != 0 &&
+                ddlMesRelatorioFinal.SelectedIndex != 0 &&
+                ddlAnoRelatorioFinal.SelectedIndex != 0;
+
+            btnLimpar.Enabled =
+                ddlDiaRelatorioInicio.SelectedIndex != 0 ||
+                ddlMesRelatorioInicio.SelectedIndex != 0 ||
+                ddlAnoRelatorioInicio.SelectedIndex != 0 ||
+                ddlDiaRelatorioFinal.SelectedIndex != 0 ||
+                ddlMesRelatorioFinal.SelectedIndex != 0 ||
+                ddlAnoRelatorioFinal.SelectedIndex != 0;
+        }
+
         protected void ddlDiaRelatorioInicio_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            SearchFields();
         }
 
         protected void ddlMesRelatorioInicio_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            SearchFields();
         }
 
         protected void ddlAnoRelatorioInicio_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            SearchFields();
         }
 
         protected void ddlDiaRelatorioFinal_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            SearchFields();
         }
 
         protected void ddlMesRelatorioFinal_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            SearchFields();
         }
 
         protected void ddlAnoRelatorioFinal_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            SearchFields();
         }
 
         protected void btnConsultar_Click(object sender, EventArgs e)
         {
-
+            CarregarVendasConsultar();
         }
 
         protected void gvwExibe_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                LinkButton lb = (LinkButton)e.Row.FindControl("lbSelecionar");
+                e.Row.Attributes.Add("onClick", Page.ClientScript.GetPostBackEventReference(lb, ""));
+            }
 
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                e.Row.Cells[1].Text = "#";
+                e.Row.Cells[2].Text = "Funcionário";
+                e.Row.Cells[3].Text = "Data";
+                e.Row.Cells[4].Text = "Tipo de Pagamento";
+                e.Row.Cells[5].Text = "Nº Parcelas";
+                e.Row.Cells[6].Text = "Valor Venda";
+                e.Row.Cells[7].Text = "Valor Lucro";
+            }
         }
 
         protected void gvwExibe_SelectedIndexChanged(object sender, EventArgs e)
         {
+            lblDS_Mensagem.Text = "";
 
+            txbID_Venda.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text.Trim());
+
+            try
+            {
+                CarregarItensVenda(Convert.ToInt32(txbID_Venda.Text.Trim()));
+                DesbloquearComponentesRelatorioItensVenda(true);
+            }
+            catch (Exception ex)
+            {
+                DesbloquearComponentesRelatorioItensVenda(false);
+                lblDS_Mensagem.Text = ex.Message + ex.StackTrace;
+            }
         }
 
         protected void gvwExibe_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+            gvwExibe.PageIndex = e.NewPageIndex;
+            CarregarVendas();
+        }
 
+        protected void btnLimpar_Click(object sender, EventArgs e)
+        {
+            LimparCamposVenda();
+            CarregarVendas();
+        }
+
+        protected void gvwExibeItensVenda_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                LinkButton lb = (LinkButton)e.Row.FindControl("lbSelecionar");
+                e.Row.Attributes.Add("onClick", Page.ClientScript.GetPostBackEventReference(lb, ""));
+
+                e.Row.Cells[7].Visible = false;
+            }
+
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                e.Row.Cells[1].Text = "#";
+                e.Row.Cells[2].Text = "ID";
+                e.Row.Cells[3].Text = "EAN";
+                e.Row.Cells[4].Text = "Produto";
+                e.Row.Cells[5].Text = "Marca";
+                e.Row.Cells[6].Text = "Sabor";
+                e.Row.Cells[7].Visible = false;
+                e.Row.Cells[8].Text = "Preço";
+                e.Row.Cells[9].Text = "Quantidade";
+                e.Row.Cells[10].Text = "Subtotal";
+                e.Row.Cells[11].Text = "Lucro";
+            }
+        }
+
+        protected void gvwExibeItensVenda_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvwExibeItensVenda.PageIndex = e.NewPageIndex;
+            CarregarItensVenda(Convert.ToInt32(gvwExibe.SelectedRow.Cells[1].Text.Trim()));
+        }
+
+        protected void btnLimparItensVenda_Click(object sender, EventArgs e)
+        {
+            LimparItensVenda();
         }
     }
 }

@@ -87,6 +87,8 @@
                                 <asp:TextBox CssClass="TextBox" ID="txbPR_Produto" runat="server" MaxLengh="10"
                                     placeholder="Produto" OnTextChanged="txbPR_Produto_TextChanged" AutoPostBack="true"></asp:TextBox>
 
+                                <asp:TextBox CssClass="TextBox" ID="txbVL_LucroProduto" runat="server" MaxLengh="10" Visible="false" Enabled="false"></asp:TextBox>
+
                             </div>
 
                             <div class="colunasVendaProduto" id="colunaVendaProduto3">

@@ -123,7 +123,7 @@ div#InternoLogin #lblDS_Usuario, div#InternoLogin #lblDS_Senha {
 
 div#InternoLogin #txbDS_Usuario, div#InternoLogin #txbDS_Senha {
     width: 100%;
-} 
+}
 
 #btnAcessar {
     width: 100%;
@@ -856,7 +856,7 @@ div#exibeInternoVendaProduto #gvwExibe {
     width: 100%;
 }
 
-#exibeRelatorio {
+.exibeRelatorio {
     background-color: #FFFFFF;
     border-radius: 10px;
     border-color: gainsboro;
@@ -864,7 +864,7 @@ div#exibeInternoVendaProduto #gvwExibe {
     margin: 0px 10% 0px 10%;
 }
 
-#exibeInternoRelatorio {
+.exibeInternoRelatorio {
     margin: 0px 5% 0px 10%;
 }
 
@@ -872,8 +872,15 @@ div#exibeInternoVendaProduto #gvwExibe {
     width: 100%;
     position: inherit;
     display: grid;
-    grid-template-columns: 40% 40% 20%;
+    grid-template-columns: 35% 35% 12% 12%;
     text-align: center;
+}
+
+.internoColunasRelatorio2 {
+    width: 100%;
+    position: inherit;
+    display: grid;
+    grid-template-columns: 25% 37% 37%;
 }
 
 #ddlDiaRelatorioInicio, #ddlDiaRelatorioFinal {
@@ -888,6 +895,15 @@ div#exibeInternoVendaProduto #gvwExibe {
     width: 32%;
 }
 
-div#internoColunasRelatorio #btnConsultar {
+div#internoColunasRelatorio #btnConsultar, div#internoColunasRelatorio #btnLimpar {
     margin-top: 20px;
+    width: 100%;
+}
+
+#lblVL_TotalVendaItem, #lblVL_TotalVendas {
+    color: green;
+}
+
+#lblVL_TotalLucroItem, #lblVL_TotalLucro {
+    color: blue;
 }

@@ -96,15 +96,6 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.UpdatePanel updExibe;
 
         /// <summary>
-        /// Controle txbID_Venda.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbID_Venda;
-
-        /// <summary>
         /// Controle ddlDiaRelatorioInicio.
         /// </summary>
         /// <remarks>
@@ -168,13 +159,13 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.Button btnConsultar;
 
         /// <summary>
-        /// Controle btnLimpar.
+        /// Controle lbtnLimparFiltro.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLimpar;
+        protected global::System.Web.UI.WebControls.LinkButton lbtnLimparFiltro;
 
         /// <summary>
         /// Controle lblQTD_VendasRealizadas.
@@ -204,6 +195,33 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.Label lblVL_TotalLucro;
 
         /// <summary>
+        /// Controle gvwExibe.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvwExibe;
+
+        /// <summary>
+        /// Controle txbID_Venda.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txbID_Venda;
+
+        /// <summary>
+        /// Controle lblVenda.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVenda;
+
+        /// <summary>
         /// Controle lblDS_Mensagem.
         /// </summary>
         /// <remarks>
@@ -213,13 +231,31 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.Label lblDS_Mensagem;
 
         /// <summary>
-        /// Controle gvwExibe.
+        /// Controle btnLimpar.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvwExibe;
+        protected global::System.Web.UI.WebControls.Button btnLimpar;
+
+        /// <summary>
+        /// Controle btnValidarVendas.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnValidarVendas;
+
+        /// <summary>
+        /// Controle btnExcluir.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnExcluir;
 
         /// <summary>
         /// Controle lblQTD_Itens.
@@ -256,14 +292,5 @@ namespace SuplementosPIMIV.View
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvwExibeItensVenda;
-
-        /// <summary>
-        /// Controle btnLimparItensVenda.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLimparItensVenda;
     }
 }

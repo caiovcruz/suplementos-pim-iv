@@ -23,7 +23,7 @@
         <!-- Menu -------------------------------------- -->
         <div class="navbar">
             <div class="dropdown">
-                <asp:LinkButton CssClass="dropbtn" ID="lbtnMeuLogin" Font-Underline="false" runat="server" PostBackUrl="~/View/FrmMeuLogin.aspx">
+                <asp:LinkButton CssClass="dropbtn" ID="lbtnMeuLogin" Font-Underline="false" runat="server">
                     <i class="fas fa-user-circle fa-lg" style="margin-right: 2px;"></i>
                     <asp:Label ID="lblNM_FuncionarioLogin" runat="server"></asp:Label>
                 </asp:LinkButton>
@@ -65,7 +65,6 @@
                     <div class="exibeInternoRelatorio">
 
                         <asp:Label CssClass="Titulo" runat="server" Width="100%" Text="Vendas"></asp:Label>
-                        <asp:TextBox CssClass="TextBox" ID="txbID_Venda" Visible="false" runat="server"></asp:TextBox>
 
                         <br />
 
@@ -118,8 +117,8 @@
 
                             <div class="coluna">
 
-                                <asp:Button CssClass="Button" ID="btnLimpar" runat="server" Text="Limpar"
-                                    OnClick="btnLimpar_Click" />
+                                <asp:LinkButton CssClass="Button" ID="lbtnLimparFiltro" Font-Underline="false" runat="server" OnClick="btnLimparFiltro_Click">
+                   <i class="fas fa-sync-alt fa-lg"></i></asp:LinkButton>
 
                             </div>
 
@@ -154,14 +153,11 @@
 
                         <br />
 
-                        <asp:Label CssClass="Msg" ID="lblDS_Mensagem" runat="server" Text=""></asp:Label>
-
-                        <br />
-
                         <div style="overflow: auto;">
                             <asp:GridView CssClass="gvwExibe" ID="gvwExibe" runat="server" CellPadding="5" GridLines="Horizontal"
                                 AlternatingRowStyle-BackColor="WhiteSmoke" OnRowDataBound="gvwExibe_RowDataBound"
-                                OnSelectedIndexChanged="gvwExibe_SelectedIndexChanged" OnPageIndexChanging="gvwExibe_PageIndexChanging" AllowPaging="true" PageSize="20">
+                                OnSelectedIndexChanged="gvwExibe_SelectedIndexChanged" OnPageIndexChanging="gvwExibe_PageIndexChanging" 
+                                on AllowPaging="true" PageSize="20">
                                 <Columns>
                                     <asp:TemplateField>
                                         <ItemTemplate>
@@ -173,6 +169,22 @@
                                 <HeaderStyle BackColor="WhiteSmoke" BorderStyle="Solid" BorderColor="Black" Font-Bold="True" />
                             </asp:GridView>
                         </div>
+
+                        <br />
+
+                        <asp:TextBox CssClass="TextBox" ID="txbID_Venda" runat="server" Visible="false"></asp:TextBox>
+                        <asp:Label CssClass="Label" ID="lblVenda" runat="server" MaxLengh="150"></asp:Label>
+
+                        <br />
+
+                        <asp:Label CssClass="Msg" ID="lblDS_Mensagem" runat="server" Text=""></asp:Label>
+
+                        <br />
+                        <br />
+
+                        <asp:Button CssClass="Button" ID="btnLimpar" runat="server" Text="Limpar" OnClick="btnLimpar_Click" />
+                        <asp:Button CssClass="Button" ID="btnValidarVendas" runat="server" Text="Validar Vendas" OnClick="btnValidarVendas_Click" />
+                        <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
 
                     </div>
 
@@ -236,9 +248,6 @@
 
                         <br />
                         <br />
-
-                        <asp:Button CssClass="Button" ID="btnLimparItensVenda" runat="server" Text="Limpar"
-                            OnClick="btnLimparItensVenda_Click" />
 
                     </div>
 

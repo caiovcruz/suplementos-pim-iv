@@ -497,7 +497,61 @@ div#InternoLogin #txbDS_Usuario, div#InternoLogin #txbDS_Senha {
         outline: none;
     }
 
-#btnIncluir, #btnAlterar, #btnExcluir, #btnAtivarStatus, #btnSalvar {
+#lbtnLimparFiltro {
+    color: #FFFFFF;
+    background-color: #2d5ff5;
+}
+
+    #lbtnLimparFiltro:disabled {
+        cursor: not-allowed;
+    }
+
+    #lbtnLimparFiltro:not([disabled]):hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 6px #999;
+        transition: all .2s ease-in-out
+    }
+
+    #lbtnLimparFiltro:active {
+        box-shadow: 0 5px #666;
+        transform: translateY(2px);
+    }
+
+    #lbtnLimparFiltro:focus {
+        outline: none;
+    }
+
+#btnValidarVendas {
+    background-color: #efefef;
+    opacity: 0.5
+}
+
+    #btnValidarVendas:enabled {
+        opacity: 1;
+    }
+
+    #btnValidarVendas:disabled {
+        cursor: not-allowed;
+    }
+
+    #btnValidarVendas:not([disabled]):hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 6px #999;
+        transition: all .2s ease-in-out
+    }
+
+    #btnValidarVendas:active {
+        box-shadow: 0 5px #666;
+        transform: translateY(2px);
+    }
+
+    #btnValidarVendas:focus {
+        outline: none;
+    }
+
+#btnIncluir, #btnAlterar, #btnExcluir, #btnAtivarStatus, #btnSalvar, #btnValidarVendas {
     float: right;
     margin-left: 15px;
 }
@@ -783,7 +837,7 @@ div#InternoLogin #txbDS_Usuario, div#InternoLogin #txbDS_Senha {
     background-color: #FFFFFF;
     border-radius: 10px;
     border-color: gainsboro;
-    margin: 8% 42% 5% 42%;
+    margin: 5% 42% 0px 42%;
     text-align: center;
 }
 
@@ -791,7 +845,7 @@ div#InternoLogin #txbDS_Usuario, div#InternoLogin #txbDS_Senha {
     margin: 0px 25px 0px 25px;
 }
 
-div#cadInternoMeuLogin #lblDS_UsuarioMeuLogin, div#cadInternoMeuLogin #lblDS_SenhaMeuLogin {
+div#cadInternoMeuLogin #lblDS_UsuarioMeuLogin, div#cadInternoMeuLogin #lblDS_SenhaMeuLoginAtual, div#cadInternoMeuLogin #lblDS_SenhaMeuLoginNovo {
     text-align: left;
 }
 
@@ -807,7 +861,7 @@ div#cadInternoMeuLogin #btnSalvar {
     padding-bottom: 140px;
 }
 
-#txbDS_UsuarioMeuLogin, #txbDS_SenhaMeuLogin, #txbDS_SenhaMeuLoginMascara {
+#txbDS_UsuarioMeuLogin, #txbDS_SenhaMeuLoginAtual, #txbDS_SenhaMeuLoginNovo {
     width: 100%;
 }
 
@@ -881,7 +935,7 @@ div#exibeInternoVendaProduto #gvwExibe {
     width: 100%;
     position: inherit;
     display: grid;
-    grid-template-columns: 35% 35% 12% 12%;
+    grid-template-columns: 36% 36% 17% 6%;
     text-align: center;
 }
 
@@ -904,10 +958,26 @@ div#exibeInternoVendaProduto #gvwExibe {
     width: 32%;
 }
 
-div#internoColunasRelatorio #btnConsultar, div#internoColunasRelatorio #btnLimpar {
+div#internoColunasRelatorio #btnConsultar, div#internoColunasRelatorio #lbtnLimparFiltro {
     margin-top: 20px;
     width: 100%;
 }
+
+div#internoColunasRelatorio #lbtnLimparFiltro {
+    display: inline-block;
+    padding-top: 15px;
+    min-width: 50px;
+}
+
+div.exibeInternoRelatorio #btnValidarVendas {
+    width: auto;
+    margin-right: 5%;
+}
+
+#txbVenda {
+    width: 95%;
+}
+
 
 #lblVL_TotalVendaItem, #lblVL_TotalVendas {
     color: green;

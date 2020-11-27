@@ -1,8 +1,5 @@
 ﻿using SuplementosPIMIV.Controller;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Validacao;
@@ -365,7 +362,7 @@ namespace SuplementosPIMIV.View
                     }
                     else
                     {// exibir erro!
-                        lblDS_Mensagem.Text = "#Erro ao incluir produto na venda, tente novamente.";
+                        lblDS_Mensagem.Text = myControllerItemVenda.DS_Mensagem + " Verifique se o mesmo já esta na lista de itens na venda.";
                     }
                 }
                 else

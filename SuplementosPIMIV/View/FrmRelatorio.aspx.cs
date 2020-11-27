@@ -1,8 +1,5 @@
 ﻿using SuplementosPIMIV.Controller;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -23,11 +20,13 @@ namespace SuplementosPIMIV.View
                     if (!IsPostBack)
                     {
                         LimparItensVenda();
+                        LimparFiltro();
                         LimparCamposVenda();
                         CarregarDatas();
+                        btnValidarVendas.Enabled = false;
                         CarregarVendas();
                         BloquearComponentesRelatorioVendas();
-                        DesbloquearComponentesRelatorioItensVenda(false);
+                        BloquearComponentesRelatorioVendasConsulta();
 
                         lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
                     }
@@ -43,7 +42,7 @@ namespace SuplementosPIMIV.View
             }
         }
 
-        private void LimparCamposVenda()
+        private void LimparFiltro()
         {
             ddlDiaRelatorioInicio.SelectedIndex = 0;
             ddlMesRelatorioInicio.SelectedIndex = 0;
@@ -56,27 +55,31 @@ namespace SuplementosPIMIV.View
             btnConsultar.Enabled = false;
         }
 
+        private void LimparCamposVenda()
+        {
+            txbID_Venda.Text = "";
+            lblVenda.Text = "";
+        }
+
         private void LimparItensVenda()
         {
             gvwExibeItensVenda.DataSource = null;
             gvwExibeItensVenda.DataBind();
-
-            DesbloquearComponentesRelatorioItensVenda(false);
 
             lblQTD_Itens.Text = "Quantidade Itens: 0";
             lblVL_TotalVendaItem.Text = "Venda R$0,00";
             lblVL_TotalLucroItem.Text = "Lucro R$0,00";
         }
 
-        private void BloquearComponentesRelatorioVendas()
+        private void BloquearComponentesRelatorioVendasConsulta()
         {
             btnConsultar.Enabled = false;
-            btnLimpar.Enabled = false;
         }
 
-        private void DesbloquearComponentesRelatorioItensVenda(bool acao)
+        private void BloquearComponentesRelatorioVendas()
         {
-            btnLimparItensVenda.Visible = acao;
+            btnLimpar.Enabled = false;
+            btnExcluir.Enabled = false;
         }
 
         private void CarregarVendas()
@@ -236,6 +239,53 @@ namespace SuplementosPIMIV.View
                 ddlAnoRelatorioFinal.SelectedIndex != 0;
         }
 
+        private void Excluir()
+        {
+            // instanciar um objeto da classe venda e carregar tela e excluir
+            myControllerVenda = new ControllerVenda(Convert.ToInt32(txbID_Venda.Text.Trim()), Session["ConnectionString"].ToString());
+
+            // o que ocorreu?
+            if (myControllerVenda.DS_Mensagem == "OK")
+            {
+                // tudo certinho!
+                LimparCamposVenda();
+                CarregarVendas();
+                LimparItensVenda();
+                BloquearComponentesRelatorioVendas();
+                lblDS_Mensagem.Text = "Excluído com sucesso!";
+            }
+            else
+            {
+                // exibir erro!
+                lblDS_Mensagem.Text = myControllerVenda.DS_Mensagem;
+            }
+        }
+
+        private void ValidarVendas()
+        {
+            // instanciar um objeto da classe venda e carregar tela e excluir
+            myControllerVenda = new ControllerVenda(Session["ConnectionString"].ToString());
+            myControllerVenda.ValidarVendas();
+
+            // o que ocorreu?
+            if (myControllerVenda.DS_Mensagem == "OK")
+            {
+                // tudo certinho!
+                LimparCamposVenda();
+                CarregarVendas();
+                LimparItensVenda();
+                BloquearComponentesRelatorioVendas();
+                btnValidarVendas.Enabled = false;
+                lblDS_Mensagem.Text = "Vendas não finalizadas excluídas com sucesso!";
+            }
+            else
+            {
+                // exibir erro!
+                lblDS_Mensagem.Text = myControllerVenda.DS_Mensagem + " Não há vendas não finalizadas para excluir.";
+                btnValidarVendas.Enabled = false;
+            }
+        }
+
         protected void ddlDiaRelatorioInicio_SelectedIndexChanged(object sender, EventArgs e)
         {
             SearchFields();
@@ -268,6 +318,7 @@ namespace SuplementosPIMIV.View
 
         protected void btnConsultar_Click(object sender, EventArgs e)
         {
+            btnValidarVendas.Enabled = false;
             CarregarVendasConsultar();
         }
 
@@ -277,6 +328,11 @@ namespace SuplementosPIMIV.View
             {
                 LinkButton lb = (LinkButton)e.Row.FindControl("lbSelecionar");
                 e.Row.Attributes.Add("onClick", Page.ClientScript.GetPostBackEventReference(lb, ""));
+
+                if (e.Row.Cells[6].Text.Equals("&nbsp;"))
+                {
+                    btnValidarVendas.Enabled = true;
+                }
             }
 
             if (e.Row.RowType == DataControlRowType.Header)
@@ -296,28 +352,30 @@ namespace SuplementosPIMIV.View
             lblDS_Mensagem.Text = "";
 
             txbID_Venda.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text.Trim());
+            lblVenda.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text.Trim()) + " ➯ " +
+                Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text.Trim()) + " ➯ " +
+                Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text.Trim()) + " ➯ " +
+                Server.HtmlDecode(gvwExibe.SelectedRow.Cells[4].Text.Trim()) + " ➯ " +
+                Server.HtmlDecode(gvwExibe.SelectedRow.Cells[5].Text.Trim()) + " ➯ " +
+                Server.HtmlDecode(gvwExibe.SelectedRow.Cells[6].Text.Trim()) + " ➯ " +
+                Server.HtmlDecode(gvwExibe.SelectedRow.Cells[7].Text.Trim());
 
             try
             {
                 CarregarItensVenda(Convert.ToInt32(txbID_Venda.Text.Trim()));
-                DesbloquearComponentesRelatorioItensVenda(true);
             }
             catch (Exception ex)
             {
-                DesbloquearComponentesRelatorioItensVenda(false);
                 lblDS_Mensagem.Text = ex.Message + ex.StackTrace;
             }
+
+            btnExcluir.Enabled = true;
+            btnLimpar.Enabled = true;
         }
 
         protected void gvwExibe_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvwExibe.PageIndex = e.NewPageIndex;
-            CarregarVendas();
-        }
-
-        protected void btnLimpar_Click(object sender, EventArgs e)
-        {
-            LimparCamposVenda();
             CarregarVendas();
         }
 
@@ -350,12 +408,30 @@ namespace SuplementosPIMIV.View
         protected void gvwExibeItensVenda_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvwExibeItensVenda.PageIndex = e.NewPageIndex;
-            CarregarItensVenda(Convert.ToInt32(gvwExibe.SelectedRow.Cells[1].Text.Trim()));
+            CarregarItensVenda(Convert.ToInt32(txbID_Venda.Text.Trim()));
         }
 
-        protected void btnLimparItensVenda_Click(object sender, EventArgs e)
+        protected void btnLimpar_Click(object sender, EventArgs e)
         {
+            LimparCamposVenda();
             LimparItensVenda();
+            BloquearComponentesRelatorioVendas();
+        }
+
+        protected void btnExcluir_Click(object sender, EventArgs e)
+        {
+            Excluir();
+        }
+
+        protected void btnValidarVendas_Click(object sender, EventArgs e)
+        {
+            ValidarVendas();
+        }
+
+        protected void btnLimparFiltro_Click(object sender, EventArgs e)
+        {
+            LimparFiltro();
+            CarregarVendas();
         }
     }
 }

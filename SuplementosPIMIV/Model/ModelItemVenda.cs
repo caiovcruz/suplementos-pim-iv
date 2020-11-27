@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
-using System.Web;
 
 namespace SuplementosPIMIV.Model
 {
@@ -83,7 +80,7 @@ namespace SuplementosPIMIV.Model
                 sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
                 int result = sqlCommand.ExecuteNonQuery();
 
-                DS_Mensagem = result > 0 ? "OK" : "Erro ao incluir produto na venda";
+                DS_Mensagem = result > 0 ? "OK" : "Erro ao incluir produto na venda.";
             }
             catch (Exception e)
             {

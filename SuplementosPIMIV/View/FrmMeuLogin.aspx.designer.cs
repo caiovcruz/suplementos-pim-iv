@@ -87,6 +87,15 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.LinkButton lbtnRelatorios;
 
         /// <summary>
+        /// Controle updLogin.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel updLogin;
+
+        /// <summary>
         /// Controle txbID_Login.
         /// </summary>
         /// <remarks>
@@ -114,58 +123,40 @@ namespace SuplementosPIMIV.View
         protected global::System.Web.UI.WebControls.TextBox txbDS_UsuarioMeuLogin;
 
         /// <summary>
-        /// Controle updSenha.
+        /// Controle lblDS_SenhaMeuLoginAtual.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel updSenha;
+        protected global::System.Web.UI.WebControls.Label lblDS_SenhaMeuLoginAtual;
 
         /// <summary>
-        /// Controle lblDS_SenhaMeuLogin.
+        /// Controle txbDS_SenhaMeuLoginAtual.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDS_SenhaMeuLogin;
+        protected global::System.Web.UI.WebControls.TextBox txbDS_SenhaMeuLoginAtual;
 
         /// <summary>
-        /// Controle txbDS_SenhaMeuLoginMascara.
+        /// Controle lblDS_SenhaMeuLoginNovo.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbDS_SenhaMeuLoginMascara;
+        protected global::System.Web.UI.WebControls.Label lblDS_SenhaMeuLoginNovo;
 
         /// <summary>
-        /// Controle txbDS_SenhaMeuLogin.
+        /// Controle txbDS_SenhaMeuLoginNovo.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbDS_SenhaMeuLogin;
-
-        /// <summary>
-        /// Controle lbtnVisualizarSenha.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbtnVisualizarSenha;
-
-        /// <summary>
-        /// Controle lbtnMascararSenha.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbtnMascararSenha;
+        protected global::System.Web.UI.WebControls.TextBox txbDS_SenhaMeuLoginNovo;
 
         /// <summary>
         /// Controle lblDS_Mensagem.

@@ -5772,5 +5772,41 @@ VALUES
 	2,
 	'Entrada',
 	'2020-10-01',
-	5
+	12
+);
+
+INSERT INTO TB_Venda
+(
+	ID_Funcionario,
+	DT_Venda,
+	DS_TipoPagamento,
+	NR_Parcelas,
+	VL_Total,
+	VL_Lucro
+)
+VALUES
+(
+	1,
+	'2020-11-26',
+	'Dinheiro',
+	1,
+	70,
+	20
+);
+
+INSERT INTO TB_ItemVenda
+(
+	ID_Venda,
+	ID_Produto,
+	QTD_ItemVenda,
+	VL_Subtotal,
+	VL_Lucro
+)
+VALUES
+(
+	1,
+	1,
+	1,
+	70,
+	20
 );

@@ -1,10 +1,5 @@
 ﻿using SuplementosPIMIV.Controller;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Validacao;
 
 namespace SuplementosPIMIV.View
@@ -43,8 +38,15 @@ namespace SuplementosPIMIV.View
         private void DesbloquearComponentes(bool acao)
         {
             txbDS_UsuarioMeuLogin.Enabled = acao;
-            txbDS_SenhaMeuLogin.Enabled = acao;
+            txbDS_SenhaMeuLoginAtual.Enabled = acao;
+            txbDS_SenhaMeuLoginNovo.Enabled = acao;
             btnSalvar.Enabled = acao;
+        }
+
+        private void LimparCampos()
+        {
+            txbDS_SenhaMeuLoginAtual.Text = "";
+            txbDS_SenhaMeuLoginNovo.Text = "";
         }
 
         private void CarregarMeuLogin()
@@ -57,21 +59,6 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho!
                 txbDS_UsuarioMeuLogin.Text = myControllerLogin.DS_Usuario;
-                txbDS_SenhaMeuLogin.Text = myControllerLogin.DS_Senha;
-
-                string mascara = "";
-                foreach (char c in txbDS_SenhaMeuLogin.Text)
-                {
-                    mascara += "•";
-                }
-
-                txbDS_SenhaMeuLoginMascara.Text = mascara;
-
-                txbDS_SenhaMeuLogin.Visible = false;
-                txbDS_SenhaMeuLoginMascara.Visible = true;
-                txbDS_SenhaMeuLoginMascara.Enabled = false;
-                lbtnVisualizarSenha.Visible = true;
-                lbtnMascararSenha.Visible = false;
             }
             else
             {
@@ -85,6 +72,7 @@ namespace SuplementosPIMIV.View
             // validar a entrada de dados para incluir
             myValidar = new Validar();
             myControllerLogin = new ControllerLogin(Session["ConnectionString"].ToString());
+            myControllerLogin.GetLogin(Session["ID_Login"].ToString());
             string mDs_Msg = "";
 
             if (myValidar.CampoPreenchido(txbDS_UsuarioMeuLogin.Text.Trim()))
@@ -105,26 +93,70 @@ namespace SuplementosPIMIV.View
                     {
                         if (myControllerLogin.VerificarLoginCadastrado(Session["ID_Login"].ToString(), Session["ID_Funcionario"].ToString(), txbDS_UsuarioMeuLogin.Text.Trim()).Equals(""))
                         {
-                            if (myValidar.CampoPreenchido(txbDS_SenhaMeuLogin.Text.Trim()))
+                            if (myValidar.CampoPreenchido(txbDS_SenhaMeuLoginAtual.Text.Trim()))
                             {
-                                if (!myValidar.TamanhoCampo(txbDS_SenhaMeuLogin.Text.Trim(), 20))
+                                if (!myValidar.TamanhoCampo(txbDS_SenhaMeuLoginAtual.Text.Trim(), 20))
                                 {
-                                    mDs_Msg += " Limite de caracteres para descrição excedido, " +
+                                    mDs_Msg += " Limite de caracteres para a senha atual do usuário excedida, " +
                                                   "o limite para este campo é: 20 caracteres, " +
-                                                  "quantidade utilizada: " + txbDS_SenhaMeuLogin.Text.Trim().Length + ".";
+                                                  "quantidade utilizada: " + txbDS_SenhaMeuLoginNovo.Text.Trim().Length + ".";
                                 }
                                 else
                                 {
-                                    if (txbDS_SenhaMeuLogin.Text.Trim().Length < 10)
+                                    if (txbDS_SenhaMeuLoginAtual.Text.Trim().Length < 10)
                                     {
-                                        mDs_Msg += " A senha do usuário deve conter pelo menos 10 caracteres";
+                                        mDs_Msg += " A senha atual do usuário deve conter pelo menos 10 caracteres.";
+                                    }
+                                    else
+                                    {
+                                        if (BCrypt.Net.BCrypt.Verify(txbDS_SenhaMeuLoginAtual.Text.Trim(), myControllerLogin.DS_Senha))
+                                        {
+                                            if (myValidar.CampoPreenchido(txbDS_SenhaMeuLoginNovo.Text.Trim()))
+                                            {
+                                                if (!myValidar.TamanhoCampo(txbDS_SenhaMeuLoginNovo.Text.Trim(), 20))
+                                                {
+                                                    mDs_Msg += " Limite de caracteres para a nova senha do usuário excedida, " +
+                                                                  "o limite para este campo é: 20 caracteres, " +
+                                                                  "quantidade utilizada: " + txbDS_SenhaMeuLoginNovo.Text.Trim().Length + ".";
+                                                }
+                                                else
+                                                {
+                                                    if (txbDS_SenhaMeuLoginNovo.Text.Trim().Length < 10)
+                                                    {
+                                                        mDs_Msg += " A senha do usuário deve conter pelo menos 10 caracteres.";
+                                                    }
+                                                    else
+                                                    {
+                                                        if (txbDS_SenhaMeuLoginAtual.Text.Trim() == txbDS_SenhaMeuLoginNovo.Text.Trim())
+                                                        {
+                                                            mDs_Msg += " A nova senha do usuário não pode ser igual a atual.";
+                                                        }
+                                                        else
+                                                        {
+                                                            if (txbDS_UsuarioMeuLogin.Text.Trim() == txbDS_SenhaMeuLoginNovo.Text.Trim())
+                                                            {
+                                                                mDs_Msg += " O nome de usuário e a nova senha não podem ser iguais.";
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                mDs_Msg += " A nova senha do usuário deve estar preenchida.";
+                                            }
+                                        }
+                                        else
+                                        {
+                                            mDs_Msg += " A senha atual do usuário está incorreta.";
+                                        }
                                     }
                                 }
                             }
                             else
                             {
-                                mDs_Msg += " A senha do usuário deve estar preenchida.";
-                            }
+                                mDs_Msg += " A senha atual do usuário deve estar preenchida.";
+                            }                          
                         }
                         else
                         {
@@ -155,7 +187,7 @@ namespace SuplementosPIMIV.View
                     Convert.ToInt32(Session["ID_Funcionario"].ToString()),
                     Session["DS_NivelAcesso"].ToString(),
                     txbDS_UsuarioMeuLogin.Text.Trim(),
-                    txbDS_SenhaMeuLogin.Text.Trim(),
+                    BCrypt.Net.BCrypt.HashPassword(txbDS_SenhaMeuLoginNovo.Text.Trim()),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -164,11 +196,8 @@ namespace SuplementosPIMIV.View
                     // tudo certinho!
                     CarregarMeuLogin();
                     DesbloquearComponentes(false);
+                    LimparCampos();
                     btnAlterar.Enabled = true;
-                    txbDS_SenhaMeuLogin.Visible = false;
-                    txbDS_SenhaMeuLoginMascara.Visible = true;
-                    lbtnVisualizarSenha.Visible = true;
-                    lbtnMascararSenha.Visible = false;
                     lblDS_Mensagem.Text = "Alterado com sucesso!";
                 }
                 else
@@ -187,29 +216,9 @@ namespace SuplementosPIMIV.View
         protected void btnAlterar_Click(object sender, EventArgs e)
         {
             DesbloquearComponentes(true);
+            LimparCampos();
             btnAlterar.Enabled = false;
             lblDS_Mensagem.Text = "";
-
-            txbDS_SenhaMeuLogin.Visible = true;
-            txbDS_SenhaMeuLoginMascara.Visible = false;
-            lbtnVisualizarSenha.Visible = false;
-            lbtnMascararSenha.Visible = false;
-        }
-
-        protected void lbtnVisualizarSenha_Click(object sender, EventArgs e)
-        {
-            txbDS_SenhaMeuLogin.Visible = true;
-            txbDS_SenhaMeuLoginMascara.Visible = false;
-            lbtnVisualizarSenha.Visible = false;
-            lbtnMascararSenha.Visible = true;
-        }
-
-        protected void lbtnMascararSenha_Click(object sender, EventArgs e)
-        {
-            txbDS_SenhaMeuLogin.Visible = false;
-            txbDS_SenhaMeuLoginMascara.Visible = true;
-            lbtnVisualizarSenha.Visible = true;
-            lbtnMascararSenha.Visible = false;
         }
     }
 }

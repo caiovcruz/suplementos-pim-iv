@@ -69,10 +69,10 @@ namespace SuplementosPIMIV.View
         private void CarregarLogins()
         {
             // instanciando um objeto da classe ControllerLogin
-            myControllerLogin = new ControllerLogin(Session["ConnectionString"].ToString());
+            myControllerLogin = new ControllerLogin();
 
             // passando a fonte de dados para o GridView
-            gvwExibe.DataSource = myControllerLogin.Exibir(chkStatusInativo.Checked ? 0 : 1);
+            gvwExibe.DataSource = myControllerLogin.Exibir(chkStatusInativo.Checked ? "0" : "1", Session["ConnectionString"].ToString());
 
             // associando os dados para carregar e exibir
             gvwExibe.DataBind();
@@ -80,9 +80,9 @@ namespace SuplementosPIMIV.View
 
         private void CarregarFuncionarios()
         {
-            myControllerFuncionario = new ControllerFuncionario(Session["ConnectionString"].ToString());
+            myControllerFuncionario = new ControllerFuncionario();
 
-            ddlID_Funcionario.DataSource = myControllerFuncionario.Exibir(1);
+            ddlID_Funcionario.DataSource = myControllerFuncionario.Exibir("1", Session["ConnectionString"].ToString());
             ddlID_Funcionario.DataTextField = "NM_Funcionario";
             ddlID_Funcionario.DataValueField = "ID_Funcionario";
             ddlID_Funcionario.DataBind();
@@ -112,8 +112,8 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho
                 // instanciar um objeto da classe login, carregar tela e consultar
-                myControllerLogin = new ControllerLogin(Session["ConnectionString"].ToString());
-                gvwExibe.DataSource = myControllerLogin.Consultar(chkStatusInativo.Checked ? 0 : 1, txbNM_FuncionarioLoginConsultar.Text.Trim());
+                myControllerLogin = new ControllerLogin();
+                gvwExibe.DataSource = myControllerLogin.Consultar(chkStatusInativo.Checked ? "0" : "1", txbNM_FuncionarioLoginConsultar.Text.Trim(), Session["ConnectionString"].ToString());
                 gvwExibe.DataBind();
             }
             else
@@ -139,167 +139,61 @@ namespace SuplementosPIMIV.View
                 txbDS_Senha.Text.Trim().Length > 0;
         }
 
-        private string ValidateFields()
-        {
-            // validar a entrada de dados para incluir
-            myValidar = new Validar();
-            myControllerLogin = new ControllerLogin(Session["ConnectionString"].ToString());
-            string mDs_Msg = "";
-
-            if (ddlID_Funcionario.SelectedIndex.Equals(0))
-            {
-                mDs_Msg = " É necessário selecionar um funcionário.";
-            }
-            else
-            {
-                if (myValidar.CampoPreenchido(txbDS_Usuario.Text.Trim()))
-                {
-                    if (!myValidar.TamanhoCampo(txbDS_Usuario.Text.Trim(), 20))
-                    {
-                        mDs_Msg = " Limite de caracteres para o nome excedido, " +
-                                      "o limite para este campo é: 20 caracteres, " +
-                                      "quantidade utilizada: " + txbDS_Usuario.Text.Trim().Length + ".";
-                    }
-                    else
-                    {
-                        if (txbDS_Usuario.Text.Trim().Length < 10)
-                        {
-                            mDs_Msg = " O nome de usuário deve conter pelo menos 10 caracteres";
-                        }
-                        else
-                        {
-                            if (myControllerLogin.VerificarLoginCadastrado(txbID_Login.Text.Trim(), ddlID_Funcionario.SelectedValue, txbDS_Usuario.Text.Trim()).Equals(""))
-                            {
-                                if (myValidar.CampoPreenchido(txbDS_Senha.Text.Trim()))
-                                {
-                                    if (!myValidar.TamanhoCampo(txbDS_Senha.Text.Trim(), 20))
-                                    {
-                                        mDs_Msg += " Limite de caracteres para descrição excedido, " +
-                                                      "o limite para este campo é: 20 caracteres, " +
-                                                      "quantidade utilizada: " + txbDS_Senha.Text.Trim().Length + ".";
-                                    }
-                                    else
-                                    {
-                                        if (ddlDS_NivelAcesso.SelectedIndex.Equals(0))
-                                        {
-                                            mDs_Msg += " É necessário selecionar um nível de acesso.";
-                                        }
-
-                                        if (txbDS_Senha.Text.Trim().Length < 10)
-                                        {
-                                            mDs_Msg += " A senha do usuário deve conter pelo menos 10 caracteres.";
-                                        }
-                                        else
-                                        {
-                                            if (txbDS_Usuario.Text.Trim() == txbDS_Senha.Text.Trim())
-                                            {
-                                                mDs_Msg += " O nome de usuário e senha não podem ser iguais.";
-                                            }
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    mDs_Msg += " A senha do usuário deve estar preenchida.";
-                                }
-                            }
-                            else
-                            {
-                                mDs_Msg += " " + myControllerLogin.DS_Mensagem + " Verifique nos logins ativos e inativos!";
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    mDs_Msg = " O nome de usuário deve estar preenchido.";
-                }
-            }
-
-            return mDs_Msg;
-        }
-
         private void Incluir()
         {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
+            myControllerLogin = new ControllerLogin(
+                ddlID_Funcionario.SelectedValue,
+                ddlDS_NivelAcesso.SelectedValue,
+                txbDS_Usuario.Text.Trim(),
+                txbDS_Senha.Text.Trim(),
+                Session["ConnectionString"].ToString());
 
-            if (mDs_Msg == "")
-            {                         
-                // tudo certinho
-                // instanciar um objeto da classe login, carregar tela e incluir
-                myControllerLogin = new ControllerLogin(
-                    Convert.ToInt32(ddlID_Funcionario.SelectedValue),
-                    ddlDS_NivelAcesso.SelectedValue,
-                    txbDS_Usuario.Text.Trim(),
-                    BCrypt.Net.BCrypt.HashPassword(txbDS_Senha.Text.Trim()),
-                    Session["ConnectionString"].ToString());
-
-                // o que ocorreu?
-                if (myControllerLogin.DS_Mensagem == "OK")
-                {
-                    // tudo certinho!
-                    LimparCampos();
-                    BloquearComponentesCadastro();
-                    CarregarLogins();
-                    lblDS_Mensagem.Text = "Incluído com sucesso!";
-                }
-                else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerLogin.DS_Mensagem;
-                }
+            // o que ocorreu?
+            if (myControllerLogin.DS_Mensagem == "OK")
+            {
+                // tudo certinho!
+                LimparCampos();
+                BloquearComponentesCadastro();
+                CarregarLogins();
+                lblDS_Mensagem.Text = "Incluído com sucesso!";
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
+                lblDS_Mensagem.Text = myControllerLogin.DS_Mensagem;
             }
         }
 
         private void Alterar()
         {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
+            myControllerLogin = new ControllerLogin(
+                txbID_Login.Text.Trim(),
+                ddlID_Funcionario.SelectedValue,
+                ddlDS_NivelAcesso.SelectedValue,
+                txbDS_Usuario.Text.Trim(),
+                txbDS_Senha.Text.Trim(),
+                Session["ConnectionString"].ToString());
 
-            if (mDs_Msg == "")
+            // o que ocorreu?
+            if (myControllerLogin.DS_Mensagem == "OK")
             {
-                // tudo certinho
-                // instanciar um objeto da classe login, carregar tela e alterar
-                myControllerLogin = new ControllerLogin(
-                    Convert.ToInt32(txbID_Login.Text.Trim()),
-                    Convert.ToInt32(ddlID_Funcionario.SelectedValue),
-                    ddlDS_NivelAcesso.SelectedValue,
-                    txbDS_Usuario.Text.Trim(),
-                    BCrypt.Net.BCrypt.HashPassword(txbDS_Senha.Text.Trim()),
-                    Session["ConnectionString"].ToString());
-
-                // o que ocorreu?
-                if (myControllerLogin.DS_Mensagem == "OK")
-                {
-                    // tudo certinho!
-                    LimparCampos();
-                    BloquearComponentesCadastro();
-                    CarregarLogins();
-                    lblDS_Mensagem.Text = "Alterado com sucesso!";
-                }
-                else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerLogin.DS_Mensagem;
-                }
+                // tudo certinho!
+                LimparCampos();
+                BloquearComponentesCadastro();
+                CarregarLogins();
+                lblDS_Mensagem.Text = "Alterado com sucesso!";
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
+                lblDS_Mensagem.Text = myControllerLogin.DS_Mensagem;
             }
         }
 
         private void Excluir()
         {
             // instanciar um objeto da classe login e carregar tela e excluir
-            myControllerLogin = new ControllerLogin(Convert.ToInt32(txbID_Login.Text.Trim()), 'E', Session["ConnectionString"].ToString());
+            myControllerLogin = new ControllerLogin(txbID_Login.Text.Trim(), 'E', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerLogin.DS_Mensagem == "OK")
@@ -320,7 +214,7 @@ namespace SuplementosPIMIV.View
         private void Ativar()
         {
             // instanciar um objeto da classe login e carregar tela e ativar
-            myControllerLogin = new ControllerLogin(Convert.ToInt32(txbID_Login.Text.Trim()), 'A', Session["ConnectionString"].ToString());
+            myControllerLogin = new ControllerLogin(txbID_Login.Text.Trim(), 'A', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerLogin.DS_Mensagem == "OK")

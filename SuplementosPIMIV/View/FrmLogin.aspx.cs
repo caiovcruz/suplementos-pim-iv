@@ -31,12 +31,6 @@ namespace SuplementosPIMIV.View
             txbDS_Senha.Text = "";
         }
 
-        private void Sinalizar(Color c1, Color c2)
-        {
-            txbDS_Usuario.BorderColor = c1;
-            txbDS_Senha.BorderColor = c2;
-        }
-
         protected void btnAcessar_Click(object sender, EventArgs e)
         {
             // Definir variáveis
@@ -60,8 +54,8 @@ namespace SuplementosPIMIV.View
 
             if (mDs_Msg == "")
             {
-                myControllerLogin = new ControllerLogin(mDs_Usuario, Session["ConnectionString"].ToString());
-                mDs_Msg = myControllerLogin.Acessar();
+                myControllerLogin = new ControllerLogin();
+                mDs_Msg = myControllerLogin.Acessar(mDs_Usuario, Session["ConnectionString"].ToString());
 
                 if (mDs_Msg == "OK")
                 {

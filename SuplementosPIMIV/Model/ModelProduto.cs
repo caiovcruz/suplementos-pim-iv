@@ -26,10 +26,7 @@ namespace SuplementosPIMIV.Model
         SqlCommand sqlCommand;                                  // Command que envia um 'comando' para o SGBD
         SqlDataReader sqlDataReader;                            // Retorno do Command (DataReader) espécie de tabela/leitura 'apenas pra frente'
 
-        public ModelProduto(string connectionString)
-        {
-            ConnectionString = connectionString;
-        }
+        public ModelProduto() { }
 
         public ModelProduto(int id_marca, int id_categoria, int id_subcategoria, int id_sabor, string nr_ean, string nm_produto, string ds_produto,
             double pr_custo, double pr_venda, string connectionString)
@@ -81,7 +78,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public void Incluir()
+        private void Incluir()
         {
             DS_Mensagem = "";
 
@@ -131,7 +128,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public void Alterar()
+        private void Alterar()
         {
             DS_Mensagem = "";
 
@@ -169,9 +166,161 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public DataTable Consultar(int status, string filtro)
+        private void Excluir()
+        {
+            DS_Mensagem = "";
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("UPDATE TB_Produto SET ");
+                stringSQL.Append("Ativo = 0 ");
+                stringSQL.Append("WHERE ID_Produto = '" + ID_Produto + "'");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                int result = sqlCommand.ExecuteNonQuery();
+
+                DS_Mensagem = result > 0 ? "OK" : "Erro ao excluir";
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+        }
+
+        private void Ativar()
+        {
+            DS_Mensagem = "";
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("UPDATE TB_Produto SET ");
+                stringSQL.Append("Ativo = 1 ");
+                stringSQL.Append("WHERE ID_Produto = '" + ID_Produto + "'");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                int result = sqlCommand.ExecuteNonQuery();
+
+                DS_Mensagem = result > 0 ? "OK" : "Erro ao ativar";
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+        }
+
+        public DataTable ListarProdutos(int status, string connectionString)
         {
             DataTable dataTable = new DataTable();
+            ConnectionString = connectionString;
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("PROD.ID_Produto, ");
+                stringSQL.Append("CONCAT(PROD.NM_Produto, ' – ', MAR.NM_Marca, ' – ', SAB.NM_Sabor) AS NM_Produto ");
+                stringSQL.Append("FROM TB_Produto AS PROD ");
+                stringSQL.Append("INNER JOIN TB_Marca AS MAR ON PROD.ID_Marca = MAR.ID_Marca ");
+                stringSQL.Append("INNER JOIN TB_Sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor ");
+                stringSQL.Append("WHERE PROD.Ativo = " + status + " ");
+                stringSQL.Append("ORDER BY PROD.ID_Produto DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                sqlDataReader = sqlCommand.ExecuteReader();
+                dataTable.Load(sqlDataReader);
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+
+            return dataTable;
+        }
+
+        public DataTable Exibir(int status, string connectionString)
+        {
+            DataTable dataTable = new DataTable();
+            ConnectionString = connectionString;
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("PROD.ID_Produto, ");
+                stringSQL.Append("PROD.NR_EAN, ");
+                stringSQL.Append("PROD.NM_Produto, ");
+                stringSQL.Append("PROD.ID_Marca, ");
+                stringSQL.Append("MAR.NM_Marca, ");
+                stringSQL.Append("PROD.ID_Categoria, ");
+                stringSQL.Append("CAT.NM_Categoria, ");
+                stringSQL.Append("PROD.ID_Subcategoria, ");
+                stringSQL.Append("SUB.NM_Subcategoria, ");
+                stringSQL.Append("PROD.ID_Sabor, ");
+                stringSQL.Append("SAB.NM_Sabor, ");
+                stringSQL.Append("PROD.DS_Produto, ");
+                stringSQL.Append("EST.QTD_Estoque, ");
+                stringSQL.Append("FORMAT(PROD.PR_Custo, 'N2') AS PR_Custo, ");
+                stringSQL.Append("FORMAT(PROD.PR_Venda, 'N2') AS PR_Venda, ");
+                stringSQL.Append("PROD.Ativo ");
+                stringSQL.Append("FROM TB_Produto AS PROD ");
+                stringSQL.Append("INNER JOIN TB_Marca AS MAR ON PROD.ID_Marca = MAR.ID_Marca ");
+                stringSQL.Append("INNER JOIN TB_Categoria AS CAT ON PROD.ID_Categoria = CAT.ID_Categoria ");
+                stringSQL.Append("INNER JOIN TB_Subcategoria AS SUB ON PROD.ID_Subcategoria = SUB.ID_Subcategoria ");
+                stringSQL.Append("INNER JOIN TB_Sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor ");
+                stringSQL.Append("INNER JOIN TB_Estoque AS EST ON PROD.ID_Produto = EST.ID_Produto ");
+                stringSQL.Append("WHERE PROD.Ativo = " + status + " ");
+                stringSQL.Append("ORDER BY PROD.ID_Produto DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                sqlDataReader = sqlCommand.ExecuteReader();
+                dataTable.Load(sqlDataReader);
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+
+            return dataTable;
+        }
+
+        public DataTable Consultar(int status, string filtro, string connectionString)
+        {
+            DataTable dataTable = new DataTable();
+            ConnectionString = connectionString;
 
             try
             {
@@ -238,158 +387,10 @@ namespace SuplementosPIMIV.Model
             return dataTable;
         }
 
-        public void Excluir()
+        public string VerificarProdutoCadastrado(string id_produto, string nr_ean, string nm_produto, string id_marca, string connectionString)
         {
             DS_Mensagem = "";
-
-            try
-            {
-                sqlConnection = new SqlConnection(ConnectionString);
-                sqlConnection.Open();
-
-                StringBuilder stringSQL = new StringBuilder();
-                stringSQL.Append("UPDATE TB_Produto SET ");
-                stringSQL.Append("Ativo = 0 ");
-                stringSQL.Append("WHERE ID_Produto = '" + ID_Produto + "'");
-
-                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
-                int result = sqlCommand.ExecuteNonQuery();
-
-                DS_Mensagem = result > 0 ? "OK" : "Erro ao excluir";
-            }
-            catch (Exception e)
-            {
-                DS_Mensagem = e.Message;
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Close();
-            }
-        }
-
-        public void Ativar()
-        {
-            DS_Mensagem = "";
-
-            try
-            {
-                sqlConnection = new SqlConnection(ConnectionString);
-                sqlConnection.Open();
-
-                StringBuilder stringSQL = new StringBuilder();
-                stringSQL.Append("UPDATE TB_Produto SET ");
-                stringSQL.Append("Ativo = 1 ");
-                stringSQL.Append("WHERE ID_Produto = '" + ID_Produto + "'");
-
-                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
-                int result = sqlCommand.ExecuteNonQuery();
-
-                DS_Mensagem = result > 0 ? "OK" : "Erro ao ativar";
-            }
-            catch (Exception e)
-            {
-                DS_Mensagem = e.Message;
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Close();
-            }
-        }
-
-        public DataTable ListarProdutos(int status)
-        {
-            DataTable dataTable = new DataTable();
-
-            try
-            {
-                sqlConnection = new SqlConnection(ConnectionString);
-                sqlConnection.Open();
-
-                StringBuilder stringSQL = new StringBuilder();
-                stringSQL.Append("SELECT ");
-                stringSQL.Append("PROD.ID_Produto, ");
-                stringSQL.Append("CONCAT(PROD.NM_Produto, ' – ', MAR.NM_Marca, ' – ', SAB.NM_Sabor) AS NM_Produto ");
-                stringSQL.Append("FROM TB_Produto AS PROD ");
-                stringSQL.Append("INNER JOIN TB_Marca AS MAR ON PROD.ID_Marca = MAR.ID_Marca ");
-                stringSQL.Append("INNER JOIN TB_Sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor ");
-                stringSQL.Append("WHERE PROD.Ativo = " + status + " ");
-                stringSQL.Append("ORDER BY PROD.ID_Produto DESC");
-
-                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
-                sqlDataReader = sqlCommand.ExecuteReader();
-                dataTable.Load(sqlDataReader);
-            }
-            catch (Exception e)
-            {
-                DS_Mensagem = e.Message;
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Close();
-            }
-
-            return dataTable;
-        }
-
-        public DataTable Exibir(int status)
-        {
-            DataTable dataTable = new DataTable();
-
-            try
-            {
-                sqlConnection = new SqlConnection(ConnectionString);
-                sqlConnection.Open();
-
-                StringBuilder stringSQL = new StringBuilder();
-                stringSQL.Append("SELECT ");
-                stringSQL.Append("PROD.ID_Produto, ");
-                stringSQL.Append("PROD.NR_EAN, ");
-                stringSQL.Append("PROD.NM_Produto, ");
-                stringSQL.Append("PROD.ID_Marca, ");
-                stringSQL.Append("MAR.NM_Marca, ");
-                stringSQL.Append("PROD.ID_Categoria, ");
-                stringSQL.Append("CAT.NM_Categoria, ");
-                stringSQL.Append("PROD.ID_Subcategoria, ");
-                stringSQL.Append("SUB.NM_Subcategoria, ");
-                stringSQL.Append("PROD.ID_Sabor, ");
-                stringSQL.Append("SAB.NM_Sabor, ");
-                stringSQL.Append("PROD.DS_Produto, ");
-                stringSQL.Append("EST.QTD_Estoque, ");
-                stringSQL.Append("FORMAT(PROD.PR_Custo, 'N2') AS PR_Custo, ");
-                stringSQL.Append("FORMAT(PROD.PR_Venda, 'N2') AS PR_Venda, ");
-                stringSQL.Append("PROD.Ativo ");
-                stringSQL.Append("FROM TB_Produto AS PROD ");
-                stringSQL.Append("INNER JOIN TB_Marca AS MAR ON PROD.ID_Marca = MAR.ID_Marca ");
-                stringSQL.Append("INNER JOIN TB_Categoria AS CAT ON PROD.ID_Categoria = CAT.ID_Categoria ");
-                stringSQL.Append("INNER JOIN TB_Subcategoria AS SUB ON PROD.ID_Subcategoria = SUB.ID_Subcategoria ");
-                stringSQL.Append("INNER JOIN TB_Sabor AS SAB ON PROD.ID_Sabor = SAB.ID_Sabor ");
-                stringSQL.Append("INNER JOIN TB_Estoque AS EST ON PROD.ID_Produto = EST.ID_Produto ");
-                stringSQL.Append("WHERE PROD.Ativo = " + status + " ");
-                stringSQL.Append("ORDER BY PROD.ID_Produto DESC");
-
-                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
-                sqlDataReader = sqlCommand.ExecuteReader();
-                dataTable.Load(sqlDataReader);
-            }
-            catch (Exception e)
-            {
-                DS_Mensagem = e.Message;
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Close();
-            }
-
-            return dataTable;
-        }
-
-        public string VerificarProdutoCadastrado(string id_produto, string nr_ean, string nm_produto, string id_marca)
-        {
-            DS_Mensagem = "";
+            ConnectionString = connectionString;
 
             try
             {

@@ -88,10 +88,10 @@ namespace SuplementosPIMIV.View
         private void CarregarFuncionarios()
         {
             // instanciando um objeto da classe ControllerFuncionario
-            myControllerFuncionario = new ControllerFuncionario(Session["ConnectionString"].ToString());
+            myControllerFuncionario = new ControllerFuncionario();
 
             // passando a fonte de dados para o GridView
-            gvwExibe.DataSource = myControllerFuncionario.Exibir(chkStatusInativo.Checked ? 0 : 1);
+            gvwExibe.DataSource = myControllerFuncionario.Exibir(chkStatusInativo.Checked ? "0" : "1", Session["ConnectionString"].ToString());
 
             // associando os dados para carregar e exibir
             gvwExibe.DataBind();
@@ -152,9 +152,9 @@ namespace SuplementosPIMIV.View
 
         private void CarregarUFs()
         {
-            myControllerFuncionario = new ControllerFuncionario(Session["ConnectionString"].ToString());
+            myControllerFuncionario = new ControllerFuncionario();
 
-            ddlDS_UF.DataSource = myControllerFuncionario.ExibirUFs();
+            ddlDS_UF.DataSource = myControllerFuncionario.ExibirUFs(Session["ConnectionString"].ToString());
             ddlDS_UF.DataTextField = "DS_UF";
             ddlDS_UF.DataValueField = "ID_UF";
             ddlDS_UF.DataBind();
@@ -165,9 +165,9 @@ namespace SuplementosPIMIV.View
 
         private void CarregarCidades()
         {
-            myControllerFuncionario = new ControllerFuncionario(Session["ConnectionString"].ToString());
+            myControllerFuncionario = new ControllerFuncionario();
 
-            ddlNM_Cidade.DataSource = myControllerFuncionario.ExibirCidades(Convert.ToInt32(ddlDS_UF.SelectedValue));
+            ddlNM_Cidade.DataSource = myControllerFuncionario.ExibirCidades(ddlDS_UF.SelectedValue, Session["ConnectionString"].ToString());
             ddlNM_Cidade.DataTextField = "NM_Cidade";
             ddlNM_Cidade.DataValueField = "ID_Cidade";
             ddlNM_Cidade.DataBind();
@@ -188,7 +188,7 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho
                 // instanciar um objeto da classe produto, carregar tela e consultar
-                myControllerFuncionario = new ControllerFuncionario(Session["ConnectionString"].ToString());
+                myControllerFuncionario = new ControllerFuncionario();
 
                 string filtro = "";
 
@@ -208,7 +208,7 @@ namespace SuplementosPIMIV.View
                 if (ddlFiltro.SelectedValue.Equals("UF")) filtro = "UF.DS_UF";
                 if (ddlFiltro.SelectedValue.Equals("Cidade")) filtro = "CID.NM_Cidade";
 
-                gvwExibe.DataSource = myControllerFuncionario.Consultar(chkStatusInativo.Checked ? 0 : 1, filtro, txbConsultar.Text.Trim());
+                gvwExibe.DataSource = myControllerFuncionario.Consultar(chkStatusInativo.Checked ? "0" : "1", filtro, txbConsultar.Text.Trim(), Session["ConnectionString"].ToString());
                 gvwExibe.DataBind();
             }
             else
@@ -279,307 +279,89 @@ namespace SuplementosPIMIV.View
                 ddlNM_Cidade.SelectedIndex != 0;
         }
 
-        private string ValidateFields()
-        {
-            // validar a entrada de dados para incluir
-            myValidar = new Validar();
-            myControllerFuncionario = new ControllerFuncionario(Session["ConnectionString"].ToString());
-            string mDs_Msg = "";
-
-            if (myValidar.CampoPreenchido(txbNM_Funcionario.Text.Trim()))
-            {
-                if (!myValidar.TamanhoCampo(txbNM_Funcionario.Text.Trim(), 50))
-                {
-                    mDs_Msg = " Limite de caracteres para o nome excedido, " +
-                                  "o limite para este campo é: 50 caracteres, " +
-                                  "quantidade utilizada: " + txbNM_Funcionario.Text.Trim().Length + ".";
-                }
-                else
-                {
-                    if (myValidar.CampoPreenchido(txbNR_CPF.Text.Trim()))
-                    {
-                        if (!myValidar.ValidaCPF(txbNR_CPF.Text.Trim()))
-                        {
-                            mDs_Msg = " CPF inválido, por favor verifique e tente novamente.";
-                        }
-                        else
-                        {
-                            if (myControllerFuncionario.VerificarFuncionarioCadastrado(txbID_Funcionario.Text.Trim(), txbNR_CPF.Text.Trim().Replace(".", "").Replace("-", "")).Equals(""))
-                            {
-                                if (ddlDiaNascimentoFuncionario.SelectedIndex.Equals(0))
-                                {
-                                    mDs_Msg += " É necessário selecionar o dia do nascimento.";
-                                }
-
-                                if (ddlMesNascimentoFuncionario.SelectedIndex.Equals(0))
-                                {
-                                    mDs_Msg += " É necessário selecionar o mês do nascimento.";
-                                }
-
-                                if (ddlAnoNascimentoFuncionario.SelectedIndex.Equals(0))
-                                {
-                                    mDs_Msg += " É necessário selecionar o ano do nascimento.";
-                                }
-
-                                if (ddlDS_Sexo.SelectedIndex.Equals(0))
-                                {
-                                    mDs_Msg += " É necessário selecionar o sexo.";
-                                }
-
-                                if (myValidar.CampoPreenchido(txbNR_Telefone.Text.Trim()))
-                                {
-                                    if (!myValidar.Numero(txbNR_Telefone.Text.Trim().Replace("(", "").Replace(")", "").Replace("-", "")))
-                                    {
-                                        mDs_Msg += " O telefone deve conter somente números.";
-                                    }
-                                    else
-                                    {
-                                        if (txbNR_Telefone.Text.Trim().Replace("(", "").Replace(")", "").Replace("-", "").Length < 10)
-                                        {
-                                            mDs_Msg += " O telefone deve conter ao menos 10 números, contando com o DDD.";
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    mDs_Msg += " O telefone deve estar preenchido.";
-                                }
-
-                                if (myValidar.CampoPreenchido(txbDS_Email.Text.Trim()))
-                                {
-                                    if (!myValidar.TamanhoCampo(txbDS_Email.Text.Trim(), 35))
-                                    {
-                                        mDs_Msg += " Limite de caracteres para descrição excedido, " +
-                                                      "o limite para este campo é: 3000 caracteres, " +
-                                                      "quantidade utilizada: " + txbDS_Email.Text.Trim().Length + ".";
-                                    }
-                                }
-                                else
-                                {
-                                    mDs_Msg += " O e-mail deve estar preenchido.";
-                                }
-
-                                if (myValidar.CampoPreenchido(txbNR_CEP.Text.Trim()))
-                                {
-                                    if (!myValidar.Numero(txbNR_CEP.Text.Trim().Replace("-", "")))
-                                    {
-                                        mDs_Msg += " O CEP deve conter somente números.";
-                                    }
-                                    else
-                                    {
-                                        if (txbNR_CEP.Text.Trim().Replace("-", "").Length < 8)
-                                        {
-                                            mDs_Msg += " O CEP deve conter ao menos 8 números.";
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    mDs_Msg += " O CEP deve estar preenchido.";
-                                }
-
-                                if (myValidar.CampoPreenchido(txbDS_Logradouro.Text.Trim()))
-                                {
-                                    if (!myValidar.TamanhoCampo(txbDS_Logradouro.Text.Trim(), 50))
-                                    {
-                                        mDs_Msg += " Limite de caracteres para descrição excedido, " +
-                                                      "o limite para este campo é: 3000 caracteres, " +
-                                                      "quantidade utilizada: " + txbDS_Logradouro.Text.Trim().Length + ".";
-                                    }
-                                }
-                                else
-                                {
-                                    mDs_Msg += " O logradouro deve estar preenchido.";
-                                }
-
-                                if (myValidar.CampoPreenchido(txbNM_Bairro.Text.Trim()))
-                                {
-                                    if (!myValidar.TamanhoCampo(txbNM_Bairro.Text.Trim(), 50))
-                                    {
-                                        mDs_Msg += " Limite de caracteres para descrição excedido, " +
-                                                      "o limite para este campo é: 3000 caracteres, " +
-                                                      "quantidade utilizada: " + txbNM_Bairro.Text.Trim().Length + ".";
-                                    }
-                                }
-                                else
-                                {
-                                    mDs_Msg += " O bairro deve estar preenchido.";
-                                }
-
-                                if (!string.IsNullOrWhiteSpace(txbDS_Complemento.Text.Trim()))
-                                {
-                                    if (!myValidar.TamanhoCampo(txbDS_Complemento.Text.Trim(), 50))
-                                    {
-                                        mDs_Msg += " Limite de caracteres para descrição excedido, " +
-                                                      "o limite para este campo é: 3000 caracteres, " +
-                                                      "quantidade utilizada: " + txbDS_Complemento.Text.Trim().Length + ".";
-                                    }
-                                }
-
-                                if (ddlDS_Cargo.SelectedIndex.Equals(0))
-                                {
-                                    mDs_Msg += " É necessário selecionar o cargo.";
-                                }
-
-                                if (myValidar.CampoPreenchido(txbVL_Salario.Text.Trim()))
-                                {
-                                    if (!myValidar.Valor(txbVL_Salario.Text.Trim()))
-                                    {
-                                        mDs_Msg += " O salário deve ser um valor numérico, no formato: 9.999.999,99.";
-                                    }
-                                }
-                                else
-                                {
-                                    mDs_Msg += " O salário deve estar preenchido.";
-                                }
-
-                                if (ddlDS_UF.SelectedIndex.Equals(0))
-                                {
-                                    mDs_Msg += " É necessário selecionar a UF.";
-                                }
-
-                                if (ddlNM_Cidade.SelectedIndex.Equals(0))
-                                {
-                                    mDs_Msg += " É necessário selecionar a cidade.";
-                                }
-                            }
-                            else
-                            {
-                                mDs_Msg += " " + myControllerFuncionario.DS_Mensagem + " Verifique nos funcionários ativos e inativos!";
-                            }
-                        }
-                    }
-                    else
-                    {
-                        mDs_Msg += " O CPF deve estar preenchido.";
-                    }
-                }
-            }
-            else
-            {
-                mDs_Msg = " O nome deve estar preenchido.";
-            }
-
-            return mDs_Msg;
-        }
-
         private void Incluir()
         {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
+            myControllerFuncionario = new ControllerFuncionario(
+                txbNM_Funcionario.Text.Trim(),
+                ddlDS_Sexo.SelectedValue,
+                ddlDiaNascimentoFuncionario.SelectedValue,
+                ddlMesNascimentoFuncionario.SelectedIndex.ToString(),
+                ddlAnoNascimentoFuncionario.SelectedValue,
+                txbNR_CPF.Text.Trim(),
+                txbNR_Telefone.Text.Trim(),
+                txbDS_Email.Text.Trim(),
+                txbNR_CEP.Text.Trim(),
+                txbDS_Logradouro.Text.Trim(),
+                txbNR_Casa.Text.Trim(),
+                txbNM_Bairro.Text.Trim(),
+                txbDS_Complemento.Text.Trim(),
+                ddlDS_UF.SelectedValue,
+                ddlNM_Cidade.SelectedValue,
+                ddlDS_Cargo.SelectedValue,
+                txbVL_Salario.Text.Trim(),
+                DateTime.Now,
+                Session["ConnectionString"].ToString());
 
-            if (mDs_Msg == "")
+            // o que ocorreu?
+            if (myControllerFuncionario.DS_Mensagem == "OK")
             {
-                // criando a data de nascimento com datetime
-                DateTime date = new DateTime(
-                    Convert.ToInt32(ddlAnoNascimentoFuncionario.SelectedValue),
-                    ddlMesNascimentoFuncionario.SelectedIndex,
-                    Convert.ToInt32(ddlDiaNascimentoFuncionario.SelectedValue));
-
-                // tudo certinho
-                // instanciar um objeto da classe funcionário, carregar tela e incluir
-                myControllerFuncionario = new ControllerFuncionario(
-                    txbNM_Funcionario.Text.Trim(),
-                    ddlDS_Sexo.SelectedValue,
-                    date,
-                    txbNR_CPF.Text.Trim(),
-                    txbNR_Telefone.Text.Trim(),
-                    txbDS_Email.Text.Trim(),
-                    txbNR_CEP.Text.Trim(),
-                    txbDS_Logradouro.Text.Trim(),
-                    txbNR_Casa.Text.Trim(),
-                    txbNM_Bairro.Text.Trim(),
-                    txbDS_Complemento.Text.Trim(),
-                    Convert.ToInt32(ddlDS_UF.SelectedValue),
-                    Convert.ToInt32(ddlNM_Cidade.SelectedValue),
-                    ddlDS_Cargo.SelectedValue,
-                    Convert.ToDouble(txbVL_Salario.Text.Trim()),
-                    DateTime.Now,
-                    Session["ConnectionString"].ToString());
-
-                // o que ocorreu?
-                if (myControllerFuncionario.DS_Mensagem == "OK")
-                {
-                    // tudo certinho!
-                    LimparCampos();
-                    BloquearComponentesCadastro();
-                    CarregarFuncionarios();
-                    lblDS_Mensagem.Text = "Incluído com sucesso!";
-                }
-                else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerFuncionario.DS_Mensagem;
-                }
+                // tudo certinho!
+                LimparCampos();
+                BloquearComponentesCadastro();
+                CarregarFuncionarios();
+                lblDS_Mensagem.Text = "Incluído com sucesso!";
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
+                lblDS_Mensagem.Text = myControllerFuncionario.DS_Mensagem;
             }
         }
 
         private void Alterar()
         {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
+            myControllerFuncionario = new ControllerFuncionario(
+                txbID_Funcionario.Text.Trim(),
+                txbNM_Funcionario.Text.Trim(),
+                ddlDS_Sexo.SelectedValue,
+                ddlDiaNascimentoFuncionario.SelectedValue,
+                ddlMesNascimentoFuncionario.SelectedIndex.ToString(),
+                ddlAnoNascimentoFuncionario.SelectedValue,
+                txbNR_CPF.Text.Trim(),
+                txbNR_Telefone.Text.Trim(),
+                txbDS_Email.Text.Trim(),
+                txbNR_CEP.Text.Trim(),
+                txbDS_Logradouro.Text.Trim(),
+                txbNR_Casa.Text.Trim(),
+                txbNM_Bairro.Text.Trim(),
+                txbDS_Complemento.Text.Trim(),
+                ddlDS_UF.SelectedValue,
+                ddlNM_Cidade.SelectedValue,
+                ddlDS_Cargo.SelectedValue,
+                txbVL_Salario.Text.Trim(),
+                DateTime.Now,
+                Session["ConnectionString"].ToString());
 
-            if (mDs_Msg == "")
+            // o que ocorreu?
+            if (myControllerFuncionario.DS_Mensagem == "OK")
             {
-                // criando a data de nascimento com datetime
-                DateTime date = new DateTime(
-                    Convert.ToInt32(ddlAnoNascimentoFuncionario.SelectedValue),
-                    ddlMesNascimentoFuncionario.SelectedIndex,
-                    Convert.ToInt32(ddlDiaNascimentoFuncionario.SelectedValue));
-
-                // tudo certinho
-                // instanciar um objeto da classe funcionário, carregar tela e alterar
-                myControllerFuncionario = new ControllerFuncionario(
-                    Convert.ToInt32(txbID_Funcionario.Text.Trim()),
-                    txbNM_Funcionario.Text.Trim(),
-                    ddlDS_Sexo.SelectedValue,
-                    date,
-                    txbNR_CPF.Text.Trim(),
-                    txbNR_Telefone.Text.Trim(),
-                    txbDS_Email.Text.Trim(),
-                    txbNR_CEP.Text.Trim(),
-                    txbDS_Logradouro.Text.Trim(),
-                    txbNR_Casa.Text.Trim(),
-                    txbNM_Bairro.Text.Trim(),
-                    txbDS_Complemento.Text.Trim(),
-                    Convert.ToInt32(ddlDS_UF.SelectedValue),
-                    Convert.ToInt32(ddlNM_Cidade.SelectedValue),
-                    ddlDS_Cargo.SelectedValue,
-                    Convert.ToDouble(txbVL_Salario.Text.Trim()),
-                    Convert.ToDateTime(txbDT_Admissao.Text.Trim()),
-                    Session["ConnectionString"].ToString());
-
-                // o que ocorreu?
-                if (myControllerFuncionario.DS_Mensagem == "OK")
-                {
-                    // tudo certinho!
-                    LimparCampos();
-                    BloquearComponentesCadastro();
-                    CarregarFuncionarios();
-                    lblDS_Mensagem.Text = "Alterado com sucesso!";
-                }
-                else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerFuncionario.DS_Mensagem;
-                }
+                // tudo certinho!
+                LimparCampos();
+                BloquearComponentesCadastro();
+                CarregarFuncionarios();
+                lblDS_Mensagem.Text = "Alterado com sucesso!";
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
+                lblDS_Mensagem.Text = myControllerFuncionario.DS_Mensagem;
             }
         }
 
         private void Excluir()
         {
             // instanciar um objeto da classe funcionário e carregar tela e excluir
-            myControllerFuncionario = new ControllerFuncionario(Convert.ToInt32(txbID_Funcionario.Text.Trim()), 'E', Session["ConnectionString"].ToString());
+            myControllerFuncionario = new ControllerFuncionario(txbID_Funcionario.Text.Trim(), 'E', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerFuncionario.DS_Mensagem == "OK")
@@ -600,7 +382,7 @@ namespace SuplementosPIMIV.View
         private void Ativar()
         {
             // instanciar um objeto da classe funcionário e carregar tela e ativar
-            myControllerFuncionario = new ControllerFuncionario(Convert.ToInt32(txbID_Funcionario.Text.Trim()), 'A', Session["ConnectionString"].ToString());
+            myControllerFuncionario = new ControllerFuncionario(txbID_Funcionario.Text.Trim(), 'A', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerFuncionario.DS_Mensagem == "OK")

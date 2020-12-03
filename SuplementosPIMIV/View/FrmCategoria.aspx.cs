@@ -63,10 +63,10 @@ namespace SuplementosPIMIV.View
         private void CarregarCategorias()
         {
             // instanciando um objeto da classe ControllerCategoria
-            myControllerCategoria = new ControllerCategoria(Session["ConnectionString"].ToString());
+            myControllerCategoria = new ControllerCategoria();
 
             // passando a fonte de dados para o GridView
-            gvwExibe.DataSource = myControllerCategoria.Exibir(chkStatusInativo.Checked ? 0 : 1);
+            gvwExibe.DataSource = myControllerCategoria.Exibir(chkStatusInativo.Checked ? "0" : "1", Session["ConnectionString"].ToString());
 
             // associando os dados para carregar e exibir
             gvwExibe.DataBind();
@@ -84,8 +84,8 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho
                 // instanciar um objeto da classe categoria, carregar tela e consultar
-                myControllerCategoria = new ControllerCategoria(Session["ConnectionString"].ToString());
-                gvwExibe.DataSource = myControllerCategoria.Consultar(chkStatusInativo.Checked ? 0 : 1, txbNM_CategoriaConsultar.Text.Trim());
+                myControllerCategoria = new ControllerCategoria();
+                gvwExibe.DataSource = myControllerCategoria.Consultar(chkStatusInativo.Checked ? "0" : "1", txbNM_CategoriaConsultar.Text.Trim(), Session["ConnectionString"].ToString());
                 gvwExibe.DataBind();
             }
             else
@@ -107,130 +107,59 @@ namespace SuplementosPIMIV.View
                 txbDS_Categoria.Text.Trim().Length > 0;
         }
 
-        private string ValidateFields()
-        {
-            // validar a entrada de dados para incluir
-            myValidar = new Validar();
-            myControllerCategoria = new ControllerCategoria(Session["ConnectionString"].ToString());
-            string mDs_Msg = "";
 
-            if (myValidar.CampoPreenchido(txbNM_Categoria.Text.Trim()))
-            {
-                if (!myValidar.TamanhoCampo(txbNM_Categoria.Text.Trim(), 50))
-                {
-                    mDs_Msg = " Limite de caracteres para o nome excedido, " +
-                                  "o limite para este campo é: 50 caracteres, " +
-                                  "quantidade utilizada: " + txbNM_Categoria.Text.Trim().Length + ".";
-                }
-                else
-                {
-                    if (myControllerCategoria.VerificarCategoriaCadastrada(txbID_Categoria.Text.Trim(), txbNM_Categoria.Text.Trim()).Equals(""))
-                    {
-                        if (myValidar.CampoPreenchido(txbDS_Categoria.Text.Trim()))
-                        {
-                            if (!myValidar.TamanhoCampo(txbDS_Categoria.Text.Trim(), 1500))
-                            {
-                                mDs_Msg += " Limite de caracteres para descrição excedido, " +
-                                              "o limite para este campo é: 3000 caracteres, " +
-                                              "quantidade utilizada: " + txbDS_Categoria.Text.Trim().Length + ".";
-                            }
-                        }
-                        else
-                        {
-                            mDs_Msg += " A descrição deve estar preenchida.";
-                        }
-                    }
-                    else
-                    {
-                        mDs_Msg += " " + myControllerCategoria.DS_Mensagem + " Verifique nas categorias ativas e inativas!";
-                    }
-                }
-            }
-            else
-            {
-                mDs_Msg = " O nome deve estar preenchido.";
-            }
-
-            return mDs_Msg;
-        }
 
         private void Incluir()
         {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
+            myControllerCategoria = new ControllerCategoria(
+                txbNM_Categoria.Text.Trim(),
+                txbDS_Categoria.Text.Trim(),
+                Session["ConnectionString"].ToString());
 
-            if (mDs_Msg == "")
+            // o que ocorreu?
+            if (myControllerCategoria.DS_Mensagem == "OK")
             {
-                // tudo certinho
-                // instanciar um objeto da classe categoria, carregar tela e incluir
-                myControllerCategoria = new ControllerCategoria(
-                    txbNM_Categoria.Text.Trim(),
-                    txbDS_Categoria.Text.Trim(),
-                    Session["ConnectionString"].ToString());
-
-                // o que ocorreu?
-                if (myControllerCategoria.DS_Mensagem == "OK")
-                {
-                    // tudo certinho!
-                    LimparCampos();
-                    BloquearComponentesCadastro();
-                    CarregarCategorias();
-                    lblDS_Mensagem.Text = "Incluído com sucesso!";
-                }
-                else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerCategoria.DS_Mensagem;
-                }
+                // tudo certinho!
+                LimparCampos();
+                BloquearComponentesCadastro();
+                CarregarCategorias();
+                lblDS_Mensagem.Text = "Incluído com sucesso!";
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
+                lblDS_Mensagem.Text = myControllerCategoria.DS_Mensagem;
             }
         }
 
         private void Alterar()
         {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
+            myControllerCategoria = new ControllerCategoria(
+                txbID_Categoria.Text.Trim(),
+                txbNM_Categoria.Text.Trim(),
+                txbDS_Categoria.Text.Trim(),
+                Session["ConnectionString"].ToString());
 
-            if (mDs_Msg == "")
+            // o que ocorreu?
+            if (myControllerCategoria.DS_Mensagem == "OK")
             {
-                // tudo certinho
-                // instanciar um objeto da classe categoria, carregar tela e alterar
-                myControllerCategoria = new ControllerCategoria(
-                    Convert.ToInt32(txbID_Categoria.Text.Trim()),
-                    txbNM_Categoria.Text.Trim(),
-                    txbDS_Categoria.Text.Trim(),
-                    Session["ConnectionString"].ToString());
-
-                // o que ocorreu?
-                if (myControllerCategoria.DS_Mensagem == "OK")
-                {
-                    // tudo certinho!
-                    LimparCampos();
-                    BloquearComponentesCadastro();
-                    CarregarCategorias();
-                    lblDS_Mensagem.Text = "Alterado com sucesso!";
-                }
-                else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerCategoria.DS_Mensagem;
-                }
+                // tudo certinho!
+                LimparCampos();
+                BloquearComponentesCadastro();
+                CarregarCategorias();
+                lblDS_Mensagem.Text = "Alterado com sucesso!";
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
+                lblDS_Mensagem.Text = myControllerCategoria.DS_Mensagem;
             }
         }
 
         private void Excluir()
         {
             // instanciar um objeto da classe categoria e carregar tela e excluir
-            myControllerCategoria = new ControllerCategoria(Convert.ToInt32(txbID_Categoria.Text.Trim()), 'E', Session["ConnectionString"].ToString());
+            myControllerCategoria = new ControllerCategoria(txbID_Categoria.Text.Trim(), 'E', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerCategoria.DS_Mensagem == "OK")
@@ -251,7 +180,7 @@ namespace SuplementosPIMIV.View
         private void Ativar()
         {
             // instanciar um objeto da classe categoria e carregar tela e ativar
-            myControllerCategoria = new ControllerCategoria(Convert.ToInt32(txbID_Categoria.Text.Trim()), 'A', Session["ConnectionString"].ToString());
+            myControllerCategoria = new ControllerCategoria(txbID_Categoria.Text.Trim(), 'A', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerCategoria.DS_Mensagem == "OK")

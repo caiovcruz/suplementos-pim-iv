@@ -59,6 +59,7 @@ namespace SuplementosPIMIV.View
         {
             txbID_Venda.Text = "";
             lblVenda.Text = "";
+            lblDS_Mensagem.Text = "";
         }
 
         private void LimparItensVenda()
@@ -85,10 +86,10 @@ namespace SuplementosPIMIV.View
         private void CarregarVendas()
         {
             // instanciando um objeto da classe ControllerVenda
-            myControllerVenda = new ControllerVenda(Session["ConnectionString"].ToString());
+            myControllerVenda = new ControllerVenda();
 
             // passando a fonte de dados para o GridView
-            gvwExibe.DataSource = myControllerVenda.Exibir();
+            gvwExibe.DataSource = myControllerVenda.Exibir(Session["ConnectionString"].ToString());
 
             // associando os dados para carregar e exibir
             gvwExibe.DataBind();
@@ -99,7 +100,7 @@ namespace SuplementosPIMIV.View
         private void CarregarVendasConsultar()
         {
             // instanciar um objeto da classe venda, carregar tela e consultar
-            myControllerVenda = new ControllerVenda(Session["ConnectionString"].ToString());
+            myControllerVenda = new ControllerVenda();
 
             // criando a data de nascimento com datetime
             DateTime dataInicio = new DateTime(
@@ -112,19 +113,19 @@ namespace SuplementosPIMIV.View
                 ddlMesRelatorioFinal.SelectedIndex,
                 Convert.ToInt32(ddlDiaRelatorioFinal.SelectedValue));
 
-            gvwExibe.DataSource = myControllerVenda.Consultar(dataInicio, dataFinal);
+            gvwExibe.DataSource = myControllerVenda.Consultar(dataInicio, dataFinal, Session["ConnectionString"].ToString());
             gvwExibe.DataBind();
 
             CalcularRelatorioVendas();
         }
 
-        private void CarregarItensVenda(int id_venda)
+        private void CarregarItensVenda(string id_venda)
         {
             // instanciando um objeto da classe ControllerItemVenda
-            myControllerItemVenda = new ControllerItemVenda(Session["ConnectionString"].ToString());
+            myControllerItemVenda = new ControllerItemVenda();
 
             // passando a fonte de dados para o GridView
-            gvwExibeItensVenda.DataSource = myControllerItemVenda.Exibir(id_venda);
+            gvwExibeItensVenda.DataSource = myControllerItemVenda.Exibir(id_venda, Session["ConnectionString"].ToString());
 
             // associando os dados para carregar e exibir
             gvwExibeItensVenda.DataBind();
@@ -242,7 +243,7 @@ namespace SuplementosPIMIV.View
         private void Excluir()
         {
             // instanciar um objeto da classe venda e carregar tela e excluir
-            myControllerVenda = new ControllerVenda(Convert.ToInt32(txbID_Venda.Text.Trim()), Session["ConnectionString"].ToString());
+            myControllerVenda = new ControllerVenda(txbID_Venda.Text.Trim(), Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerVenda.DS_Mensagem == "OK")
@@ -264,8 +265,8 @@ namespace SuplementosPIMIV.View
         private void ValidarVendas()
         {
             // instanciar um objeto da classe venda e carregar tela e excluir
-            myControllerVenda = new ControllerVenda(Session["ConnectionString"].ToString());
-            myControllerVenda.ValidarVendas();
+            myControllerVenda = new ControllerVenda();
+            myControllerVenda.ValidarVendas(Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerVenda.DS_Mensagem == "OK")
@@ -319,6 +320,8 @@ namespace SuplementosPIMIV.View
         protected void btnConsultar_Click(object sender, EventArgs e)
         {
             btnValidarVendas.Enabled = false;
+            LimparCamposVenda();
+            LimparItensVenda();
             CarregarVendasConsultar();
         }
 
@@ -362,7 +365,7 @@ namespace SuplementosPIMIV.View
 
             try
             {
-                CarregarItensVenda(Convert.ToInt32(txbID_Venda.Text.Trim()));
+                CarregarItensVenda(txbID_Venda.Text.Trim());
             }
             catch (Exception ex)
             {
@@ -408,7 +411,7 @@ namespace SuplementosPIMIV.View
         protected void gvwExibeItensVenda_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvwExibeItensVenda.PageIndex = e.NewPageIndex;
-            CarregarItensVenda(Convert.ToInt32(txbID_Venda.Text.Trim()));
+            CarregarItensVenda(txbID_Venda.Text.Trim());
         }
 
         protected void btnLimpar_Click(object sender, EventArgs e)

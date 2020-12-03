@@ -19,10 +19,7 @@ namespace SuplementosPIMIV.Model
         SqlCommand sqlCommand;                                  // Command que envia um 'comando' para o SGBD
         SqlDataReader sqlDataReader;                            // Retorno do Command (DataReader) espécie de tabela/leitura 'apenas pra frente'
 
-        public ModelCategoria(string connectionString)
-        {
-            ConnectionString = connectionString;
-        }
+        public ModelCategoria() { }
 
         public ModelCategoria(string nm_categoria, string ds_categoria, string connectionString)
         {
@@ -58,7 +55,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public void Incluir()
+        private void Incluir()
         {
             DS_Mensagem = "";
 
@@ -93,7 +90,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public void Alterar()
+        private void Alterar()
         {
             DS_Mensagem = "";
 
@@ -124,9 +121,107 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public DataTable Consultar(int status, string texto)
+        private void Excluir()
+        {
+            DS_Mensagem = "";
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("UPDATE TB_Categoria SET ");
+                stringSQL.Append("Ativo = 0 ");
+                stringSQL.Append("WHERE ID_Categoria = '" + ID_Categoria + "'");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                int result = sqlCommand.ExecuteNonQuery();
+
+                DS_Mensagem = result > 0 ? "OK" : "Erro ao excluir";
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+        }
+
+        private void Ativar()
+        {
+            DS_Mensagem = "";
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("UPDATE TB_Categoria SET ");
+                stringSQL.Append("Ativo = 1 ");
+                stringSQL.Append("WHERE ID_Categoria = '" + ID_Categoria + "'");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                int result = sqlCommand.ExecuteNonQuery();
+
+                DS_Mensagem = result > 0 ? "OK" : "Erro ao ativar";
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+        }
+
+        public DataTable Exibir(int status, string connectionString)
         {
             DataTable dataTable = new DataTable();
+            ConnectionString = connectionString;
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("ID_Categoria, ");
+                stringSQL.Append("NM_Categoria, ");
+                stringSQL.Append("DS_Categoria, ");
+                stringSQL.Append("Ativo ");
+                stringSQL.Append("FROM TB_Categoria ");
+                stringSQL.Append("WHERE Ativo = " + status + " ");
+                stringSQL.Append("ORDER BY ID_Categoria DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                sqlDataReader = sqlCommand.ExecuteReader();
+                dataTable.Load(sqlDataReader);
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+
+            return dataTable;
+        }
+
+        public DataTable Consultar(int status, string texto, string connectionString)
+        {
+            DataTable dataTable = new DataTable();
+            ConnectionString = connectionString;
 
             try
             {
@@ -161,105 +256,10 @@ namespace SuplementosPIMIV.Model
             return dataTable;
         }
 
-        public void Excluir()
+        public string VerificarCategoriaCadastrada(string id_categoria, string nm_categoria, string connectionString)
         {
             DS_Mensagem = "";
-
-            try
-            {
-                sqlConnection = new SqlConnection(ConnectionString);
-                sqlConnection.Open();
-
-                StringBuilder stringSQL = new StringBuilder();
-                stringSQL.Append("UPDATE TB_Categoria SET ");
-                stringSQL.Append("Ativo = 0 ");
-                stringSQL.Append("WHERE ID_Categoria = '" + ID_Categoria + "'");
-
-                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
-                int result = sqlCommand.ExecuteNonQuery();
-
-                DS_Mensagem = result > 0 ? "OK" : "Erro ao excluir";
-            }
-            catch (Exception e)
-            {
-                DS_Mensagem = e.Message;
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Close();
-            }
-        }
-
-        public void Ativar()
-        {
-            DS_Mensagem = "";
-
-            try
-            {
-                sqlConnection = new SqlConnection(ConnectionString);
-                sqlConnection.Open();
-
-                StringBuilder stringSQL = new StringBuilder();
-                stringSQL.Append("UPDATE TB_Categoria SET ");
-                stringSQL.Append("Ativo = 1 ");
-                stringSQL.Append("WHERE ID_Categoria = '" + ID_Categoria + "'");
-
-                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
-                int result = sqlCommand.ExecuteNonQuery();
-
-                DS_Mensagem = result > 0 ? "OK" : "Erro ao ativar";
-            }
-            catch (Exception e)
-            {
-                DS_Mensagem = e.Message;
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Close();
-            }
-        }
-
-        public DataTable Exibir(int status)
-        {
-            DataTable dataTable = new DataTable();
-
-            try
-            {
-                sqlConnection = new SqlConnection(ConnectionString);
-                sqlConnection.Open();
-
-                StringBuilder stringSQL = new StringBuilder();
-                stringSQL.Append("SELECT ");
-                stringSQL.Append("ID_Categoria, ");
-                stringSQL.Append("NM_Categoria, ");
-                stringSQL.Append("DS_Categoria, ");
-                stringSQL.Append("Ativo ");
-                stringSQL.Append("FROM TB_Categoria ");
-                stringSQL.Append("WHERE Ativo = " + status + " ");
-                stringSQL.Append("ORDER BY ID_Categoria DESC");
-
-                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
-                sqlDataReader = sqlCommand.ExecuteReader();
-                dataTable.Load(sqlDataReader);
-            }
-            catch (Exception e)
-            {
-                DS_Mensagem = e.Message;
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Close();
-            }
-
-            return dataTable;
-        }
-
-        public string VerificarCategoriaCadastrada(string id_categoria, string nm_categoria)
-        {
-            DS_Mensagem = "";
+            ConnectionString = connectionString;
 
             try
             {

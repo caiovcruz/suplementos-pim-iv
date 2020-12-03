@@ -51,8 +51,8 @@ namespace SuplementosPIMIV.View
 
         private void CarregarMeuLogin()
         {
-            myControllerLogin = new ControllerLogin(Session["ConnectionString"].ToString());
-            myControllerLogin.GetLogin(Session["ID_Login"].ToString());
+            myControllerLogin = new ControllerLogin();
+            myControllerLogin.GetLogin(Session["ID_Login"].ToString(), Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerLogin.DS_Mensagem == "OK")
@@ -71,8 +71,8 @@ namespace SuplementosPIMIV.View
         {
             // validar a entrada de dados para incluir
             myValidar = new Validar();
-            myControllerLogin = new ControllerLogin(Session["ConnectionString"].ToString());
-            myControllerLogin.GetLogin(Session["ID_Login"].ToString());
+            myControllerLogin = new ControllerLogin();
+            myControllerLogin.GetLogin(Session["ID_Login"].ToString(), Session["ConnectionString"].ToString());
             string mDs_Msg = "";
 
             if (myValidar.CampoPreenchido(txbDS_UsuarioMeuLogin.Text.Trim()))
@@ -91,7 +91,7 @@ namespace SuplementosPIMIV.View
                     }
                     else
                     {
-                        if (myControllerLogin.VerificarLoginCadastrado(Session["ID_Login"].ToString(), Session["ID_Funcionario"].ToString(), txbDS_UsuarioMeuLogin.Text.Trim()).Equals(""))
+                        if (myControllerLogin.VerificarLoginCadastrado(Session["ID_Login"].ToString(), Session["ID_Funcionario"].ToString(), txbDS_UsuarioMeuLogin.Text.Trim(), Session["ConnectionString"].ToString()).Equals(""))
                         {
                             if (myValidar.CampoPreenchido(txbDS_SenhaMeuLoginAtual.Text.Trim()))
                             {
@@ -156,7 +156,7 @@ namespace SuplementosPIMIV.View
                             else
                             {
                                 mDs_Msg += " A senha atual do usuário deve estar preenchida.";
-                            }                          
+                            }
                         }
                         else
                         {
@@ -183,11 +183,11 @@ namespace SuplementosPIMIV.View
                 // tudo certinho
                 // instanciar um objeto da classe login, carregar tela e alterar
                 myControllerLogin = new ControllerLogin(
-                    Convert.ToInt32(Session["ID_Login"].ToString()),
-                    Convert.ToInt32(Session["ID_Funcionario"].ToString()),
+                    Session["ID_Login"].ToString(),
+                    Session["ID_Funcionario"].ToString(),
                     Session["DS_NivelAcesso"].ToString(),
                     txbDS_UsuarioMeuLogin.Text.Trim(),
-                    BCrypt.Net.BCrypt.HashPassword(txbDS_SenhaMeuLoginNovo.Text.Trim()),
+                    txbDS_SenhaMeuLoginNovo.Text.Trim(),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?

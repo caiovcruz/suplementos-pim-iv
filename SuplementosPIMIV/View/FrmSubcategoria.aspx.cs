@@ -67,10 +67,10 @@ namespace SuplementosPIMIV.View
         private void CarregarSubcategorias()
         {
             // instanciando um objeto da classe ControllerSubcategoria
-            myControllerSubcategoria = new ControllerSubcategoria(Session["ConnectionString"].ToString());
+            myControllerSubcategoria = new ControllerSubcategoria();
 
             // passando a fonte de dados para o GridView
-            gvwExibe.DataSource = myControllerSubcategoria.Exibir(chkStatusInativo.Checked ? 0 : 1);
+            gvwExibe.DataSource = myControllerSubcategoria.Exibir(chkStatusInativo.Checked ? "0" : "1", Session["ConnectionString"].ToString());
 
             // associando os dados para carregar e exibir
             gvwExibe.DataBind();
@@ -78,9 +78,9 @@ namespace SuplementosPIMIV.View
 
         private void CarregarCategorias()
         {
-            myControllerCategoria = new ControllerCategoria(Session["ConnectionString"].ToString());
+            myControllerCategoria = new ControllerCategoria();
 
-            ddlID_Categoria.DataSource = myControllerCategoria.Exibir(1);
+            ddlID_Categoria.DataSource = myControllerCategoria.Exibir("1", Session["ConnectionString"].ToString());
             ddlID_Categoria.DataTextField = "NM_Categoria";
             ddlID_Categoria.DataValueField = "ID_Categoria";
             ddlID_Categoria.DataBind();
@@ -101,8 +101,8 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho
                 // instanciar um objeto da classe subcategoria, carregar tela e consultar
-                myControllerSubcategoria = new ControllerSubcategoria(Session["ConnectionString"].ToString());
-                gvwExibe.DataSource = myControllerSubcategoria.Consultar(chkStatusInativo.Checked ? 0 : 1, txbNM_SubcategoriaConsultar.Text.Trim());
+                myControllerSubcategoria = new ControllerSubcategoria();
+                gvwExibe.DataSource = myControllerSubcategoria.Consultar(chkStatusInativo.Checked ? "0" : "1", txbNM_SubcategoriaConsultar.Text.Trim(), Session["ConnectionString"].ToString());
                 gvwExibe.DataBind();
             }
             else
@@ -126,140 +126,59 @@ namespace SuplementosPIMIV.View
                 txbDS_Subcategoria.Text.Trim().Length > 0;
         }
 
-        private string ValidateFields()
-        {
-            // validar a entrada de dados para incluir
-            myValidar = new Validar();
-            myControllerSubcategoria = new ControllerSubcategoria(Session["ConnectionString"].ToString());
-            string mDs_Msg = "";
-
-            if (myValidar.CampoPreenchido(txbNM_Subcategoria.Text.Trim()))
-            {
-                if (!myValidar.TamanhoCampo(txbNM_Subcategoria.Text.Trim(), 50))
-                {
-                    mDs_Msg = " Limite de caracteres para o nome excedido, " +
-                                  "o limite para este campo é: 50 caracteres, " +
-                                  "quantidade utilizada: " + txbNM_Subcategoria.Text.Trim().Length + ".";
-                }
-                else
-                {
-                    if (ddlID_Categoria.SelectedIndex.Equals(0))
-                    {
-                        mDs_Msg = " É necessário selecionar uma categoria base.";
-                    }
-                    else
-                    {
-                        if (myControllerSubcategoria.VerificarSubcategoriaCadastrada(txbID_Subcategoria.Text.Trim(),
-                            txbNM_Subcategoria.Text.Trim(), ddlID_Categoria.SelectedValue).Equals(""))
-                        {
-                            if (myValidar.CampoPreenchido(txbDS_Subcategoria.Text.Trim()))
-                            {
-                                if (!myValidar.TamanhoCampo(txbDS_Subcategoria.Text.Trim(), 1500))
-                                {
-                                    mDs_Msg += " Limite de caracteres para descrição excedido, " +
-                                                  "o limite para este campo é: 3000 caracteres, " +
-                                                  "quantidade utilizada: " + txbDS_Subcategoria.Text.Trim().Length + ".";
-                                }
-                            }
-                            else
-                            {
-                                mDs_Msg += " A descrição deve estar preenchida.";
-                            }
-                        }
-                        else
-                        {
-                            mDs_Msg += " " + myControllerSubcategoria.DS_Mensagem + " Verifique nas subcategorias ativas e inativas!";
-                        }
-                    }
-                }
-            }
-            else
-            {
-                mDs_Msg = " O nome deve estar preenchido.";
-            }
-
-            return mDs_Msg;
-        }
-
         private void Incluir()
         {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
+            myControllerSubcategoria = new ControllerSubcategoria(
+                ddlID_Categoria.SelectedValue,
+                txbNM_Subcategoria.Text.Trim(),
+                txbDS_Subcategoria.Text.Trim(),
+                Session["ConnectionString"].ToString());
 
-            if (mDs_Msg == "")
+            // o que ocorreu?
+            if (myControllerSubcategoria.DS_Mensagem == "OK")
             {
-                // tudo certinho
-                // instanciar um objeto da classe subcategoria, carregar tela e incluir
-                myControllerSubcategoria = new ControllerSubcategoria(
-                    Convert.ToInt32(ddlID_Categoria.SelectedValue),
-                    txbNM_Subcategoria.Text.Trim(),
-                    txbDS_Subcategoria.Text.Trim(),
-                    Session["ConnectionString"].ToString());
-
-                // o que ocorreu?
-                if (myControllerSubcategoria.DS_Mensagem == "OK")
-                {
-                    // tudo certinho!
-                    LimparCampos();
-                    BloquearComponentesCadastro();
-                    CarregarSubcategorias();
-                    lblDS_Mensagem.Text = "Incluído com sucesso!";
-                }
-                else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerSubcategoria.DS_Mensagem;
-                }
+                // tudo certinho!
+                LimparCampos();
+                BloquearComponentesCadastro();
+                CarregarSubcategorias();
+                lblDS_Mensagem.Text = "Incluído com sucesso!";
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
+                lblDS_Mensagem.Text = myControllerSubcategoria.DS_Mensagem;
             }
         }
 
         private void Alterar()
         {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
+            myControllerSubcategoria = new ControllerSubcategoria(
+                txbID_Subcategoria.Text.Trim(),
+                ddlID_Categoria.SelectedValue,
+                txbNM_Subcategoria.Text.Trim(),
+                txbDS_Subcategoria.Text.Trim(),
+                Session["ConnectionString"].ToString());
 
-            if (mDs_Msg == "")
+            // o que ocorreu?
+            if (myControllerSubcategoria.DS_Mensagem == "OK")
             {
-                // tudo certinho
-                // instanciar um objeto da classe subcategoria, carregar tela e alterar
-                myControllerSubcategoria = new ControllerSubcategoria(
-                    Convert.ToInt32(txbID_Subcategoria.Text.Trim()),
-                    Convert.ToInt32(ddlID_Categoria.SelectedValue),
-                    txbNM_Subcategoria.Text.Trim(),
-                    txbDS_Subcategoria.Text.Trim(),
-                    Session["ConnectionString"].ToString());
-
-                // o que ocorreu?
-                if (myControllerSubcategoria.DS_Mensagem == "OK")
-                {
-                    // tudo certinho!
-                    LimparCampos();
-                    BloquearComponentesCadastro();
-                    CarregarSubcategorias();
-                    lblDS_Mensagem.Text = "Alterado com sucesso!";
-                }
-                else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerSubcategoria.DS_Mensagem;
-                }
+                // tudo certinho!
+                LimparCampos();
+                BloquearComponentesCadastro();
+                CarregarSubcategorias();
+                lblDS_Mensagem.Text = "Alterado com sucesso!";
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
+                lblDS_Mensagem.Text = myControllerSubcategoria.DS_Mensagem;
             }
         }
 
         private void Excluir()
         {
             // instanciar um objeto da classe subcategoria e carregar tela e consultar
-            myControllerSubcategoria = new ControllerSubcategoria(Convert.ToInt32(txbID_Subcategoria.Text.Trim()), 'E', Session["ConnectionString"].ToString());
+            myControllerSubcategoria = new ControllerSubcategoria(txbID_Subcategoria.Text.Trim(), 'E', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerSubcategoria.DS_Mensagem == "OK")
@@ -280,7 +199,7 @@ namespace SuplementosPIMIV.View
         private void Ativar()
         {
             // instanciar um objeto da classe categoria e carregar tela e ativar
-            myControllerSubcategoria = new ControllerSubcategoria(Convert.ToInt32(txbID_Subcategoria.Text.Trim()), 'A', Session["ConnectionString"].ToString());
+            myControllerSubcategoria = new ControllerSubcategoria(txbID_Subcategoria.Text.Trim(), 'A', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerSubcategoria.DS_Mensagem == "OK")

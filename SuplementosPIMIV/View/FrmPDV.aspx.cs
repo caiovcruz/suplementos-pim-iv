@@ -74,6 +74,7 @@ namespace SuplementosPIMIV.View
 
         private void BloquearComponentesCadastro()
         {
+            txbNR_EAN.ReadOnly = false;
             txbProduto.ReadOnly = true;
             txbPR_Produto.ReadOnly = true;
             txbQTD_Produto.Enabled = false;
@@ -103,10 +104,10 @@ namespace SuplementosPIMIV.View
         private void CarregarItensVenda()
         {
             // instanciando um objeto da classe ControllerItemVenda
-            myControllerItemVenda = new ControllerItemVenda(Session["ConnectionString"].ToString());
+            myControllerItemVenda = new ControllerItemVenda();
 
             // passando a fonte de dados para o GridView
-            gvwExibe.DataSource = myControllerItemVenda.Exibir(Convert.ToInt32(txbID_Venda.Text.Trim()));
+            gvwExibe.DataSource = myControllerItemVenda.Exibir(txbID_Venda.Text.Trim(), Session["ConnectionString"].ToString());
 
             // associando os dados para carregar e exibir
             gvwExibe.DataBind();
@@ -162,8 +163,8 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho
                 // instanciar um objeto da classe produto, carregar tela e consultar
-                myControllerProduto = new ControllerProduto(Session["ConnectionString"].ToString());
-                myControllerProduto.Consultar(1, "PROD.NR_EAN = '" + txbNR_EAN.Text.Trim() + "' ");
+                myControllerProduto = new ControllerProduto();
+                myControllerProduto.Consultar("1", "PROD.NR_EAN = '" + txbNR_EAN.Text.Trim() + "' ", Session["ConnectionString"].ToString());
 
                 if (!myControllerProduto.ID_Produto.Equals(0))
                 {
@@ -173,9 +174,9 @@ namespace SuplementosPIMIV.View
 
                     txbVL_LucroProduto.Text = (myControllerProduto.PR_Venda - myControllerProduto.PR_Custo).ToString("N2");
 
-                    myControllerEstoque = new ControllerEstoque(Session["ConnectionString"].ToString());
+                    myControllerEstoque = new ControllerEstoque();
 
-                    if (myControllerEstoque.QuantidadeTotalEstoque(myControllerProduto.ID_Produto) <= 0)
+                    if (myControllerEstoque.QuantidadeTotalEstoque(txbID_Produto.Text.Trim(), Session["ConnectionString"].ToString()) <= 0)
                     {
                         txbQTD_Produto.Text = "ESGOTADO";
                         AlterarCorQTD_Produto(System.Drawing.Color.Red);
@@ -225,45 +226,15 @@ namespace SuplementosPIMIV.View
                 txbDT_Venda.Text.Trim().Length > 0 &&
                 ddlDS_TipoPagamento.SelectedIndex != 0 &&
                 ddlNR_Parcelas.SelectedIndex != 0 &&
-                txbVL_Total.Text.Trim().Length > 0;
+                txbVL_Total.Text.Trim().Length > 0 &&
+                gvwExibe.Rows.Count > 0;
 
             btnCancelar.Enabled =
                 txbDT_Venda.Text.Trim().Length > 0 ||
                 ddlDS_TipoPagamento.SelectedIndex != 0 ||
                 ddlNR_Parcelas.SelectedIndex != 0 ||
-                txbVL_Total.Text.Trim().Length > 0;
-        }
-
-        private string ValidateFields()
-        {
-            // validar a entrada de dados para incluir
-            myValidar = new Validar();
-            myControllerEstoque = new ControllerEstoque(Session["ConnectionString"].ToString());
-
-            string mDs_Msg = "";
-
-            if (myValidar.CampoPreenchido(txbQTD_Produto.Text.Trim()))
-            {
-                if (!myValidar.Numero(txbQTD_Produto.Text.Trim()))
-                {
-                    mDs_Msg += " A quantidade deve conter somente números.";
-                }
-                else
-                {
-                    int qtd_estoque = myControllerEstoque.QuantidadeTotalEstoque(Convert.ToInt32(txbID_Produto.Text.Trim()));
-
-                    if (qtd_estoque < Convert.ToInt32(txbQTD_Produto.Text.Trim()))
-                    {
-                        mDs_Msg = "Quantidade indisponível para venda [ Quantidade máxima disponível: " + qtd_estoque + " ].";
-                    }
-                }
-            }
-            else
-            {
-                mDs_Msg += " A quantidade deve estar preenchida.";
-            }
-
-            return mDs_Msg;
+                txbVL_Total.Text.Trim().Length > 0 ||
+                gvwExibe.Rows.Count > 0;
         }
 
         private void CarregarTiposPagamento()
@@ -315,131 +286,128 @@ namespace SuplementosPIMIV.View
 
         private void Incluir()
         {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
-
-            if (mDs_Msg == "")
+            if (string.IsNullOrWhiteSpace(txbID_Venda.Text.Trim()))
             {
-                if (string.IsNullOrWhiteSpace(txbID_Venda.Text.Trim()))
+                // tudo certinho
+                // instanciar um objeto da classe venda, carregar tela e incluir
+                myControllerVenda = new ControllerVenda(
+                    Session["ID_Funcionario"].ToString(),
+                    DateTime.Now,
+                    Session["ConnectionString"].ToString());
+
+                txbID_Venda.Text = myControllerVenda.ID_Venda.ToString();
+                lblDS_Mensagem.Text = txbID_Venda.Text;
+
+                txbDT_Venda.Text = DateTime.Now.ToString();
+                CarregarTiposPagamento();
+                CarregarNParcelas();
+                btnCancelar.Enabled = true;
+            }
+
+            // o que ocorreu?
+            if (!string.IsNullOrWhiteSpace(txbID_Venda.Text.Trim()))
+            {
+                myControllerItemVenda = new ControllerItemVenda(
+                    txbID_Venda.Text.Trim(),
+                    txbID_Produto.Text.Trim(),
+                    txbQTD_Produto.Text.Trim(),
+                    txbPR_Produto.Text.Trim(),
+                    txbVL_LucroProduto.Text.Trim(),
+                    'I',
+                    Session["ConnectionString"].ToString());
+
+                if (myControllerItemVenda.DS_Mensagem == "OK")
                 {
-                    // tudo certinho
-                    // instanciar um objeto da classe venda, carregar tela e incluir
-                    myControllerVenda = new ControllerVenda(
-                        Convert.ToInt32(Session["ID_Funcionario"].ToString()),
-                        DateTime.Now,
-                        Session["ConnectionString"].ToString());
+                    // tudo certinho!
+                    LimparCamposCadastro();
+                    BloquearComponentesCadastro();
+                    CarregarItensVenda();
+                    lblDS_Mensagem.Text = "Incluído com sucesso!";
 
-                    txbID_Venda.Text = myControllerVenda.ID_Venda.ToString();
-                    lblDS_Mensagem.Text = txbID_Venda.Text;
-
-                    txbDT_Venda.Text = DateTime.Now.ToString();
-                    CarregarTiposPagamento();
-                    CarregarNParcelas();
-                    btnCancelar.Enabled = true;
-                }
-
-                // o que ocorreu?
-                if (!string.IsNullOrWhiteSpace(txbID_Venda.Text.Trim()))
-                {
-                    myControllerItemVenda = new ControllerItemVenda(
-                        Convert.ToInt32(txbID_Venda.Text.Trim()),
-                        Convert.ToInt32(txbID_Produto.Text.Trim()),
-                        Convert.ToInt32(txbQTD_Produto.Text.Trim()),
-                        Convert.ToDouble(txbPR_Produto.Text.Trim()) * Convert.ToInt32(txbQTD_Produto.Text.Trim()),
-                        Convert.ToDouble(txbVL_LucroProduto.Text.Trim()) * Convert.ToInt32(txbQTD_Produto.Text.Trim()),
-                        'I',
-                        Session["ConnectionString"].ToString());
-
-                    if (myControllerItemVenda.DS_Mensagem == "OK")
-                    {
-                        // tudo certinho!
-                        LimparCamposCadastro();
-                        BloquearComponentesCadastro();
-                        CarregarItensVenda();
-                        lblDS_Mensagem.Text = "Incluído com sucesso!";
-
-                        AtualizarValorTotalVenda();
-                    }
-                    else
-                    {// exibir erro!
-                        lblDS_Mensagem.Text = myControllerItemVenda.DS_Mensagem + " Verifique se o mesmo já esta na lista de itens na venda.";
-                    }
+                    AtualizarValorTotalVenda();
                 }
                 else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerVenda.DS_Mensagem;
+                {// exibir erro!
+                    lblDS_Mensagem.Text = myControllerItemVenda.DS_Mensagem + " Verifique se o mesmo já esta na lista de itens na venda.";
                 }
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
+                lblDS_Mensagem.Text = myControllerVenda.DS_Mensagem;
             }
         }
 
         private void Finalizar()
         {
-            try
+            if (gvwExibe.Rows.Count > 0)
             {
-                // instanciar um objeto da classe venda, carregar tela e finalizar
-                myControllerVenda = new ControllerVenda(
-                    Convert.ToInt32(txbID_Venda.Text.Trim()),
-                    Convert.ToInt32(Session["ID_Funcionario"].ToString()),
-                    DateTime.Now,
-                    ddlDS_TipoPagamento.SelectedValue,
-                    Convert.ToInt32(ddlNR_Parcelas.SelectedValue),
-                    Convert.ToDouble(txbVL_Total.Text.Trim()),
-                    GetValorLucroTotal(),
-                    Session["ConnectionString"].ToString());
-
-                // o que ocorreu?
-                if (myControllerVenda.DS_Mensagem == "OK")
+                try
                 {
-                    string nm_produtoErro = "";
+                    // instanciar um objeto da classe venda, carregar tela e finalizar
+                    myControllerVenda = new ControllerVenda(
+                        txbID_Venda.Text.Trim(),
+                        Session["ID_Funcionario"].ToString(),
+                        DateTime.Now,
+                        ddlDS_TipoPagamento.SelectedValue,
+                        ddlNR_Parcelas.SelectedValue,
+                        txbVL_Total.Text.Trim(),
+                        GetValorLucroTotal().ToString(),
+                        Session["ConnectionString"].ToString());
 
-                    foreach (GridViewRow row in gvwExibe.Rows)
+                    // o que ocorreu?
+                    if (myControllerVenda.DS_Mensagem == "OK")
                     {
-                        myControllerMovEstoque = new ControllerMovEstoque(
-                            Convert.ToInt32(row.Cells[2].Text),
-                            Convert.ToInt32(row.Cells[9].Text),
-                            "Venda",
-                            DateTime.Now,
-                            Session["ConnectionString"].ToString());
+                        string nm_produtoErro = "";
 
-                        if (myControllerMovEstoque.DS_Mensagem != "OK")
+                        foreach (GridViewRow row in gvwExibe.Rows)
                         {
-                            nm_produtoErro += "Produto ➯ | " + row.Cells[4].Text + " ➯ " + row.Cells[5].Text + " ➯ " + row.Cells[6].Text + " |. ";
+                            myControllerMovEstoque = new ControllerMovEstoque(
+                                row.Cells[2].Text,
+                                row.Cells[9].Text,
+                                "Venda",
+                                DateTime.Now,
+                                Session["ConnectionString"].ToString());
+
+                            if (myControllerMovEstoque.DS_Mensagem != "OK")
+                            {
+                                nm_produtoErro += "Produto ➯ | " + row.Cells[4].Text + " ➯ " + row.Cells[5].Text + " ➯ " + row.Cells[6].Text + " |. ";
+                            }
+                        }
+
+                        // tudo certinho!
+                        txbID_Venda.Text = "";
+                        LimparCamposCadastro();
+                        BloquearComponentesCadastro();
+                        LimparCamposFinaliza();
+                        BloquearComponentesFinaliza();
+                        LimparMensagens();
+                        lblDS_MensagemFinal.Text = "Venda realizada com sucesso!";
+
+                        if (nm_produtoErro != "")
+                        {
+                            lblDS_MensagemFinal.Text +=
+                                " #Erro ao atualizar o estoque dos seguintes produtos: " +
+                                nm_produtoErro +
+                                " ☞ Informe o gerente! ☜";
                         }
                     }
-
-                    // tudo certinho!
-                    txbID_Venda.Text = "";
-                    LimparCamposCadastro();
-                    BloquearComponentesCadastro();
-                    LimparCamposFinaliza();
-                    BloquearComponentesFinaliza();
-                    LimparMensagens();
-                    lblDS_MensagemFinal.Text = "Venda realizada com sucesso!";
-
-                    if (nm_produtoErro != "")
+                    else
                     {
-                        lblDS_MensagemFinal.Text +=
-                            " #Erro ao atualizar o estoque dos seguintes produtos: " +
-                            nm_produtoErro +
-                            " ☞ Informe o gerente! ☜";
+                        // exibir erro!
+                        lblDS_MensagemFinal.Text = myControllerVenda.DS_Mensagem;
                     }
                 }
-                else
+                catch (Exception e)
                 {
                     // exibir erro!
-                    lblDS_MensagemFinal.Text = myControllerVenda.DS_Mensagem;
+                    lblDS_MensagemFinal.Text = e.Message;
                 }
             }
-            catch (Exception e)
+            else
             {
-                // exibir erro!
-                lblDS_MensagemFinal.Text = e.Message;
+                lblDS_MensagemFinal.Text = "Impossível salvar uma venda com zero itens! Por favor, inclua itens na venda.";
+                btnSalvar.Enabled = false;
             }
         }
 
@@ -449,7 +417,7 @@ namespace SuplementosPIMIV.View
             {
                 // instanciar um objeto da classe venda, carregar tela e excluir venda
                 myControllerVenda = new ControllerVenda(
-                    Convert.ToInt32(txbID_Venda.Text.Trim()),
+                    txbID_Venda.Text.Trim(),
                     Session["ConnectionString"].ToString());
 
                 // o que ocorreu?
@@ -479,43 +447,30 @@ namespace SuplementosPIMIV.View
 
         private void Alterar()
         {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
+            myControllerItemVenda = new ControllerItemVenda(
+                txbID_Venda.Text.Trim(),
+                txbID_Produto.Text.Trim(),
+                txbQTD_Produto.Text.Trim(),
+                txbPR_Produto.Text.Trim(),
+                txbVL_LucroProduto.Text.Trim(),
+                'A',
+                Session["ConnectionString"].ToString());
 
-            if (mDs_Msg == "")
+            // o que ocorreu?
+            if (myControllerItemVenda.DS_Mensagem == "OK")
             {
-                // tudo certinho
-                // instanciar um objeto da classe itemvenda, carregar tela e alterar
-                myControllerItemVenda = new ControllerItemVenda(
-                    Convert.ToInt32(txbID_Venda.Text.Trim()),
-                    Convert.ToInt32(txbID_Produto.Text.Trim()),
-                    Convert.ToInt32(txbQTD_Produto.Text.Trim()),
-                    Convert.ToDouble(txbPR_Produto.Text.Trim()) * Convert.ToInt32(txbQTD_Produto.Text.Trim()),
-                    Convert.ToDouble(txbVL_LucroProduto.Text.Trim()) * Convert.ToInt32(txbQTD_Produto.Text.Trim()),
-                    'A',
-                    Session["ConnectionString"].ToString());
+                // tudo certinho!
+                LimparCamposCadastro();
+                BloquearComponentesCadastro();
+                CarregarItensVenda();
+                lblDS_Mensagem.Text = "Alterado com sucesso!";
 
-                // o que ocorreu?
-                if (myControllerItemVenda.DS_Mensagem == "OK")
-                {
-                    // tudo certinho!
-                    LimparCamposCadastro();
-                    BloquearComponentesCadastro();
-                    CarregarItensVenda();
-                    lblDS_Mensagem.Text = "Alterado com sucesso!";
-
-                    AtualizarValorTotalVenda();
-                }
-                else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerProduto.DS_Mensagem;
-                }
+                AtualizarValorTotalVenda();
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
+                lblDS_Mensagem.Text = myControllerItemVenda.DS_Mensagem;
             }
         }
 
@@ -523,8 +478,8 @@ namespace SuplementosPIMIV.View
         {
             // instanciar um objeto da classe itemvenda e carregar tela e excluir
             myControllerItemVenda = new ControllerItemVenda(
-                Convert.ToInt32(txbID_Venda.Text.Trim()),
-                Convert.ToInt32(txbID_Produto.Text.Trim()),
+                txbID_Venda.Text.Trim(),
+                txbID_Produto.Text.Trim(),
                 Session["ConnectionString"].ToString());
 
             // o que ocorreu?

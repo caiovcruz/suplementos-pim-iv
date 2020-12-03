@@ -95,6 +95,7 @@ body {
 
 .Msg {
     color: #F00;
+    font-weight: bold;
 }
 
 #formLogin {

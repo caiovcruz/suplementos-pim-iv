@@ -22,10 +22,7 @@ namespace SuplementosPIMIV.Model
         SqlCommand sqlCommand;                                  // Command que envia um 'comando' para o SGBD
         SqlDataReader sqlDataReader;                            // Retorno do Command (DataReader) espécie de tabela/leitura 'apenas pra frente'
 
-        public ModelLogin(string connectionString)
-        {
-            ConnectionString = connectionString;
-        }
+        public ModelLogin() { }
 
         public ModelLogin(int id_funcionario, string ds_nivelAcesso, string ds_usuario, string ds_senha, string connectionString)
         {
@@ -65,13 +62,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public ModelLogin(string ds_usuario, string connectionString)
-        {
-            DS_Usuario = ds_usuario;
-            ConnectionString = connectionString;
-        }
-
-        public void Incluir()
+        private void Incluir()
         {
             DS_Mensagem = "";
 
@@ -110,7 +101,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public void Alterar()
+        private void Alterar()
         {
             DS_Mensagem = "";
 
@@ -142,9 +133,111 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public DataTable Consultar(int status, string texto)
+        private void Excluir()
+        {
+            DS_Mensagem = "";
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("UPDATE TB_Login SET ");
+                stringSQL.Append("Ativo = 0 ");
+                stringSQL.Append("WHERE ID_Login = '" + ID_Login + "'");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                int result = sqlCommand.ExecuteNonQuery();
+
+                DS_Mensagem = result > 0 ? "OK" : "Erro ao excluir";
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+        }
+
+        private void Ativar()
+        {
+            DS_Mensagem = "";
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("UPDATE TB_Login SET ");
+                stringSQL.Append("Ativo = 1 ");
+                stringSQL.Append("WHERE ID_Login = '" + ID_Login + "'");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                int result = sqlCommand.ExecuteNonQuery();
+
+                DS_Mensagem = result > 0 ? "OK" : "Erro ao ativar";
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+        }
+
+        public DataTable Exibir(int status, string connectionString)
         {
             DataTable dataTable = new DataTable();
+            ConnectionString = connectionString;
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("LOG.ID_Login, ");
+                stringSQL.Append("LOG.ID_Funcionario, ");
+                stringSQL.Append("FUN.NM_Funcionario, ");
+                stringSQL.Append("LOG.DS_NivelAcesso, ");
+                stringSQL.Append("LOG.DS_Usuario, ");
+                stringSQL.Append("LOG.DS_Senha, ");
+                stringSQL.Append("LOG.Ativo ");
+                stringSQL.Append("FROM TB_Login AS LOG ");
+                stringSQL.Append("INNER JOIN TB_Funcionario AS FUN ON LOG.ID_Funcionario = FUN.ID_Funcionario ");
+                stringSQL.Append("WHERE LOG.Ativo = " + status + " ");
+                stringSQL.Append("ORDER BY ID_Login DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                sqlDataReader = sqlCommand.ExecuteReader();
+                dataTable.Load(sqlDataReader);
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+
+            return dataTable;
+        }
+
+        public DataTable Consultar(int status, string texto, string connectionString)
+        {
+            DataTable dataTable = new DataTable();
+            ConnectionString = connectionString;
 
             try
             {
@@ -183,109 +276,10 @@ namespace SuplementosPIMIV.Model
             return dataTable;
         }
 
-        public void Excluir()
+        public string VerificarLoginCadastrado(string id_login, string id_funcionario, string ds_usuario, string connectionString)
         {
             DS_Mensagem = "";
-
-            try
-            {
-                sqlConnection = new SqlConnection(ConnectionString);
-                sqlConnection.Open();
-
-                StringBuilder stringSQL = new StringBuilder();
-                stringSQL.Append("UPDATE TB_Login SET ");
-                stringSQL.Append("Ativo = 0 ");
-                stringSQL.Append("WHERE ID_Login = '" + ID_Login + "'");
-
-                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
-                int result = sqlCommand.ExecuteNonQuery();
-
-                DS_Mensagem = result > 0 ? "OK" : "Erro ao excluir";
-            }
-            catch (Exception e)
-            {
-                DS_Mensagem = e.Message;
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Close();
-            }
-        }
-
-        public void Ativar()
-        {
-            DS_Mensagem = "";
-
-            try
-            {
-                sqlConnection = new SqlConnection(ConnectionString);
-                sqlConnection.Open();
-
-                StringBuilder stringSQL = new StringBuilder();
-                stringSQL.Append("UPDATE TB_Login SET ");
-                stringSQL.Append("Ativo = 1 ");
-                stringSQL.Append("WHERE ID_Login = '" + ID_Login + "'");
-
-                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
-                int result = sqlCommand.ExecuteNonQuery();
-
-                DS_Mensagem = result > 0 ? "OK" : "Erro ao ativar";
-            }
-            catch (Exception e)
-            {
-                DS_Mensagem = e.Message;
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Close();
-            }
-        }
-
-        public DataTable Exibir(int status)
-        {
-            DataTable dataTable = new DataTable();
-
-            try
-            {
-                sqlConnection = new SqlConnection(ConnectionString);
-                sqlConnection.Open();
-
-                StringBuilder stringSQL = new StringBuilder();
-                stringSQL.Append("SELECT ");
-                stringSQL.Append("LOG.ID_Login, ");
-                stringSQL.Append("LOG.ID_Funcionario, ");
-                stringSQL.Append("FUN.NM_Funcionario, ");
-                stringSQL.Append("LOG.DS_NivelAcesso, ");
-                stringSQL.Append("LOG.DS_Usuario, ");
-                stringSQL.Append("LOG.DS_Senha, ");
-                stringSQL.Append("LOG.Ativo ");
-                stringSQL.Append("FROM TB_Login AS LOG ");
-                stringSQL.Append("INNER JOIN TB_Funcionario AS FUN ON LOG.ID_Funcionario = FUN.ID_Funcionario ");
-                stringSQL.Append("WHERE LOG.Ativo = " + status + " ");
-                stringSQL.Append("ORDER BY ID_Login DESC");
-
-                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
-                sqlDataReader = sqlCommand.ExecuteReader();
-                dataTable.Load(sqlDataReader);
-            }
-            catch (Exception e)
-            {
-                DS_Mensagem = e.Message;
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Close();
-            }
-
-            return dataTable;
-        }
-
-        public string VerificarLoginCadastrado(string id_login, string id_funcionario, string ds_usuario)
-        {
-            DS_Mensagem = "";
+            ConnectionString = connectionString;
 
             try
             {
@@ -340,9 +334,10 @@ namespace SuplementosPIMIV.Model
             return DS_Mensagem;
         }
 
-        public string GetLogin(string id_login)
+        public string GetLogin(string id_login, string connectionString)
         {
             DS_Mensagem = "";
+            ConnectionString = connectionString;
 
             try
             {
@@ -390,11 +385,12 @@ namespace SuplementosPIMIV.Model
             return DS_Mensagem;
         }
 
-        public string Acessar()
+        public string Acessar(string ds_usuario, string connectionString)
         {
             DS_Mensagem = "";
             DS_NivelAcesso = "";
             NM_FuncionarioLogin = "";
+            ConnectionString = connectionString;
 
             try
             {
@@ -411,7 +407,7 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("FROM TB_Login AS LOG ");
                 stringSQL.Append("INNER JOIN TB_Funcionario AS FUN ON LOG.ID_Funcionario = FUN.ID_Funcionario ");
                 stringSQL.Append("WHERE LOG.Ativo = 1 ");
-                stringSQL.Append("AND DS_Usuario = '" + DS_Usuario + "'");
+                stringSQL.Append("AND DS_Usuario = '" + ds_usuario + "'");
 
                 sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
                 sqlDataReader = sqlCommand.ExecuteReader();

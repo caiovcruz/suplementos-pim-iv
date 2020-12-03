@@ -62,10 +62,10 @@ namespace SuplementosPIMIV.View
         private void CarregarSabores()
         {
             // instanciando um objeto da classe ControllerSabor
-            myControllerSabor = new ControllerSabor(Session["ConnectionString"].ToString());
+            myControllerSabor = new ControllerSabor();
 
             // passando a fonte de dados para o GridView
-            gvwExibe.DataSource = myControllerSabor.Exibir(chkStatusInativo.Checked ? 0 : 1);
+            gvwExibe.DataSource = myControllerSabor.Exibir(chkStatusInativo.Checked ? "0" : "1", Session["ConnectionString"].ToString());
 
             // associando os dados para carregar e exibir
             gvwExibe.DataBind();
@@ -83,8 +83,8 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho
                 // instanciar um objeto da classe sabor, carregar tela e consultar
-                myControllerSabor = new ControllerSabor(Session["ConnectionString"].ToString());
-                gvwExibe.DataSource = myControllerSabor.Consultar(chkStatusInativo.Checked ? 0 : 1, txbNM_SaborConsultar.Text.Trim());
+                myControllerSabor = new ControllerSabor();
+                gvwExibe.DataSource = myControllerSabor.Consultar(chkStatusInativo.Checked ? "0" : "1", txbNM_SaborConsultar.Text.Trim(), Session["ConnectionString"].ToString());
                 gvwExibe.DataBind();
             }
             else
@@ -104,112 +104,55 @@ namespace SuplementosPIMIV.View
                 txbNM_Sabor.Text.Trim().Length > 0;
         }
 
-        private string ValidateFields()
-        {
-            // validar a entrada de dados para incluir
-            myValidar = new Validar();
-            myControllerSabor = new ControllerSabor(Session["ConnectionString"].ToString());
-            string mDs_Msg = "";
-
-            if (myValidar.CampoPreenchido(txbNM_Sabor.Text.Trim()))
-            {
-                if (!myValidar.TamanhoCampo(txbNM_Sabor.Text.Trim(), 50))
-                {
-                    mDs_Msg = " Limite de caracteres para o nome excedido, " +
-                                  "o limite para este campo é: 50 caracteres, " +
-                                  "quantidade utilizada: " + txbNM_Sabor.Text.Trim().Length + ".";
-                }
-                else
-                {
-                    if (!myControllerSabor.VerificarProdutoCadastrado(txbID_Sabor.Text.Trim(), txbNM_Sabor.Text.Trim()).Equals(""))
-                    {
-                        mDs_Msg += " " + myControllerSabor.DS_Mensagem + " Verifique nos sabores ativos e inativos!";
-                    }
-                }
-            }
-            else
-            {
-                mDs_Msg = " O nome deve estar preenchido.";
-            }
-
-            return mDs_Msg;
-        }
-
         private void Incluir()
         {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
+            myControllerSabor = new ControllerSabor(
+                txbNM_Sabor.Text.Trim(),
+                Session["ConnectionString"].ToString());
 
-            if (mDs_Msg == "")
+            // o que ocorreu?
+            if (myControllerSabor.DS_Mensagem == "OK")
             {
-                // tudo certinho
-                // instanciar um objeto da classe sabor, carregar tela e incluir
-                myControllerSabor = new ControllerSabor(
-                    txbNM_Sabor.Text.Trim(),
-                    Session["ConnectionString"].ToString());
-
-                // o que ocorreu?
-                if (myControllerSabor.DS_Mensagem == "OK")
-                {
-                    // tudo certinho!
-                    LimparCampos();
-                    BloquearComponentesCadastro();
-                    CarregarSabores();
-                    lblDS_Mensagem.Text = "Incluído com sucesso!";
-                }
-                else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerSabor.DS_Mensagem;
-                }
+                // tudo certinho!
+                LimparCampos();
+                BloquearComponentesCadastro();
+                CarregarSabores();
+                lblDS_Mensagem.Text = "Incluído com sucesso!";
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
+                lblDS_Mensagem.Text = myControllerSabor.DS_Mensagem;
             }
         }
 
         private void Alterar()
         {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
+            myControllerSabor = new ControllerSabor(
+                txbID_Sabor.Text.Trim(),
+                txbNM_Sabor.Text.Trim(),
+                Session["ConnectionString"].ToString());
 
-            if (mDs_Msg == "")
+            // o que ocorreu?
+            if (myControllerSabor.DS_Mensagem == "OK")
             {
-                // tudo certinho
-                // instanciar um objeto da classe sabor, carregar tela e alterar
-                myControllerSabor = new ControllerSabor(
-                    Convert.ToInt32(txbID_Sabor.Text.Trim()),
-                    txbNM_Sabor.Text.Trim(),
-                    Session["ConnectionString"].ToString());
-
-                // o que ocorreu?
-                if (myControllerSabor.DS_Mensagem == "OK")
-                {
-                    // tudo certinho!
-                    LimparCampos();
-                    BloquearComponentesCadastro();
-                    CarregarSabores();
-                    lblDS_Mensagem.Text = "Alterado com sucesso!";
-                }
-                else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerSabor.DS_Mensagem;
-                }
+                // tudo certinho!
+                LimparCampos();
+                BloquearComponentesCadastro();
+                CarregarSabores();
+                lblDS_Mensagem.Text = "Alterado com sucesso!";
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
+                lblDS_Mensagem.Text = myControllerSabor.DS_Mensagem;
             }
         }
 
         private void Excluir()
         {
             // instanciar um objeto da classe sabor e carregar tela e consultar
-            myControllerSabor = new ControllerSabor(Convert.ToInt32(txbID_Sabor.Text.Trim()), 'E', Session["ConnectionString"].ToString());
+            myControllerSabor = new ControllerSabor(txbID_Sabor.Text.Trim(), 'E', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerSabor.DS_Mensagem == "OK")
@@ -230,7 +173,7 @@ namespace SuplementosPIMIV.View
         private void Ativar()
         {
             // instanciar um objeto da classe sabor e carregar tela e ativar
-            myControllerSabor = new ControllerSabor(Convert.ToInt32(txbID_Sabor.Text.Trim()), 'A', Session["ConnectionString"].ToString());
+            myControllerSabor = new ControllerSabor(txbID_Sabor.Text.Trim(), 'A', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerSabor.DS_Mensagem == "OK")

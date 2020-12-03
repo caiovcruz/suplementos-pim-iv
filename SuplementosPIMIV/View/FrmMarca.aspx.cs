@@ -62,10 +62,10 @@ namespace SuplementosPIMIV.View
         private void CarregarMarcas()
         {
             // instanciando um objeto da classe ControllerMarca
-            myControllerMarca = new ControllerMarca(Session["ConnectionString"].ToString());
+            myControllerMarca = new ControllerMarca();
 
             // passando a fonte de dados para o GridView
-            gvwExibe.DataSource = myControllerMarca.Exibir(chkStatusInativo.Checked ? 0 : 1);
+            gvwExibe.DataSource = myControllerMarca.Exibir(chkStatusInativo.Checked ? "0" : "1", Session["ConnectionString"].ToString());
 
             // associando os dados para carregar e exibir
             gvwExibe.DataBind();
@@ -83,8 +83,8 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho
                 // instanciar um objeto da classe marca, carregar tela e consultar
-                myControllerMarca = new ControllerMarca(Session["ConnectionString"].ToString());
-                gvwExibe.DataSource = myControllerMarca.Consultar(chkStatusInativo.Checked ? 0 : 1, txbNM_MarcaConsultar.Text.Trim());
+                myControllerMarca = new ControllerMarca();
+                gvwExibe.DataSource = myControllerMarca.Consultar(chkStatusInativo.Checked ? "0" : "1", txbNM_MarcaConsultar.Text.Trim(), Session["ConnectionString"].ToString());
                 gvwExibe.DataBind();
             }
             else
@@ -104,112 +104,55 @@ namespace SuplementosPIMIV.View
                 txbNM_Marca.Text.Trim().Length > 0;
         }
 
-        private string ValidateFields()
-        {
-            // validar a entrada de dados para incluir
-            myValidar = new Validar();
-            myControllerMarca = new ControllerMarca(Session["ConnectionString"].ToString());
-            string mDs_Msg = "";
-
-            if (myValidar.CampoPreenchido(txbNM_Marca.Text.Trim()))
-            {
-                if (!myValidar.TamanhoCampo(txbNM_Marca.Text.Trim(), 50))
-                {
-                    mDs_Msg = " Limite de caracteres para o nome excedido, " +
-                                  "o limite para este campo é: 50 caracteres, " +
-                                  "quantidade utilizada: " + txbNM_Marca.Text.Trim().Length + ".";
-                }
-                else
-                {
-                    if (!myControllerMarca.VerificarMarcaCadastrada(txbID_Marca.Text.Trim(), txbNM_Marca.Text.Trim()).Equals(""))
-                    {
-                        mDs_Msg += " " + myControllerMarca.DS_Mensagem + " Verifique nas marcas ativas e inativas!";
-                    }
-                }
-            }
-            else
-            {
-                mDs_Msg = " O nome deve estar preenchido.";
-            }
-
-            return mDs_Msg;
-        }
-
         private void Incluir()
         {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
+            myControllerMarca = new ControllerMarca(
+                txbNM_Marca.Text.Trim(),
+                Session["ConnectionString"].ToString());
 
-            if (mDs_Msg == "")
+            // o que ocorreu?
+            if (myControllerMarca.DS_Mensagem == "OK")
             {
-                // tudo certinho
-                // instanciar um objeto da classe marca, carregar tela e incluir
-                myControllerMarca = new ControllerMarca(
-                    txbNM_Marca.Text.Trim(),
-                    Session["ConnectionString"].ToString());
-
-                // o que ocorreu?
-                if (myControllerMarca.DS_Mensagem == "OK")
-                {
-                    // tudo certinho!
-                    LimparCampos();
-                    BloquearComponentesCadastro();
-                    CarregarMarcas();
-                    lblDS_Mensagem.Text = "Incluído com sucesso!";
-                }
-                else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerMarca.DS_Mensagem;
-                }
+                // tudo certinho!
+                LimparCampos();
+                BloquearComponentesCadastro();
+                CarregarMarcas();
+                lblDS_Mensagem.Text = "Incluído com sucesso!";
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
+                lblDS_Mensagem.Text = myControllerMarca.DS_Mensagem;
             }
         }
 
         private void Alterar()
         {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
+            myControllerMarca = new ControllerMarca(
+                txbID_Marca.Text.Trim(),
+                txbNM_Marca.Text.Trim(),
+                Session["ConnectionString"].ToString());
 
-            if (mDs_Msg == "")
+            // o que ocorreu?
+            if (myControllerMarca.DS_Mensagem == "OK")
             {
-                // tudo certinho
-                // instanciar um objeto da classe sabor, carregar tela e alterar
-                myControllerMarca = new ControllerMarca(
-                    Convert.ToInt32(txbID_Marca.Text.Trim()),
-                    txbNM_Marca.Text.Trim(),
-                    Session["ConnectionString"].ToString());
-
-                // o que ocorreu?
-                if (myControllerMarca.DS_Mensagem == "OK")
-                {
-                    // tudo certinho!
-                    LimparCampos();
-                    BloquearComponentesCadastro();
-                    CarregarMarcas();
-                    lblDS_Mensagem.Text = "Alterado com sucesso!";
-                }
-                else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerMarca.DS_Mensagem;
-                }
+                // tudo certinho!
+                LimparCampos();
+                BloquearComponentesCadastro();
+                CarregarMarcas();
+                lblDS_Mensagem.Text = "Alterado com sucesso!";
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
+                lblDS_Mensagem.Text = myControllerMarca.DS_Mensagem;
             }
         }
 
         private void Excluir()
         {
             // instanciar um objeto da classe sabor e carregar tela e consultar
-            myControllerMarca = new ControllerMarca(Convert.ToInt32(txbID_Marca.Text.Trim()), 'E', Session["ConnectionString"].ToString());
+            myControllerMarca = new ControllerMarca(txbID_Marca.Text.Trim(), 'E', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerMarca.DS_Mensagem == "OK")
@@ -230,7 +173,7 @@ namespace SuplementosPIMIV.View
         private void Ativar()
         {
             // instanciar um objeto da classe marca e carregar tela e ativar
-            myControllerMarca = new ControllerMarca(Convert.ToInt32(txbID_Marca.Text.Trim()), 'A', Session["ConnectionString"].ToString());
+            myControllerMarca = new ControllerMarca(txbID_Marca.Text.Trim(), 'A', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerMarca.DS_Mensagem == "OK")

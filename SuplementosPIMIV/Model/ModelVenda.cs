@@ -23,10 +23,7 @@ namespace SuplementosPIMIV.Model
         SqlCommand sqlCommand;                                  // Command que envia um 'comando' para o SGBD
         SqlDataReader sqlDataReader;                            // Retorno do Command (DataReader) espécie de tabela/leitura 'apenas pra frente'
 
-        public ModelVenda(string connectionString)
-        {
-            ConnectionString = connectionString;
-        }
+        public ModelVenda() { }
 
         public ModelVenda(int id_funcionario, DateTime dt_venda, string connectionString)
         {
@@ -37,7 +34,7 @@ namespace SuplementosPIMIV.Model
             Incluir();
         }
 
-        public ModelVenda(int id_venda, int id_funcionario, DateTime dt_venda, string ds_tipoPagamento, int nr_parcelas, double vl_total, double vl_lucro, 
+        public ModelVenda(int id_venda, int id_funcionario, DateTime dt_venda, string ds_tipoPagamento, int nr_parcelas, double vl_total, double vl_lucro,
             string connectionString)
         {
             ID_Venda = id_venda;
@@ -60,7 +57,7 @@ namespace SuplementosPIMIV.Model
             Excluir();
         }
 
-        public void Incluir()
+        private void Incluir()
         {
             DS_Mensagem = "";
 
@@ -94,7 +91,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public void Finalizar()
+        private void Finalizar()
         {
             DS_Mensagem = "";
 
@@ -129,47 +126,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public DataTable Consultar(DateTime dataInicio, DateTime dataFinal)
-        {
-            DataTable dataTable = new DataTable();
-
-            try
-            {
-                sqlConnection = new SqlConnection(ConnectionString);
-                sqlConnection.Open();
-
-                StringBuilder stringSQL = new StringBuilder();
-                stringSQL.Append("SELECT ");
-                stringSQL.Append("VEN.ID_Venda, ");
-                stringSQL.Append("FUN.NM_Funcionario, ");
-                stringSQL.Append("VEN.DT_Venda, ");
-                stringSQL.Append("VEN.DS_TipoPagamento, ");
-                stringSQL.Append("VEN.NR_Parcelas, ");
-                stringSQL.Append("FORMAT(VEN.VL_Total, 'N2') AS VL_Total, ");
-                stringSQL.Append("FORMAT(VEN.VL_Lucro, 'N2') AS VL_Lucro ");
-                stringSQL.Append("FROM TB_Venda AS VEN ");
-                stringSQL.Append("INNER JOIN TB_Funcionario AS FUN ON VEN.ID_Funcionario = FUN.ID_Funcionario ");
-                stringSQL.Append("WHERE VEN.DT_VENDA BETWEEN '" + dataInicio + "' AND '" + dataFinal + "' ");
-                stringSQL.Append("ORDER BY VEN.ID_Venda DESC");
-
-                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
-                sqlDataReader = sqlCommand.ExecuteReader();
-                dataTable.Load(sqlDataReader);
-            }
-            catch (Exception e)
-            {
-                DS_Mensagem = e.Message;
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Close();
-            }
-
-            return dataTable;
-        }
-
-        public void Excluir()
+        private void Excluir()
         {
             DS_Mensagem = "";
 
@@ -198,9 +155,10 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public void ValidarVendas()
+        public void ValidarVendas(string connectionString)
         {
             DS_Mensagem = "";
+            ConnectionString = connectionString;
 
             try
             {
@@ -227,9 +185,10 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public DataTable Exibir()
+        public DataTable Exibir(string connectionString)
         {
             DataTable dataTable = new DataTable();
+            ConnectionString = connectionString;
 
             try
             {
@@ -247,6 +206,47 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("FORMAT(VEN.VL_Lucro, 'N2') AS VL_Lucro ");
                 stringSQL.Append("FROM TB_Venda AS VEN ");
                 stringSQL.Append("INNER JOIN TB_Funcionario AS FUN ON VEN.ID_Funcionario = FUN.ID_Funcionario ");
+                stringSQL.Append("ORDER BY VEN.ID_Venda DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                sqlDataReader = sqlCommand.ExecuteReader();
+                dataTable.Load(sqlDataReader);
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+
+            return dataTable;
+        }
+
+        public DataTable Consultar(DateTime dataInicio, DateTime dataFinal, string connectionString)
+        {
+            DataTable dataTable = new DataTable();
+            ConnectionString = connectionString;
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("VEN.ID_Venda, ");
+                stringSQL.Append("FUN.NM_Funcionario, ");
+                stringSQL.Append("VEN.DT_Venda, ");
+                stringSQL.Append("VEN.DS_TipoPagamento, ");
+                stringSQL.Append("VEN.NR_Parcelas, ");
+                stringSQL.Append("FORMAT(VEN.VL_Total, 'N2') AS VL_Total, ");
+                stringSQL.Append("FORMAT(VEN.VL_Lucro, 'N2') AS VL_Lucro ");
+                stringSQL.Append("FROM TB_Venda AS VEN ");
+                stringSQL.Append("INNER JOIN TB_Funcionario AS FUN ON VEN.ID_Funcionario = FUN.ID_Funcionario ");
+                stringSQL.Append("WHERE VEN.DT_VENDA BETWEEN '" + dataInicio + "' AND '" + dataFinal + "' ");
                 stringSQL.Append("ORDER BY VEN.ID_Venda DESC");
 
                 sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);

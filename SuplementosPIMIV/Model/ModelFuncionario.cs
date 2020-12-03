@@ -33,13 +33,10 @@ namespace SuplementosPIMIV.Model
         SqlCommand sqlCommand;                                  // Command que envia um 'comando' para o SGBD
         SqlDataReader sqlDataReader;                            // Retorno do Command (DataReader) espécie de tabela/leitura 'apenas pra frente'
 
-        public ModelFuncionario(string connectionString)
-        {
-            ConnectionString = connectionString;
-        }
+        public ModelFuncionario() { }
 
-        public ModelFuncionario(string nm_funcionario, string ds_sexo, DateTime dt_nascimento, string nr_cpf, string nr_telefone, 
-            string ds_email, string nr_cep, string ds_logradouro, string nr_casa, string nm_bairro, string ds_complemento, int id_uf, 
+        public ModelFuncionario(string nm_funcionario, string ds_sexo, DateTime dt_nascimento, string nr_cpf, string nr_telefone,
+            string ds_email, string nr_cep, string ds_logradouro, string nr_casa, string nm_bairro, string ds_complemento, int id_uf,
             int id_cidade, string ds_cargo, double vl_salario, DateTime dt_admissao, string connectionString)
         {
             NM_Funcionario = nm_funcionario;
@@ -104,7 +101,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public void Incluir()
+        private void Incluir()
         {
             DS_Mensagem = "";
 
@@ -146,7 +143,7 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("'" + DS_Complemento + "', ");
                 stringSQL.Append("'" + ID_UF + "', ");
                 stringSQL.Append("'" + ID_Cidade + "', ");
-                stringSQL.Append("'" + DS_Cargo + "', ");           
+                stringSQL.Append("'" + DS_Cargo + "', ");
                 stringSQL.Append("REPLACE(REPLACE('" + VL_Salario + "', '.', ''), ',', '.'), ");
                 stringSQL.Append("'" + DT_Admissao + "', ");
                 stringSQL.Append("1)");
@@ -167,7 +164,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public void Alterar()
+        private void Alterar()
         {
             DS_Mensagem = "";
 
@@ -212,9 +209,125 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public DataTable Consultar(int status, string filtro, string texto)
+        private void Excluir()
+        {
+            DS_Mensagem = "";
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("UPDATE TB_Funcionario SET ");
+                stringSQL.Append("Ativo = 0 ");
+                stringSQL.Append("WHERE ID_Funcionario = '" + ID_Funcionario + "'");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                int result = sqlCommand.ExecuteNonQuery();
+
+                DS_Mensagem = result > 0 ? "OK" : "Erro ao excluir";
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+        }
+
+        private void Ativar()
+        {
+            DS_Mensagem = "";
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("UPDATE TB_Funcionario SET ");
+                stringSQL.Append("Ativo = 1 ");
+                stringSQL.Append("WHERE ID_Funcionario = '" + ID_Funcionario + "'");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                int result = sqlCommand.ExecuteNonQuery();
+
+                DS_Mensagem = result > 0 ? "OK" : "Erro ao ativar";
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+        }
+
+        public DataTable Exibir(int status, string connectionString)
         {
             DataTable dataTable = new DataTable();
+            ConnectionString = connectionString;
+
+            try
+            {
+                sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+
+                StringBuilder stringSQL = new StringBuilder();
+                stringSQL.Append("SELECT ");
+                stringSQL.Append("FUNC.ID_Funcionario, ");
+                stringSQL.Append("FUNC.NM_Funcionario, ");
+                stringSQL.Append("FUNC.NR_CPF, ");
+                stringSQL.Append("FUNC.DT_Nascimento, ");
+                stringSQL.Append("FUNC.DS_Sexo, ");
+                stringSQL.Append("FUNC.NR_Telefone, ");
+                stringSQL.Append("FUNC.DS_Email, ");
+                stringSQL.Append("FUNC.NR_CEP, ");
+                stringSQL.Append("FUNC.DS_Logradouro, ");
+                stringSQL.Append("FUNC.NR_Casa, ");
+                stringSQL.Append("FUNC.NM_Bairro, ");
+                stringSQL.Append("FUNC.DS_Complemento, ");
+                stringSQL.Append("FUNC.ID_Cidade, ");
+                stringSQL.Append("CID.NM_Cidade, ");
+                stringSQL.Append("FUNC.ID_UF, ");
+                stringSQL.Append("UF.DS_UF, ");
+                stringSQL.Append("FUNC.DS_Cargo, ");
+                stringSQL.Append("FORMAT(FUNC.VL_Salario, 'N2') AS VL_Salario, ");
+                stringSQL.Append("FUNC.DT_Admissao, ");
+                stringSQL.Append("FUNC.Ativo ");
+                stringSQL.Append("FROM TB_Funcionario AS FUNC ");
+                stringSQL.Append("INNER JOIN TB_UF AS UF ON FUNC.ID_UF = UF.ID_UF ");
+                stringSQL.Append("INNER JOIN TB_Cidade AS CID ON FUNC.ID_Cidade = CID.ID_Cidade ");
+                stringSQL.Append("WHERE FUNC.Ativo = " + status + " ");
+                stringSQL.Append("ORDER BY FUNC.ID_Funcionario DESC");
+
+                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
+                sqlDataReader = sqlCommand.ExecuteReader();
+                dataTable.Load(sqlDataReader);
+            }
+            catch (Exception e)
+            {
+                DS_Mensagem = e.Message;
+            }
+            finally
+            {
+                sqlCommand.Dispose();
+                sqlConnection.Close();
+            }
+
+            return dataTable;
+        }
+
+        public DataTable Consultar(int status, string filtro, string texto, string connectionString)
+        {
+            DataTable dataTable = new DataTable();
+            ConnectionString = connectionString;
 
             try
             {
@@ -267,123 +380,10 @@ namespace SuplementosPIMIV.Model
             return dataTable;
         }
 
-        public void Excluir()
+        public string VerificarFuncionarioCadastrado(string id_funcionario, string nr_cpf, string connectionString)
         {
             DS_Mensagem = "";
-
-            try
-            {
-                sqlConnection = new SqlConnection(ConnectionString);
-                sqlConnection.Open();
-
-                StringBuilder stringSQL = new StringBuilder();
-                stringSQL.Append("UPDATE TB_Funcionario SET ");
-                stringSQL.Append("Ativo = 0 ");
-                stringSQL.Append("WHERE ID_Funcionario = '" + ID_Funcionario + "'");
-
-                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
-                int result = sqlCommand.ExecuteNonQuery();
-
-                DS_Mensagem = result > 0 ? "OK" : "Erro ao excluir";
-            }
-            catch (Exception e)
-            {
-                DS_Mensagem = e.Message;
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Close();
-            }
-        }
-
-        public void Ativar()
-        {
-            DS_Mensagem = "";
-
-            try
-            {
-                sqlConnection = new SqlConnection(ConnectionString);
-                sqlConnection.Open();
-
-                StringBuilder stringSQL = new StringBuilder();
-                stringSQL.Append("UPDATE TB_Funcionario SET ");
-                stringSQL.Append("Ativo = 1 ");
-                stringSQL.Append("WHERE ID_Funcionario = '" + ID_Funcionario + "'");
-
-                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
-                int result = sqlCommand.ExecuteNonQuery();
-
-                DS_Mensagem = result > 0 ? "OK" : "Erro ao ativar";
-            }
-            catch (Exception e)
-            {
-                DS_Mensagem = e.Message;
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Close();
-            }
-        }
-
-        public DataTable Exibir(int status)
-        {
-            DataTable dataTable = new DataTable();
-
-            try
-            {
-                sqlConnection = new SqlConnection(ConnectionString);
-                sqlConnection.Open();
-
-                StringBuilder stringSQL = new StringBuilder();
-                stringSQL.Append("SELECT ");
-                stringSQL.Append("FUNC.ID_Funcionario, ");
-                stringSQL.Append("FUNC.NM_Funcionario, ");
-                stringSQL.Append("FUNC.NR_CPF, ");
-                stringSQL.Append("FUNC.DT_Nascimento, ");
-                stringSQL.Append("FUNC.DS_Sexo, ");
-                stringSQL.Append("FUNC.NR_Telefone, ");
-                stringSQL.Append("FUNC.DS_Email, ");
-                stringSQL.Append("FUNC.NR_CEP, ");
-                stringSQL.Append("FUNC.DS_Logradouro, ");
-                stringSQL.Append("FUNC.NR_Casa, ");
-                stringSQL.Append("FUNC.NM_Bairro, ");
-                stringSQL.Append("FUNC.DS_Complemento, ");
-                stringSQL.Append("FUNC.ID_Cidade, ");
-                stringSQL.Append("CID.NM_Cidade, ");
-                stringSQL.Append("FUNC.ID_UF, ");
-                stringSQL.Append("UF.DS_UF, ");
-                stringSQL.Append("FUNC.DS_Cargo, ");
-                stringSQL.Append("FORMAT(FUNC.VL_Salario, 'N2') AS VL_Salario, ");
-                stringSQL.Append("FUNC.DT_Admissao, ");
-                stringSQL.Append("FUNC.Ativo ");
-                stringSQL.Append("FROM TB_Funcionario AS FUNC ");
-                stringSQL.Append("INNER JOIN TB_UF AS UF ON FUNC.ID_UF = UF.ID_UF ");
-                stringSQL.Append("INNER JOIN TB_Cidade AS CID ON FUNC.ID_Cidade = CID.ID_Cidade ");
-                stringSQL.Append("WHERE FUNC.Ativo = " + status + " ");
-                stringSQL.Append("ORDER BY FUNC.ID_Funcionario DESC");
-
-                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
-                sqlDataReader = sqlCommand.ExecuteReader();
-                dataTable.Load(sqlDataReader);
-            }
-            catch (Exception e)
-            {
-                DS_Mensagem = e.Message;
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Close();
-            }
-
-            return dataTable;
-        }
-
-        public string VerificarFuncionarioCadastrado(string id_funcionario, string nr_cpf)
-        {
-            DS_Mensagem = "";
+            ConnectionString = connectionString;
 
             try
             {
@@ -419,9 +419,10 @@ namespace SuplementosPIMIV.Model
             return DS_Mensagem;
         }
 
-        public DataTable ExibirUFs()
+        public DataTable ExibirUFs(string connectionString)
         {
             DataTable dataTable = new DataTable();
+            ConnectionString = connectionString;
 
             try
             {
@@ -432,7 +433,7 @@ namespace SuplementosPIMIV.Model
                 stringSQL.Append("SELECT ");
                 stringSQL.Append("ID_UF, ");
                 stringSQL.Append("NM_UF, ");
-                stringSQL.Append("DS_UF ");             
+                stringSQL.Append("DS_UF ");
                 stringSQL.Append("FROM TB_UF ");
                 stringSQL.Append("ORDER BY DS_UF ASC");
 
@@ -453,9 +454,10 @@ namespace SuplementosPIMIV.Model
             return dataTable;
         }
 
-        public DataTable ExibirCidades(int id_uf)
+        public DataTable ExibirCidades(int id_uf, string connectionString)
         {
             DataTable dataTable = new DataTable();
+            ConnectionString = connectionString;
 
             try
             {

@@ -32,7 +32,7 @@ namespace Validacao
 
         public bool Valor(string campo)
         {
-            if (!Regex.IsMatch(campo, @"^[1-9]\d{0,2}(\.\d{3})*,\d{2}$"))
+            if (!Regex.IsMatch(campo, @"^(0|[1-9]\d{0,2}(\.\d{3})*),\d{2}$"))
             {
                 return false;
             }

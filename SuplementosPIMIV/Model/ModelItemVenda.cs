@@ -21,10 +21,7 @@ namespace SuplementosPIMIV.Model
         SqlCommand sqlCommand;                                  // Command que envia um 'comando' para o SGBD
         SqlDataReader sqlDataReader;                            // Retorno do Command (DataReader) espécie de tabela/leitura 'apenas pra frente'
 
-        public ModelItemVenda(string connectionString)
-        {
-            ConnectionString = connectionString;
-        }
+        public ModelItemVenda() { }
 
         public ModelItemVenda(int id_venda, int id_produto, int qtd_itemVenda, double vl_subtotal, double vl_lucro, char acao, string connectionString)
         {
@@ -54,7 +51,7 @@ namespace SuplementosPIMIV.Model
             Excluir();
         }
 
-        public void Incluir()
+        private void Incluir()
         {
             DS_Mensagem = "";
 
@@ -93,7 +90,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public void Alterar()
+        private void Alterar()
         {
             DS_Mensagem = "";
 
@@ -126,7 +123,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public void Excluir()
+        private void Excluir()
         {
             DS_Mensagem = "";
 
@@ -156,9 +153,10 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public DataTable Exibir(int id_venda)
+        public DataTable Exibir(int id_venda, string connectionString)
         {
             DataTable dataTable = new DataTable();
+            ConnectionString = connectionString;
 
             try
             {

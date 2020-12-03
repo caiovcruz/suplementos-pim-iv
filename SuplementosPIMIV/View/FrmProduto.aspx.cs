@@ -84,10 +84,10 @@ namespace SuplementosPIMIV.View
         private void CarregarProdutos()
         {
             // instanciando um objeto da classe ControllerProduto
-            myControllerProduto = new ControllerProduto(Session["ConnectionString"].ToString());
+            myControllerProduto = new ControllerProduto();
 
             // passando a fonte de dados para o GridView
-            gvwExibe.DataSource = myControllerProduto.Exibir(chkStatusInativo.Checked ? 0 : 1);
+            gvwExibe.DataSource = myControllerProduto.Exibir(chkStatusInativo.Checked ? "0" : "1", Session["ConnectionString"].ToString());
 
             // associando os dados para carregar e exibir
             gvwExibe.DataBind();
@@ -95,9 +95,9 @@ namespace SuplementosPIMIV.View
 
         private void CarregarMarcas()
         {
-            myControllerMarca = new ControllerMarca(Session["ConnectionString"].ToString());
+            myControllerMarca = new ControllerMarca();
 
-            ddlID_MarcaProduto.DataSource = myControllerMarca.Exibir(1);
+            ddlID_MarcaProduto.DataSource = myControllerMarca.Exibir("1", Session["ConnectionString"].ToString());
             ddlID_MarcaProduto.DataTextField = "NM_Marca";
             ddlID_MarcaProduto.DataValueField = "ID_Marca";
             ddlID_MarcaProduto.DataBind();
@@ -108,9 +108,9 @@ namespace SuplementosPIMIV.View
 
         private void CarregarCategorias()
         {
-            myControllerCategoria = new ControllerCategoria(Session["ConnectionString"].ToString());
+            myControllerCategoria = new ControllerCategoria();
 
-            ddlID_CategoriaProduto.DataSource = myControllerCategoria.Exibir(1);
+            ddlID_CategoriaProduto.DataSource = myControllerCategoria.Exibir("1", Session["ConnectionString"].ToString());
             ddlID_CategoriaProduto.DataTextField = "NM_Categoria";
             ddlID_CategoriaProduto.DataValueField = "ID_Categoria";
             ddlID_CategoriaProduto.DataBind();
@@ -121,9 +121,9 @@ namespace SuplementosPIMIV.View
 
         private void CarregarSubcategorias()
         {
-            myControllerSubcategoria = new ControllerSubcategoria(Session["ConnectionString"].ToString());
+            myControllerSubcategoria = new ControllerSubcategoria();
 
-            ddlID_SubcategoriaProduto.DataSource = myControllerSubcategoria.Filtrar(1, Convert.ToInt32(ddlID_CategoriaProduto.SelectedValue));
+            ddlID_SubcategoriaProduto.DataSource = myControllerSubcategoria.Filtrar("1", ddlID_CategoriaProduto.SelectedValue, Session["ConnectionString"].ToString());
             ddlID_SubcategoriaProduto.DataTextField = "NM_Subcategoria";
             ddlID_SubcategoriaProduto.DataValueField = "ID_Subcategoria";
             ddlID_SubcategoriaProduto.DataBind();
@@ -134,9 +134,9 @@ namespace SuplementosPIMIV.View
 
         private void CarregarSabores()
         {
-            myControllerSabor = new ControllerSabor(Session["ConnectionString"].ToString());
+            myControllerSabor = new ControllerSabor();
 
-            ddlID_SaborProduto.DataSource = myControllerSabor.Exibir(1);
+            ddlID_SaborProduto.DataSource = myControllerSabor.Exibir("1", Session["ConnectionString"].ToString());
             ddlID_SaborProduto.DataTextField = "NM_Sabor";
             ddlID_SaborProduto.DataValueField = "ID_Sabor";
             ddlID_SaborProduto.DataBind();
@@ -157,7 +157,7 @@ namespace SuplementosPIMIV.View
             {
                 // tudo certinho
                 // instanciar um objeto da classe produto, carregar tela e consultar
-                myControllerProduto = new ControllerProduto(Session["ConnectionString"].ToString());
+                myControllerProduto = new ControllerProduto();
 
                 string filtro = "";
 
@@ -176,7 +176,7 @@ namespace SuplementosPIMIV.View
 
                 filtro += " LIKE '" + txbConsultar.Text.Trim() + "' + '%' ";
 
-                gvwExibe.DataSource = myControllerProduto.Consultar(chkStatusInativo.Checked ? 0 : 1, filtro);
+                gvwExibe.DataSource = myControllerProduto.Consultar(chkStatusInativo.Checked ? "0" : "1", filtro, Session["ConnectionString"].ToString());
                 gvwExibe.DataBind();
             }
             else
@@ -227,235 +227,85 @@ namespace SuplementosPIMIV.View
                 ddlID_SaborProduto.SelectedIndex != 0;
         }
 
-        private string ValidateFields()
-        {
-            // validar a entrada de dados para incluir
-            myValidar = new Validar();
-            myControllerProduto = new ControllerProduto(Session["ConnectionString"].ToString());
-            string mDs_Msg = "";
-
-            if (myValidar.CampoPreenchido(txbNR_EAN.Text.Trim()))
-            {
-                if (!myValidar.TamanhoCampo(txbNR_EAN.Text.Trim(), 13))
-                {
-                    mDs_Msg = " Limite de caracteres para o EAN excedido, " +
-                                  "o limite para este campo é: 13 caracteres, " +
-                                  "quantidade utilizada: " + txbNR_EAN.Text.Trim().Length + ".";
-                }
-                else
-                {
-                    if (!myValidar.Numero(txbNR_EAN.Text.Trim()))
-                    {
-                        mDs_Msg = " O EAN deve ser numérico.";
-                    }
-                    else
-                    {
-                        if (!myValidar.EAN(txbNR_EAN.Text.Trim()))
-                        {
-                            mDs_Msg = " EAN inválido.";
-                        }
-                        else
-                        {
-                            if (myValidar.CampoPreenchido(txbNM_Produto.Text.Trim()))
-                            {
-                                if (!myValidar.TamanhoCampo(txbNM_Produto.Text.Trim(), 50))
-                                {
-                                    mDs_Msg = " Limite de caracteres para o nome excedido, " +
-                                                  "o limite para este campo é: 50 caracteres, " +
-                                                  "quantidade utilizada: " + txbNM_Produto.Text.Trim().Length + ".";
-                                }
-                                else
-                                {
-                                    if (ddlID_MarcaProduto.SelectedIndex.Equals(0))
-                                    {
-                                        mDs_Msg = " É necessário selecionar uma marca.";
-                                    }
-                                    else
-                                    {
-                                        if (myControllerProduto.VerificarProdutoCadastrado(txbID_Produto.Text.Trim(), txbNR_EAN.Text.Trim(),
-                                        txbNM_Produto.Text.Trim(), ddlID_MarcaProduto.SelectedValue).Equals(""))
-                                        {
-                                            if (myValidar.CampoPreenchido(txbDS_Produto.Text.Trim()))
-                                            {
-                                                if (!myValidar.TamanhoCampo(txbDS_Produto.Text.Trim(), 3000))
-                                                {
-                                                    mDs_Msg += " Limite de caracteres para descrição excedido, " +
-                                                                  "o limite para este campo é: 3000 caracteres, " +
-                                                                  "quantidade utilizada: " + txbDS_Produto.Text.Trim().Length + ".";
-                                                }
-                                            }
-                                            else
-                                            {
-                                                mDs_Msg += " A descrição deve estar preenchida.";
-                                            }
-
-                                            if (ddlID_CategoriaProduto.SelectedIndex.Equals(0))
-                                            {
-                                                mDs_Msg += " É necessário selecionar uma categoria.";
-                                            }
-
-                                            if (ddlID_SubcategoriaProduto.SelectedIndex.Equals(0))
-                                            {
-                                                mDs_Msg += " É necessário selecionar uma subcategoria.";
-                                            }
-
-                                            if (ddlID_SaborProduto.SelectedIndex.Equals(0))
-                                            {
-                                                mDs_Msg += " É necessário selecionar um sabor.";
-                                            }
-
-                                            if (myValidar.CampoPreenchido(txbPR_Custo.Text.Trim()))
-                                            {
-                                                if (!myValidar.Valor(txbPR_Custo.Text.Trim()))
-                                                {
-                                                    mDs_Msg += " O preço de custo deve ser um valor numérico, no formato: 9.999.999,99.";
-                                                }
-                                            }
-                                            else
-                                            {
-                                                mDs_Msg += " O preço de custo deve estar preenchido.";
-                                            }
-
-                                            if (myValidar.CampoPreenchido(txbPR_Venda.Text.Trim()))
-                                            {
-                                                if (!myValidar.Valor(txbPR_Venda.Text.Trim()))
-                                                {
-                                                    mDs_Msg += " O preço de venda deve ser um valor numérico, no formato: 9.999.999,99.";
-                                                }
-                                            }
-                                            else
-                                            {
-                                                mDs_Msg += " O preço de venda deve estar preenchido.";
-                                            }
-                                        }
-                                        else
-                                        {
-                                            mDs_Msg += " " + myControllerProduto.DS_Mensagem + " Verifique nos produtos ativos e inativos!";
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                mDs_Msg = " O nome deve estar preenchido.";
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                mDs_Msg = " O código de barras deve estar preenchido.";
-            }
-
-            return mDs_Msg;
-        }
-
         private void Incluir()
         {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
+            myControllerProduto = new ControllerProduto(
+                ddlID_MarcaProduto.SelectedValue,
+                ddlID_CategoriaProduto.SelectedValue,
+                ddlID_SubcategoriaProduto.SelectedValue,
+                ddlID_SaborProduto.SelectedValue,
+                txbNR_EAN.Text.Trim(),
+                txbNM_Produto.Text.Trim(),
+                txbDS_Produto.Text.Trim(),
+                txbPR_Custo.Text.Trim(),
+                txbPR_Venda.Text.Trim(),
+                Session["ConnectionString"].ToString());
 
-            if (mDs_Msg == "")
+            // o que ocorreu?
+            if (myControllerProduto.DS_Mensagem == "OK")
             {
-                // tudo certinho
-                // instanciar um objeto da classe produto, carregar tela e incluir
-                myControllerProduto = new ControllerProduto(
-                    Convert.ToInt32(ddlID_MarcaProduto.SelectedValue),
-                    Convert.ToInt32(ddlID_CategoriaProduto.SelectedValue),
-                    Convert.ToInt32(ddlID_SubcategoriaProduto.SelectedValue),
-                    Convert.ToInt32(ddlID_SaborProduto.SelectedValue),
-                    txbNR_EAN.Text.Trim(),
-                    txbNM_Produto.Text.Trim(),
-                    txbDS_Produto.Text.Trim(),
-                    Convert.ToDouble(txbPR_Custo.Text.Trim()),
-                    Convert.ToDouble(txbPR_Venda.Text.Trim()),
+                myControllerEstoque = new ControllerEstoque(
+                    myControllerProduto.ID_Produto.ToString(),
+                    "0",
                     Session["ConnectionString"].ToString());
 
-                // o que ocorreu?
-                if (myControllerProduto.DS_Mensagem == "OK")
-                {
-                    myControllerEstoque = new ControllerEstoque(
-                        myControllerProduto.ID_Produto,
-                        0,
-                        Session["ConnectionString"].ToString());
-
-                    if (myControllerEstoque.DS_Mensagem == "OK")
-                    {
-                        // tudo certinho!
-                        LimparCampos();
-                        BloquearComponentesCadastro();
-                        CarregarProdutos();
-                        lblDS_Mensagem.Text = "Incluído com sucesso!";
-                    }
-                    else
-                    {// exibir erro!
-                        lblDS_Mensagem.Text = "Incluído com sucesso! #Erro ao cadastrar estoque, " +
-                            "favor cadastrar manualmente para conseguir visualizar o produto.";
-
-                    }
-                }
-                else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerProduto.DS_Mensagem;
-                }
-            }
-            else
-            {
-                // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
-            }
-        }
-
-        private void Alterar()
-        {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
-
-            if (mDs_Msg == "")
-            {
-                // tudo certinho
-                // instanciar um objeto da classe produto, carregar tela e alterar
-                myControllerProduto = new ControllerProduto(
-                    Convert.ToInt32(txbID_Produto.Text.Trim()),
-                    Convert.ToInt32(ddlID_MarcaProduto.SelectedValue),
-                    Convert.ToInt32(ddlID_CategoriaProduto.SelectedValue),
-                    Convert.ToInt32(ddlID_SubcategoriaProduto.SelectedValue),
-                    Convert.ToInt32(ddlID_SaborProduto.SelectedValue),
-                    txbNR_EAN.Text.Trim(),
-                    txbNM_Produto.Text.Trim(),
-                    txbDS_Produto.Text.Trim(),
-                    Convert.ToDouble(txbPR_Custo.Text.Trim()),
-                    Convert.ToDouble(txbPR_Venda.Text.Trim()),
-                    Session["ConnectionString"].ToString());
-
-                // o que ocorreu?
-                if (myControllerProduto.DS_Mensagem == "OK")
+                if (myControllerEstoque.DS_Mensagem == "OK")
                 {
                     // tudo certinho!
                     LimparCampos();
                     BloquearComponentesCadastro();
                     CarregarProdutos();
-                    lblDS_Mensagem.Text = "Alterado com sucesso!";
+                    lblDS_Mensagem.Text = "Incluído com sucesso!";
                 }
                 else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerProduto.DS_Mensagem;
+                {// exibir erro!
+                    lblDS_Mensagem.Text = "Incluído com sucesso! #Erro ao cadastrar estoque, " +
+                        "favor cadastrar manualmente para conseguir visualizar o produto.";
+
                 }
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
+                lblDS_Mensagem.Text = myControllerProduto.DS_Mensagem;
+            }
+        }
+
+        private void Alterar()
+        {
+            myControllerProduto = new ControllerProduto(
+                txbID_Produto.Text.Trim(),
+                ddlID_MarcaProduto.SelectedValue,
+                ddlID_CategoriaProduto.SelectedValue,
+                ddlID_SubcategoriaProduto.SelectedValue,
+                ddlID_SaborProduto.SelectedValue,
+                txbNR_EAN.Text.Trim(),
+                txbNM_Produto.Text.Trim(),
+                txbDS_Produto.Text.Trim(),
+                txbPR_Custo.Text.Trim(),
+                txbPR_Venda.Text.Trim(),
+                Session["ConnectionString"].ToString());
+
+            // o que ocorreu?
+            if (myControllerProduto.DS_Mensagem == "OK")
+            {
+                // tudo certinho!
+                LimparCampos();
+                BloquearComponentesCadastro();
+                CarregarProdutos();
+                lblDS_Mensagem.Text = "Alterado com sucesso!";
+            }
+            else
+            {
+                // exibir erro!
+                lblDS_Mensagem.Text = myControllerProduto.DS_Mensagem;
             }
         }
 
         private void Excluir()
         {
             // instanciar um objeto da classe produto e carregar tela e excluir
-            myControllerProduto = new ControllerProduto(Convert.ToInt32(txbID_Produto.Text.Trim()), 'E', Session["ConnectionString"].ToString());
+            myControllerProduto = new ControllerProduto(txbID_Produto.Text.Trim(), 'E', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerProduto.DS_Mensagem == "OK")
@@ -476,7 +326,7 @@ namespace SuplementosPIMIV.View
         private void Ativar()
         {
             // instanciar um objeto da classe produto e carregar tela e ativar
-            myControllerProduto = new ControllerProduto(Convert.ToInt32(txbID_Produto.Text.Trim()), 'A', Session["ConnectionString"].ToString());
+            myControllerProduto = new ControllerProduto(txbID_Produto.Text.Trim(), 'A', Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerProduto.DS_Mensagem == "OK")
@@ -573,6 +423,7 @@ namespace SuplementosPIMIV.View
             try
             {
                 ddlID_CategoriaProduto.SelectedValue = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[6].Text.Trim());
+                CarregarSubcategorias();
             }
             catch (Exception)
             {

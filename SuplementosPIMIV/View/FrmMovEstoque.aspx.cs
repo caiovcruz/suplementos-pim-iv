@@ -8,10 +8,9 @@ namespace SuplementosPIMIV.View
 {
     public partial class FrmEstoque : System.Web.UI.Page
     {
-        private Validar myValidar;
         private ControllerMovEstoque myControllerMovEstoque;
-        private ControllerEstoque myControllerEstoque;
         private ControllerProduto myControllerProduto;
+        private Validar myValidar;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -58,8 +57,6 @@ namespace SuplementosPIMIV.View
             btnIncluir.Enabled = false;
             btnExcluir.Enabled = false;
             btnLimpar.Enabled = false;
-            btnConsultar.Enabled = false;
-            txbNM_ProdutoConsultar.Enabled = false;
             txbDT_MovimentacaoEstoque.Enabled = false;
         }
 
@@ -71,20 +68,43 @@ namespace SuplementosPIMIV.View
         private void CarregarMovimentacoesEstoque()
         {
             // instanciando um objeto da classe ControllerMovEstoque
-            myControllerMovEstoque = new ControllerMovEstoque(Session["ConnectionString"].ToString());
+            myControllerMovEstoque = new ControllerMovEstoque();
 
             // passando a fonte de dados para o GridView
-            gvwExibe.DataSource = myControllerMovEstoque.Exibir();
+            gvwExibe.DataSource = myControllerMovEstoque.Exibir(Session["ConnectionString"].ToString());
 
             // associando os dados para carregar e exibir
             gvwExibe.DataBind();
         }
 
+        private void CarregarMovimentacoesEstoqueConsultar()
+        {
+            // validar a entrada de dados para consulta
+            myValidar = new Validar();
+            string mDs_Msg = (myValidar.TamanhoCampo(txbNM_ProdutoConsultar.Text, 50)) ? "" : " Limite de caracteres para o nome excedido, " +
+                                                                                              "o limite para este campo é: 50 caracteres, " +
+                                                                                              "quantidade utilizada: " + txbNM_ProdutoConsultar.Text.Trim().Length + "."; ;
+
+            if (mDs_Msg == "")
+            {
+                // tudo certinho
+                // instanciar um objeto da classe marca, carregar tela e consultar
+                myControllerMovEstoque = new ControllerMovEstoque();
+                gvwExibe.DataSource = myControllerMovEstoque.Consultar(txbNM_ProdutoConsultar.Text.Trim(), Session["ConnectionString"].ToString());
+                gvwExibe.DataBind();
+            }
+            else
+            {
+                // exibir erro!
+                lblDS_Mensagem.Text = mDs_Msg;
+            }
+        }
+
         private void CarregarProdutos()
         {
-            myControllerProduto = new ControllerProduto(Session["ConnectionString"].ToString());
+            myControllerProduto = new ControllerProduto();
 
-            ddlID_ProdutoMovimentacaoEstoque.DataSource = myControllerProduto.ListarProdutos(1);
+            ddlID_ProdutoMovimentacaoEstoque.DataSource = myControllerProduto.ListarProdutos("1", Session["ConnectionString"].ToString());
             ddlID_ProdutoMovimentacaoEstoque.DataTextField = "NM_Produto";
             ddlID_ProdutoMovimentacaoEstoque.DataValueField = "ID_Produto";
             ddlID_ProdutoMovimentacaoEstoque.DataBind();
@@ -116,85 +136,35 @@ namespace SuplementosPIMIV.View
                 ddlDS_MovimentacaoEstoque.SelectedIndex != 0;
         }
 
-        private string ValidateFields()
-        {
-            // validar a entrada de dados para incluir
-            myValidar = new Validar();
-            myControllerEstoque = new ControllerEstoque(Session["ConnectionString"].ToString());
-            string mDs_Msg = "";
-
-            if (myValidar.CampoPreenchido(txbQTD_MovimentacaoEstoque.Text.Trim()))
-            {
-                if (!myValidar.Numero(txbQTD_MovimentacaoEstoque.Text.Trim()))
-                {
-                    mDs_Msg += " A quantidade da movimentação deve conter somente números.";
-                }
-                else
-                {
-                    int qtd_movimentacaoEstoque = Convert.ToInt32(txbQTD_MovimentacaoEstoque.Text.Trim());
-                    int qtd_estoque = myControllerEstoque.QuantidadeTotalEstoque(Convert.ToInt32(ddlID_ProdutoMovimentacaoEstoque.SelectedValue));
-
-                    if (ddlDS_MovimentacaoEstoque.SelectedValue.Equals("Saída") && qtd_movimentacaoEstoque > qtd_estoque)
-                    {
-                        mDs_Msg += " Quantidade ultrapassada para movimentação de saída [ Quantidade máxima disponível: " + qtd_estoque + " ].";
-                    }
-
-                    if (ddlDS_MovimentacaoEstoque.SelectedValue.Equals("Venda") && qtd_movimentacaoEstoque > qtd_estoque)
-                    {
-                        mDs_Msg += " Quantidade ultrapassada para movimentação de venda [ Quantidade máxima disponível: " + qtd_estoque + " ].";
-                    }
-                }
-            }
-            else
-            {
-                mDs_Msg += " A quantidade da movimentação deve estar preenchida.";
-            }
-
-            return mDs_Msg;
-        }
-
         private void Incluir()
         {
-            // validar a entrada de dados para inclusão
-            string mDs_Msg = ValidateFields();
+            myControllerMovEstoque = new ControllerMovEstoque(
+                ddlID_ProdutoMovimentacaoEstoque.SelectedValue,
+                txbQTD_MovimentacaoEstoque.Text.Trim(),
+                ddlDS_MovimentacaoEstoque.SelectedValue,
+                DateTime.Now,
+                Session["ConnectionString"].ToString());
 
-            if (mDs_Msg == "")
+            // o que ocorreu?
+            if (myControllerMovEstoque.DS_Mensagem == "OK")
             {
-                // tudo certinho
-                // instanciar um objeto da classe movestoque, carregar tela e incluir
-                myControllerMovEstoque = new ControllerMovEstoque(
-                    Convert.ToInt32(ddlID_ProdutoMovimentacaoEstoque.SelectedValue),
-                    Convert.ToInt32(txbQTD_MovimentacaoEstoque.Text.Trim()),
-                    ddlDS_MovimentacaoEstoque.SelectedValue,
-                    DateTime.Now,
-                    Session["ConnectionString"].ToString());
-
-                // o que ocorreu?
-                if (myControllerMovEstoque.DS_Mensagem == "OK")
-                {
-                    // tudo certinho!
-                    LimparCampos();
-                    BloquearComponentesCadastro();
-                    CarregarMovimentacoesEstoque();
-                    lblDS_Mensagem.Text = "Incluído com sucesso!";
-                }
-                else
-                {
-                    // exibir erro!
-                    lblDS_Mensagem.Text = myControllerMovEstoque.DS_Mensagem;
-                }
+                // tudo certinho!
+                LimparCampos();
+                BloquearComponentesCadastro();
+                CarregarMovimentacoesEstoque();
+                lblDS_Mensagem.Text = "Incluído com sucesso!";
             }
             else
             {
                 // exibir erro!
-                lblDS_Mensagem.Text = mDs_Msg;
+                lblDS_Mensagem.Text = myControllerMovEstoque.DS_Mensagem;
             }
         }
 
         private void Excluir()
         {
             // instanciar um objeto da classe movestoque e carregar tela e excluir
-            myControllerMovEstoque = new ControllerMovEstoque(Convert.ToInt32(txbID_MovimentacaoEstoque.Text.Trim()), Session["ConnectionString"].ToString());
+            myControllerMovEstoque = new ControllerMovEstoque(txbID_MovimentacaoEstoque.Text.Trim(), Session["ConnectionString"].ToString());
 
             // o que ocorreu?
             if (myControllerMovEstoque.DS_Mensagem == "OK")
@@ -244,7 +214,7 @@ namespace SuplementosPIMIV.View
 
         protected void btnConsultar_Click(object sender, EventArgs e)
         {
-
+            CarregarMovimentacoesEstoqueConsultar();
         }
 
         protected void gvwExibe_RowDataBound(object sender, GridViewRowEventArgs e)

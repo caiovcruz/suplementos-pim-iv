@@ -16,10 +16,7 @@ namespace SuplementosPIMIV.Model
         SqlConnection sqlConnection;                            // Conexão do SGBD
         SqlCommand sqlCommand;                                  // Command que envia um 'comando' para o SGBD
 
-        public ModelEstoque(string connectionString)
-        {
-            ConnectionString = connectionString;
-        }
+        public ModelEstoque() { }
 
         public ModelEstoque(int id_produto, int qtd_estoque, string connectionString)
         {
@@ -38,7 +35,7 @@ namespace SuplementosPIMIV.Model
             Excluir();
         }
 
-        public void Incluir()
+        private void Incluir()
         {
             DS_Mensagem = "";
 
@@ -73,7 +70,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public void Excluir()
+        private void Excluir()
         {
             DS_Mensagem = "";
 
@@ -103,9 +100,10 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        public int QuantidadeTotalEstoque(int id_produto)
+        public int QuantidadeTotalEstoque(int id_produto, string connectionString)
         {
             int qtd_total = 0;
+            ConnectionString = connectionString;
 
             try
             {

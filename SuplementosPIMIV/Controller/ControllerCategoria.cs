@@ -92,25 +92,32 @@ namespace SuplementosPIMIV.Controller
                 }
                 else
                 {
-                    if (VerificarCategoriaCadastrada(id_categoria, nm_categoria, connectionString).Equals(""))
+                    if (!myValidar.Letra(nm_categoria))
                     {
-                        if (myValidar.CampoPreenchido(ds_categoria))
+                        mDs_Msg = " O nome deve conter somente letras";
+                    }
+                    else
+                    {
+                        if (VerificarCategoriaCadastrada(id_categoria, nm_categoria, connectionString).Equals(""))
                         {
-                            if (!myValidar.TamanhoCampo(ds_categoria, 1500))
+                            if (myValidar.CampoPreenchido(ds_categoria))
                             {
-                                mDs_Msg += " Limite de caracteres para descrição excedido, " +
-                                              "o limite para este campo é: 1500 caracteres, " +
-                                              "quantidade utilizada: " + ds_categoria.Length + ".";
+                                if (!myValidar.TamanhoCampo(ds_categoria, 1500))
+                                {
+                                    mDs_Msg += " Limite de caracteres para descrição excedido, " +
+                                                  "o limite para este campo é: 1500 caracteres, " +
+                                                  "quantidade utilizada: " + ds_categoria.Length + ".";
+                                }
+                            }
+                            else
+                            {
+                                mDs_Msg += " A descrição deve estar preenchida.";
                             }
                         }
                         else
                         {
-                            mDs_Msg += " A descrição deve estar preenchida.";
+                            mDs_Msg += " Categoria já cadastrada. Verifique nas categorias ativas e inativas!";
                         }
-                    }
-                    else
-                    {
-                        mDs_Msg += " Categoria já cadastrada. Verifique nas categorias ativas e inativas!";
                     }
                 }
             }

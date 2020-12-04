@@ -42,6 +42,18 @@ namespace Validacao
             }
         }
 
+        public bool Letra(string campo)
+        {
+            if (!Regex.IsMatch(campo, @"^[a-zA-Z\s]+$"))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public bool Numero(string campo)
         {
             if (!Regex.IsMatch(campo, @"^[\d]+$"))

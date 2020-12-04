@@ -125,162 +125,190 @@ namespace SuplementosPIMIV.Controller
                 }
                 else
                 {
-                    if (myValidar.CampoPreenchido(nr_cpf))
+                    if (!myValidar.Letra(nm_funcionario))
                     {
-                        if (!myValidar.ValidaCPF(nr_cpf))
-                        {
-                            mDs_Msg = " CPF inválido, por favor verifique e tente novamente.";
-                        }
-                        else
-                        {
-                            if (VerificarFuncionarioCadastrado(id_funcionario, nr_cpf.Replace(".", "").Replace("-", ""), connectionString).Equals(""))
-                            {
-                                if (diaNascimentoFuncionario.Equals("Dia"))
-                                {
-                                    mDs_Msg += " É necessário selecionar o dia do nascimento.";
-                                }
-
-                                if (mesNascimentoFuncionario.Equals("0"))
-                                {
-                                    mDs_Msg += " É necessário selecionar o mês do nascimento.";
-                                }
-
-                                if (anoNascimentoFuncionario.Equals("Ano"))
-                                {
-                                    mDs_Msg += " É necessário selecionar o ano do nascimento.";
-                                }
-
-                                if (ds_sexo.Equals("Sexo"))
-                                {
-                                    mDs_Msg += " É necessário selecionar o sexo.";
-                                }
-
-                                if (myValidar.CampoPreenchido(nr_telefone))
-                                {
-                                    if (!myValidar.Numero(nr_telefone.Replace("(", "").Replace(")", "").Replace("-", "")))
-                                    {
-                                        mDs_Msg += " O telefone deve conter somente números.";
-                                    }
-                                    else
-                                    {
-                                        if (nr_telefone.Replace("(", "").Replace(")", "").Replace("-", "").Length < 10)
-                                        {
-                                            mDs_Msg += " O telefone deve conter ao menos 10 números, contando com o DDD.";
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    mDs_Msg += " O telefone deve estar preenchido.";
-                                }
-
-                                if (myValidar.CampoPreenchido(ds_email))
-                                {
-                                    if (!myValidar.TamanhoCampo(ds_email, 35))
-                                    {
-                                        mDs_Msg += " Limite de caracteres para e-mail excedido, " +
-                                                      "o limite para este campo é: 35 caracteres, " +
-                                                      "quantidade utilizada: " + ds_email.Length + ".";
-                                    }
-                                }
-                                else
-                                {
-                                    mDs_Msg += " O e-mail deve estar preenchido.";
-                                }
-
-                                if (myValidar.CampoPreenchido(nr_cep))
-                                {
-                                    if (!myValidar.Numero(nr_cep.Replace("-", "")))
-                                    {
-                                        mDs_Msg += " O CEP deve conter somente números.";
-                                    }
-                                    else
-                                    {
-                                        if (nr_cep.Replace("-", "").Length < 8)
-                                        {
-                                            mDs_Msg += " O CEP deve conter ao menos 8 números.";
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    mDs_Msg += " O CEP deve estar preenchido.";
-                                }
-
-                                if (myValidar.CampoPreenchido(ds_logradouro))
-                                {
-                                    if (!myValidar.TamanhoCampo(ds_logradouro, 50))
-                                    {
-                                        mDs_Msg += " Limite de caracteres para logradouro excedido, " +
-                                                      "o limite para este campo é: 3000 caracteres, " +
-                                                      "quantidade utilizada: " + ds_logradouro.Length + ".";
-                                    }
-                                }
-                                else
-                                {
-                                    mDs_Msg += " O logradouro deve estar preenchido.";
-                                }
-
-                                if (myValidar.CampoPreenchido(nm_bairro))
-                                {
-                                    if (!myValidar.TamanhoCampo(nm_bairro, 50))
-                                    {
-                                        mDs_Msg += " Limite de caracteres para bairro excedido, " +
-                                                      "o limite para este campo é: 3000 caracteres, " +
-                                                      "quantidade utilizada: " + nm_bairro.Length + ".";
-                                    }
-                                }
-                                else
-                                {
-                                    mDs_Msg += " O bairro deve estar preenchido.";
-                                }
-
-                                if (!string.IsNullOrWhiteSpace(ds_complemento))
-                                {
-                                    if (!myValidar.TamanhoCampo(ds_complemento, 50))
-                                    {
-                                        mDs_Msg += " Limite de caracteres para complemento excedido, " +
-                                                      "o limite para este campo é: 50 caracteres, " +
-                                                      "quantidade utilizada: " + ds_complemento.Length + ".";
-                                    }
-                                }
-
-                                if (ds_cargo.Equals("Cargo"))
-                                {
-                                    mDs_Msg += " É necessário selecionar o cargo.";
-                                }
-
-                                if (myValidar.CampoPreenchido(vl_salario))
-                                {
-                                    if (!myValidar.Valor(vl_salario))
-                                    {
-                                        mDs_Msg += " O salário deve ser um valor numérico, no formato: 9.999.999,99.";
-                                    }
-                                }
-                                else
-                                {
-                                    mDs_Msg += " O salário deve estar preenchido.";
-                                }
-
-                                if (id_uf.Equals("Estado"))
-                                {
-                                    mDs_Msg += " É necessário selecionar a UF.";
-                                }
-
-                                if (id_cidade.Equals("Cidade"))
-                                {
-                                    mDs_Msg += " É necessário selecionar a cidade.";
-                                }
-                            }
-                            else
-                            {
-                                mDs_Msg += " Funcionário já cadastrado com este CPF. Verifique nos funcionários ativos e inativos!";
-                            }
-                        }
+                        mDs_Msg = " O nome deve conter somente letras";
                     }
                     else
                     {
-                        mDs_Msg += " O CPF deve estar preenchido.";
+                        if (myValidar.CampoPreenchido(nr_cpf))
+                        {
+                            if (!myValidar.ValidaCPF(nr_cpf))
+                            {
+                                mDs_Msg = " CPF inválido, por favor verifique e tente novamente.";
+                            }
+                            else
+                            {
+                                if (VerificarFuncionarioCadastrado(id_funcionario, nr_cpf.Replace(".", "").Replace("-", ""), connectionString).Equals(""))
+                                {
+                                    if (diaNascimentoFuncionario.Equals("Dia"))
+                                    {
+                                        mDs_Msg += " É necessário selecionar o dia do nascimento.";
+                                    }
+
+                                    if (mesNascimentoFuncionario.Equals("0"))
+                                    {
+                                        mDs_Msg += " É necessário selecionar o mês do nascimento.";
+                                    }
+
+                                    if (anoNascimentoFuncionario.Equals("Ano"))
+                                    {
+                                        mDs_Msg += " É necessário selecionar o ano do nascimento.";
+                                    }
+
+                                    if (ds_sexo.Equals("Sexo"))
+                                    {
+                                        mDs_Msg += " É necessário selecionar o sexo.";
+                                    }
+
+                                    if (myValidar.CampoPreenchido(nr_telefone))
+                                    {
+                                        if (!myValidar.Numero(nr_telefone.Replace("(", "").Replace(")", "").Replace("-", "")))
+                                        {
+                                            mDs_Msg += " O telefone deve conter somente números.";
+                                        }
+                                        else
+                                        {
+                                            if (nr_telefone.Replace("(", "").Replace(")", "").Replace("-", "").Length < 10)
+                                            {
+                                                mDs_Msg += " O telefone deve conter ao menos 10 números, contando com o DDD.";
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        mDs_Msg += " O telefone deve estar preenchido.";
+                                    }
+
+                                    if (myValidar.CampoPreenchido(ds_email))
+                                    {
+                                        if (!myValidar.TamanhoCampo(ds_email, 35))
+                                        {
+                                            mDs_Msg += " Limite de caracteres para e-mail excedido, " +
+                                                          "o limite para este campo é: 35 caracteres, " +
+                                                          "quantidade utilizada: " + ds_email.Length + ".";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        mDs_Msg += " O e-mail deve estar preenchido.";
+                                    }
+
+                                    if (myValidar.CampoPreenchido(nr_cep))
+                                    {
+                                        if (!myValidar.Numero(nr_cep.Replace("-", "")))
+                                        {
+                                            mDs_Msg += " O CEP deve conter somente números.";
+                                        }
+                                        else
+                                        {
+                                            if (nr_cep.Replace("-", "").Length < 8)
+                                            {
+                                                mDs_Msg += " O CEP deve conter ao menos 8 números.";
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        mDs_Msg += " O CEP deve estar preenchido.";
+                                    }
+
+                                    if (myValidar.CampoPreenchido(ds_logradouro))
+                                    {
+                                        if (!myValidar.TamanhoCampo(ds_logradouro, 50))
+                                        {
+                                            mDs_Msg += " Limite de caracteres para logradouro excedido, " +
+                                                          "o limite para este campo é: 3000 caracteres, " +
+                                                          "quantidade utilizada: " + ds_logradouro.Length + ".";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        mDs_Msg += " O logradouro deve estar preenchido.";
+                                    }
+
+                                    if (myValidar.CampoPreenchido(nr_casa))
+                                    {
+                                        if (!myValidar.TamanhoCampo(nr_casa, 5))
+                                        {
+                                            mDs_Msg += " Limite de caracteres para número da casa excedido, " +
+                                                          "o limite para este campo é: 5 caracteres, " +
+                                                          "quantidade utilizada: " + nr_casa.Length + ".";
+                                        }
+                                        else
+                                        {
+                                            if (!myValidar.Numero(nr_casa))
+                                            {
+                                                mDs_Msg += " O número da casa deve conter somente números.";
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        mDs_Msg += " O número da casa deve estar preenchida.";
+                                    }
+
+                                    if (myValidar.CampoPreenchido(nm_bairro))
+                                    {
+                                        if (!myValidar.TamanhoCampo(nm_bairro, 50))
+                                        {
+                                            mDs_Msg += " Limite de caracteres para bairro excedido, " +
+                                                          "o limite para este campo é: 3000 caracteres, " +
+                                                          "quantidade utilizada: " + nm_bairro.Length + ".";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        mDs_Msg += " O bairro deve estar preenchido.";
+                                    }
+
+                                    if (!string.IsNullOrWhiteSpace(ds_complemento))
+                                    {
+                                        if (!myValidar.TamanhoCampo(ds_complemento, 50))
+                                        {
+                                            mDs_Msg += " Limite de caracteres para complemento excedido, " +
+                                                          "o limite para este campo é: 50 caracteres, " +
+                                                          "quantidade utilizada: " + ds_complemento.Length + ".";
+                                        }
+                                    }
+
+                                    if (ds_cargo.Equals("Cargo"))
+                                    {
+                                        mDs_Msg += " É necessário selecionar o cargo.";
+                                    }
+
+                                    if (myValidar.CampoPreenchido(vl_salario))
+                                    {
+                                        if (!myValidar.Valor(vl_salario))
+                                        {
+                                            mDs_Msg += " O salário deve ser um valor numérico, no formato: 9.999.999,99.";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        mDs_Msg += " O salário deve estar preenchido.";
+                                    }
+
+                                    if (id_uf.Equals("Estado"))
+                                    {
+                                        mDs_Msg += " É necessário selecionar a UF.";
+                                    }
+
+                                    if (id_cidade.Equals("Cidade"))
+                                    {
+                                        mDs_Msg += " É necessário selecionar a cidade.";
+                                    }
+                                }
+                                else
+                                {
+                                    mDs_Msg += " Funcionário já cadastrado com este CPF. Verifique nos funcionários ativos e inativos!";
+                                }
+                            }
+                        }
+                        else
+                        {
+                            mDs_Msg += " O CPF deve estar preenchido.";
+                        }
                     }
                 }
             }

@@ -97,31 +97,38 @@ namespace SuplementosPIMIV.Controller
                 }
                 else
                 {
-                    if (id_categoria.Equals("Categoria"))
+                    if (!myValidar.Letra(nm_subcategoria))
                     {
-                        mDs_Msg = " É necessário selecionar uma categoria base.";
+                        mDs_Msg = " O nome deve conter somente letras";
                     }
                     else
                     {
-                        if (VerificarSubcategoriaCadastrada(id_subcategoria, nm_subcategoria, id_categoria, connectionString).Equals(""))
+                        if (id_categoria.Equals("Categoria"))
                         {
-                            if (myValidar.CampoPreenchido(ds_subcategoria))
+                            mDs_Msg = " É necessário selecionar uma categoria base.";
+                        }
+                        else
+                        {
+                            if (VerificarSubcategoriaCadastrada(id_subcategoria, nm_subcategoria, id_categoria, connectionString).Equals(""))
                             {
-                                if (!myValidar.TamanhoCampo(ds_subcategoria, 1500))
+                                if (myValidar.CampoPreenchido(ds_subcategoria))
                                 {
-                                    mDs_Msg += " Limite de caracteres para descrição excedido, " +
-                                                  "o limite para este campo é: 1500 caracteres, " +
-                                                  "quantidade utilizada: " + ds_subcategoria.Length + ".";
+                                    if (!myValidar.TamanhoCampo(ds_subcategoria, 1500))
+                                    {
+                                        mDs_Msg += " Limite de caracteres para descrição excedido, " +
+                                                      "o limite para este campo é: 1500 caracteres, " +
+                                                      "quantidade utilizada: " + ds_subcategoria.Length + ".";
+                                    }
+                                }
+                                else
+                                {
+                                    mDs_Msg += " A descrição deve estar preenchida.";
                                 }
                             }
                             else
                             {
-                                mDs_Msg += " A descrição deve estar preenchida.";
+                                mDs_Msg += " Subcategoria já cadastrada para a categoria selecionada. Verifique nas subcategorias ativas e inativas!";
                             }
-                        }
-                        else
-                        {
-                            mDs_Msg += " Subcategoria já cadastrada para a categoria selecionada. Verifique nas subcategorias ativas e inativas!";
                         }
                     }
                 }

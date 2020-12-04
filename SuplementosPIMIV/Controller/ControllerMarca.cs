@@ -91,9 +91,16 @@ namespace SuplementosPIMIV.Controller
                 }
                 else
                 {
-                    if (!VerificarMarcaCadastrada(id_marca, nm_marca, connectionString).Equals(""))
+                    if (!myValidar.Letra(nm_marca))
                     {
-                        mDs_Msg += " Marca já cadastrada. Verifique nas marcas ativas e inativas!";
+                        mDs_Msg = " O nome deve conter somente letras";
+                    }
+                    else
+                    {
+                        if (!VerificarMarcaCadastrada(id_marca, nm_marca, connectionString).Equals(""))
+                        {
+                            mDs_Msg += " Marca já cadastrada. Verifique nas marcas ativas e inativas!";
+                        }
                     }
                 }
             }

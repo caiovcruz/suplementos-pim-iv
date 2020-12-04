@@ -91,9 +91,16 @@ namespace SuplementosPIMIV.Controller
                 }
                 else
                 {
-                    if (!VerificarSaborCadastrado(id_sabor, nm_sabor, connectionString).Equals(""))
+                    if (!myValidar.Letra(nm_sabor))
                     {
-                        mDs_Msg += " Sabor já cadastrado. Verifique nos sabores ativos e inativos!";
+                        mDs_Msg = " O nome deve conter somente letras";
+                    }
+                    else
+                    {
+                        if (!VerificarSaborCadastrado(id_sabor, nm_sabor, connectionString).Equals(""))
+                        {
+                            mDs_Msg += " Sabor já cadastrado. Verifique nos sabores ativos e inativos!";
+                        }
                     }
                 }
             }

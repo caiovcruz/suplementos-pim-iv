@@ -70,7 +70,6 @@
 
                         <br />
 
-                        <asp:TextBox CssClass="TextBox" ID="txbID_Venda" Visible="false" runat="server"></asp:TextBox>
                         <asp:TextBox CssClass="TextBox" ID="txbID_Produto" Visible="false" runat="server"></asp:TextBox>
 
                         <asp:Label CssClass="Label" runat="server" Width="100%" Text="EAN"></asp:Label>

@@ -25,10 +25,14 @@ namespace SuplementosPIMIV.Model
 
         public ModelVenda() { }
 
-        public ModelVenda(int id_funcionario, DateTime dt_venda, string connectionString)
+        public ModelVenda(int id_funcionario, DateTime dt_venda, string ds_tipoPagamento, int nr_parcelas, double vl_total, double vl_lucro, string connectionString)
         {
             ID_Funcionario = id_funcionario;
             DT_Venda = dt_venda;
+            DS_TipoPagamento = ds_tipoPagamento;
+            NR_Parcelas = nr_parcelas;
+            VL_Total = vl_total;
+            VL_Lucro = vl_lucro;
             ConnectionString = connectionString;
 
             Incluir();
@@ -46,7 +50,7 @@ namespace SuplementosPIMIV.Model
             VL_Lucro = vl_lucro;
             ConnectionString = connectionString;
 
-            Finalizar();
+            Alterar();
         }
 
         public ModelVenda(int id_venda, string connectionString)
@@ -69,16 +73,24 @@ namespace SuplementosPIMIV.Model
                 StringBuilder stringSQL = new StringBuilder();
                 stringSQL.Append("INSERT INTO TB_Venda (");
                 stringSQL.Append("ID_Funcionario, ");
-                stringSQL.Append("DT_Venda)");
+                stringSQL.Append("DT_Venda, ");
+                stringSQL.Append("DS_TipoPagamento, ");
+                stringSQL.Append("NR_Parcelas, ");
+                stringSQL.Append("VL_Total, ");
+                stringSQL.Append("VL_Lucro) ");
                 stringSQL.Append("VALUES (");
                 stringSQL.Append("'" + ID_Funcionario + "', ");
-                stringSQL.Append("'" + DT_Venda + "');");
+                stringSQL.Append("'" + DT_Venda + "', ");
+                stringSQL.Append("'" + DS_TipoPagamento + "', ");
+                stringSQL.Append("'" + NR_Parcelas + "', ");
+                stringSQL.Append("'" + VL_Total + "', ");
+                stringSQL.Append("'" + VL_Lucro + "');");
                 stringSQL.Append("SELECT SCOPE_IDENTITY();");
 
                 sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
                 ID_Venda = Convert.ToInt32(sqlCommand.ExecuteScalar());
 
-                DS_Mensagem = ID_Venda > 0 ? "OK" : "Erro ao iniciar venda";
+                DS_Mensagem = ID_Venda > 0 ? "OK" : "Erro ao incluir venda";
             }
             catch (Exception e)
             {
@@ -91,7 +103,7 @@ namespace SuplementosPIMIV.Model
             }
         }
 
-        private void Finalizar()
+        private void Alterar()
         {
             DS_Mensagem = "";
 
@@ -113,7 +125,7 @@ namespace SuplementosPIMIV.Model
                 sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
                 int result = sqlCommand.ExecuteNonQuery();
 
-                DS_Mensagem = result > 0 ? "OK" : "Erro ao finalizar venda";
+                DS_Mensagem = result > 0 ? "OK" : "Erro ao alterar venda";
             }
             catch (Exception e)
             {
@@ -143,36 +155,6 @@ namespace SuplementosPIMIV.Model
                 int result = sqlCommand.ExecuteNonQuery();
 
                 DS_Mensagem = result > 0 ? "OK" : "Erro ao excluir venda";
-            }
-            catch (Exception e)
-            {
-                DS_Mensagem = e.Message;
-            }
-            finally
-            {
-                sqlCommand.Dispose();
-                sqlConnection.Close();
-            }
-        }
-
-        public void ValidarVendas(string connectionString)
-        {
-            DS_Mensagem = "";
-            ConnectionString = connectionString;
-
-            try
-            {
-                sqlConnection = new SqlConnection(ConnectionString);
-                sqlConnection.Open();
-
-                StringBuilder stringSQL = new StringBuilder();
-                stringSQL.Append("DELETE FROM TB_Venda ");
-                stringSQL.Append("WHERE VL_Total IS NULL");
-
-                sqlCommand = new SqlCommand(stringSQL.ToString(), sqlConnection);
-                int result = sqlCommand.ExecuteNonQuery();
-
-                DS_Mensagem = result > 0 ? "OK" : "Erro ao excluir vendas não finalizadas.";
             }
             catch (Exception e)
             {

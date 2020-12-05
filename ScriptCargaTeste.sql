@@ -5632,7 +5632,7 @@ INSERT INTO TB_Funcionario
 
 VALUES
 (
-	'Caio',
+	'Caio Vieira Cruz',
 	'Masculino',
 	'2001-01-08',
 	42564895812,
@@ -5643,10 +5643,52 @@ VALUES
 	1426,
 	'Jardim São Conrado',
 	'',
-	8,
-	1,
+	26,
+	5289,
 	'Gerente',
 	11000.00,
+	'2010-01-08',
+	1
+);
+
+INSERT INTO TB_Funcionario
+(
+	NM_Funcionario,
+	DS_Sexo,
+	DT_Nascimento,
+	NR_CPF,
+	NR_Telefone,
+	DS_Email,
+	NR_CEP,
+	DS_Logradouro,
+	NR_Casa,
+	NM_Bairro,
+	DS_Complemento,
+	ID_UF,
+	ID_Cidade,
+	DS_Cargo,
+	VL_Salario,
+	DT_Admissao,
+	Ativo
+)
+
+VALUES
+(
+	'Eliezer Defilicibus',
+	'Masculino',
+	'1996-01-08',
+	35612585695,
+	15986542536,
+	'eliezer.def@outlook.com',
+	18076290,
+	'Rubião de Almeida',
+	1426,
+	'Jardim São Conrado',
+	'',
+	26,
+	5289,
+	'Vendedor',
+	5000.00,
 	'2010-01-08',
 	1
 );
@@ -5665,6 +5707,23 @@ VALUES
     'Gerente',
     'caiovcruz123',
 	'$2a$11$h7KvlKvugjtNv2lY9/00B.dbXoY253yCtoy3BuNCST224sEQDG0cW',
+	1
+);
+
+INSERT INTO TB_Login
+(
+	ID_Funcionario,
+	DS_NivelAcesso,
+	DS_Usuario,
+    DS_Senha,
+    Ativo
+)
+VALUES
+(
+	2,
+    'Vendedor',
+    'elidefilicibus',
+	'$2a$11$/YPzwuGQpDshKqQiMmlz4eVI8DskHENvTNwoCs1cXBKzVUlrsL.Di',
 	1
 );
 
@@ -5695,6 +5754,36 @@ VALUES
     'Categoria utilizada para wheys concentrados',
     1
 ); 
+
+INSERT INTO TB_Subcategoria
+(
+	ID_Categoria,
+	NM_Subcategoria,
+    DS_Subcategoria,
+    Ativo
+)
+VALUES
+(
+	1,
+	'Isolada',
+    'Categoria utilizada para wheys isolados',
+    1
+);
+
+INSERT INTO TB_Subcategoria
+(
+	ID_Categoria,
+	NM_Subcategoria,
+    DS_Subcategoria,
+    Ativo
+)
+VALUES
+(
+	1,
+	'Blend',
+    'Categoria utilizada para wheys blends',
+    1
+);
   
 INSERT INTO TB_Sabor
 (
@@ -5706,6 +5795,28 @@ VALUES
 	'Chocolate',
     1
 ); 
+
+INSERT INTO TB_Sabor
+(
+    NM_Sabor,
+    Ativo
+)
+VALUES
+(
+	'Morango',
+    1
+); 
+
+INSERT INTO TB_Sabor
+(
+    NM_Sabor,
+    Ativo
+)
+VALUES
+(
+	'Baunilha',
+    1
+); 
   
 INSERT INTO TB_Marca
 (
@@ -5715,6 +5826,17 @@ INSERT INTO TB_Marca
 VALUES
 (
 	'Muscle Definition',
+    1
+);
+
+INSERT INTO TB_Marca
+(
+	NM_Marca,
+    Ativo
+)
+VALUES
+(
+	'Thiani',
     1
 );
   
@@ -5745,6 +5867,60 @@ VALUES
     1
 );
 
+INSERT INTO TB_Produto
+(
+    ID_Marca,
+	ID_Categoria,
+    ID_Subcategoria,
+	ID_Sabor,
+	NR_EAN,
+	NM_Produto,
+    DS_Produto,
+	PR_Custo,
+    PR_Venda,
+    Ativo
+)
+VALUES
+(
+	1,
+	1,
+    2,
+    2,
+	'5901234123457',
+	'Iso Whey 900g',
+    'Tabela Nutricional: 32g (dose) = 2,8g carboidrato, 28g proteína',
+    109.00,
+    209.00,
+    1
+);
+
+INSERT INTO TB_Produto
+(
+    ID_Marca,
+	ID_Categoria,
+    ID_Subcategoria,
+	ID_Sabor,
+	NR_EAN,
+	NM_Produto,
+    DS_Produto,
+	PR_Custo,
+    PR_Venda,
+    Ativo
+)
+VALUES
+(
+	2,
+	1,
+    3,
+    3,
+	'7898357410015',
+	'Whey 3W 900g',
+    'Tabela Nutricional: 32g (dose) = 4g carboidrato, 28g proteína',
+    50.00,
+    100.00,
+    1
+);
+
 INSERT INTO TB_Estoque
 (
 	ID_Produto,
@@ -5754,7 +5930,33 @@ INSERT INTO TB_Estoque
 VALUES
 (
 	1,
-	10,
+	12,
+    1
+);
+
+INSERT INTO TB_Estoque
+(
+	ID_Produto,
+	QTD_Estoque,
+    Ativo
+)
+VALUES
+(
+	2,
+	12,
+    1
+);
+
+INSERT INTO TB_Estoque
+(
+	ID_Produto,
+	QTD_Estoque,
+    Ativo
+)
+VALUES
+(
+	3,
+	12,
     1
 );
 
@@ -5771,7 +5973,41 @@ VALUES
 	1,
 	2,
 	'Entrada',
-	'2020-10-01',
+	GETDATE(),
+	12
+);
+
+INSERT INTO TB_MovimentacaoEstoque
+(
+	ID_Produto,
+	QTD_MovimentacaoEstoque,
+	DS_MovimentacaoEstoque,
+	DT_MovimentacaoEstoque,
+	QTD_Estoque
+)
+VALUES
+(
+	2,
+	5,
+	'Entrada',
+	GETDATE(),
+	12
+);
+
+INSERT INTO TB_MovimentacaoEstoque
+(
+	ID_Produto,
+	QTD_MovimentacaoEstoque,
+	DS_MovimentacaoEstoque,
+	DT_MovimentacaoEstoque,
+	QTD_Estoque
+)
+VALUES
+(
+	3,
+	8,
+	'Entrada',
+	GETDATE(),
 	12
 );
 
@@ -5794,6 +6030,25 @@ VALUES
 	20
 );
 
+INSERT INTO TB_Venda
+(
+	ID_Funcionario,
+	DT_Venda,
+	DS_TipoPagamento,
+	NR_Parcelas,
+	VL_Total,
+	VL_Lucro
+)
+VALUES
+(
+	1,
+	'2020-11-30',
+	'Cartão de Débito',
+	1,
+	279.00,
+	120.00
+);
+
 INSERT INTO TB_ItemVenda
 (
 	ID_Venda,
@@ -5809,4 +6064,38 @@ VALUES
 	1,
 	70,
 	20
+);
+
+INSERT INTO TB_ItemVenda
+(
+	ID_Venda,
+	ID_Produto,
+	QTD_ItemVenda,
+	VL_Subtotal,
+	VL_Lucro
+)
+VALUES
+(
+	2,
+	1,
+	1,
+	70,
+	20
+);
+
+INSERT INTO TB_ItemVenda
+(
+	ID_Venda,
+	ID_Produto,
+	QTD_ItemVenda,
+	VL_Subtotal,
+	VL_Lucro
+)
+VALUES
+(
+	2,
+	2,
+	1,
+	209.00,
+	100.00
 );

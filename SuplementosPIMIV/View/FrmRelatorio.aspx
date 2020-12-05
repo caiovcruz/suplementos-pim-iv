@@ -183,7 +183,6 @@
                         <br />
 
                         <asp:Button CssClass="Button" ID="btnLimpar" runat="server" Text="Limpar" OnClick="btnLimpar_Click" />
-                        <asp:Button CssClass="Button" ID="btnValidarVendas" runat="server" Text="Validar Vendas" OnClick="btnValidarVendas_Click" />
                         <asp:Button CssClass="Button" ID="btnExcluir" runat="server" Text="Excluir" OnClick="btnExcluir_Click" />
 
                     </div>

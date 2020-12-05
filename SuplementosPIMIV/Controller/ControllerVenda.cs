@@ -13,9 +13,10 @@ namespace SuplementosPIMIV.Controller
 
         public ControllerVenda() { }
 
-        public ControllerVenda(string id_funcionario, DateTime dt_venda, string connectionString)
+        public ControllerVenda(string id_funcionario, DateTime dt_venda, string ds_tipoPagamento, string nr_parcelas, string vl_total, string vl_lucro, string connectionString)
         {
-            myModelVenda = new ModelVenda(Convert.ToInt32(id_funcionario), dt_venda, connectionString);
+            myModelVenda = new ModelVenda(Convert.ToInt32(id_funcionario), dt_venda, ds_tipoPagamento, Convert.ToInt32(nr_parcelas), Convert.ToDouble(vl_total),
+                Convert.ToDouble(vl_lucro), connectionString);
             ID_Venda = myModelVenda.ID_Venda;
             DS_Mensagem = myModelVenda.DS_Mensagem;
         }
@@ -30,13 +31,6 @@ namespace SuplementosPIMIV.Controller
         public ControllerVenda(string id_venda, string connectionString)
         {
             myModelVenda = new ModelVenda(Convert.ToInt32(id_venda), connectionString);
-            DS_Mensagem = myModelVenda.DS_Mensagem;
-        }
-
-        public void ValidarVendas(string connectionString)
-        {
-            myModelVenda = new ModelVenda();
-            myModelVenda.ValidarVendas(connectionString);
             DS_Mensagem = myModelVenda.DS_Mensagem;
         }
 

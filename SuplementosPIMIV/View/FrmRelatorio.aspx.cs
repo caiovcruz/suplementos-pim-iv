@@ -23,7 +23,6 @@ namespace SuplementosPIMIV.View
                         LimparFiltro();
                         LimparCamposVenda();
                         CarregarDatas();
-                        btnValidarVendas.Enabled = false;
                         CarregarVendas();
                         BloquearComponentesRelatorioVendas();
                         BloquearComponentesRelatorioVendasConsulta();
@@ -262,31 +261,6 @@ namespace SuplementosPIMIV.View
             }
         }
 
-        private void ValidarVendas()
-        {
-            // instanciar um objeto da classe venda e carregar tela e excluir
-            myControllerVenda = new ControllerVenda();
-            myControllerVenda.ValidarVendas(Session["ConnectionString"].ToString());
-
-            // o que ocorreu?
-            if (myControllerVenda.DS_Mensagem == "OK")
-            {
-                // tudo certinho!
-                LimparCamposVenda();
-                CarregarVendas();
-                LimparItensVenda();
-                BloquearComponentesRelatorioVendas();
-                btnValidarVendas.Enabled = false;
-                lblDS_Mensagem.Text = "Vendas não finalizadas excluídas com sucesso!";
-            }
-            else
-            {
-                // exibir erro!
-                lblDS_Mensagem.Text = myControllerVenda.DS_Mensagem + " Não há vendas não finalizadas para excluir.";
-                btnValidarVendas.Enabled = false;
-            }
-        }
-
         protected void ddlDiaRelatorioInicio_SelectedIndexChanged(object sender, EventArgs e)
         {
             SearchFields();
@@ -319,7 +293,6 @@ namespace SuplementosPIMIV.View
 
         protected void btnConsultar_Click(object sender, EventArgs e)
         {
-            btnValidarVendas.Enabled = false;
             LimparCamposVenda();
             LimparItensVenda();
             CarregarVendasConsultar();
@@ -331,11 +304,6 @@ namespace SuplementosPIMIV.View
             {
                 LinkButton lb = (LinkButton)e.Row.FindControl("lbSelecionar");
                 e.Row.Attributes.Add("onClick", Page.ClientScript.GetPostBackEventReference(lb, ""));
-
-                if (e.Row.Cells[6].Text.Equals("&nbsp;"))
-                {
-                    btnValidarVendas.Enabled = true;
-                }
             }
 
             if (e.Row.RowType == DataControlRowType.Header)
@@ -424,11 +392,6 @@ namespace SuplementosPIMIV.View
         protected void btnExcluir_Click(object sender, EventArgs e)
         {
             Excluir();
-        }
-
-        protected void btnValidarVendas_Click(object sender, EventArgs e)
-        {
-            ValidarVendas();
         }
 
         protected void btnLimparFiltro_Click(object sender, EventArgs e)

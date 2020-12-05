@@ -1,5 +1,6 @@
 ﻿using SuplementosPIMIV.Controller;
 using System;
+using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Validacao;
@@ -23,9 +24,10 @@ namespace SuplementosPIMIV.View
                 {
                     LimparCamposCadastro();
                     BloquearComponentesCadastro();
-                    LimparCamposFinaliza();
-                    BloquearComponentesFinaliza();
+                    LimparCamposSalvar();
+                    BloquearComponentesSalvar();
                     LimparMensagens();
+                    Session["dtItemVenda"] = null;
 
                     lblNM_FuncionarioLogin.Text = Session["NM_FuncionarioLogin"].ToString();
 
@@ -61,7 +63,7 @@ namespace SuplementosPIMIV.View
             AlterarCorQTD_Produto(System.Drawing.Color.Black);
         }
 
-        private void LimparCamposFinaliza()
+        private void LimparCamposSalvar()
         {
             gvwExibe.DataSource = null;
             gvwExibe.DataBind();
@@ -86,7 +88,7 @@ namespace SuplementosPIMIV.View
             btnLimpar.Enabled = false;
         }
 
-        private void BloquearComponentesFinaliza()
+        private void BloquearComponentesSalvar()
         {
             txbDT_Venda.ReadOnly = true;
             ddlDS_TipoPagamento.Enabled = false;
@@ -99,18 +101,6 @@ namespace SuplementosPIMIV.View
 
             btnSalvar.Enabled = false;
             btnCancelar.Enabled = false;
-        }
-
-        private void CarregarItensVenda()
-        {
-            // instanciando um objeto da classe ControllerItemVenda
-            myControllerItemVenda = new ControllerItemVenda();
-
-            // passando a fonte de dados para o GridView
-            gvwExibe.DataSource = myControllerItemVenda.Exibir(txbID_Venda.Text.Trim(), Session["ConnectionString"].ToString());
-
-            // associando os dados para carregar e exibir
-            gvwExibe.DataBind();
         }
 
         private void AlterarCorQTD_Produto(System.Drawing.Color color)
@@ -266,7 +256,7 @@ namespace SuplementosPIMIV.View
 
             foreach (GridViewRow row in gvwExibe.Rows)
             {
-                valorTotal += Convert.ToDouble(row.Cells[10].Text);
+                valorTotal += Convert.ToDouble(row.Cells[6].Text);
             }
 
             txbVL_Total.Text = valorTotal.ToString("N2");
@@ -278,7 +268,7 @@ namespace SuplementosPIMIV.View
 
             foreach (GridViewRow row in gvwExibe.Rows)
             {
-                valorLucro += Convert.ToDouble(row.Cells[11].Text);
+                valorLucro += Convert.ToDouble(row.Cells[7].Text);
             }
 
             return valorLucro;
@@ -286,67 +276,178 @@ namespace SuplementosPIMIV.View
 
         private void Incluir()
         {
-            if (string.IsNullOrWhiteSpace(txbID_Venda.Text.Trim()))
+            try
             {
-                // tudo certinho
-                // instanciar um objeto da classe venda, carregar tela e incluir
-                myControllerVenda = new ControllerVenda(
-                    Session["ID_Funcionario"].ToString(),
-                    DateTime.Now,
-                    Session["ConnectionString"].ToString());
+                DataTable dtItemVenda = new DataTable();
 
-                txbID_Venda.Text = myControllerVenda.ID_Venda.ToString();
-                lblDS_Mensagem.Text = txbID_Venda.Text;
-
-                txbDT_Venda.Text = DateTime.Now.ToString();
-                CarregarTiposPagamento();
-                CarregarNParcelas();
-                btnCancelar.Enabled = true;
-            }
-
-            // o que ocorreu?
-            if (!string.IsNullOrWhiteSpace(txbID_Venda.Text.Trim()))
-            {
-                myControllerItemVenda = new ControllerItemVenda(
-                    txbID_Venda.Text.Trim(),
-                    txbID_Produto.Text.Trim(),
-                    txbQTD_Produto.Text.Trim(),
-                    txbPR_Produto.Text.Trim(),
-                    txbVL_LucroProduto.Text.Trim(),
-                    'I',
-                    Session["ConnectionString"].ToString());
-
-                if (myControllerItemVenda.DS_Mensagem == "OK")
+                if (Session["dtItemVenda"] != null)
                 {
-                    // tudo certinho!
-                    LimparCamposCadastro();
-                    BloquearComponentesCadastro();
-                    CarregarItensVenda();
-                    lblDS_Mensagem.Text = "Incluído com sucesso!";
-
-                    AtualizarValorTotalVenda();
+                    dtItemVenda = (DataTable)Session["dtItemVenda"];
                 }
                 else
-                {// exibir erro!
-                    lblDS_Mensagem.Text = myControllerItemVenda.DS_Mensagem + " Verifique se o mesmo já esta na lista de itens na venda.";
+                {
+                    dtItemVenda.Columns.Add("#");
+                    dtItemVenda.Columns.Add("EAN");
+                    dtItemVenda.Columns.Add("Produto");
+                    dtItemVenda.Columns.Add("Quantidade");
+                    dtItemVenda.Columns.Add("Preço");
+                    dtItemVenda.Columns.Add("Subtotal");
+                    dtItemVenda.Columns.Add("Lucro");
+                }
+
+                DataRow dataRow = dtItemVenda.NewRow();
+                dataRow["#"] = txbID_Produto.Text.Trim();
+                dataRow["EAN"] = txbNR_EAN.Text.Trim();
+                dataRow["Produto"] = txbProduto.Text.Trim();
+                dataRow["Quantidade"] = txbQTD_Produto.Text.Trim();
+                dataRow["Preço"] = txbPR_Produto.Text.Trim();
+                dataRow["Subtotal"] = (Convert.ToDouble(txbPR_Produto.Text.Trim()) * Convert.ToInt32(txbQTD_Produto.Text.Trim())).ToString("N2");
+                dataRow["Lucro"] = (Convert.ToDouble(txbVL_LucroProduto.Text.Trim()) * Convert.ToInt32(txbQTD_Produto.Text.Trim())).ToString("N2");
+
+                dtItemVenda.Rows.Add(dataRow);
+                gvwExibe.DataSource = dtItemVenda;
+                gvwExibe.DataBind();
+                Session["dtItemVenda"] = dtItemVenda;
+
+                LimparCamposCadastro();
+                BloquearComponentesCadastro();
+                lblDS_Mensagem.Text = "Incluído com sucesso!";
+
+                AtualizarValorTotalVenda();
+
+                if (Session["dtItemVenda"] != null)
+                {
+                    txbDT_Venda.Text = DateTime.Now.ToString();
+                    if (ddlDS_TipoPagamento.Items.Count.Equals(0)) CarregarTiposPagamento();
+                    if (ddlNR_Parcelas.Items.Count.Equals(0)) CarregarNParcelas();
+                    btnCancelar.Enabled = true;
                 }
             }
-            else
+            catch (Exception e)
             {
-                // exibir erro!
-                lblDS_Mensagem.Text = myControllerVenda.DS_Mensagem;
+                lblDS_Mensagem.Text = "Ocorreu um erro ao incluir o item na venda. Por favor, tente novamente! |#|ERRO|#| " + e.Message;
             }
         }
 
-        private void Finalizar()
+        private void Alterar()
+        {
+            try
+            {
+                DataTable dtItemVenda = new DataTable();
+
+                if (Session["dtItemVenda"] != null)
+                {
+                    dtItemVenda = (DataTable)Session["dtItemVenda"];
+                }
+
+                foreach (DataRow row in dtItemVenda.Rows)
+                {
+                    if (row[0].ToString().Equals(txbID_Produto.Text.Trim()))
+                    {
+                        row[3] = txbQTD_Produto.Text.Trim();
+                        row[4] = txbPR_Produto.Text.Trim();
+                        row[5] = (Convert.ToDouble(txbPR_Produto.Text.Trim()) * Convert.ToInt32(txbQTD_Produto.Text.Trim())).ToString("N2");
+                        row[6] = (Convert.ToDouble(txbVL_LucroProduto.Text.Trim()) * Convert.ToInt32(txbQTD_Produto.Text.Trim())).ToString("N2");
+                        dtItemVenda.AcceptChanges();
+                        break;
+                    }
+                }
+
+                gvwExibe.DataSource = dtItemVenda;
+                gvwExibe.DataBind();
+                Session["dtItemVenda"] = dtItemVenda;
+
+                LimparCamposCadastro();
+                BloquearComponentesCadastro();
+                lblDS_Mensagem.Text = "Alterado com sucesso!";
+
+                AtualizarValorTotalVenda();
+            }
+            catch (Exception e)
+            {
+                lblDS_Mensagem.Text = "Ocorreu um erro ao alterar o item da venda. Por favor, tente novamente! #ERRO# " + e.Message;
+            }
+        }
+
+        private void Excluir()
+        {
+            try
+            {
+                DataTable dtItemVenda = new DataTable();
+
+                if (Session["dtItemVenda"] != null)
+                {
+                    dtItemVenda = (DataTable)Session["dtItemVenda"];
+
+                    foreach (DataRow row in dtItemVenda.Rows)
+                    {
+                        if (row[0].ToString().Equals(txbID_Produto.Text.Trim()))
+                        {
+                            row.Delete();
+                            dtItemVenda.AcceptChanges();
+                            break;
+                        }
+                    }
+
+                    gvwExibe.DataSource = dtItemVenda;
+                    gvwExibe.DataBind();
+                    Session["dtItemVenda"] = dtItemVenda;
+
+                    LimparCamposCadastro();
+                    BloquearComponentesCadastro();
+                    lblDS_Mensagem.Text = "Excluído com sucesso!";
+
+                    AtualizarValorTotalVenda();
+                }
+            }
+            catch (Exception e)
+            {
+                lblDS_Mensagem.Text = "Ocorreu um erro ao excluir o item da venda. Por favor, tente novamente! #ERRO# " + e.Message;
+            }
+        }
+
+        private void SalvarItensVenda(string id_venda)
+        {
+
+        }
+
+        private void BaixaEstoqueItensVenda()
+        {
+            string nm_produtoErroEstoque = "";
+
+            foreach (GridViewRow row in gvwExibe.Rows)
+            {
+                myControllerMovEstoque = new ControllerMovEstoque(
+                    row.Cells[1].Text,
+                    row.Cells[4].Text,
+                    "Venda",
+                    DateTime.Now,
+                    Session["ConnectionString"].ToString());
+
+                if (myControllerMovEstoque.DS_Mensagem != "OK")
+                {
+                    nm_produtoErroEstoque += "Produto ➯ | " + row.Cells[3].Text + " |. ";
+                }
+            }
+
+            if (nm_produtoErroEstoque != "")
+            {
+                lblDS_MensagemFinal.Text +=
+                    " Ocorreu um erro ao atualizar o estoque dos seguintes produtos: " +
+                    nm_produtoErroEstoque +
+                    " ☞ Informe o gerente! ☜";
+            }
+        }
+
+        private void Salvar()
         {
             if (gvwExibe.Rows.Count > 0)
             {
                 try
                 {
-                    // instanciar um objeto da classe venda, carregar tela e finalizar
+                    // tudo certinho
+                    // instanciar um objeto da classe venda, carregar tela e incluir
                     myControllerVenda = new ControllerVenda(
-                        txbID_Venda.Text.Trim(),
                         Session["ID_Funcionario"].ToString(),
                         DateTime.Now,
                         ddlDS_TipoPagamento.SelectedValue,
@@ -356,41 +457,49 @@ namespace SuplementosPIMIV.View
                         Session["ConnectionString"].ToString());
 
                     // o que ocorreu?
-                    if (myControllerVenda.DS_Mensagem == "OK")
+                    if (!myControllerVenda.ID_Venda.Equals(0))
                     {
+                        // tudo certinho
+                        lblDS_MensagemFinal.Text = "";
+
                         string nm_produtoErro = "";
 
                         foreach (GridViewRow row in gvwExibe.Rows)
                         {
-                            myControllerMovEstoque = new ControllerMovEstoque(
-                                row.Cells[2].Text,
-                                row.Cells[9].Text,
-                                "Venda",
-                                DateTime.Now,
+                            myControllerItemVenda = new ControllerItemVenda(
+                                myControllerVenda.ID_Venda.ToString(),
+                                row.Cells[1].Text,
+                                row.Cells[4].Text,
+                                row.Cells[5].Text,
+                                (Convert.ToDouble(row.Cells[7].Text) / Convert.ToInt32(row.Cells[4].Text)).ToString("N2"),
+                                'I',
                                 Session["ConnectionString"].ToString());
 
-                            if (myControllerMovEstoque.DS_Mensagem != "OK")
+                            if (myControllerItemVenda.DS_Mensagem != "OK")
                             {
-                                nm_produtoErro += "Produto ➯ | " + row.Cells[4].Text + " ➯ " + row.Cells[5].Text + " ➯ " + row.Cells[6].Text + " |. ";
+                                nm_produtoErro += "Produto ➯ | " + row.Cells[3].Text + " |. ";
                             }
                         }
-
-                        // tudo certinho!
-                        txbID_Venda.Text = "";
-                        LimparCamposCadastro();
-                        BloquearComponentesCadastro();
-                        LimparCamposFinaliza();
-                        BloquearComponentesFinaliza();
-                        LimparMensagens();
-                        lblDS_MensagemFinal.Text = "Venda realizada com sucesso!";
 
                         if (nm_produtoErro != "")
                         {
                             lblDS_MensagemFinal.Text +=
-                                " #Erro ao atualizar o estoque dos seguintes produtos: " +
+                                " Ocorreu um erro ao salvar os seguintes itens da venda: " +
                                 nm_produtoErro +
                                 " ☞ Informe o gerente! ☜";
                         }
+
+                        BaixaEstoqueItensVenda();
+
+                        LimparCamposCadastro();
+                        BloquearComponentesCadastro();
+                        LimparCamposSalvar();
+                        BloquearComponentesSalvar();
+                        lblDS_Mensagem.Text = "";
+                        lblDS_MensagemTroco.Text = "";
+                        Session["dtItemVenda"] = null;
+
+                        lblDS_MensagemFinal.Text = lblDS_MensagemFinal.Text.Equals("") ? "Venda realizada com sucesso!" : "Venda realizada com sucesso! |#|ERRO(s)|#| " + lblDS_MensagemFinal.Text;
                     }
                     else
                     {
@@ -401,7 +510,7 @@ namespace SuplementosPIMIV.View
                 catch (Exception e)
                 {
                     // exibir erro!
-                    lblDS_MensagemFinal.Text = e.Message;
+                    lblDS_MensagemFinal.Text = "Ocorreu um erro ao salvar a venda. Por favor, tente novamente! |#|ERRO|#| " + e.Message;
                 }
             }
             else
@@ -411,93 +520,16 @@ namespace SuplementosPIMIV.View
             }
         }
 
-        private void ExcluirVenda()
+        private void Cancelar()
         {
-            try
-            {
-                // instanciar um objeto da classe venda, carregar tela e excluir venda
-                myControllerVenda = new ControllerVenda(
-                    txbID_Venda.Text.Trim(),
-                    Session["ConnectionString"].ToString());
+            LimparCamposCadastro();
+            BloquearComponentesCadastro();
+            LimparCamposSalvar();
+            BloquearComponentesSalvar();
+            LimparMensagens();
+            Session["dtItemVenda"] = null;
 
-                // o que ocorreu?
-                if (myControllerVenda.DS_Mensagem == "OK")
-                {
-                    // tudo certinho!
-                    txbID_Venda.Text = "";
-                    LimparCamposCadastro();
-                    BloquearComponentesCadastro();
-                    LimparCamposFinaliza();
-                    BloquearComponentesFinaliza();
-                    LimparMensagens();
-                    lblDS_MensagemFinal.Text = "Venda cancelada com sucesso!";
-                }
-                else
-                {
-                    // exibir erro!
-                    lblDS_MensagemFinal.Text = myControllerVenda.DS_Mensagem;
-                }
-            }
-            catch (Exception e)
-            {
-                // exibir erro!
-                lblDS_MensagemFinal.Text = e.Message;
-            }
-        }
-
-        private void Alterar()
-        {
-            myControllerItemVenda = new ControllerItemVenda(
-                txbID_Venda.Text.Trim(),
-                txbID_Produto.Text.Trim(),
-                txbQTD_Produto.Text.Trim(),
-                txbPR_Produto.Text.Trim(),
-                txbVL_LucroProduto.Text.Trim(),
-                'A',
-                Session["ConnectionString"].ToString());
-
-            // o que ocorreu?
-            if (myControllerItemVenda.DS_Mensagem == "OK")
-            {
-                // tudo certinho!
-                LimparCamposCadastro();
-                BloquearComponentesCadastro();
-                CarregarItensVenda();
-                lblDS_Mensagem.Text = "Alterado com sucesso!";
-
-                AtualizarValorTotalVenda();
-            }
-            else
-            {
-                // exibir erro!
-                lblDS_Mensagem.Text = myControllerItemVenda.DS_Mensagem;
-            }
-        }
-
-        private void Excluir()
-        {
-            // instanciar um objeto da classe itemvenda e carregar tela e excluir
-            myControllerItemVenda = new ControllerItemVenda(
-                txbID_Venda.Text.Trim(),
-                txbID_Produto.Text.Trim(),
-                Session["ConnectionString"].ToString());
-
-            // o que ocorreu?
-            if (myControllerItemVenda.DS_Mensagem == "OK")
-            {
-                // tudo certinho!
-                LimparCamposCadastro();
-                BloquearComponentesCadastro();
-                CarregarItensVenda();
-                lblDS_Mensagem.Text = "Excluído com sucesso!";
-
-                AtualizarValorTotalVenda();
-            }
-            else
-            {
-                // exibir erro!
-                lblDS_Mensagem.Text = myControllerItemVenda.DS_Mensagem;
-            }
+            lblDS_MensagemFinal.Text = "Venda cancelada com sucesso!";
         }
 
         protected void txbNR_EAN_TextChanged(object sender, EventArgs e)
@@ -572,22 +604,11 @@ namespace SuplementosPIMIV.View
                 e.Row.Attributes.Add("onClick", Page.ClientScript.GetPostBackEventReference(lb, ""));
 
                 e.Row.Cells[7].Visible = false;
-                e.Row.Cells[11].Visible = false;
             }
 
             if (e.Row.RowType == DataControlRowType.Header)
             {
-                e.Row.Cells[1].Text = "#";
-                e.Row.Cells[2].Text = "ID";
-                e.Row.Cells[3].Text = "EAN";
-                e.Row.Cells[4].Text = "Produto";
-                e.Row.Cells[5].Text = "Marca";
-                e.Row.Cells[6].Text = "Sabor";
                 e.Row.Cells[7].Visible = false;
-                e.Row.Cells[8].Text = "Preço";
-                e.Row.Cells[9].Text = "Quantidade";
-                e.Row.Cells[10].Text = "Subtotal";
-                e.Row.Cells[11].Visible = false;
             }
         }
 
@@ -595,23 +616,17 @@ namespace SuplementosPIMIV.View
         {
             lblDS_Mensagem.Text = "";
 
-            txbID_Venda.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text.Trim());
-            txbID_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text.Trim());
-            txbNR_EAN.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text.Trim());
+            txbID_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[1].Text.Trim());
+            txbNR_EAN.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[2].Text.Trim());
+            txbProduto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[3].Text.Trim());
+            txbQTD_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[4].Text.Trim());
+            txbPR_Produto.Text = Convert.ToDouble(gvwExibe.SelectedRow.Cells[5].Text.Trim()).ToString("N2");
 
-            txbProduto.Text =
-                Server.HtmlDecode(gvwExibe.SelectedRow.Cells[4].Text.Trim()) + " ➯ " +
-                Server.HtmlDecode(gvwExibe.SelectedRow.Cells[5].Text.Trim()) + " ➯ " +
-                Server.HtmlDecode(gvwExibe.SelectedRow.Cells[6].Text.Trim());
-
-            txbVL_LucroProduto.Text = (Convert.ToDouble(gvwExibe.SelectedRow.Cells[8].Text.Trim()) -
-                Convert.ToDouble(gvwExibe.SelectedRow.Cells[7].Text.Trim())).ToString("N2");
-
-            txbPR_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[8].Text.Trim());
-            txbQTD_Produto.Text = Server.HtmlDecode(gvwExibe.SelectedRow.Cells[9].Text.Trim());
-            txbQTD_Produto.Enabled = true;
+            txbVL_LucroProduto.Text = (Convert.ToDouble(gvwExibe.SelectedRow.Cells[7].Text.Trim()) /
+                Convert.ToDouble(gvwExibe.SelectedRow.Cells[4].Text.Trim())).ToString("N2");
 
             txbNR_EAN.ReadOnly = true;
+            txbQTD_Produto.Enabled = true;
             btnConsultar.Enabled = false;
             btnIncluir.Enabled = false;
             btnAlterar.Enabled = true;
@@ -622,7 +637,7 @@ namespace SuplementosPIMIV.View
         protected void gvwExibe_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvwExibe.PageIndex = e.NewPageIndex;
-            CarregarItensVenda();
+            gvwExibe.DataSource = (DataTable)Session["dtItemVenda"];
         }
 
         protected void txbDT_Venda_TextChanged(object sender, EventArgs e)
@@ -661,7 +676,6 @@ namespace SuplementosPIMIV.View
                 txbVL_Recebido.Visible = false;
                 lblDS_MensagemTroco.Visible = false;
             }
-
         }
 
         protected void ddlNR_Parcelas_SelectedIndexChanged(object sender, EventArgs e)
@@ -715,12 +729,12 @@ namespace SuplementosPIMIV.View
 
         protected void btnSalvar_Click(object sender, EventArgs e)
         {
-            Finalizar();
+            Salvar();
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            ExcluirVenda();
+            Cancelar();
         }
     }
 }

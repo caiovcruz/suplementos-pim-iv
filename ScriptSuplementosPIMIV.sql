@@ -122,10 +122,10 @@ CREATE TABLE TB_Venda
 	ID_Venda INT PRIMARY KEY IDENTITY(1,1),
 	ID_Funcionario INT NOT NULL,
 	DT_Venda DATETIME NOT NULL,
-	DS_TipoPagamento VARCHAR(20),
-	NR_Parcelas INT,
-	VL_Total DECIMAL(10,2),
-	VL_Lucro DECIMAL(10,2),
+	DS_TipoPagamento VARCHAR(20) NOT NULL,
+	NR_Parcelas INT NOT NULL,
+	VL_Total DECIMAL(10,2) NOT NULL,
+	VL_Lucro DECIMAL(10,2) NOT NULL,
 	FOREIGN KEY (ID_Funcionario) REFERENCES TB_Funcionario(ID_Funcionario)
 );
 
